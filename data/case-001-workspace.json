@@ -1,0 +1,362 @@
+{
+  "id": "CASE-001",
+  "caseNumber": "001",
+  "title": "USS Nimitz Encounter",
+  "subtitle": "The Tic Tac Incident",
+  "date": "November 14, 2004",
+  "location": "Pacific Ocean, ~100mi SW of San Diego",
+  "duration": "~5 min visual encounter",
+  "credibilityScore": 92,
+  "credibilityTier": "Tier 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "multi-sensor",
+    "multi-witness",
+    "radar-confirmed",
+    "infrared-confirmed",
+    "data-confiscation",
+    "congressional-testimony"
+  ],
+
+  "timeline": [
+    {
+      "date": "Late October 2004",
+      "title": "Anomalous radar contacts begin",
+      "detail": "USS Princeton\u2019s AN/SPY-1B radar detects objects at 80,000+ ft, descending to sea level in seconds \u2014 rates exceeding ballistic missile profiles. Senior Chief Kevin Day tracks returns over two weeks.",
+      "tags": [{ "label": "SPY-1", "type": "sensor" }, { "label": "Radar", "type": "radar-confirmed" }],
+      "type": "key"
+    },
+    {
+      "date": "November 14, 2004 \u00b7 1:00 PM",
+      "title": "Fravor & Dietrich vectored to contact",
+      "detail": "CDR David Fravor and LCDR Alex Dietrich, flying two F/A-18F Super Hornets from VFA-41 \"Black Aces,\" are diverted to a live radar return ~100 miles SW of San Diego.",
+      "tags": [{ "label": "Fravor", "type": "witness" }, { "label": "Dietrich", "type": "witness" }],
+      "type": "key"
+    },
+    {
+      "date": "1:10 PM \u00b7 The Intercept",
+      "title": "Visual contact \u2014 Tic Tac above churning ocean",
+      "detail": null,
+      "tags": [{ "label": "Visual", "type": "visual-confirmed" }, { "label": "Multi-sensor", "type": "sensor" }],
+      "type": "key",
+      "hasHighlight": "ann-3"
+    },
+    {
+      "date": "1:12 PM \u00b7 ~2 min later",
+      "title": "Object vanishes \u2014 reappears 60 miles away",
+      "detail": null,
+      "tags": [{ "label": "SPY-1", "type": "sensor" }, { "label": "Anomaly", "type": "anomaly" }],
+      "type": "key",
+      "hasHighlight": "ann-5"
+    },
+    {
+      "date": "2:00 PM \u00b7 Second flight",
+      "title": "FLIR1 infrared video captured",
+      "detail": "WSO Chad Underwood records 76 seconds of IR video. The footage shows a featureless oblong with no exhaust plume, rotating on its longitudinal axis while maintaining flight.",
+      "tags": [{ "label": "FLIR", "type": "infrared-confirmed" }, { "label": "Sensor", "type": "sensor" }],
+      "type": "key"
+    },
+    {
+      "date": "Late 2004 \u2013 Early 2005",
+      "title": "Hard drives confiscated \u2014 data vanishes",
+      "detail": null,
+      "tags": [{ "label": "Data gap", "type": "data-confiscation" }],
+      "type": "anomaly",
+      "hasHighlight": "ann-6"
+    },
+    {
+      "date": "December 16, 2017",
+      "title": "Pentagon confirms AATIP, releases FLIR1",
+      "detail": "NYT publishes bombshell investigation. Pentagon ran a $22M secret UAP program. DoD releases FLIR1 after 13 years. Luis Elizondo resigns AATIP in protest over secrecy.",
+      "tags": [{ "label": "DoD", "type": "official" }, { "label": "Official", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "2019 \u2013 2023",
+      "title": "Congressional hearings & public testimony",
+      "detail": "Fravor testifies under oath. Dietrich on 60 Minutes. Kevin Day speaks publicly. AARO is established. The Nimitz encounter becomes the most cited UAP case in legislative history.",
+      "tags": [{ "label": "Congress", "type": "official" }, { "label": "Multiple", "type": "multi-witness" }],
+      "type": "key"
+    }
+  ],
+
+  "evidence": [
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "SPY-1",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "AN/SPY-1B Radar Tracking",
+      "summary": "Princeton\u2019s AEGIS radar tracked multiple objects at 80,000+ ft descending to sea level in seconds. Radar operator Kevin Day tracked returns over ~2 weeks before the intercept.",
+      "linkText": "\ud83d\udd17 Linked to: FLIR1 Video, Fravor Testimony, 60-Mile Relocation"
+    },
+    {
+      "typeLabel": "Physical Evidence",
+      "badge": "Video",
+      "badgeClass": "badge-official",
+      "cardType": "type-sensor",
+      "title": "FLIR1 Infrared Video",
+      "summary": "76 seconds recorded, 35 publicly released. Zero exhaust plume \u2014 thermodynamically impossible for any known propulsion. Object rotates on longitudinal axis while maintaining trajectory.",
+      "linkText": "\ud83d\udd17 Linked to: SPY-1 Radar, Underwood Testimony, SCU Analysis"
+    },
+    {
+      "typeLabel": "Anomaly",
+      "badge": "Unresolved",
+      "badgeClass": "badge-anomaly",
+      "cardType": "type-evidence",
+      "title": "60-Mile Instant Relocation",
+      "summary": "Object reappears at the fighters\u2019 CAP point \u2014 a pre-assigned coordinate known only to Navy personnel. Implied speed ~46,000 mph. No sonic boom detected.",
+      "linkText": "\ud83d\udd17 Linked to: SPY-1 Radar, CAP Point Awareness"
+    },
+    {
+      "typeLabel": "Anomaly",
+      "badge": "Unresolved",
+      "badgeClass": "badge-anomaly",
+      "cardType": "type-evidence",
+      "title": "Ocean Surface Disturbance",
+      "summary": "Cross-shaped area of churning whitewater the size of a 737. Calm surrounding seas. No submarine or surface vessel detected. Disturbance ceased with Tic Tac departure.",
+      "linkText": "\ud83d\udd17 Linked to: Water Pattern (Shag Harbour), Subsurface Component"
+    }
+  ],
+
+  "witnesses": [
+    {
+      "initials": "DF",
+      "name": "CDR David Fravor",
+      "rank": "CO VFA-41 \"Black Aces\" \u00b7 Ret.",
+      "observed": "Observed the Tic Tac at close range. Attempted to intercept. Object mirrored his descent, then accelerated instantaneously. 18 years experience, 3,500+ flight hours, Top Gun graduate.",
+      "quote": "\u201cIt accelerated like nothing I\u2019ve ever seen.\u201d",
+      "quoteSource": "\u2014 JRE #1361, 2019"
+    },
+    {
+      "initials": "AD",
+      "name": "LCDR Alex Dietrich",
+      "rank": "Wingman \u00b7 VFA-41",
+      "observed": "Observed from higher altitude. Independently corroborated all details \u2014 ocean disturbance, mirroring behavior, instantaneous departure. First female fighter pilot to speak publicly.",
+      "quote": "\u201cI don\u2019t identify it as any kind of aircraft that I know.\u201d",
+      "quoteSource": "\u2014 60 Minutes, May 2021"
+    },
+    {
+      "initials": "KD",
+      "name": "Sr. Chief Kevin Day",
+      "rank": "USS Princeton CIC \u00b7 Radar Operator",
+      "observed": "First to identify anomalous radar returns. Tracked objects over two weeks. Personally vectored Fravor\u2019s flight. Later reported cognitive effects post-encounter. 20+ years Navy, Top Secret clearance.",
+      "quote": null,
+      "quoteSource": null
+    }
+  ],
+
+  "aiAnalysis": [
+    {
+      "aiType": "Pattern Analysis",
+      "title": "Cross-Corpus: Water Disturbance Pattern",
+      "finding": "Water interaction observed in 3 other high-credibility cases: Shag Harbour 1967 (physical traces), Aguadilla 2013 (thermal video), Catalina Channel 1958 (military witnesses). P(coincidence) < 0.3%.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Physics Review",
+      "title": "Acceleration Analysis: 75g \u2013 12,600g",
+      "finding": "SCU estimates 75\u20135,000g based on FLIR1 tracking. Alternative radar calculation yields ~12,600g. Human tolerance: 9g. F-35 structural limit: 13.5g. Orders of magnitude beyond any known technology.",
+      "confidence": "Medium \u2014 Dependent on sensor accuracy",
+      "confidenceClass": "confidence-medium"
+    },
+    {
+      "aiType": "Context Analysis",
+      "title": "13-Year Disclosure Gap",
+      "finding": "Belgian Wave: 20 years to acknowledgment. Tehran 1976: decades via FOIA. Nimitz: 13 years. Pattern suggests deliberate institutional delay, not routine bureaucratic process.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    }
+  ],
+
+  "openQuestions": [
+    { "num": "Q01", "text": "What is in the classified annex of the AARO Historical Report Vol. 1?", "context": "The public report calls Nimitz \"among the most significant unresolved cases\" but the annex remains sealed." },
+    { "num": "Q02", "text": "Where are the original high-resolution FLIR recordings?", "context": "Only a downgraded copy survived. Multiple crew members describe confiscation by unidentified individuals." },
+    { "num": "Q03", "text": "Was the object aware of the fighters\u2019 CAP point?", "context": "It reappeared at a pre-assigned coordinate known only to Navy personnel." },
+    { "num": "Q04", "text": "What caused the ocean surface disturbance?", "context": "Cross-shaped churning whitewater the size of a 737. No submarine detected. Suggests a subsurface component." },
+    { "num": "Q05", "text": "What does USS Louisville\u2019s sonar data show?", "context": "Los Angeles-class submarine was part of the strike group. Sonar data status unknown." }
+  ],
+
+  "resolution": [
+    { "status": "eliminated", "label": "Weather balloon", "detail": "Eliminated. Object tracked at hypersonic speeds. No balloon matches observed flight profile." },
+    { "status": "eliminated", "label": "Conventional aircraft", "detail": "Eliminated. No wings, no exhaust, no IFF transponder. Flight profile exceeds any known airframe." },
+    { "status": "eliminated", "label": "Military drone / UAS", "detail": "Eliminated. No known 2004-era drone matches observed performance." },
+    { "status": "eliminated", "label": "Astronomical object", "detail": "Eliminated. Object at low altitude, hovering and maneuvering. Broad daylight." },
+    { "status": "partial", "label": "Sensor malfunction / radar clutter", "detail": "Partially addressed. SPY-1 team ruled out clutter. Visual confirmation supports physical object." },
+    { "status": "eliminated", "label": "Hoax / fabrication", "detail": "Eliminated. Multiple independent witnesses, government-released video, congressional testimony under oath." },
+    { "status": "open", "label": "Classified US program", "detail": "Not fully eliminated. AARO found \"no evidence\" linking UAP to classified programs. Capabilities exceed known physics." },
+    { "status": "open", "label": "Foreign adversary technology", "detail": "Not fully eliminated. 20 years later no nation has demonstrated remotely comparable capabilities." }
+  ],
+
+  "osint": [
+    { "field": "Location", "status": "verified", "value": "SOCAL OPAREA, ~100mi SW of San Diego. 31.33\u00b0N, 117.17\u00b0W.", "source": "Confirmed via USS Nimitz deployment records, FOIA documents." },
+    { "field": "Weather Conditions", "status": "verified", "value": "Clear skies, calm seas, excellent visibility. No clouds below 25,000 ft.", "source": "NOAA historical weather data, all witness accounts." },
+    { "field": "Military Exercise", "status": "verified", "value": "CSG-11 pre-deployment COMPTUEX/JTFEX exercises confirmed.", "source": "Navy deployment schedule, USS Nimitz cruise book." },
+    { "field": "Witness Credentials", "status": "verified", "value": "Fravor: CO VFA-41, Top Gun grad, 3,500+ hrs. Dietrich: VFA-41. Day: 20+ yrs Navy.", "source": "Navy records, congressional testimony, public interviews." },
+    { "field": "FLIR1 Video Authenticity", "status": "verified", "value": "Officially released by DoD. Metadata consistent with AN/ASQ-228 ATFLIR.", "source": "DoD official release, FOIA confirmation, SCU analysis." },
+    { "field": "Data Confiscation", "status": "partial", "value": "Two crew members describe men arriving by helicopter to collect data.", "source": "Documentary interviews. No official records or chain of custody found." },
+    { "field": "Submarine Sonar Data", "status": "unverified", "value": "USS Louisville (SSN-724) was part of CSG-11. Sonar data status unknown.", "source": "No public records. FOIA not yet filed." }
+  ],
+
+  "evidenceChain": [
+    { "num": 1, "source": "AN/SPY-1B Radar Data", "note": "Original tapes confiscated. Exists now only as verbal testimony.", "strength": "moderate", "strengthLabel": "Moderate \u2014 testimony only" },
+    { "num": 2, "source": "FLIR1 Video (downgraded copy)", "note": "Original confiscated. Downgraded copy survived. Officially released by DoD Dec 2017.", "strength": "strong", "strengthLabel": "Strong \u2014 DoD authenticated" },
+    { "num": 3, "source": "CDR Fravor Testimony", "note": "JRE #1361 (2019), Lex Fridman #122 (2020), Congress (July 2023).", "strength": "strong", "strengthLabel": "Strong \u2014 consistent across 19 years" },
+    { "num": 4, "source": "LCDR Dietrich Testimony", "note": "Independent account. 60 Minutes (May 2021). Corroborates all key details.", "strength": "strong", "strengthLabel": "Strong \u2014 independent witness" },
+    { "num": 5, "source": "Kevin Day Testimony", "note": "Radar operator. Public 2019. Describes 2 weeks of anomalous contacts.", "strength": "strong", "strengthLabel": "Strong \u2014 first-hand, corroborated" },
+    { "num": 6, "source": "Data Confiscation Accounts", "note": "PO Hughes and PO Voorhis. Documentary interviews only.", "strength": "weak", "strengthLabel": "Weak \u2014 no physical evidence" }
+  ],
+
+  "solvabilityFactors": [
+    { "name": "Multiple independent witnesses", "score": "+15", "type": "positive" },
+    { "name": "Official DoD video exists", "score": "+12", "type": "positive" },
+    { "name": "Congressional testimony on record", "score": "+10", "type": "positive" },
+    { "name": "Cross-case pattern matches", "score": "+8", "type": "positive" },
+    { "name": "FOIA avenues unexplored", "score": "+10", "type": "positive" },
+    { "name": "Original sensor data confiscated", "score": "-8", "type": "negative" },
+    { "name": "Key witness silent (Slaight)", "score": "-5", "type": "negative" },
+    { "name": "20-year evidence degradation", "score": "-5", "type": "negative" },
+    { "name": "Submarine data unknown", "score": "+5", "type": "neutral" },
+    { "name": "AARO classified annex sealed", "score": "-3", "type": "negative" }
+  ],
+  "solvabilityScore": 72,
+
+  "nextSteps": [
+    { "priority": "high", "text": "File FOIA for USS Louisville sonar logs (Nov 2004)" },
+    { "priority": "high", "text": "File FOIA for AARO Historical Report classified annex" },
+    { "priority": "medium", "text": "Cross-reference NUFORC database for Nov 2004 SOCAL sightings" },
+    { "priority": "medium", "text": "Locate additional Princeton CIC crew" },
+    { "priority": "medium", "text": "Analyze satellite imagery archives for ocean disturbance" },
+    { "priority": "low", "text": "Contact Jim Slaight (WSO, no public statements)" },
+    { "priority": "low", "text": "Review E-2C Hawkeye crew testimony (VAW-117)" }
+  ],
+
+  "searchDemoResults": [
+    { "type": "reddit", "source": "Reddit \u00b7 r/UFOs", "title": "Frame-by-frame FLIR1 analysis reveals rotation axis anomaly", "snippet": "User /u/SkyWatcher2004 isolates 3 frames showing the object\u2019s rotation changes direction mid-flight \u2014 inconsistent with any ballistic trajectory or known propulsion..." },
+    { "type": "academic", "source": "SCU \u00b7 Scientific Coalition for UAP Studies", "title": "2019 FLIR1 Reconstruction: Estimated acceleration 75g\u20135,400g", "snippet": "Detailed frame-by-frame reconstruction of the FLIR1 footage using calibrated lens parameters, atmospheric correction, and triangulation from known aircraft position..." },
+    { "type": "video", "source": "YouTube \u00b7 Lex Fridman Podcast #122", "title": "David Fravor: Nimitz encounter full testimony (2h14m)", "snippet": "Commander Fravor\u2019s most detailed account. Timestamps: 0:14:22 first visual, 0:31:05 mirroring behavior, 0:45:18 departure speed, 1:12:00 hard drive confiscation..." },
+    { "type": "foia", "source": "FOIA \u00b7 The Black Vault", "title": "AATIP Program Documents \u2014 Nimitz Case References", "snippet": "Collection of declassified documents from the Advanced Aerospace Threat Identification Program. Three memos reference the 2004 Nimitz encounter specifically..." },
+    { "type": "web", "source": "Web \u00b7 The War Zone / The Drive", "title": "Navy Confirms USS Louisville Was Part of Nimitz Strike Group", "snippet": "FOIA response confirms SSN-724 Louisville was operating with CSG-11 during November 2004. Sonar data status: \"responsive records not located\" \u2014 which may indicate classified hold..." }
+  ],
+
+  "achHypotheses": [
+    "Conventional Aircraft",
+    "Drone / UAS",
+    "Atmospheric",
+    "Sensor Error",
+    "Unknown Tech"
+  ],
+  "achEvidence": [
+    { "evidence": "SPY-1 radar tracking (2 weeks)", "ai": ["I", "I", "I", "C", "C"] },
+    { "evidence": "Visual contact (4 pilots)", "ai": ["I", "I", "I", "I", "C"] },
+    { "evidence": "FLIR1 IR video (no exhaust)", "ai": ["I", "I", "N", "N", "C"] },
+    { "evidence": "60-mile relocation (~46,000 mph)", "ai": ["I", "I", "I", "C", "C"] },
+    { "evidence": "No sonic boom", "ai": ["I", "I", "-", "N", "C"] },
+    { "evidence": "Object mirrored pilot", "ai": ["I", "N", "I", "I", "C"] },
+    { "evidence": "Ocean disturbance", "ai": ["I", "I", "N", "-", "C"] },
+    { "evidence": "Data confiscated", "ai": ["-", "-", "-", "-", "C"] }
+  ],
+
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "image",
+      "priority": "high",
+      "status": "open",
+      "title": "FLIR1 Official Video — Still Frame Extraction",
+      "description": "Download the FLIR1 video from NAVAIR FOIA Reading Room. Extract 4 key still frames: (1) first acquisition of Tic Tac, (2) object rotation on longitudinal axis, (3) object centered in frame showing oblong shape, (4) moment of apparent lock loss.",
+      "source_url": "https://www.navair.navy.mil/foia/documents",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Department of Defense / Naval Air Systems Command",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["flir1-acquisition.png", "flir1-rotation.png", "flir1-center.png", "flir1-lock-loss.png"],
+      "notes": "US Government work. No copyright restrictions. The most important images in the entire project."
+    },
+    {
+      "id": "IT-002",
+      "type": "image",
+      "priority": "high",
+      "status": "open",
+      "title": "GIMBAL & GOFAST — Still Frame Extraction",
+      "description": "Download GIMBAL and GOFAST videos from NAVAIR FOIA. Extract 1 representative frame from each. These are USS Roosevelt (Case 006) but released alongside FLIR1 and cross-referenced in this case.",
+      "source_url": "https://www.navair.navy.mil/foia/documents",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Department of Defense / Naval Air Systems Command",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["gimbal-frame.png", "gofast-frame.png"],
+      "notes": "Cross-case reference images. GIMBAL shows rotation. GOFAST shows speed against ocean background."
+    },
+    {
+      "id": "IT-003",
+      "type": "document",
+      "priority": "high",
+      "status": "open",
+      "title": "SCU Forensic Analysis — Key Diagrams",
+      "description": "Extract 3-4 key figures from the 270-page SCU report: trajectory reconstruction, acceleration estimation charts, radar track visualization, and the comparative g-force diagram.",
+      "source_url": "https://www.academia.edu/40212818/A_Forensic_Analysis_of_Navy_Carrier_Strike_Group_Elevens_Encounter_with_an_Anomalous_Aerial_Vehicle",
+      "license": "Academic fair use — research citation",
+      "attribution": "Scientific Coalition for UAP Studies (SCU), 2019",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["scu-trajectory.png", "scu-acceleration.png", "scu-radar-track.png", "scu-gforce-comparison.png"],
+      "notes": "Academic publication by Knuth, Powell, Reali. Cite properly. Peer-reviewed in Entropy (MDPI)."
+    },
+    {
+      "id": "IT-004",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "SOCAL OPAREA Map — Encounter Location",
+      "description": "Create or source a map showing the Southern California Operating Area with the approximate encounter location (~100mi SW of San Diego). Include the positions of USS Nimitz, USS Princeton, and the intercept point.",
+      "source_url": null,
+      "license": "Create original (OpenStreetMap base layer)",
+      "attribution": "Meridian Project / OpenStreetMap contributors",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["socal-oparea-map.png"],
+      "notes": "OpenStreetMap base is CC-BY-SA. Could also use NOAA nautical chart (public domain)."
+    },
+    {
+      "id": "IT-005",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "AN/SPY-1B Radar System — Reference Photo",
+      "description": "Source a photo of the AN/SPY-1B radar arrays on a Ticonderoga-class cruiser. These are the octagonal panels visible on the superstructure. US Navy photos of commissioned ships are public domain.",
+      "source_url": "https://www.navy.mil/Resources/Photo-Gallery/",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Navy",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["spy1b-radar-array.jpg"],
+      "notes": "Any official US Navy photo of USS Princeton or similar Ticonderoga-class cruiser showing the SPY-1 arrays."
+    },
+    {
+      "id": "IT-006",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "F/A-18F Super Hornet — Reference Photo",
+      "description": "Source a US Navy photo of an F/A-18F Super Hornet from VFA-41 'Black Aces' if possible, or any Super Hornet. This is the aircraft type flown by Fravor and Dietrich.",
+      "source_url": "https://www.navy.mil/Resources/Photo-Gallery/",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Navy",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["fa18f-super-hornet.jpg"],
+      "notes": "VFA-41 Black Aces specific livery preferred. Any F/A-18F acceptable."
+    },
+    {
+      "id": "IT-007",
+      "type": "document",
+      "priority": "low",
+      "status": "open",
+      "title": "Fravor Congressional Testimony — Document Scan",
+      "description": "Download Fravor's written statement to the House Oversight Committee (July 26, 2023). Screenshot or scan the first page for display as a document card.",
+      "source_url": "https://oversight.house.gov/wp-content/uploads/2023/07/David-Fravor-Statement-for-House-Oversight-Committee.pdf",
+      "license": "Public Domain — Congressional record",
+      "attribution": "U.S. House Committee on Oversight and Accountability",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["fravor-testimony-page1.png"],
+      "notes": "Congressional testimony is public record. The document itself is part of the official government record."
+    }
+  ]
+}

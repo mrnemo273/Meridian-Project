@@ -1,0 +1,1734 @@
+{
+  "case_id": "CASE-002",
+  "title": "The Phoenix Lights",
+  "subtitle": "Mass Sighting Over Arizona",
+  "date": "1997-03-13",
+  "date_display": "March 13, 1997",
+  "date_range": {
+    "first_sighting": "1997-03-13T19:55:00-07:00",
+    "last_sighting": "1997-03-13T22:30:00-07:00",
+    "recurrence": "1997-03-14"
+  },
+  "location": {
+    "description": "300-mile corridor from Henderson, Nevada through Phoenix, Arizona to the edge of Tucson",
+    "lat": 33.4484,
+    "lng": -112.074,
+    "area": "Southwest United States — Arizona / Nevada"
+  },
+  "duration": {
+    "v_formation_transit": "~90 minutes (7:55 PM – 9:30 PM MST)",
+    "stationary_lights_event": "~2 hours (10:00 PM – 12:00 AM MST)",
+    "total_observation_window": "~4.5 hours"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 72,
+  "credibility_tier": "TIER 2",
+  "status": "investigating",
+  "tags": [
+    "mass-sighting",
+    "civilian",
+    "governor-witness",
+    "pilot-witness",
+    "video-documented",
+    "military-flare-hypothesis",
+    "two-distinct-events",
+    "300-mile-corridor",
+    "operation-snowbird",
+    "contested-explanation"
+  ],
+  "related_case_ids": [
+    "CASE-001",
+    "CASE-003",
+    "CASE-006"
+  ],
+  "event_summary": {
+    "overview": "On the evening of March 13, 1997, between 10,000 and 20,000 witnesses across a 300-mile corridor from Henderson, Nevada through Phoenix, Arizona to the edge of Tucson observed two distinct aerial phenomena. The first event (7:55 PM – ~9:30 PM) involved a massive V-shaped formation of lights — described by many as a solid, mile-wide craft — traveling silently from northwest to southeast across the state. The second event (~10:00 PM) involved a row of bright stationary lights appearing over the Phoenix metropolitan area. The two events are considered distinct phenomena by most investigators. The U.S. Air Force attributed both to Operation Snowbird military exercises — A-10 aircraft in formation and LUU-2B/B illumination flares — but this explanation remains contested by hundreds of witnesses, including the sitting Governor of Arizona, a commercial pilot (Kurt Russell), police officers, and a city councilwoman who interviewed over 700 witnesses.",
+    "weather": "Clear skies over most of Arizona. Good visibility conditions across the Phoenix metropolitan area.",
+    "sea_conditions": null,
+    "military_units": [
+      {
+        "unit": "104th Fighter Squadron, Maryland Air National Guard",
+        "type": "A-10 Thunderbolt II attack aircraft",
+        "role": "Operation Snowbird training — credited by USAF with both the formation overflight and the flare drop at Barry Goldwater Range"
+      },
+      {
+        "unit": "Davis-Monthan Air Force Base",
+        "type": "Host installation for Operation Snowbird",
+        "role": "Staging base for A-10 winter training exercises"
+      },
+      {
+        "unit": "Luke Air Force Base",
+        "type": "USAF installation northwest of Phoenix",
+        "role": "Initially denied any aircraft in the area; delayed months before offering flare explanation. Unconfirmed NUFORC report of F-15C intercept."
+      }
+    ]
+  },
+  "cards": [
+    {
+      "id": "W-001",
+      "type": "witness",
+      "title": "Governor Fife Symington III",
+      "summary": "Sitting Governor of Arizona who initially mocked the incident at a press conference (having an aide dress in an alien costume), then admitted in 2007 that he personally witnessed the V-formation and described it as 'otherworldly.'",
+      "detail": "Governor Fife Symington III was the sitting Governor of Arizona on March 13, 1997. Shortly after the mass sighting, Symington held a press conference where he announced 'they found who was responsible' and produced his chief of staff dressed in an alien costume. This was widely interpreted as an attempt to calm public panic through humor. Ten years later, in 2007, Symington publicly reversed course, admitting he had personally driven to Squaw Peak that night and witnessed a massive delta-shaped craft silently navigating overhead. He described it as 'dramatically large, very distinctive leading edge with some enormous lights.' Symington stated: 'It couldn't have been flares because it was too symmetrical. It had a geometric outline, a constant shape.' He explained his initial mockery as a governor's duty to prevent public panic, but said he could no longer stay silent about what he saw.",
+      "source": {
+        "citation": "CNN commentary (2007); multiple subsequent interviews",
+        "url": "https://www.cnn.com/2007/TECH/science/11/09/simington.ufocommentary/index.html"
+      },
+      "badge": {
+        "label": "Governor",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "A sitting governor who initially covered it up with a joke, then came clean a decade later. That trajectory is more credible than if he'd been shouting about UFOs from day one. The 10-year delay mirrors the Nimitz witnesses."
+        },
+        {
+          "author": "Claude",
+          "text": "The delayed disclosure pattern matches Case 001 (Nimitz witnesses waited 13 years). Symington's dual response — public mockery followed by private acknowledgment — suggests institutional pressure to suppress. His description ('geometric outline, constant shape') contradicts the flare explanation and aligns with the structured-craft hypothesis."
+        }
+      ],
+      "position": {
+        "x": 120,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "witness",
+          "label": "Contradicts flare theory"
+        },
+        {
+          "target_id": "AI-001",
+          "type": "witness",
+          "label": "Supports structured craft"
+        }
+      ]
+    },
+    {
+      "id": "W-002",
+      "type": "witness",
+      "title": "Kurt Russell (Pilot)",
+      "summary": "Actor and licensed pilot who reported the V-shaped formation to Phoenix air traffic control while flying into the airport on the night of March 13, 1997 — unaware until years later that what he reported was the Phoenix Lights.",
+      "detail": "Kurt Russell, an experienced licensed pilot, was flying his son Oliver Hudson to Phoenix to visit his girlfriend on the evening of March 13, 1997. On approach to the airport, Russell observed six lights in a perfectly uniform V-shape over the airfield. He radioed the sighting to air traffic control, who told him there was nothing else in the sky on their radar. Russell thought little of it until approximately six years later, when he watched a television program about the Phoenix Lights and heard his own air traffic control exchange being played back. He then realized he had been the pilot who made the original report. Russell's account is significant because it was documented in real-time via ATC communications — before any media coverage or social contagion could influence his description.",
+      "source": {
+        "citation": "BBC One's The One Show interview (2017); multiple subsequent interviews",
+        "url": "https://www.flyingmag.com/kurt-russell-claims-to-be-pilot-who-reported-phoenix-lights/"
+      },
+      "badge": {
+        "label": "Pilot",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "Russell's account carries unusual evidentiary weight: it was documented in real-time via ATC communication before any media narrative existed. His delayed self-identification (6 years later) eliminates attention-seeking as a motive. As a licensed pilot, his ability to judge altitude, distance, and aircraft characteristics exceeds that of ground-based civilian witnesses."
+        }
+      ],
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-004",
+          "type": "witness",
+          "label": "ATC recording"
+        },
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "Corroborates V-shape"
+        }
+      ]
+    },
+    {
+      "id": "W-003",
+      "type": "witness",
+      "title": "Councilwoman Frances Barwood",
+      "summary": "Phoenix City Councilwoman who launched the only official public investigation into the Phoenix Lights, personally interviewing over 700 witnesses including police officers, pilots, and former military personnel.",
+      "detail": "Frances Emma Barwood was a Phoenix City Councilwoman who became the only elected official (alongside Senator John McCain's office, which requested a formal inquiry) to launch a public investigation into the March 13 sightings. Barwood's office was flooded with calls from concerned citizens, and she personally spoke with over 700 witnesses. The witnesses included police officers, commercial and military pilots, and other credentialed observers. Barwood reported that the descriptions were remarkably consistent: a massive, silent, V-shaped or boomerang-shaped object with multiple lights, moving slowly. Barwood faced significant ridicule from other officials and media for taking the reports seriously, but she maintained that the volume and consistency of credible witness testimony warranted investigation.",
+      "source": {
+        "citation": "Multiple interviews; Phoenix New Times reporting",
+        "url": null
+      },
+      "badge": {
+        "label": "Investigator",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "700 witnesses. Not anonymous internet posts — face-to-face interviews with cops, pilots, and military. And she got ridiculed for it. That tells you something about the social cost of taking this seriously in 1997."
+        }
+      ],
+      "position": {
+        "x": 120,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "AI-003",
+          "type": "witness",
+          "label": "Witness pool data"
+        },
+        {
+          "target_id": "E-002",
+          "type": "witness",
+          "label": "Investigated witness reports"
+        }
+      ]
+    },
+    {
+      "id": "W-004",
+      "type": "witness",
+      "title": "Retired Police Officer (Paulden, AZ)",
+      "summary": "First documented witness report to NUFORC at 8:16 PM — a retired police officer in Paulden, Arizona, who reported a cluster of reddish-orange lights moving south.",
+      "detail": "A retired police officer in Paulden, Arizona, made the first documented report to the National UFO Reporting Center (NUFORC) at 8:16 PM MST on March 13, 1997. He described seeing a cluster of reddish-orange lights arranged in a V-pattern, moving slowly and silently to the south. As a former law enforcement officer, his observation skills and reporting discipline lend credibility to the account. His report preceded the flood of calls that would follow as the formation moved south over Prescott, Prescott Valley, and into the Phoenix metropolitan area.",
+      "source": {
+        "citation": "NUFORC records, Peter Davenport",
+        "url": "https://nuforc.org/phoenix/"
+      },
+      "badge": {
+        "label": "Law Enforcement",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 950
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "witness",
+          "label": "First NUFORC report"
+        }
+      ]
+    },
+    {
+      "id": "W-005",
+      "type": "witness",
+      "title": "Prescott Valley Witnesses",
+      "summary": "Multiple families in Prescott Valley reported a V-shaped formation at approximately 8:17 PM — describing five lights in a very tight pattern that changed from white to reddish-orange as it approached.",
+      "detail": "Around 8:17 PM, witnesses in Prescott Valley, Arizona, observed the V-formation passing overhead. One family described five lights 'in a very tight pattern' that transitioned from white to reddish-orange as the formation drew closer. Witnesses in the Prescott area consistently described the lights as attached to a single enormous structure rather than separate aircraft — noting that stars were occluded as the formation passed overhead, implying a solid object. Prescott is approximately 100 miles north-northwest of Phoenix, establishing the formation's trajectory from the Nevada border southward.",
+      "source": {
+        "citation": "Multiple local news reports; NUFORC records",
+        "url": null
+      },
+      "badge": {
+        "label": "Civilian",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The star-occlusion detail is significant. If witnesses observed that stars disappeared behind the formation as it passed, this implies a solid object between the lights — not separate aircraft in formation. This observation, if accurate, is the single strongest counter to the A-10 formation hypothesis."
+        }
+      ],
+      "position": {
+        "x": 120,
+        "y": 1200
+      },
+      "connections": [
+        {
+          "target_id": "AI-001",
+          "type": "witness",
+          "label": "Star occlusion evidence"
+        },
+        {
+          "target_id": "E-001",
+          "type": "witness",
+          "label": "Contradicts aircraft formation"
+        }
+      ]
+    },
+    {
+      "id": "W-006",
+      "type": "witness",
+      "title": "Mike Krzyston (Videographer)",
+      "summary": "Resident of Moon Valley, Phoenix, who captured the most widely circulated video footage of the second event (10 PM stationary lights) from his home.",
+      "detail": "Mike Krzyston filmed the Phoenix Lights from his home in Moon Valley at approximately 10:00 PM on March 13, 1997. His footage became the most widely circulated video of the event and was analyzed by multiple organizations. The Discovery Channel commissioned an analysis by Dr. Leonid Rudin of Cognitech, who compared daytime and nighttime shots frame by frame and concluded the lights were consistent with flares disappearing behind the Sierra Estrella mountain range. However, a separate analysis by image analyst Jim Dilettoso measured brightness across 6,000 frames and found it remained constant — unlike flares, which oscillate in brightness — and also found significant color-content differences between the Phoenix Lights and known flare signatures.",
+      "source": {
+        "citation": "KGUN9 interview (2022); Discovery Channel analysis",
+        "url": "https://www.kgun9.com/news/state/man-behind-famous-phoenix-lights-footage-still-mystified-25-years-later"
+      },
+      "badge": {
+        "label": "Videographer",
+        "style": "witness"
+      },
+      "visual": "video",
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Two analysts looked at the same footage and reached opposite conclusions. Cognitech says flares. Dilettoso says NOT flares based on brightness consistency. This is exactly why we need rigorous, replicable analysis — not competing sound bites."
+        },
+        {
+          "author": "Claude",
+          "text": "The contradictory analyses of Krzyston's footage exemplify the evidentiary challenge of this case. Rudin's mountain-occlusion analysis is geometrically sound. Dilettoso's brightness-constancy finding is empirically interesting but his methodology has been questioned. Both analyses should be weighted, neither is conclusive alone."
+        }
+      ],
+      "position": {
+        "x": 580,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-003",
+          "type": "witness",
+          "label": "Filmed"
+        },
+        {
+          "target_id": "AI-002",
+          "type": "witness",
+          "label": "Footage analyzed"
+        }
+      ]
+    },
+    {
+      "id": "S-001",
+      "type": "sensor",
+      "title": "NUFORC Reporting System",
+      "summary": "The National UFO Reporting Center, directed by Peter Davenport, received and cataloged hundreds of reports beginning at 8:16 PM MST. NUFORC served as the primary centralized reporting mechanism for the event.",
+      "detail": "Peter Davenport's National UFO Reporting Center received the first call at 8:16 PM from a retired police officer in Paulden, Arizona. Over the following hours and days, hundreds of reports poured in from witnesses across the 300-mile corridor. NUFORC's records provide the most comprehensive temporal and geographic mapping of the event, establishing the formation's trajectory from northwest to southeast. Davenport has publicly stated he considers the Phoenix Lights to be a genuine UAP event. NUFORC also received an unverified call approximately seven hours after the incident from someone identifying himself as an airman at Luke Air Force Base, claiming two F-15C fighters had been scrambled and that their radar had gone to 'white noise' upon approach. This claim has never been corroborated.",
+      "source": {
+        "citation": "NUFORC records; Peter Davenport",
+        "url": "https://nuforc.org/phoenix/"
+      },
+      "badge": {
+        "label": "Reporting Center",
+        "style": "sensor"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The unverified Luke AFB intercept report is tantalizing but unsubstantiated. NUFORC was unable to confirm it despite efforts. If true, it would represent military sensor engagement with the V-formation — dramatically elevating the case. If false, it's noise. Flagged as unverified."
+        }
+      ],
+      "position": {
+        "x": 580,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-004",
+          "type": "evidence",
+          "label": "First report received"
+        },
+        {
+          "target_id": "E-002",
+          "type": "evidence",
+          "label": "Report database"
+        }
+      ]
+    },
+    {
+      "id": "E-001",
+      "type": "evidence",
+      "title": "Operation Snowbird — Official Explanation",
+      "summary": "The USAF attributed both events to Operation Snowbird exercises: A-10 Thunderbolt II aircraft in V-formation (Event 1) and LUU-2B/B illumination flares dropped over Barry Goldwater Range (Event 2).",
+      "detail": "The official U.S. Air Force explanation, offered months after the event, attributes both Phoenix Lights phenomena to Operation Snowbird — a winter pilot training program operated by the Air National Guard out of Davis-Monthan Air Force Base in Tucson. The first event (V-formation) is attributed to five A-10 Thunderbolt II jets from the 104th Fighter Squadron, Maryland Air National Guard, flying in formation along an assigned air traffic corridor. The second event (stationary lights at 10 PM) is attributed to LUU-2B/B illumination flares dropped by a separate flight of A-10 aircraft conducting exercises at the Barry Goldwater Range in southwest Arizona. The flares would have been visible from Phoenix at a range of 50-70 miles. Critics note: (1) Luke AFB initially denied any military aircraft in the area; (2) The explanation took months to emerge; (3) LUU-2B/B flares burn for approximately 5 minutes and oscillate in brightness, while witnesses reported steady lights lasting much longer; (4) A-10s at high altitude would not occlude stars or appear as a single massive structure.",
+      "source": {
+        "citation": "U.S. Air Force public affairs; Maryland ANG history (2000); Arizona Republic reporting (July 1997)",
+        "url": null
+      },
+      "badge": {
+        "label": "Official Explanation",
+        "style": "official"
+      },
+      "visual": "document-scan",
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Months of silence, then 'oh it was flares.' The delay is the tell. If they knew immediately, why not say so? And the first event — five A-10s looking like a mile-wide solid craft? From what altitude? At what distance? The geometry doesn't work for most witness positions."
+        },
+        {
+          "author": "Claude",
+          "text": "The delayed official response is a pattern seen in other military UAP cases. The flare explanation for Event 2 has some support (Cognitech analysis, geometric line-of-sight to Barry Goldwater Range). The A-10 formation explanation for Event 1 is weaker — it requires witnesses to misperceive five separate aircraft as a solid, mile-wide structure. The star-occlusion testimony from multiple independent witnesses is particularly difficult to reconcile with the formation-flight hypothesis."
+        }
+      ],
+      "position": {
+        "x": 580,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "AI-001",
+          "type": "evidence",
+          "label": "Contested by"
+        },
+        {
+          "target_id": "AI-002",
+          "type": "evidence",
+          "label": "Partially supported by"
+        },
+        {
+          "target_id": "E-003",
+          "type": "evidence",
+          "label": "Flares filmed by"
+        }
+      ]
+    },
+    {
+      "id": "E-002",
+      "type": "evidence",
+      "title": "NUFORC Witness Database (700+ Reports)",
+      "summary": "Over 700 first-person witness reports collected through NUFORC and Councilwoman Frances Barwood's investigation, providing geographic and temporal mapping of the formation's 300-mile transit.",
+      "detail": "The combined witness database from NUFORC reports and Frances Barwood's personal interviews totals over 700 first-person accounts. The reports span from Henderson, Nevada (7:55 PM) through Paulden (8:16 PM), Prescott/Prescott Valley (8:17 PM), Phoenix metro area (8:30-9:00 PM), and toward Tucson (~9:30 PM). Witnesses include a retired police officer, commercial pilots, military veterans, a state governor, a city councilwoman, and hundreds of ordinary citizens. The remarkable consistency of descriptions — massive, silent, V-shaped, with multiple lights — across independent witnesses separated by up to 300 miles represents strong circumstantial evidence for a single coherent phenomenon traversing the state. The witness pool includes credentialed observers (pilots, police, military) whose professional training makes them less susceptible to misidentification.",
+      "source": {
+        "citation": "NUFORC records; Frances Barwood interviews; multiple media compilations",
+        "url": null
+      },
+      "badge": {
+        "label": "Witness Database",
+        "style": "official"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1040,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "W-003",
+          "type": "evidence",
+          "label": "Compiled by"
+        },
+        {
+          "target_id": "S-001",
+          "type": "evidence",
+          "label": "Documented by"
+        }
+      ]
+    },
+    {
+      "id": "E-003",
+      "type": "media",
+      "title": "Krzyston Video Footage",
+      "summary": "The most widely analyzed video of the Phoenix Lights, filmed by Mike Krzyston from Moon Valley at approximately 10:00 PM. Subject of competing forensic analyses with contradictory conclusions.",
+      "detail": "Mike Krzyston's video, filmed from his Moon Valley home, captured the second event — the row of bright lights appearing over the Phoenix metropolitan area at approximately 10:00 PM. The footage was analyzed by two separate teams with contradictory findings. Dr. Leonid Rudin of Cognitech, commissioned by the Discovery Channel, compared daytime and nighttime shots frame by frame and concluded the lights were consistent with illumination flares descending behind the Sierra Estrella mountain range — appearing to 'wink out' as they dropped below the ridgeline. Separately, image analyst Jim Dilettoso ran brightness analysis across approximately 6,000 frames and found the light intensity remained constant (unlike flares, which oscillate) and identified color-content differences between the Phoenix Lights and known flare signatures. The footage remains a key point of contention between skeptical and anomalous interpretations of Event 2.",
+      "source": {
+        "citation": "Mike Krzyston; Cognitech analysis (Dr. Rudin); Jim Dilettoso analysis",
+        "url": null
+      },
+      "badge": {
+        "label": "Video Evidence",
+        "style": "sensor"
+      },
+      "visual": "video",
+      "annotations": [],
+      "position": {
+        "x": 1040,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-006",
+          "type": "witness",
+          "label": "Filmed by"
+        },
+        {
+          "target_id": "AI-002",
+          "type": "evidence",
+          "label": "Subject of analysis"
+        },
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Contested interpretation"
+        }
+      ]
+    },
+    {
+      "id": "E-004",
+      "type": "evidence",
+      "title": "Air Traffic Control Recording (Kurt Russell)",
+      "summary": "ATC communication from Kurt Russell reporting the V-formation while on approach to Phoenix — a real-time, pre-media-narrative documentation of the sighting by a trained pilot.",
+      "detail": "Kurt Russell's radio call to Phoenix air traffic control on the evening of March 13, 1997, constitutes the earliest real-time documentation of the V-formation by a trained observer. As a licensed pilot on approach to the airport, Russell reported six lights in a uniform V-shape. ATC responded that they showed nothing else in the sky. This exchange was recorded and later aired on television, which is how Russell himself realized (approximately six years later) that he had been the reporting pilot. The recording is significant because it predates any media coverage, social media amplification, or witness contamination — Russell was simply reporting what he saw to ATC as a pilot is trained to do.",
+      "source": {
+        "citation": "ATC recording; Kurt Russell interviews (2017+)",
+        "url": null
+      },
+      "badge": {
+        "label": "ATC Recording",
+        "style": "sensor"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Real-time ATC recording from a pilot who didn't even know what he'd seen for SIX YEARS. This is about as clean as witness evidence gets — no agenda, no narrative, just a pilot doing his job."
+        }
+      ],
+      "position": {
+        "x": 1040,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "W-002",
+          "type": "witness",
+          "label": "Reported by"
+        },
+        {
+          "target_id": "AI-003",
+          "type": "evidence",
+          "label": "Credibility assessment"
+        }
+      ]
+    },
+    {
+      "id": "E-005",
+      "type": "evidence",
+      "title": "Erased FAA Radar Records",
+      "summary": "FAA radar data from the night of March 13, 1997 was erased after the standard two-week retention period — before any formal investigation could request it.",
+      "detail": "FAA radar records from the night of March 13, 1997, which could have provided definitive data on what was in the sky over Arizona, were erased after the standard two-week data retention period. By the time formal investigation requests were made, the data no longer existed. This represents the single most significant evidentiary gap in the case. Had the radar data been preserved, it could have conclusively confirmed or denied the presence of: (1) the V-formation as a distinct large object vs. five separate aircraft, (2) the altitude, speed, and trajectory of whatever was observed, (3) the presence or absence of military aircraft at the times and locations in question. The loss of this data means the case relies almost entirely on witness testimony and limited video evidence.",
+      "source": {
+        "citation": "FAA data retention policy; investigator reports",
+        "url": null
+      },
+      "badge": {
+        "label": "Data Gap",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "The radar data was just... gone. Two-week retention for one of the biggest mass sightings in US history. Nobody thought to flag it? Nobody pulled it? This is either bureaucratic incompetence or something else."
+        },
+        {
+          "author": "Claude",
+          "text": "The erasure of FAA radar data follows standard retention policy and is not evidence of cover-up. However, the failure of any official body to request preservation of this data during a widely-publicized mass sighting is notable. Compare with Case 001 (Nimitz) where data was actively confiscated — here, data was simply allowed to expire. The effect is the same: critical sensor data is unavailable for analysis."
+        }
+      ],
+      "position": {
+        "x": 1500,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "AI-006",
+          "type": "evidence",
+          "label": "Key data gap"
+        },
+        {
+          "target_id": "Q-001",
+          "type": "evidence",
+          "label": "Raises question"
+        }
+      ]
+    },
+    {
+      "id": "E-006",
+      "type": "evidence",
+      "title": "Symington Press Conference / Cover-Up Admission",
+      "summary": "Governor Symington's 1997 press conference (alien costume joke) followed by his 2007 admission constitutes evidence of institutional pressure to suppress public UAP discussion.",
+      "detail": "Governor Symington's two-stage response to the Phoenix Lights — mockery in 1997, admission in 2007 — provides a case study in institutional response to mass UAP sightings. In 1997, as Governor, Symington held a press conference with his chief of staff in an alien costume, deflecting public concern with humor. In 2007, Symington admitted this was a deliberate strategy to 'avert public panic' and revealed he had actually witnessed the phenomenon himself. He described it as 'otherworldly' and inconsistent with flares or conventional aircraft. This sequence suggests: (1) institutional pressure exists on elected officials to suppress UAP discussion, (2) the social cost of taking sightings seriously was high even for a sitting governor, (3) the 10-year delay between observation and disclosure mirrors patterns seen in military UAP cases.",
+      "source": {
+        "citation": "CNN (2007); Arizona Republic; Symington's website fifesymington.com",
+        "url": "https://www.fifesymington.com/former-arizona-governor-now-admits-seeing-ufo/"
+      },
+      "badge": {
+        "label": "Institutional Response",
+        "style": "official"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1500,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "Subject"
+        },
+        {
+          "target_id": "AI-004",
+          "type": "evidence",
+          "label": "Delayed disclosure pattern"
+        }
+      ]
+    },
+    {
+      "id": "AI-001",
+      "type": "ai-finding",
+      "title": "Two-Event Decomposition Analysis",
+      "summary": "The Phoenix Lights consist of two distinct phenomena that must be analyzed separately. Event 1 (V-formation, 7:55-9:30 PM) and Event 2 (stationary lights, ~10:00 PM) have different evidence profiles, different witness descriptions, and potentially different explanations. Conflating them weakens analysis of both.",
+      "detail": "Critical analytical finding: The Phoenix Lights incident comprises two temporally and phenomenologically distinct events that are frequently conflated in media coverage, undermining rigorous analysis. Event 1 (V-Formation, 7:55–~9:30 PM): A massive V-shaped formation traversed 300 miles from Nevada to south of Phoenix. Witnesses describe a solid, mile-wide structure. Star-occlusion reported. No video of this event exists. Official explanation: five A-10 aircraft in formation. Event 2 (Stationary Lights, ~10:00 PM): A row of bright lights appeared over the Phoenix area for an extended period. Multiple videos exist. Official explanation: LUU-2B/B illumination flares at Barry Goldwater Range. The evidentiary strength of each event differs dramatically: Event 1 has the strongest witness testimony (governor, pilot, 700+ reports) but no hard sensor data. Event 2 has video evidence but a more plausible conventional explanation. Treating them as a single 'Phoenix Lights' event obscures these distinctions.",
+      "source": {
+        "citation": "Structured decomposition of temporal, geographic, and phenomenological evidence from all available sources.",
+        "url": null
+      },
+      "badge": {
+        "label": "analytical_framework",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1500,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "ai",
+          "label": "Analyzes"
+        },
+        {
+          "target_id": "E-003",
+          "type": "ai",
+          "label": "Analyzes"
+        },
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-002",
+      "type": "ai-finding",
+      "title": "Video Evidence Assessment: Flare vs. Anomalous",
+      "summary": "The Krzyston footage of Event 2 has been subjected to two competing forensic analyses. Cognitech's mountain-occlusion model supports the flare explanation. Dilettoso's brightness-constancy finding challenges it. Neither analysis is conclusive.",
+      "detail": "Two forensic analyses of the Krzyston video reach opposing conclusions. Dr. Leonid Rudin (Cognitech), commissioned by Discovery Channel: matched daytime/nighttime frames and demonstrated that the lights' disappearance sequence is consistent with flares dropping behind the Sierra Estrella mountain range. This geometric analysis is methodologically sound. Jim Dilettoso (independent analyst): measured brightness across ~6,000 frames, finding constant intensity (flares oscillate) and spectral differences from known flare signatures. However, Dilettoso's methodology has been questioned, and his conclusions have not been independently replicated. Assessment: The flare explanation for Event 2 is more credible than the A-10 formation explanation for Event 1. The mountain-occlusion geometry works. The brightness-constancy counterargument is interesting but insufficient to overturn the flare hypothesis without replication. Event 2 credibility score: 45/100 as anomalous (more likely conventional). Event 1 credibility score: 78/100 as anomalous (conventional explanation strained).",
+      "source": {
+        "citation": "Comparative analysis of Cognitech and Dilettoso forensic reports. Methodology assessment based on replicability and peer review status.",
+        "url": null
+      },
+      "badge": {
+        "label": "evidence_assessment",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1960,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-003",
+          "type": "ai",
+          "label": "Analyzes"
+        },
+        {
+          "target_id": "W-006",
+          "type": "ai",
+          "label": "Footage source"
+        }
+      ]
+    },
+    {
+      "id": "AI-003",
+      "type": "ai-finding",
+      "title": "Witness Credibility Matrix",
+      "summary": "The Phoenix Lights case features an exceptionally large and diverse witness pool. Key credentialed witnesses include a sitting state governor (Symington), a licensed pilot with real-time ATC documentation (Russell), a retired police officer (first NUFORC report), and 700+ witnesses interviewed by an elected official (Barwood).",
+      "detail": "Witness credibility assessment across the Phoenix Lights case: TIER 1 (Highest credibility): Kurt Russell — licensed pilot, real-time ATC documentation, delayed self-identification (no attention-seeking motive), trained observer. Governor Fife Symington — sitting governor, delayed admission (10 years), institutional pressure documented, personal reputation at stake in admission. TIER 2 (High credibility): Retired police officer (Paulden) — first NUFORC report, trained observer, documented in real-time. Frances Barwood — not a direct witness but an investigator who interviewed 700+ witnesses and faced career consequences. Multiple unnamed pilots and former military among Barwood's 700 interviewees. TIER 3 (Standard civilian credibility): Thousands of civilian witnesses across the 300-mile corridor. Consistent descriptions strengthen collective reliability but individual accounts are harder to verify. Overall assessment: The witness pool's strength is its size and diversity, not individual sensor-quality evidence. Compared to Case 001 (Nimitz), the Phoenix Lights has vastly more witnesses but no military sensor data to corroborate their testimony. The case's credibility rests primarily on the statistical improbability that 10,000+ independent observers all misidentified the same conventional phenomenon.",
+      "source": {
+        "citation": "Structured credibility assessment examining: professional qualifications, documentation quality, potential motivations, consistency across independent witnesses, and social cost of testimony.",
+        "url": null
+      },
+      "badge": {
+        "label": "credibility_assessment",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1960,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Assesses"
+        },
+        {
+          "target_id": "W-002",
+          "type": "ai",
+          "label": "Assesses"
+        },
+        {
+          "target_id": "W-003",
+          "type": "ai",
+          "label": "Assesses"
+        },
+        {
+          "target_id": "W-004",
+          "type": "ai",
+          "label": "Assesses"
+        }
+      ]
+    },
+    {
+      "id": "AI-004",
+      "type": "ai-finding",
+      "title": "Delayed Disclosure Pattern — Cross-Case",
+      "summary": "Symington's 10-year delay between witnessing the Phoenix Lights and publicly admitting it matches a cross-case pattern of delayed disclosure in UAP cases: Nimitz witnesses (13 years), Dietrich (17 years), Belgian Wave military sources (decades). The pattern suggests institutional or social suppression mechanisms.",
+      "detail": "Governor Symington's 10-year delay between his 1997 observation and 2007 admission is not an isolated data point. Cross-case analysis reveals a consistent pattern: CDR David Fravor (Nimitz) — 13-year delay (2004→2017), spoke only when approached by NYT. LCDR Alex Dietrich (Nimitz) — 17-year delay (2004→2021), waited until 60 Minutes. Symington (Phoenix Lights) — 10-year delay (1997→2007), motivated by accumulated regret. Belgian Air Force officials — spoke decades after the 1989-90 wave. The consistency of this pattern across independent cases, witnesses, and countries suggests a systemic mechanism — whether institutional pressure, career risk, social stigma, or some combination — that suppresses timely disclosure of UAP observations by credible witnesses. The pattern also implies there may be many more undisclosed observations by credible witnesses who have not yet reached their disclosure threshold.",
+      "source": {
+        "citation": "Cross-case temporal analysis of disclosure timing for credentialed UAP witnesses.",
+        "url": null
+      },
+      "badge": {
+        "label": "cross_reference",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1960,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Pattern match"
+        },
+        {
+          "target_id": "E-006",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-005",
+      "type": "ai-finding",
+      "title": "Event 1: A-10 Formation Hypothesis — Stress Test",
+      "summary": "Systematic evaluation of the official A-10 formation explanation for Event 1. The hypothesis explains some observations (V-shape, trajectory) but fails to account for others (star occlusion, perceived size, silence at reported altitude, lack of navigation lights).",
+      "detail": "Stress-testing the official explanation: five A-10 jets from the 104th Fighter Squadron flying in V-formation. SUPPORTS the hypothesis: (1) V-shaped pattern matches A-10 formation geometry; (2) Southeast trajectory matches Davis-Monthan AFB approach corridor; (3) The 104th FS was confirmed to be conducting Operation Snowbird exercises. CONTRADICTS the hypothesis: (1) Star occlusion — multiple independent witnesses reported stars disappearing behind the formation, implying a solid object. Five separate A-10s at altitude would not occlude stars. (2) Perceived size — witnesses consistently described a 'mile-wide' structure. A-10 formation spacing at altitude would not create this impression from ground level. (3) Silence — A-10s are powered by twin General Electric TF34 turbofans. While quiet for a military jet, five A-10s at any altitude low enough to appear as a cohesive structure would produce audible engine noise. Witnesses consistently report silence. (4) No navigation lights — A-10s flying VFR at night would display standard FAA navigation lights (red/green wingtip, white tail). Witnesses describe only amber/reddish-orange lights with no standard aviation lighting. (5) Speed — witnesses describe slow, deliberate movement inconsistent with A-10 transit speed. Assessment: The A-10 hypothesis cannot fully explain Event 1 testimony without assuming widespread, correlated witness error across 300 miles.",
+      "source": {
+        "citation": "Systematic comparison of A-10 Thunderbolt II flight characteristics against witness testimony. A-10 specifications from manufacturer data. Witness accounts from NUFORC database and Barwood interviews.",
+        "url": null
+      },
+      "badge": {
+        "label": "hypothesis_test",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2420,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "ai",
+          "label": "Tests"
+        },
+        {
+          "target_id": "W-005",
+          "type": "ai",
+          "label": "Contradicted by"
+        },
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Contradicted by"
+        }
+      ]
+    },
+    {
+      "id": "AI-006",
+      "type": "ai-finding",
+      "title": "Missing Data Inventory",
+      "summary": "Critical data gaps that, if filled, could resolve the case: (1) FAA radar data — erased; (2) Luke AFB scramble records — denied but unverified; (3) Operation Snowbird flight logs — not publicly released; (4) Additional video of Event 1 (V-formation) — none known to exist.",
+      "detail": "Critical data gaps in the Phoenix Lights case: (1) FAA radar data — erased after standard 2-week retention period. This is the single most consequential loss. Radar data could definitively show whether the V-formation was five separate contacts (A-10s) or a single large return. (2) Luke AFB scramble records — Luke initially denied any aircraft activity. An unverified NUFORC report claims F-15Cs were scrambled. If flight records exist, they could confirm or deny military engagement with Event 1. (3) Operation Snowbird flight logs — the specific flight logs for the 104th Fighter Squadron on March 13, 1997, have not been made publicly available. These would show exact departure times, routes, altitudes, and formation configurations. (4) Event 1 video — remarkably, no video of the V-formation transit has surfaced. All known footage is of Event 2 (10 PM stationary lights). Video of Event 1 would be transformative. (5) ATC recordings beyond Russell — ATC communications from other aircraft in the corridor during Event 1 may exist in FAA archives. (6) Military radar data — any military radar installations tracking the Phoenix airspace on March 13 would have data, though military radar retention policies differ from FAA.",
+      "source": {
+        "citation": "Systematic inventory of expected data sources for a mass aerial sighting, cross-referenced with publicly available data.",
+        "url": null
+      },
+      "badge": {
+        "label": "data_gap",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2420,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-005",
+          "type": "ai",
+          "label": "Primary gap"
+        },
+        {
+          "target_id": "S-001",
+          "type": "ai",
+          "label": "Partial record"
+        }
+      ]
+    },
+    {
+      "id": "Q-001",
+      "type": "anomaly",
+      "title": "Why were FAA radar records not preserved?",
+      "summary": "Why were FAA radar records not preserved?",
+      "detail": "The Phoenix Lights was one of the largest mass sightings in U.S. history, generating widespread media coverage and thousands of witness reports. Despite this, FAA radar data for the Phoenix area on March 13, 1997 was allowed to expire under the standard two-week retention policy. No official body requested preservation of this data during the window when it was available. Was this bureaucratic inertia, or was there a deliberate choice not to preserve?",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "critical",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2420,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-005",
+          "type": "evidence",
+          "label": "Related to"
+        }
+      ]
+    },
+    {
+      "id": "Q-002",
+      "type": "anomaly",
+      "title": "Were fighters scrambled from Luke AFB?",
+      "summary": "Were fighters scrambled from Luke AFB?",
+      "detail": "An unverified NUFORC report from a self-identified Luke AFB airman claims two F-15C fighters were scrambled to intercept the V-formation, and that their radar went to 'white noise' upon approach. Luke AFB officially denied any aircraft activity. This claim has never been corroborated but also has never been conclusively debunked. If true, it would represent military sensor engagement with Event 1 and dramatically change the evidence profile of the case.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "high",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "S-001",
+          "type": "evidence",
+          "label": "Unverified report"
+        }
+      ]
+    },
+    {
+      "id": "Q-003",
+      "type": "anomaly",
+      "title": "Where are the Operation Snowbird flight logs?",
+      "summary": "Where are the Operation Snowbird flight logs?",
+      "detail": "The specific flight logs for the 104th Fighter Squadron on March 13, 1997, have not been publicly released. These logs would document exact departure times, flight paths, altitudes, formation configurations, and any flare drops. If the A-10 formation and flare explanations are accurate, the flight logs would corroborate them precisely. The absence of this corroborating documentation is notable.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "high",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Would validate"
+        }
+      ]
+    },
+    {
+      "id": "Q-004",
+      "type": "anomaly",
+      "title": "Why did Luke AFB initially deny any aircraft activity?",
+      "summary": "Why did Luke AFB initially deny any aircraft activity?",
+      "detail": "Officials at Luke Air Force Base initially stated they had no aircraft in the area on the night of March 13, 1997. It took months before the military offered the Operation Snowbird / flare explanation. If the explanation was straightforward military exercises, why the initial denial and months-long delay? This response pattern — initial denial followed by delayed conventional explanation — appears in other military UAP cases and erodes public trust in official statements.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "medium",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "AI-004",
+          "type": "evidence",
+          "label": "Pattern match"
+        }
+      ]
+    },
+    {
+      "id": "Q-005",
+      "type": "anomaly",
+      "title": "Does video of Event 1 (V-formation) exist?",
+      "summary": "Does video of Event 1 (V-formation) exist?",
+      "detail": "All known video footage of the Phoenix Lights captures Event 2 (the 10 PM stationary lights). No video of Event 1 — the massive V-formation that traversed 300 miles across Arizona between 7:55 and 9:30 PM — has ever surfaced. Given that thousands of people witnessed Event 1, the absence of video is puzzling. In 1997, camcorders were common but not ubiquitous; the V-formation appeared without warning and transited relatively quickly. Still, the lack of any recorded footage of Event 1 is a significant evidentiary gap.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "medium",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 950
+      },
+      "connections": [
+        {
+          "target_id": "AI-006",
+          "type": "evidence",
+          "label": "Data gap"
+        }
+      ]
+    },
+    {
+      "id": "HN-001",
+      "type": "note",
+      "title": "Two Events, One Name — That's the Problem",
+      "summary": "Everyone talks about 'the Phoenix Lights' like it's one thing. It's two.",
+      "detail": "Everyone talks about 'the Phoenix Lights' like it's one thing. It's two completely different events on the same night. The V-formation from 8-9:30 PM — massive, structured, silent, 300 miles, thousands of witnesses — and the stationary lights at 10 PM that got filmed. The military explained the 10 PM lights as flares, and most people stopped asking questions. But the V-formation is the real mystery. No video. No radar. Just 700+ consistent witness accounts from cops, pilots, and a governor. We need to keep these separate or we'll never think clearly about either one.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Everyone talks about 'the Phoenix Lights' like it's one thing. It's two completely different events on the same night. The V-formation from 8-9:30 PM — massive, structured, silent, 300 miles, thousands of witnesses — and the stationary lights at 10 PM that got filmed. The military explained the 10 PM lights as flares, and most people stopped asking questions. But the V-formation is the real mystery."
+        }
+      ],
+      "position": {
+        "x": 350,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "AI-001",
+          "type": "witness",
+          "label": "Aligns with"
+        }
+      ]
+    },
+    {
+      "id": "HN-002",
+      "type": "note",
+      "title": "The Star Occlusion Question",
+      "summary": "If witnesses saw stars disappear behind the formation, that changes everything.",
+      "detail": "If witnesses saw stars disappear behind the formation as it passed overhead, that's not five separate A-10s. That's a solid object. Multiple witnesses in Prescott reported exactly this — stars winking out and reappearing as the V-shape moved across the sky. This is the single most important detail in the entire case. If it's accurate, the A-10 formation hypothesis collapses. But it's eyewitness testimony about subtle visual details at night, so how reliable is it? This needs formal study.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "If witnesses saw stars disappear behind the formation, that changes everything. That's not five separate A-10s. That's a solid object. Multiple witnesses in Prescott reported exactly this. This is the single most important detail in the entire case."
+        }
+      ],
+      "position": {
+        "x": 350,
+        "y": 1100
+      },
+      "connections": [
+        {
+          "target_id": "W-005",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "AI-005",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "HN-003",
+      "type": "note",
+      "title": "Nimitz vs. Phoenix — Opposite Evidentiary Profiles",
+      "summary": "Nimitz has incredible sensor data but few witnesses. Phoenix Lights has 10,000+ witnesses but almost no sensor data.",
+      "detail": "Nimitz has incredible sensor data but few witnesses. Phoenix Lights has 10,000+ witnesses but almost no sensor data. They're almost mirror images of each other as evidence problems. Nimitz: SPY-1 radar, ATFLIR video, multiple independent sensors — but only ~10 direct witnesses. Phoenix: a sitting governor, a professional pilot with ATC recording, 700+ interviewed witnesses — but no radar, no military sensor data, and the only video is of the less-interesting Event 2. If you could combine the evidence sets from both cases, you'd have an airtight file. Separately, each has a gaping hole the other fills.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Nimitz has incredible sensor data but few witnesses. Phoenix Lights has 10,000+ witnesses but almost no sensor data. They're almost mirror images as evidence problems. If you could combine both evidence sets, you'd have an airtight file."
+        }
+      ],
+      "position": {
+        "x": 1730,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "AI-003",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "HN-004",
+      "type": "note",
+      "title": "FOIA To-Do List",
+      "summary": "Need to file for: (1) Operation Snowbird flight logs for March 13, 1997.",
+      "detail": "Need to file for: (1) Operation Snowbird flight logs for March 13, 1997 — specifically the 104th Fighter Squadron sortie records. (2) Luke AFB incident logs for March 13, 1997 — any scramble orders, alert status changes. (3) FAA facility records for Phoenix TRACON — even if the radar data is gone, there may be facility logs noting the volume of calls or any coordination with military. (4) Any surviving ATC recordings beyond Russell's call. (5) The Maryland ANG after-action report referenced in their 2000 unit history. Some of these will be dead ends but the denials and GLOMAR responses are data too.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Need to file for: (1) Operation Snowbird flight logs for March 13, 1997. (2) Luke AFB incident logs. (3) FAA facility records for Phoenix TRACON. (4) ATC recordings. (5) Maryland ANG after-action report. The denials and GLOMAR responses are data too."
+        }
+      ],
+      "position": {
+        "x": 2190,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "Q-003",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "Q-002",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "E-005",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "AN-001",
+      "type": "note",
+      "title": "Mass Sighting Evidentiary Value",
+      "summary": "The Phoenix Lights represents a natural experiment in mass observation. When 10,000+ independent observers report the same phenomenon with consistent descriptions, the probability of universal misidentification approaches zero — even without sensor corroboration.",
+      "detail": "The Phoenix Lights represents a natural experiment in mass observation. When 10,000+ independent observers report the same phenomenon with consistent descriptions, the probability of universal misidentification approaches zero — even without sensor corroboration. Statistical analysis of witness reliability: if each individual witness has a 90% chance of correctly identifying whether an object is 'conventional aircraft' vs. 'something anomalous,' then the probability that ALL 10,000+ witnesses are simultaneously wrong is astronomically small (0.1^10000). Even with generous error margins, the sheer volume of consistent testimony constitutes strong probabilistic evidence that something genuinely unusual was observed. However, this analysis assumes independence of observations. Social contagion, media amplification, and the tendency to conform descriptions post-event can reduce effective independence. For Event 1, which occurred in real-time across 300 miles before any media coverage, the independence assumption is stronger. For post-event descriptions influenced by media, it is weaker.",
+      "source": {
+        "citation": "Claude — AI Analyst",
+        "url": null
+      },
+      "badge": {
+        "label": "AI Note",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The Phoenix Lights represents a natural experiment in mass observation. The sheer volume of consistent testimony constitutes strong probabilistic evidence, though independence assumptions must be carefully examined. Real-time observations (Event 1) carry more weight than post-media descriptions."
+        }
+      ],
+      "position": {
+        "x": 2650,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "W-003",
+          "type": "ai",
+          "label": "Analysis of"
+        }
+      ]
+    },
+    {
+      "id": "AN-002",
+      "type": "note",
+      "title": "Conventional Explanation Assessment",
+      "summary": "Event 2 (stationary lights): Flare explanation is plausible (60-70% confidence). Event 1 (V-formation): A-10 formation explanation is strained (30-40% confidence). The case's overall anomalous credibility rests primarily on Event 1.",
+      "detail": "Systematic evaluation of conventional explanations: EVENT 2 — LUU-2B/B Flares (60-70% conventional confidence): Cognitech's mountain-occlusion geometry is sound. Flare luminosity at 50-70 miles is within range of observed brightness. The lights' sequential disappearance matches the expected pattern of flares dropping behind a ridge. Counterargument: Dilettoso's brightness-constancy finding (unresolved). Assessment: More likely than not flares, but not conclusive. EVENT 1 — A-10 Formation (30-40% conventional confidence): A-10s were in the area. V-formation matches. However: star occlusion reports contradict separate aircraft. Silence contradicts A-10 engine noise at altitudes low enough to appear cohesive. No navigation lights reported. Perceived mile-wide size inconsistent with formation spacing. Slow speed inconsistent with A-10 transit. Assessment: Conventional explanation requires dismissing multiple correlated witness observations across 300 miles.",
+      "source": {
+        "citation": "Claude — AI Analyst",
+        "url": null
+      },
+      "badge": {
+        "label": "AI Note",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The case splits cleanly: Event 2 is probably flares (60-70%); Event 1 is probably anomalous (60-70%). The critical error in most analyses is treating them as one event and letting Event 2's conventional explanation contaminate assessment of Event 1."
+        }
+      ],
+      "position": {
+        "x": 2650,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "AI-001",
+          "type": "ai",
+          "label": "Builds on"
+        },
+        {
+          "target_id": "AI-002",
+          "type": "ai",
+          "label": "Builds on"
+        },
+        {
+          "target_id": "AI-005",
+          "type": "ai",
+          "label": "Builds on"
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "id": "T-001",
+      "date": "1997-03-13T19:55:00",
+      "date_display": "March 13, 1997, 7:55 PM MST",
+      "title": "First Sighting — Henderson, Nevada",
+      "detail": "A witness in Henderson, Nevada, reports seeing a large V-shaped object with multiple lights traveling southeast. This is the earliest known observation of Event 1, establishing the formation's origin near the Nevada-Arizona border.",
+      "type": "key",
+      "tags": ["visual", "witness", "event-1"],
+      "linked_card_ids": ["E-002"]
+    },
+    {
+      "id": "T-002",
+      "date": "1997-03-13T20:16:00",
+      "date_display": "March 13, 1997, 8:16 PM MST",
+      "title": "First NUFORC Report — Paulden, AZ",
+      "detail": "A retired police officer in Paulden, Arizona, calls the National UFO Reporting Center to report a cluster of reddish-orange lights in a V-pattern moving south. This is the first formally documented report of the event.",
+      "type": "key",
+      "tags": ["witness", "event-1", "documented"],
+      "linked_card_ids": ["W-004", "S-001"]
+    },
+    {
+      "id": "T-003",
+      "date": "1997-03-13T20:17:00",
+      "date_display": "March 13, 1997, ~8:17 PM MST",
+      "title": "Prescott Valley Sightings",
+      "detail": "Multiple families in Prescott Valley observe the V-formation passing overhead. Witnesses describe five lights in a very tight pattern that change from white to reddish-orange. Critically, some witnesses report that stars were occluded as the formation passed — implying a solid structure between the lights rather than separate aircraft.",
+      "type": "key",
+      "tags": ["visual", "witness", "event-1", "star-occlusion"],
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The star-occlusion reports from Prescott Valley are the strongest single piece of evidence against the A-10 formation hypothesis. If multiple independent witnesses observed stars disappearing behind the formation, this implies a solid object — not five separate aircraft.",
+          "timestamp": "2026-03-23"
+        }
+      ],
+      "linked_card_ids": ["W-005", "AI-001", "AI-005"]
+    },
+    {
+      "id": "T-004",
+      "date": "1997-03-13T20:30:00",
+      "date_display": "March 13, 1997, ~8:30 PM MST",
+      "title": "Kurt Russell Reports V-Formation to ATC",
+      "detail": "Actor and licensed pilot Kurt Russell, on approach to Phoenix airport, observes six lights in a perfect V-shape over the airfield. He radios Phoenix air traffic control to report the sighting. ATC responds that nothing else appears on radar. The exchange is recorded, constituting real-time documentation of Event 1 by a trained observer before any media coverage.",
+      "type": "key",
+      "tags": ["pilot", "ATC", "event-1", "documented"],
+      "linked_card_ids": ["W-002", "E-004"]
+    },
+    {
+      "id": "T-005",
+      "date": "1997-03-13T20:45:00",
+      "date_display": "March 13, 1997, ~8:30–9:00 PM MST",
+      "title": "V-Formation Over Phoenix Metro Area",
+      "detail": "The V-shaped formation reaches the Phoenix metropolitan area. Thousands of residents observe the formation moving silently over the city. Descriptions are remarkably consistent: massive, V-shaped or boomerang-shaped, multiple lights, completely silent, moving slowly from northwest to southeast. Governor Fife Symington drives to Squaw Peak and observes the formation, later describing it as 'dramatically large' with 'a geometric outline, a constant shape.'",
+      "type": "key",
+      "tags": ["mass-sighting", "event-1", "governor"],
+      "linked_card_ids": ["W-001", "E-002"]
+    },
+    {
+      "id": "T-006",
+      "date": "1997-03-13T21:30:00",
+      "date_display": "March 13, 1997, ~9:30 PM MST",
+      "title": "V-Formation Last Observed — South of Phoenix / Tucson",
+      "detail": "The V-shaped formation is last reported south of Phoenix, with some reports extending toward Tucson. Event 1 concludes after approximately 90 minutes and a 300-mile transit. No further observations of the V-formation are reported.",
+      "type": "normal",
+      "tags": ["event-1", "endpoint"],
+      "linked_card_ids": []
+    },
+    {
+      "id": "T-007",
+      "date": "1997-03-13T22:00:00",
+      "date_display": "March 13, 1997, ~10:00 PM MST",
+      "title": "Event 2 — Stationary Lights Appear Over Phoenix",
+      "detail": "A distinct second event begins: a row of bright, intensely luminous lights appears stationary over the Phoenix area. This event is widely filmed, including by Mike Krzyston from Moon Valley. The lights are visible for an extended period before sequentially disappearing. This event — not the V-formation — produces all known video footage of the Phoenix Lights. The USAF later attributes these lights to LUU-2B/B illumination flares dropped during Operation Snowbird exercises at the Barry Goldwater Range.",
+      "type": "key",
+      "tags": ["event-2", "video", "flares"],
+      "linked_card_ids": ["W-006", "E-003", "E-001"]
+    },
+    {
+      "id": "T-008",
+      "date": "1997-03-14",
+      "date_display": "March 14, 1997",
+      "title": "Media Coverage Begins",
+      "detail": "Local Arizona media begins covering the mass sighting. Arizona Republic, local TV stations, and national wire services pick up the story. Thousands of calls flood local authorities, NUFORC, and Councilwoman Frances Barwood's office.",
+      "type": "normal",
+      "tags": ["media"],
+      "linked_card_ids": ["W-003"]
+    },
+    {
+      "id": "T-009",
+      "date": "1997-06-19",
+      "date_display": "June 19, 1997",
+      "title": "Governor Symington's Press Conference",
+      "detail": "Arizona Governor Fife Symington III holds a press conference addressing the Phoenix Lights. He announces 'they found who was responsible' and produces his chief of staff dressed in an alien costume. The stunt is designed to defuse public anxiety with humor but is criticized by witnesses and investigators as dismissive. Symington later reveals this was a deliberate attempt to prevent panic, not a reflection of his actual assessment.",
+      "type": "key",
+      "tags": ["official", "cover-up"],
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "A sitting governor saw something he couldn't explain, got scared of the public reaction, and put on a clown show. Then spent 10 years regretting it. This tells you everything about why disclosure is so slow.",
+          "timestamp": "2026-03-23"
+        }
+      ],
+      "linked_card_ids": ["W-001", "E-006"]
+    },
+    {
+      "id": "T-010",
+      "date": "1997-07-25",
+      "date_display": "July 1997",
+      "title": "Military Flare Explanation Emerges",
+      "detail": "The Arizona Republic publishes the first reports connecting the March 13 lights to members of the Maryland Air National Guard conducting Operation Snowbird exercises. Officials at Luke Air Force Base, which had initially denied any military aircraft in the area, eventually acknowledge the flare exercise at Barry Goldwater Range. The explanation takes four months to emerge.",
+      "type": "key",
+      "tags": ["official", "explanation"],
+      "linked_card_ids": ["E-001", "Q-004"]
+    },
+    {
+      "id": "T-011",
+      "date": "2000-01-01",
+      "date_display": "2000",
+      "title": "Maryland ANG History Published",
+      "detail": "A history of the Maryland Air National Guard published in 2000 asserts that the 104th Fighter Squadron was responsible for the Phoenix Lights incident, documenting the Operation Snowbird exercises conducted on March 13, 1997. This constitutes the primary official record connecting specific military units to the event.",
+      "type": "normal",
+      "tags": ["official", "documentation"],
+      "linked_card_ids": ["E-001"]
+    },
+    {
+      "id": "T-012",
+      "date": "2007-03-18",
+      "date_display": "March 2007",
+      "title": "Governor Symington Admits Witnessing Lights",
+      "detail": "Ten years after the event, former Governor Fife Symington III publicly admits he personally witnessed the Phoenix Lights. In a CNN commentary and subsequent interviews, he describes seeing a 'dramatically large' delta-shaped craft over Squaw Peak, calls it 'otherworldly,' and states 'it couldn't have been flares because it was too symmetrical.' He explains his 1997 press conference mockery as an attempt to prevent public panic.",
+      "type": "key",
+      "tags": ["witness", "disclosure", "governor"],
+      "linked_card_ids": ["W-001", "E-006"]
+    },
+    {
+      "id": "T-013",
+      "date": "2017-01-01",
+      "date_display": "2017",
+      "title": "Kurt Russell Self-Identifies as Reporting Pilot",
+      "detail": "Actor and pilot Kurt Russell publicly reveals that he was the pilot who reported the V-formation to Phoenix air traffic control on March 13, 1997. Russell states he only realized this approximately six years after the event, when he recognized his own ATC exchange being played on a television program about the Phoenix Lights.",
+      "type": "normal",
+      "tags": ["witness", "pilot", "disclosure"],
+      "linked_card_ids": ["W-002", "E-004"]
+    },
+    {
+      "id": "T-014",
+      "date": "2022-03-13",
+      "date_display": "March 2022",
+      "title": "25th Anniversary Coverage",
+      "detail": "On the 25th anniversary of the Phoenix Lights, renewed media coverage includes updated interviews with Mike Krzyston (who remains mystified by his footage), retrospectives featuring witness accounts, and analysis in the context of the broader UAP disclosure movement catalyzed by the 2017 NYT AATIP story and subsequent congressional hearings.",
+      "type": "normal",
+      "tags": ["media", "anniversary"],
+      "linked_card_ids": ["W-006"]
+    }
+  ],
+  "witnesses": [
+    {
+      "id": "W-001",
+      "name": "Fife Symington III",
+      "rank_at_time": "Governor of Arizona",
+      "rank_current": "Former Governor",
+      "unit": null,
+      "role": "Sitting Governor of Arizona — highest-ranking public official to witness and later admit to observing UAP",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "Governor of Arizona (1991-1997), businessman, Air Force veteran. Grandson of industrialist and U.S. Senator Fife Symington I.",
+      "what_they_observed": "Observed a massive delta-shaped craft with an enormous leading edge and large lights, silently navigating over Squaw Peak in Phoenix. Described it as 'dramatically large' with 'a geometric outline, a constant shape.' Stated it 'couldn't have been flares because it was too symmetrical.'",
+      "first_public": {
+        "date": "2007-03-18",
+        "venue": "CNN commentary and subsequent interviews",
+        "url": "https://www.cnn.com/2007/TECH/science/11/09/simington.ufocommentary/index.html"
+      },
+      "key_quotes": [
+        {
+          "quote": "It was otherworldly.",
+          "source": "CNN, 2007",
+          "date": "2007-03-18"
+        },
+        {
+          "quote": "It couldn't have been flares because it was too symmetrical. It had a geometric outline, a constant shape.",
+          "source": "Multiple interviews, 2007+",
+          "date": "2007-03-18"
+        },
+        {
+          "quote": "As a public figure, I didn't want to say something that could create panic. But I also couldn't keep it to myself anymore.",
+          "source": "Various interviews",
+          "date": "2007-03-18"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "1997-06-19",
+          "venue": "Press conference (alien costume stunt)",
+          "url": null
+        },
+        {
+          "date": "2007-03-18",
+          "venue": "CNN commentary",
+          "url": "https://www.cnn.com/2007/TECH/science/11/09/simington.ufocommentary/index.html"
+        },
+        {
+          "date": "2007-11-12",
+          "venue": "National Press Club, Washington D.C.",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Sitting governor at time of sighting. Air Force veteran. Initially attempted to cover up his experience with humor, later admitted the truth — a trajectory that suggests integrity over convenience. 10-year disclosure delay mirrors Nimitz pattern. No financial motive for admission; career risk was negative.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 200
+      }
+    },
+    {
+      "id": "W-002",
+      "name": "Kurt Russell",
+      "rank_at_time": "Licensed Private Pilot",
+      "rank_current": "Licensed Private Pilot",
+      "unit": null,
+      "role": "Pilot who reported V-formation to Phoenix ATC — first real-time documentation by a trained observer",
+      "status": "active",
+      "flight_hours": null,
+      "career_highlights": "Licensed pilot, professional actor. His ATC report constitutes the earliest trained-observer real-time documentation of Event 1.",
+      "what_they_observed": "While on approach to Phoenix airport with his son, observed six lights in a perfectly uniform V-shape over the airfield. Called ATC to report; told nothing was on radar. Did not recognize the significance of his sighting until approximately six years later when he heard his own ATC exchange on a television program.",
+      "first_public": {
+        "date": "2017-01-01",
+        "venue": "BBC One's The One Show and subsequent interviews",
+        "url": null
+      },
+      "key_quotes": [
+        {
+          "quote": "I saw six lights over the airport in absolute uniform in a V shape.",
+          "source": "BBC One / The One Show",
+          "date": "2017-01-01"
+        },
+        {
+          "quote": "I was on prior approach... and there were six lights. And I said, 'I'm gonna call it in' to [my son]. And so I did.",
+          "source": "Various interviews",
+          "date": "2017-01-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2017-01-01",
+          "venue": "BBC One's The One Show",
+          "url": null
+        },
+        {
+          "date": "2017-01-01",
+          "venue": "Various entertainment/news interviews",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Licensed pilot with trained observation skills. Report was made in real-time via ATC before any media narrative existed. Delayed self-identification (6 years) eliminates attention-seeking as a motive. His celebrity status cuts both ways — adds visibility but invites skepticism.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 450
+      }
+    },
+    {
+      "id": "W-003",
+      "name": "Frances Barwood",
+      "rank_at_time": "Phoenix City Councilwoman",
+      "rank_current": "Former City Councilwoman",
+      "unit": null,
+      "role": "Only elected official to launch a public investigation — personally interviewed 700+ witnesses",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "Phoenix City Councilwoman. Conducted the most thorough civilian investigation of the Phoenix Lights, facing significant professional ridicule.",
+      "what_they_observed": "Did not directly witness Event 1 or Event 2 but interviewed over 700 witnesses including police officers, pilots, and former military personnel. Compiled what remains the most comprehensive first-person witness database for the event.",
+      "first_public": {
+        "date": "1997-03-14",
+        "venue": "Public statements and media interviews beginning immediately after the event",
+        "url": null
+      },
+      "key_quotes": [
+        {
+          "quote": "Over 700 people contacted my office. These weren't crackpots — these were police officers, pilots, military people. And their descriptions were remarkably consistent.",
+          "source": "Multiple interviews",
+          "date": "1997-04-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "1997-04-01",
+          "venue": "Multiple local and national media",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Not a direct witness but a primary investigator. Her 700+ interviews represent the most extensive civilian data collection effort for a UAP mass sighting. Faced career consequences for taking the reports seriously, which adds credibility to her commitment to the investigation.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 700
+      }
+    }
+  ],
+  "ai_analysis": [
+    {
+      "id": "AI-001",
+      "analysis_type": "analytical_framework",
+      "title": "Two-Event Decomposition Analysis",
+      "finding": "The Phoenix Lights consist of two distinct phenomena that must be analyzed separately. Event 1 (V-formation, 7:55-9:30 PM) and Event 2 (stationary lights, ~10:00 PM) have different evidence profiles, different witness descriptions, and potentially different explanations. Conflating them weakens analysis of both.",
+      "methodology": "Structured decomposition of temporal, geographic, and phenomenological evidence from all available sources.",
+      "confidence": "high",
+      "cross_references": [],
+      "supporting_evidence_ids": ["E-001", "E-003", "W-001"]
+    },
+    {
+      "id": "AI-002",
+      "analysis_type": "evidence_assessment",
+      "title": "Video Evidence Assessment: Flare vs. Anomalous",
+      "finding": "The Krzyston footage of Event 2 has been subjected to two competing forensic analyses. Cognitech's mountain-occlusion model supports the flare explanation. Dilettoso's brightness-constancy finding challenges it. Neither analysis is conclusive. Assessment: Event 2 is 60-70% likely conventional (flares).",
+      "methodology": "Comparative analysis of Cognitech and Dilettoso forensic reports. Methodology assessment based on replicability and peer review status.",
+      "confidence": "medium",
+      "cross_references": [],
+      "supporting_evidence_ids": ["E-003", "W-006"]
+    },
+    {
+      "id": "AI-003",
+      "analysis_type": "credibility_assessment",
+      "title": "Witness Credibility Matrix",
+      "finding": "The Phoenix Lights case features an exceptionally large and diverse witness pool with unusually high credibility. TIER 1: Kurt Russell (pilot, ATC documentation, delayed self-identification), Governor Symington (institutional pressure documented, 10-year delay). TIER 2: Retired police officer, Frances Barwood's 700+ interviewees. TIER 3: 10,000+ civilian observers. The witness pool's strength is its size and diversity.",
+      "methodology": "Structured credibility assessment examining: professional qualifications, documentation quality, potential motivations, consistency across independent witnesses, social cost of testimony.",
+      "confidence": "high",
+      "cross_references": [
+        {
+          "case_id": "CASE-001",
+          "case_name": "USS Nimitz (2004)",
+          "shared_pattern": "Delayed disclosure by high-credibility witnesses under institutional pressure",
+          "strength": "strong"
+        }
+      ],
+      "supporting_evidence_ids": ["W-001", "W-002", "W-003", "W-004", "E-002"]
+    },
+    {
+      "id": "AI-004",
+      "analysis_type": "cross_reference",
+      "title": "Delayed Disclosure Pattern — Cross-Case",
+      "finding": "Symington's 10-year delay matches a cross-case pattern: Nimitz witnesses (13 years), Dietrich (17 years). The consistency of this pattern suggests systemic suppression mechanisms — institutional pressure, career risk, social stigma. Implies many undisclosed observations may exist.",
+      "methodology": "Cross-case temporal analysis of disclosure timing for credentialed UAP witnesses.",
+      "confidence": "high",
+      "cross_references": [
+        {
+          "case_id": "CASE-001",
+          "case_name": "USS Nimitz (2004)",
+          "shared_pattern": "13-17 year disclosure delay for military witnesses",
+          "strength": "strong"
+        }
+      ],
+      "supporting_evidence_ids": ["W-001", "E-006"]
+    },
+    {
+      "id": "AI-005",
+      "analysis_type": "hypothesis_test",
+      "title": "Event 1: A-10 Formation Hypothesis — Stress Test",
+      "finding": "The official A-10 formation explanation for Event 1 explains some observations (V-shape, trajectory) but fails key tests: star occlusion (solid object vs. separate aircraft), silence (A-10 engines), no navigation lights, perceived mile-wide size, slow speed. Assessment: 30-40% confidence in conventional explanation for Event 1.",
+      "methodology": "Systematic comparison of A-10 Thunderbolt II flight characteristics against witness testimony. A-10 specifications from manufacturer data.",
+      "confidence": "medium",
+      "cross_references": [],
+      "supporting_evidence_ids": ["E-001", "W-005", "W-001"]
+    },
+    {
+      "id": "AI-006",
+      "analysis_type": "data_gap",
+      "title": "Missing Data Inventory",
+      "finding": "Critical data gaps: (1) FAA radar data — erased after 2-week retention; (2) Luke AFB scramble records — denied, unverified; (3) Operation Snowbird flight logs — not publicly released; (4) Event 1 video — none known; (5) ATC recordings beyond Russell; (6) Military radar data. The FAA radar erasure is the most consequential loss.",
+      "methodology": "Systematic inventory of expected data sources, cross-referenced with publicly available data.",
+      "confidence": "high",
+      "cross_references": [
+        {
+          "case_id": "CASE-001",
+          "case_name": "USS Nimitz (2004)",
+          "shared_pattern": "Critical sensor data unavailable — confiscated (Nimitz) vs. expired (Phoenix)",
+          "strength": "moderate"
+        }
+      ],
+      "supporting_evidence_ids": ["E-005", "S-001"]
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Why were FAA radar records not preserved?",
+      "context": "The Phoenix Lights was one of the largest mass sightings in U.S. history. FAA radar data expired under the standard 2-week retention policy before any investigation could access it. No official body requested preservation during the available window.",
+      "status": "open",
+      "priority": "critical",
+      "linked_evidence_ids": ["E-005"]
+    },
+    {
+      "id": "Q-002",
+      "question": "Were fighters scrambled from Luke AFB?",
+      "context": "An unverified NUFORC report from a self-identified Luke AFB airman claims two F-15Cs were scrambled and their radar went to 'white noise.' Luke officially denied any activity. If true, this would be transformative evidence.",
+      "status": "open",
+      "priority": "high",
+      "linked_evidence_ids": ["S-001"]
+    },
+    {
+      "id": "Q-003",
+      "question": "Where are the Operation Snowbird flight logs?",
+      "context": "Specific flight logs for the 104th Fighter Squadron on March 13, 1997, have not been publicly released. These would document exact departure times, routes, altitudes, and formation configurations — directly validating or contradicting the official explanation.",
+      "status": "open",
+      "priority": "high",
+      "linked_evidence_ids": ["E-001"]
+    },
+    {
+      "id": "Q-004",
+      "question": "Why did Luke AFB initially deny any military aircraft activity?",
+      "context": "Luke AFB initially stated they had no aircraft in the area. The flare explanation took months to emerge. If the answer was straightforward military exercises, the initial denial and delay are difficult to explain.",
+      "status": "open",
+      "priority": "medium",
+      "linked_evidence_ids": ["E-001"]
+    },
+    {
+      "id": "Q-005",
+      "question": "Does video of Event 1 (V-formation) exist?",
+      "context": "All known footage is of Event 2 (10 PM stationary lights). Despite thousands of witnesses, no video of Event 1 has surfaced. In 1997, camcorders existed but were not ubiquitous. Undiscovered footage would be transformative.",
+      "status": "open",
+      "priority": "medium",
+      "linked_evidence_ids": []
+    }
+  ],
+  "source_documents": [
+    {
+      "id": "D-001",
+      "title": "Phoenix Lights — NUFORC Investigation Summary",
+      "author": "Peter Davenport",
+      "organization": "National UFO Reporting Center",
+      "date": "1997-03-14",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": "https://nuforc.org/phoenix/",
+      "key_excerpts": [
+        "The first call came in at 8:16 p.m. from a retired police officer in Paulden, Arizona."
+      ]
+    },
+    {
+      "id": "D-002",
+      "title": "NUFORC — Phoenix Lights: 2 Years Later",
+      "author": "Peter Davenport",
+      "organization": "National UFO Reporting Center",
+      "date": "1999-03-13",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": "https://nuforc.org/phoenix2/",
+      "key_excerpts": []
+    },
+    {
+      "id": "D-003",
+      "title": "Governor Symington CNN Commentary",
+      "author": "Fife Symington III",
+      "organization": "CNN",
+      "date": "2007-11-09",
+      "classification": "PUBLIC",
+      "doc_type": "commentary",
+      "url": "https://www.cnn.com/2007/TECH/science/11/09/simington.ufocommentary/index.html",
+      "key_excerpts": [
+        "It was otherworldly.",
+        "It couldn't have been flares because it was too symmetrical."
+      ]
+    },
+    {
+      "id": "D-004",
+      "title": "Maryland ANG Unit History",
+      "author": "Maryland Air National Guard",
+      "organization": "Maryland ANG",
+      "date": "2000-01-01",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": null,
+      "key_excerpts": [
+        "The 104th Fighter Squadron was responsible for the Phoenix Lights incident."
+      ]
+    },
+    {
+      "id": "D-005",
+      "title": "Military now says flares may be cause of mysterious Arizona lights",
+      "author": "Las Vegas Sun / Associated Press",
+      "organization": "Las Vegas Sun",
+      "date": "1997-07-25",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": "https://lasvegassun.com/news/1997/jul/25/military-now-says-flares-may-be-cause-of-mysteriou/",
+      "key_excerpts": []
+    },
+    {
+      "id": "D-006",
+      "title": "Cognitech Video Analysis (Dr. Leonid Rudin)",
+      "author": "Dr. Leonid Rudin",
+      "organization": "Cognitech",
+      "date": "2000-01-01",
+      "classification": "PUBLIC",
+      "doc_type": "analysis",
+      "url": null,
+      "key_excerpts": [
+        "Frame-by-frame comparison of daytime and nighttime shots concluded that the lights were consistent with flares disappearing behind the Sierra Estrella mountain range."
+      ]
+    }
+  ],
+  "cross_case_patterns": [
+    {
+      "pattern": "Delayed disclosure by credentialed witnesses",
+      "phoenix_evidence": "Governor Symington waited 10 years to admit his sighting",
+      "matching_cases": [
+        {
+          "name": "USS Nimitz (2004)",
+          "detail": "CDR Fravor waited 13 years; LCDR Dietrich waited 17 years",
+          "strength": "strong",
+          "source": "Multiple public testimonies"
+        },
+        {
+          "name": "Belgian Wave (1989-90)",
+          "detail": "Military officials spoke only decades later",
+          "strength": "moderate",
+          "source": "Belgian Air Force records"
+        }
+      ]
+    },
+    {
+      "pattern": "Official denial followed by delayed conventional explanation",
+      "phoenix_evidence": "Luke AFB denied activity; flare explanation emerged months later",
+      "matching_cases": [
+        {
+          "name": "USS Nimitz (2004)",
+          "detail": "DoD acknowledged nothing until NYT story in 2017, 13 years after the event",
+          "strength": "strong",
+          "source": "NYT 2017 article"
+        },
+        {
+          "name": "Rendlesham Forest (1980)",
+          "detail": "MOD initially dismissed the incident; classification persisted for decades",
+          "strength": "moderate",
+          "source": "MOD files"
+        }
+      ]
+    },
+    {
+      "pattern": "Critical sensor data unavailable for analysis",
+      "phoenix_evidence": "FAA radar data erased after 2-week retention; no military radar released",
+      "matching_cases": [
+        {
+          "name": "USS Nimitz (2004)",
+          "detail": "SPY-1 radar tapes and E-2C hard drives confiscated by unidentified personnel",
+          "strength": "strong",
+          "source": "Multiple witness testimonies"
+        },
+        {
+          "name": "Rendlesham Forest (1980)",
+          "detail": "Key evidence reportedly confiscated or classified",
+          "strength": "moderate",
+          "source": "MOD files, witness testimony"
+        }
+      ]
+    },
+    {
+      "pattern": "Mass sighting with consistent descriptions across geographic spread",
+      "phoenix_evidence": "10,000-20,000 witnesses across 300 miles with remarkably consistent descriptions",
+      "matching_cases": [
+        {
+          "name": "Belgian Wave (1989-90)",
+          "detail": "Thousands of witnesses across Belgium over several months reported triangular craft",
+          "strength": "strong",
+          "source": "Belgian Air Force official report"
+        },
+        {
+          "name": "Hudson Valley Wave (1982-86)",
+          "detail": "Thousands of witnesses in NY/CT reported boomerang-shaped craft over 4 years",
+          "strength": "moderate",
+          "source": "MUFON investigation, Night Siege (book)"
+        }
+      ]
+    }
+  ]
+}

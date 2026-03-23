@@ -6,373 +6,246 @@ Each phase below is a discrete, handoff-ready unit. When you are ready to build 
 
 ---
 
+## Current Status (March 2026)
+
+### What Shipped (Phase UI + Phase 3A)
+
+A production Next.js app at the project root with:
+- **Homepage** (`app/page.tsx`) — case list sidebar, dashboard stats, active investigation card, queue table, methodology section
+- **Investigation Workspace** (`app/case/[id]/page.tsx`) — full three-column layout for Case 001 (Nimitz)
+- **All interactive features working:** right-click annotations, ACH matrix voting, evidence linking, card selection, search UI, 6 investigation tabs
+- **localStorage persistence** for annotations, ACH votes, evidence links via custom hooks (`hooks/useAnnotations.ts`, `hooks/useACHVotes.ts`, `hooks/useEvidenceLinks.ts`)
+- **Design system fully implemented** — Instrument Serif, JetBrains Mono, Oswald, Caveat fonts + full color system
+
+### What's Still Hardcoded
+- Workspace page has ~200 lines of `const` data arrays (timeline, evidence, witnesses, AI cards, questions, etc.) at the top of `app/case/[id]/page.tsx`
+- The `[id]` route param is ignored — workspace always shows Nimitz regardless of URL
+- Cases 002-006 are listed on homepage but have no data files
+- Search returns 5 static demo results
+
+### Architecture Issues to Address
+1. **Single-file workspace** — 700+ line component needs decomposition
+2. **No backend** — localStorage only, no multi-user support
+3. **No auth** — Nemo vs Claude is action-based, not login-based
+4. **Demo search** — needs real search backend
+
+---
+
 ## Phase Overview
 
-| Phase | Name | Description |
-|-------|------|-------------|
-| 1 | Foundation | Project setup, design system, schema, blank app shell |
-| 2 | Corpus Engine | Data ingest, processing pipeline, credibility scoring |
-| 3 | Evidence Index | Case browsing, case detail, map view, timeline view |
-| 4 | Findings Layer | Report generation, findings pages, null findings |
-| 5 | Query Interface | Natural language corpus search |
-| 6 | Contribution Platform | Public submission form, AI screening, admin review |
-| 7 | Polish & Launch | Homepage, about page, performance, public launch |
+| Phase | Name | Status | Description |
+|-------|------|--------|-------------|
+| UI | Design Exploration | ✅ SHIPPED | Prototypes, design system, interaction model |
+| 3A | Initial Build | ✅ SHIPPED | Next.js app, homepage, workspace for Case 001 |
+| 3B | Architecture & Cases | 🔄 NEXT | Refactor workspace, wire routing, add cases 002-006 |
+| 4 | Backend & Persistence | ⬜ Planned | Supabase, real auth, server-side persistence |
+| 5 | Corpus Engine | ⬜ Planned | Data ingest pipeline, credibility scoring |
+| 6 | Findings & Query | ⬜ Planned | AI pattern reports, natural language search |
+| 7 | Contributions & Launch | ⬜ Planned | Public submissions, polish, launch |
 
 ---
 
-## Phase 1 — Foundation
+## Phase UI — Design Exploration ✅ SHIPPED
 
-**Goal:** A running Next.js app with design system implemented, database schema live, and all infrastructure connected. No visible product yet — this is the skeleton everything else is built on.
+**Goal:** Establish the design system, interaction model, and content structure through interactive prototypes.
 
-**Deliverables:**
-
-### 1.1 Project Scaffolding
-- Next.js 14+ app with TypeScript and App Router
-- Tailwind CSS configured
-- ESLint + Prettier configured
-- Folder structure: `/app`, `/components`, `/lib`, `/types`, `/styles`
-
-### 1.2 Design System Implementation
-- CSS variables for full color system (see DESIGN.md — Color System)
-- Font loading: Instrument Serif, JetBrains Mono, Oswald, Caveat via next/font or Google Fonts
-- Tailwind config extended with design tokens
-- Base typography styles — prose sizes for each font role
-- Base component stubs: Button, Badge, Card, Divider, Tag
-
-### 1.3 Infrastructure Setup
-- Supabase project initialized
-- Environment variables configured: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`, `ANTHROPIC_API_KEY`
-- Vercel project connected to repo
-
-### 1.4 Database Schema
-Run migrations to create all core tables:
-- `cases` — full schema per TRD.md
-- `sources` — source registry
-- `findings_reports` — report storage
-- `contributions` — submission intake
-- `contributor_annotations` — researcher annotation layer
-- pgvector extension enabled
-- Indexes on: cases.credibility_score, cases.date, cases.location fields, cases.credibility_tier
-
-### 1.5 Background Job Setup
-- Inngest or Trigger.dev initialized
-- Placeholder job registered (no logic yet)
-
-**Done when:** App builds and deploys to Vercel, database schema is live in Supabase, design tokens render correctly in a `/test` route showing all colors, fonts, and base components.
-
-**Dependencies:** None. This is the starting point.
+**What shipped:**
+- HTML prototypes in `/prototype/` — `index.html` (homepage) and `case-workspace.html` (investigation workspace)
+- Full design system: Instrument Serif, JetBrains Mono, Oswald, Caveat fonts + complete color palette
+- Three-column workspace layout with right-click annotation system
+- ACH matrix, evidence linking, search & import, solvability scoring
+- Full Case 001 (Nimitz) data in `prototype/data/case-001-nimitz.json`
+- Design docs updated: DESIGN.md, PRD.md, all phase specs aligned with prototype
 
 ---
 
-## Phase 2 — Corpus Engine
+## Phase 3A — Initial Build ✅ SHIPPED
 
-**Goal:** The data pipeline. Ingest real data from NUFORC and Project Blue Book, process it through entity extraction and credibility scoring, and populate the database with real cases.
+**Goal:** Turn the prototype into a running Next.js app with the homepage and Case 001 workspace fully functional.
 
-**Deliverables:**
+**What shipped:**
 
-### 2.1 Data Ingest — NUFORC
-- Script to fetch/parse NUFORC CSV data
-- Field mapping to `cases` schema
-- Run as background job, idempotent (re-run safe)
-- Target: full NUFORC dataset loaded
+### App Shell
+- Next.js app with App Router, TypeScript, Tailwind CSS
+- Project root: `/app`, `/components`, `/data`, `/hooks`, `/styles`
+- Design tokens in CSS variables matching DESIGN.md
 
-### 2.2 Data Ingest — MUFON (Public Cases Only)
-- Scrape publicly accessible case summaries from mufon.com
-- Field mapping to `cases` schema — note fields may be less complete than NUFORC
-- Source registered in `sources` table with flag: `partial_dataset: true`, `partnership_pending: true`
-- Full investigator-reviewed dataset deferred pending formal MUFON partnership agreement
-- Do not attempt to scrape behind any login or membership wall
+### Homepage (`app/page.tsx`)
+- Left sidebar with case list (001-006) and status badges
+- Dashboard stats, active investigation card, queue table
+- Methodology section, investigator cards (Nemo + Claude)
 
-### 2.3 Data Ingest — Project Blue Book
-- Script to parse Project Blue Book digitized archive
-- Field mapping to `cases` schema
-- Source registered in `sources` table
+### Investigation Workspace (`app/case/[id]/page.tsx`)
+- Three-column layout: sidebar (200px) | case content (flex:1, max 860px) | investigation tools (460px)
+- Full Nimitz case content: hero, summary, timeline, evidence cards, witness cards, AI analysis, open questions
+- Right-click annotation system with inline note/URL input
+- 6 investigation tabs: ACH, Resolution, OSINT, Links, Search, Score
+- Card selection with gold border + tab switching
 
-### 2.4 Entity Extraction Pipeline
-- Claude API call on each raw case text
-- Extraction targets: craft shape, craft size, craft color, craft behavior, witness count, witness credentials, physiological effects on witnesses, physical trace evidence present
-- Output stored as JSONB in `cases.craft_description`, `cases.behavioral_descriptors`, `cases.physiological_effects`
-- Prompt must be deterministic and testable
+### Custom Hooks
+- `useAnnotations.ts` — annotation CRUD with localStorage persistence
+- `useACHVotes.ts` — ACH matrix voting with localStorage persistence
+- `useEvidenceLinks.ts` — evidence linking with localStorage persistence
 
-### 2.5 Data Normalization
-- Location normalization: extract lat/lng from text descriptions where possible, standardize country/region fields
-- Date normalization: parse varied date formats to ISO standard
-- Descriptor taxonomy: controlled vocabulary for craft shape, behavior, effect types — applied consistently across sources
-
-### 2.6 Embedding Generation
-- Generate vector embedding for each case using `cases.raw_text` + `cases.summary`
-- Store in pgvector column `cases.embedding`
-- Batch processing — handle full corpus without timeout
-
-### 2.7 Credibility Scoring
-- Implement weighted factor model per TRD.md
-- Score computed on ingest and stored in `cases.credibility_score`
-- Factor breakdown stored in `cases.credibility_factors` JSONB
-- Tier assigned based on score thresholds
-
-### 2.8 Cross-Reference Linking
-- After all cases embedded: run similarity search on each case
-- Flag cases with high semantic similarity from different sources
-- Store cross-reference links (consider junction table: `case_cross_references`)
-
-### 2.9 Deduplication
-- Detect likely duplicates: same date, same location, similar description
-- Flag rather than delete — preserve provenance
-
-**Done when:** NUFORC and Blue Book data fully loaded. Running `/api/stats` returns real case count by source and tier. Spot check: 10 random cases have credibility scores, extracted descriptors, and embeddings.
-
-**Dependencies:** Phase 1 complete.
+### Case Data
+- `data/case-001-nimitz.json` — full structured case data
+- `data/cases-index.ts` — case list for homepage
 
 ---
 
-## Phase 3 — Evidence Index
+## Phase 3B — Architecture & Cases 🔄 NEXT
 
-**Goal:** The public-facing case browsing experience. Users can explore, filter, and dive deep into individual cases.
+**Goal:** Refactor the workspace for multi-case support, extract hardcoded data, wire dynamic routing, and add cases 002-006.
 
 **Deliverables:**
 
-### 3.1 Case List Page (`/cases`)
-- Paginated list of cases — 25 per page
-- Default sort: credibility score descending
-- Sort options: date, credibility score, witness count
-- Filter panel: credibility tier, source, country/region, date range, craft descriptor tags
-- Case card component: title, date, location, tier badge, top descriptors, credibility score arc
-- URL-persisted filter state
+### 3B.1 Workspace Decomposition
+Break `app/case/[id]/page.tsx` (~700 lines) into smaller components:
+- `components/workspace/CaseContent.tsx` — center column content renderer
+- `components/workspace/Sidebar.tsx` — left sidebar with TOC and meta
+- `components/workspace/InvestColumn.tsx` — right column tab container
+- `components/workspace/ContextMenu.tsx` — right-click annotation menu
+- Individual tab components already exist in `components/workspace/tabs/`
 
-### 3.2 Investigation Workspace (`/cases/[id]`)
-- Three-column layout: sidebar 200px | case content flex:1 max-width 860px | investigation tools 460px
-- Left sidebar: case overview, credibility score display with factor breakdown expandable, tier badge
-- Center column: full case information — craft description, witness info, behavioral descriptors, physiological effects, corroboration evidence, raw narrative, source attribution
-- Right panel: investigation tools with 6 tabs (see 3.8)
-- Right-click annotation system throughout case content
-- Related cases section (semantic similarity — top 3-5)
+### 3B.2 Data Extraction
+Move hardcoded `const` arrays from `page.tsx` into JSON data files:
+- Timeline events, evidence cards, witness cards, AI analysis cards
+- Open questions, resolution items, OSINT items, chain items
+- Search results (demo), solvability factors
+- Target: `page.tsx` should only import data and render components
 
-### 3.3 Credibility Score Component
-- Visual arc or ring indicator — 0-100
-- Color mapped to tier (gold / green / graphite / caution)
-- Factor breakdown: expandable list showing each factor and its contribution
-- Tier badge: TIER 1 / TIER 2 / TIER 3 / TIER 4 in Oswald
+### 3B.3 Dynamic Route Loading
+- Make `app/case/[id]/page.tsx` read the `[id]` param
+- Load the correct case JSON based on the route
+- Show 404 for cases without data
+- Update homepage links to use correct routes
 
-### 3.4 Map View (`/cases/map`)
-- Muted cartographic base map (Mapbox or Leaflet with CartoDB tiles)
-- Cases plotted as clusters, sized by count
-- Cluster color indicates average tier of contained cases
-- Click cluster → case list panel slides in
-- Filter controls mirror case list filters
+### 3B.4 Case Data Format Standard
+- Define a canonical JSON schema for case data files
+- Case 001 (Nimitz) already has `data/case-001-nimitz.json` — extend to include all workspace content (timeline, evidence, witnesses, AI analysis, etc.)
+- Create template for new case files
 
-### 3.5 Timeline View (`/cases/timeline`)
-- Horizontal timeline — cases plotted by date
-- Frequency histogram overlay
-- Filterable by source, tier, descriptor
-- Click event → case detail
+### 3B.5 Cases 002-006 Data Files
+Research and build complete case data for each:
+- 002: Phoenix Lights (March 13, 1997)
+- 003: Rendlesham Forest (December 26-28, 1980)
+- 004: Belgian Wave (November 1989 – April 1990)
+- 005: Tehran 1976 (September 19, 1976)
+- 006: Aguadilla PR (April 25, 2013)
 
-### 3.6 Search
-- Full-text search across case titles and narratives
-- Typesense or Meilisearch integration
-- Results ranked by credibility score within relevance
+Each needs: timeline, evidence cards, witness cards, AI analysis, open questions, resolution items, OSINT items, solvability factors.
 
-### 3.7 Right-Click Annotation System
-- Custom context menu on case content: highlight, note, URL, evidence link
-- Annotations saved to database with timestamp and user
-- Highlight colors for visual distinction (gold, blue, red for different types)
-- Annotation panel shows all annotations on current case
-- Ability to delete own annotations
+### 3B.6 Navigation & Polish
+- "Back to Cases" link from workspace sidebar
+- Case status badges update based on data availability
+- Loading states for case data
 
-### 3.8 Investigation Tools Panel
-- 6 tabbed interface in right column (460px width):
-  - **ACH (Analysis of Competing Hypotheses):** Interactive matrix with hypotheses vs evidence, voting buttons, confidence scoring
-  - **Resolution:** Checklist of investigative questions, checkoff tracking, notes field
-  - **OSINT:** Search & import panel for external sources, link integration
-  - **Links:** Evidence node map showing connections between case elements, related cases, cross-references
-  - **Search:** Internal corpus search scoped to case context
-  - **Score:** Solvability scoring display and breakdown
+**Done when:**
+- Workspace renders correctly for any case ID with a data file
+- All 6 cases have complete data files and render in the workspace
+- `page.tsx` is under 200 lines (most content in components + data)
+- All interactive features still work after refactor
 
-**Done when:** A user can browse cases, filter by tier and source, read a full case detail with credibility breakdown, see related cases, and explore geographically on the map.
-
-**Dependencies:** Phase 2 complete (real data in database).
+**Dependencies:** Phase 3A complete (✅)
 
 ---
 
-## Phase 4 — Findings Layer
+## Phase 4 — Backend & Persistence
 
-**Goal:** The headline feature. AI-generated pattern reports surfacing what no human researcher could find manually.
+**Goal:** Replace localStorage with real persistence. Add database, auth, and server-side storage so investigations persist across devices and support multiple users.
 
 **Deliverables:**
 
-### 4.1 Findings Report Data Layer
-- Report storage schema live (from Phase 1)
-- API endpoints: `GET /api/findings`, `GET /api/findings/[id]`
-- Versioning logic — reports are immutable once published, new version creates new record
+### 4.1 Supabase Setup
+- Supabase project with PostgreSQL
+- Environment variables configured
+- Database schema: cases, sources, annotations, ach_votes, evidence_links
+- pgvector extension enabled for future semantic search
+- Row-level security policies
 
-### 4.2 Findings Index Page (`/findings`)
-- List of published findings reports
-- Confidence badge: HIGH / MEDIUM / LOW / INCONCLUSIVE
-- Report type label, publication date, summary excerpt
-- Null findings displayed with identical visual weight — no visual penalty
-- Filter by report type, confidence level
+### 4.2 Auth
+- Supabase Auth for user identity
+- Investigator profiles (Nemo = human, Claude = AI)
+- Session management
 
-### 4.3 Findings Report Detail Page (`/findings/[id]`)
-- Editorial layout — Instrument Serif headline, JetBrains Mono body
-- Confidence badge prominent at top
-- Methodology section — collapsible but present
-- Body with inline case citations (click → case detail slide-over)
-- Cases cited section — list of referenced cases with tier badges
-- Version history (if updated)
-- Null findings: "Analysis did not surface sufficient evidence to support this conclusion at this confidence threshold" — no apologetic framing
+### 4.3 Persistence Migration
+- Replace `useAnnotations` localStorage → Supabase CRUD
+- Replace `useACHVotes` localStorage → Supabase CRUD
+- Replace `useEvidenceLinks` localStorage → Supabase CRUD
+- Optimistic updates for snappy UX, sync to server
 
-### 4.4 First Report — Descriptor Convergence
-- Background job: query corpus for craft descriptor frequency across sources
-- Claude analysis: which descriptors appear with statistically anomalous frequency across sources with no shared origin?
-- Output formatted as findings report, stored in DB
-- Confidence level assigned
+### 4.4 Case Data API
+- `GET /api/cases` — list endpoint for homepage
+- `GET /api/cases/[id]` — full case detail endpoint
+- Server-side rendering for case pages (SEO)
 
-### 4.5 Second Report — Corroboration Density
-- Identify cases with highest number of independent confirmation vectors
-- Surface the top tier of cases that have survived the most scrutiny
-- Formatted and stored as findings report
+**Done when:** Annotations, votes, and links persist across devices. Multiple users see each other's annotations.
 
-### 4.6 Report Generation Job
-- Inngest/Trigger.dev job: scheduled weekly
-- Runs each report type analysis
-- If significant change from prior version: flags for human review before publish
-- If confidence drops below LOW: flags as inconclusive, does not auto-publish
-
-### 4.7 Admin: Findings Publish Controls
-- Admin UI: review pending reports, publish or reject
-- Reason required for rejection
-- Audit log of all publish actions
-
-**Done when:** At least two published findings reports are live, readable, with cited cases linkable. Null finding state renders correctly.
-
-**Dependencies:** Phase 2 (corpus data), Phase 3 (case pages for citation links).
+**Dependencies:** Phase 3B complete.
 
 ---
 
-## Phase 5 — Query Interface
+## Phase 5 — Corpus Engine
 
-**Goal:** Natural language research tool. Ask Meridian a question, get an answer grounded strictly in the corpus.
+**Goal:** Ingest real cases from public sources, process through extraction and scoring, populate the database at scale.
 
 **Deliverables:**
 
-### 5.1 Query UI Component
-- Centered input — clean, minimal, not a chat interface
-- No assistant persona — this is a research instrument
-- Example queries displayed on empty state
-- Results appear below input — not in a chat thread
+### 5.1 NUFORC + Blue Book Ingest
+- CSV/archive parsing, field mapping, batch processing
+- Target: 100K+ cases loaded
 
-### 5.2 Query API (`POST /api/query`)
-- Intent classification — what is the user asking for?
-- Hybrid retrieval: semantic search (pgvector) + keyword search (Typesense)
-- Retrieved cases passed as context to Claude
-- Claude prompted with strict grounding instruction: cite only retrieved corpus, flag uncertainty, output "insufficient data" if evidence does not support answer
-- Response includes: answer text, confidence level, cited case IDs
+### 5.2 Entity Extraction + Scoring
+- Claude API extraction: craft shape, behavior, witness data, effects
+- Weighted credibility scoring model → tier assignment
 
-### 5.3 Grounded Response Display
-- Answer text rendered with inline case citations
-- Cited case chips below answer — click to open case detail
-- Confidence level badge on response
-- "Insufficient data to answer this question with confidence" displayed as first-class state — not an error
+### 5.3 Embeddings & Cross-References
+- Vector embeddings for semantic search
+- Similarity-based cross-reference linking
 
-### 5.4 Rate Limiting
-- Query endpoint rate limited — reasonable public use threshold
-- No auth required for basic queries
+**Done when:** 100K+ cases in database with scores, tiers, and embeddings.
 
-**Done when:** A user can type "What are the most credible cases involving triangular craft in the US after 2000?" and receive a grounded, cited answer with a confidence level.
-
-**Dependencies:** Phase 2 (corpus + embeddings), Phase 3 (case detail pages).
+**Dependencies:** Phase 4 complete (database exists).
 
 ---
 
-## Phase 6 — Contribution Platform
+## Phase 6 — Findings & Query
 
-**Goal:** The living data layer. Public submission system for new accounts and evidence, with AI screening and admin review.
+**Goal:** AI pattern reports + natural language corpus search.
 
 **Deliverables:**
 
-### 6.1 Contribution Form UI (`/contribute`)
-- Multi-step form — not one long page
-- Step 1: Submission type (personal account / physical evidence / documentary evidence / corroboration of existing case)
-- Step 2: Core details — date, time, location, duration, witness count
-- Step 3: Account narrative — structured prompts, not free text box
-- Step 4: Corroborating evidence — checkboxes + upload for media
-- Step 5: Contributor info — optional, anonymous supported
-- Progress indicator throughout
-- Tone: respectful, precise, research-framed
+### 6.1 Findings Reports
+- AI-generated pattern analysis (descriptor convergence, corroboration density)
+- Editorial layout, methodology, confidence badges, cited cases
+- Null findings with equal design weight
 
-### 6.2 Contribution Submission API (`POST /api/contribute`)
-- Validate and store structured submission data
-- Trigger AI screening job async
-- Return: submission confirmation + tracking ID
+### 6.2 Query Interface
+- Natural language research tool (NOT a chatbot)
+- Hybrid retrieval: semantic + keyword
+- Grounded responses with cited cases
 
-### 6.3 AI Screening Pipeline
-- Internal consistency check — timeline plausible, details non-contradictory
-- Specificity score — granular detail vs. vague
-- Contamination check — semantic similarity to recently viral media
-- Cross-reference match — similarity to high-tier existing cases
-- Output: screening score, flags, recommended tier
-- Stored on contribution record
+**Done when:** 2+ published findings reports. Query returns grounded answers.
 
-### 6.4 Contribution Review Admin UI
-- Queue of pending contributions sorted by screening score
-- Per-submission view: structured data, narrative, AI screening report
-- Actions: Approve (assign tier) / Request more info / Reject (reason required)
-- Approved contributions trigger corpus integration job
-
-### 6.5 Corpus Integration Job
-- Approved contribution processed through entity extraction, normalization, embedding
-- Added to `cases` table with source type = "contribution"
-- Cross-reference linking run
-
-### 6.6 Researcher Annotations
-- Registered researcher accounts (admin-approved)
-- Annotation types: corroboration / challenge / contextual link / related case link
-- Annotations visible on case detail page
-- Reason field required — no anonymous one-word annotations
-
-**Done when:** A submission can be made through the public form, processed through AI screening, reviewed in admin, approved, and appear as a new case in the Evidence Index.
-
-**Dependencies:** Phase 1 (schema), Phase 2 (corpus pipeline for integration).
+**Dependencies:** Phase 5 complete.
 
 ---
 
-## Phase 7 — Polish & Launch
+## Phase 7 — Contributions & Launch
 
-**Goal:** Homepage, about page, performance optimization, and public launch readiness.
+**Goal:** Public submissions, performance, and launch readiness.
 
 **Deliverables:**
 
-### 7.1 Homepage (`/`)
-- Meridian logotype — clean wordmark, no UFO imagery
-- Mission statement — one precise sentence (Caveat font)
-- Corpus stats: total cases, sources, findings published, contributions received
-- Featured findings reports (latest 2-3)
-- Entry points: Browse Evidence / Read Findings / Submit Account / Query the Corpus (Oswald font)
-- Cartographic background element — subtle meridian line motif
+### 7.1 Contribution Platform
+- Multi-step submission form, AI screening, admin review, corpus integration
 
-### 7.2 About & Methodology Page (`/about`)
-- Mission and the three research questions
-- What Meridian is not (conspiracy research, advocacy)
-- Methodology: how credibility scoring works, factor weights visible
-- How findings reports are generated and reviewed
-- Data sources listed with descriptions
-- Team / origin story (brief)
+### 7.2 About & Methodology
+- Mission, research questions, full methodology transparency
 
-### 7.3 Performance
-- All case list pages server-side rendered
-- Findings reports statically generated
-- Image optimization
-- Core Web Vitals target: LCP < 2.5s, CLS < 0.1
+### 7.3 Performance & Polish
+- SSR, Core Web Vitals, SEO, accessibility, mobile
 
-### 7.4 SEO
-- Metadata for all public pages
-- OG tags for findings reports and notable cases
-- Sitemap
-
-### 7.5 Accessibility
-- Keyboard navigable throughout
-- Screen reader compatible
-- Sufficient color contrast across all tier color states
-
-**Done when:** Lighthouse score ≥ 90 performance, ≥ 95 accessibility. All pages render correctly on mobile. About page fully written and live.
+**Done when:** Lighthouse ≥ 90 performance, ≥ 95 accessibility. Full end-to-end flow works.
 
 **Dependencies:** All prior phases.

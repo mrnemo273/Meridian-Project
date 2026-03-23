@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { queuedCases, sidebarCases } from "@/data/cases-index";
+import { queuedCases, sidebarCases, casesWithData } from "@/data/cases-index";
 
 export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -155,23 +155,30 @@ export default function HomePage() {
               </tr>
             </thead>
             <tbody>
-              {queuedCases.map(c => (
-                <tr key={c.id}>
-                  <td><span className="queue-num">{c.num}</span></td>
-                  <td>
-                    <div className="queue-title">{c.title}</div>
-                    <div className="queue-desc">{c.description}</div>
-                  </td>
-                  <td><span className="queue-year">{c.year}</span></td>
-                  <td><span className="queue-score high">{c.score}</span></td>
-                  <td>
-                    <div className="queue-tags">
-                      {c.tags.map(t => <span key={t.label} className={`queue-tag ${t.type}`}>{t.label}</span>)}
-                    </div>
-                  </td>
-                  <td><span className="queue-status">{c.status}</span></td>
-                </tr>
-              ))}
+              {queuedCases.map(c => {
+                const hasData = casesWithData.has(c.id);
+                return (
+                  <tr key={c.id} onClick={() => window.location.href = `/case/${c.id}`} style={{ cursor: "pointer" }}>
+                    <td><span className="queue-num">{c.num}</span></td>
+                    <td>
+                      <Link href={`/case/${c.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <div className="queue-title">{c.title}</div>
+                        <div className="queue-desc">{c.description}</div>
+                      </Link>
+                    </td>
+                    <td><span className="queue-year">{c.year}</span></td>
+                    <td><span className="queue-score high">{c.score}</span></td>
+                    <td>
+                      <div className="queue-tags">
+                        {c.tags.map(t => <span key={t.label} className={`queue-tag ${t.type}`}>{t.label}</span>)}
+                      </div>
+                    </td>
+                    <td>
+                      <span className="queue-status">{hasData ? "Ready" : c.status}</span>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </section>

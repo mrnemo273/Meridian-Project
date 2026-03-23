@@ -155,6 +155,29 @@
 
 ---
 
+## Phase 3B — Architecture & Multi-Case (NEXT SPRINT)
+
+| ID | Item | Priority | Notes |
+|----|------|----------|-------|
+| ARC-01 | Decompose workspace page.tsx (~700 lines) into components | P0 | CaseContent, Sidebar, InvestColumn, ContextMenu |
+| ARC-02 | Extract hardcoded data arrays from page.tsx into JSON | P0 | ~200 lines of const data → case data files |
+| ARC-03 | Wire [id] route param to load correct case data | P0 | Currently ignores param, always shows Nimitz |
+| ARC-04 | Define canonical JSON schema for case data files | P0 | Extend case-001-nimitz.json to include all workspace content |
+| ARC-05 | Build Case 002 data: Phoenix Lights | P0 | Full research + JSON |
+| ARC-06 | Build Case 003 data: Rendlesham Forest | P0 | Full research + JSON |
+| ARC-07 | Build Case 004 data: Belgian Wave | P1 | Full research + JSON |
+| ARC-08 | Build Case 005 data: Tehran 1976 | P1 | Full research + JSON |
+| ARC-09 | Build Case 006 data: Aguadilla PR | P1 | Full research + JSON |
+| ARC-10 | "Back to Cases" navigation link in workspace | P1 | |
+| ARC-11 | Loading states for case data | P1 | |
+| ARC-12 | 404 page for cases without data | P1 | |
+
+---
+
 ## Notes
 
-**Phase UI Prototypes:** The Phase 3 Evidence Index UI prototypes (index.html and case-workspace.html) are complete and ready for production build.
+**What shipped (March 2026):** Production Next.js app with homepage + Case 001 (Nimitz) investigation workspace. All interactive features working: annotations, ACH matrix, evidence linking, card selection, search UI, 6 investigation tabs. localStorage persistence via custom hooks.
+
+**Prototypes (reference only):** HTML prototypes in `/prototype/` — index.html, case-workspace.html. These are the design source of truth but are now superseded by the production app for development purposes.
+
+**Architecture debt:** Workspace is a single ~700-line component with hardcoded data. Phase 3B addresses this before adding more cases.

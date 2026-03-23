@@ -10,7 +10,7 @@
     {
       "name": "meridian-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "meridian-app"],
+      "runtimeArgs": ["run", "dev"],
       "port": 3000
     }
   ]

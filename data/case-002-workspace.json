@@ -1,0 +1,766 @@
+{
+  "id": "CASE-002",
+  "caseNumber": "002",
+  "title": "The Phoenix Lights",
+  "subtitle": "Mass Sighting Over Arizona",
+  "date": "March 13, 1997",
+  "location": "300-mile corridor, Henderson NV → Phoenix AZ → Tucson",
+  "duration": "~4.5 hours (two distinct events)",
+  "credibilityScore": 72,
+  "credibilityTier": "Tier 2",
+  "status": "investigating",
+  "tags": [
+    "mass-sighting",
+    "civilian",
+    "governor-witness",
+    "pilot-witness",
+    "video-documented",
+    "contested-explanation",
+    "two-distinct-events"
+  ],
+  "timeline": [
+    {
+      "date": "March 13, 1997 · 7:55 PM",
+      "title": "First sighting — Henderson, Nevada",
+      "detail": "Witness reports a large V-shaped object with multiple lights traveling southeast. Earliest known observation of Event 1. Formation originates near the Nevada-Arizona border.",
+      "tags": [
+        {
+          "label": "Event 1",
+          "type": "event-1"
+        },
+        {
+          "label": "Visual",
+          "type": "visual"
+        }
+      ],
+      "type": "key"
+    },
+    {
+      "date": "8:16 PM · Paulden, AZ",
+      "title": "First NUFORC report — retired police officer",
+      "detail": "A retired police officer calls NUFORC to report a cluster of reddish-orange lights in a V-pattern moving south. First formally documented report.",
+      "tags": [
+        {
+          "label": "NUFORC",
+          "type": "official"
+        },
+        {
+          "label": "Law Enforcement",
+          "type": "witness"
+        }
+      ],
+      "type": "key"
+    },
+    {
+      "date": "8:17 PM · Prescott Valley",
+      "title": "Star occlusion observed — solid object implied",
+      "detail": "Multiple families report the V-formation passing overhead. Stars disappear behind the formation, implying a solid structure — not separate aircraft. Lights transition from white to reddish-orange.",
+      "tags": [
+        {
+          "label": "Event 1",
+          "type": "event-1"
+        },
+        {
+          "label": "Critical",
+          "type": "anomaly"
+        }
+      ],
+      "type": "key",
+      "hasHighlight": "ann-1"
+    },
+    {
+      "date": "~8:30 PM · Phoenix approach",
+      "title": "Kurt Russell reports V-formation to ATC",
+      "detail": "Licensed pilot Kurt Russell, on approach to Phoenix airport, observes six lights in a perfect V-shape. Radios ATC — told nothing on radar. ATC exchange recorded. Russell doesn't realize what he saw until 6 years later.",
+      "tags": [
+        {
+          "label": "Pilot",
+          "type": "witness"
+        },
+        {
+          "label": "ATC",
+          "type": "sensor"
+        }
+      ],
+      "type": "key"
+    },
+    {
+      "date": "8:30–9:00 PM · Phoenix metro",
+      "title": "Thousands witness V-formation over city",
+      "detail": "Massive V-shaped formation passes over the Phoenix metropolitan area. Governor Fife Symington drives to Squaw Peak and observes it firsthand. Describes it as 'dramatically large' with 'a geometric outline, a constant shape.'",
+      "tags": [
+        {
+          "label": "Event 1",
+          "type": "event-1"
+        },
+        {
+          "label": "Governor",
+          "type": "witness"
+        }
+      ],
+      "type": "key"
+    },
+    {
+      "date": "~9:30 PM · South of Phoenix",
+      "title": "V-formation last observed",
+      "detail": "The V-shaped formation is last reported south of Phoenix toward Tucson. Event 1 concludes: ~90 minutes, ~300 miles. No further observations of the V-formation.",
+      "tags": [
+        {
+          "label": "Event 1",
+          "type": "event-1"
+        }
+      ],
+      "type": "normal"
+    },
+    {
+      "date": "10:00 PM · Event 2 begins",
+      "title": "Stationary lights appear over Phoenix",
+      "detail": "A distinct second event: a row of bright lights appears stationary over the Phoenix area. This is what gets filmed. Mike Krzyston captures the most-circulated footage from Moon Valley. USAF later attributes these to LUU-2B/B flares at Barry Goldwater Range.",
+      "tags": [
+        {
+          "label": "Event 2",
+          "type": "event-2"
+        },
+        {
+          "label": "Video",
+          "type": "video"
+        }
+      ],
+      "type": "key",
+      "hasHighlight": "ann-2"
+    },
+    {
+      "date": "June 19, 1997",
+      "title": "Governor's press conference — alien costume stunt",
+      "detail": "Governor Symington holds a press conference, produces his chief of staff dressed in an alien costume. Designed to defuse public panic. He later calls this his biggest regret.",
+      "tags": [
+        {
+          "label": "Official",
+          "type": "official"
+        },
+        {
+          "label": "Cover-up",
+          "type": "anomaly"
+        }
+      ],
+      "type": "anomaly"
+    },
+    {
+      "date": "July 1997",
+      "title": "Military flare explanation emerges — 4 months late",
+      "detail": "USAF attributes lights to Operation Snowbird exercises: A-10 formation (Event 1) and LUU-2B/B flares (Event 2). Luke AFB, which initially denied any activity, quietly acknowledges the exercises.",
+      "tags": [
+        {
+          "label": "USAF",
+          "type": "official"
+        },
+        {
+          "label": "Delayed",
+          "type": "anomaly"
+        }
+      ],
+      "type": "key"
+    },
+    {
+      "date": "March 2007 · 10 years later",
+      "title": "Governor Symington admits: 'It was otherworldly'",
+      "detail": "Former Governor publicly admits he personally witnessed the V-formation. Describes 'a massive delta-shaped craft' that 'couldn't have been flares.' Explains his 1997 mockery as an attempt to prevent public panic.",
+      "tags": [
+        {
+          "label": "Disclosure",
+          "type": "witness"
+        },
+        {
+          "label": "Governor",
+          "type": "official"
+        }
+      ],
+      "type": "key"
+    }
+  ],
+  "evidence": [
+    {
+      "typeLabel": "Witness Data",
+      "badge": "700+",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Mass Witness Database (700+ Interviews)",
+      "summary": "Councilwoman Frances Barwood personally interviewed 700+ witnesses including police officers, pilots, and military veterans. Descriptions remarkably consistent: massive, silent, V-shaped, multiple lights.",
+      "linkText": "🔗 Linked to: NUFORC Records, Prescott Valley Occlusion, Governor Testimony"
+    },
+    {
+      "typeLabel": "Official Record",
+      "badge": "USAF",
+      "badgeClass": "badge-official",
+      "cardType": "type-official",
+      "title": "Operation Snowbird — Official Explanation",
+      "summary": "USAF attributes Event 1 to A-10 formation, Event 2 to LUU-2B/B flares at Barry Goldwater Range. Explanation emerged 4 months after the event. Luke AFB initially denied any aircraft activity.",
+      "linkText": "🔗 Linked to: A-10 Hypothesis Test, Video Analysis, Delayed Response Pattern"
+    },
+    {
+      "typeLabel": "Physical Evidence",
+      "badge": "Video",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "Krzyston Video Footage (Event 2)",
+      "summary": "Most-circulated footage, filmed from Moon Valley at 10 PM. Competing forensic analyses: Cognitech says flares behind Sierra Estrella. Dilettoso says brightness too constant for flares. Neither conclusive.",
+      "linkText": "🔗 Linked to: Cognitech Analysis, Dilettoso Analysis, Event 2 Assessment"
+    },
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "ATC",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "ATC Recording — Kurt Russell",
+      "summary": "Real-time pilot report to Phoenix ATC before any media coverage. Russell didn't realize what he'd reported until 6 years later. Cleanest witness evidence in the case — no narrative contamination.",
+      "linkText": "🔗 Linked to: V-Formation Path, Radar Gap, Pilot Credibility"
+    },
+    {
+      "typeLabel": "Data Gap",
+      "badge": "Erased",
+      "badgeClass": "badge-anomaly",
+      "cardType": "type-evidence",
+      "title": "FAA Radar Data — Erased",
+      "summary": "FAA radar data for Phoenix on March 13, 1997, expired after the standard 2-week retention period. Nobody requested preservation. This is the most consequential evidence loss in the case.",
+      "linkText": "🔗 Linked to: FOIA Targets, Radar Gap Analysis, Luke AFB Denial"
+    }
+  ],
+  "witnesses": [
+    {
+      "initials": "FS",
+      "name": "Gov. Fife Symington III",
+      "rank": "Governor of Arizona · Air Force Veteran",
+      "observed": "Drove to Squaw Peak and observed a massive delta-shaped craft with enormous lights. Called it 'otherworldly' and 'too symmetrical' to be flares. Initially mocked the incident publicly, then admitted the truth 10 years later.",
+      "quote": "'It couldn't have been flares because it was too symmetrical. It had a geometric outline, a constant shape.'",
+      "quoteSource": "— CNN, 2007"
+    },
+    {
+      "initials": "KR",
+      "name": "Kurt Russell (Pilot)",
+      "rank": "Licensed Private Pilot",
+      "observed": "Observed six lights in a perfect V-shape on approach to Phoenix. Reported to ATC, told nothing on radar. Didn't connect his sighting to the Phoenix Lights until 6 years later when he heard his own ATC recording on TV.",
+      "quote": "'I saw six lights over the airport in absolute uniform in a V shape.'",
+      "quoteSource": "— BBC One, 2017"
+    },
+    {
+      "initials": "FB",
+      "name": "Councilwoman Frances Barwood",
+      "rank": "Phoenix City Council · Investigator",
+      "observed": "Only elected official to launch public investigation. Personally interviewed 700+ witnesses including police, pilots, and military. Faced career-damaging ridicule. Witness descriptions were remarkably consistent.",
+      "quote": "“Over 700 people contacted my office. These weren’t crackpots — these were police officers, pilots, military people.”",
+      "quoteSource": "— Multiple interviews, 1997"
+    }
+  ],
+  "aiAnalysis": [
+    {
+      "aiType": "Analytical Framework",
+      "title": "Two-Event Decomposition — Critical Distinction",
+      "finding": "The Phoenix Lights are TWO distinct events. Event 1 (V-formation, 8-9:30 PM): massive structure, 300 miles, star occlusion, no video. Event 2 (stationary lights, 10 PM): filmed, possibly flares. Conflating them weakens analysis of both. Event 1 is the real mystery.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Hypothesis Test",
+      "title": "A-10 Formation vs. Witness Testimony",
+      "finding": "The A-10 explanation for Event 1 fails key tests: star occlusion (solid object, not formation), silence (A-10 engines audible at relevant altitude), no navigation lights, perceived mile-wide size, slow speed. 30-40% confidence in conventional explanation.",
+      "confidence": "Medium — Strong witness data, no sensor data",
+      "confidenceClass": "confidence-medium"
+    },
+    {
+      "aiType": "Cross-Case Pattern",
+      "title": "Delayed Disclosure Pattern",
+      "finding": "Symington's 10-year delay matches: Nimitz (Fravor 13 years, Dietrich 17 years), Belgian Wave (military officials, decades). Pattern suggests systemic institutional suppression. Implies undisclosed observations likely exist.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    }
+  ],
+  "openQuestions": [
+    {
+      "num": "Q01",
+      "text": "Why were FAA radar records not preserved?",
+      "context": "Largest mass sighting in US history, and the FAA let the radar data auto-delete after 2 weeks. Nobody requested preservation."
+    },
+    {
+      "num": "Q02",
+      "text": "Were fighters scrambled from Luke AFB?",
+      "context": "Unverified NUFORC report claims F-15Cs launched and radar went to 'white noise.' Luke denied any activity. If true, this changes everything."
+    },
+    {
+      "num": "Q03",
+      "text": "Where are the Operation Snowbird flight logs?",
+      "context": "104th Fighter Squadron sortie records for March 13, 1997, have never been publicly released. They would validate or contradict the A-10 explanation."
+    },
+    {
+      "num": "Q04",
+      "text": "Does video of Event 1 (V-formation) exist?",
+      "context": "All known footage is Event 2 (10 PM). Despite thousands of witnesses, no video of the V-formation has surfaced. 1997 — camcorders existed but weren't ubiquitous."
+    },
+    {
+      "num": "Q05",
+      "text": "What did ATC record beyond Russell's call?",
+      "context": "Other aircraft were in the Phoenix corridor. Their ATC communications may exist in FAA archives."
+    }
+  ],
+  "resolution": [
+    {
+      "status": "partial",
+      "label": "A-10 formation (Event 1)",
+      "detail": "Official explanation. Explains V-shape and trajectory. Fails star-occlusion test, silence, perceived size, and speed. 30-40% confidence."
+    },
+    {
+      "status": "partial",
+      "label": "LUU-2B/B flares (Event 2)",
+      "detail": "Official explanation. Cognitech geometry supports it. Mountain-occlusion timing works. Brightness-constancy counterargument unresolved. 60-70% confidence."
+    },
+    {
+      "status": "eliminated",
+      "label": "Single phenomenon",
+      "detail": "Eliminated. Events 1 and 2 are temporally, geographically, and phenomenologically distinct. Must be analyzed separately."
+    },
+    {
+      "status": "eliminated",
+      "label": "Mass hallucination",
+      "detail": "Eliminated. 10,000+ independent observers across 300 miles with real-time ATC documentation."
+    },
+    {
+      "status": "eliminated",
+      "label": "Astronomical object",
+      "detail": "Eliminated. Object described as low-altitude, moving, structured. Multiple witnesses with aviation expertise."
+    },
+    {
+      "status": "open",
+      "label": "Unknown structured craft (Event 1)",
+      "detail": "Star occlusion, silence, and governor's 'geometric outline' testimony suggest solid structure. No sensor data to confirm or deny."
+    }
+  ],
+  "osint": [
+    {
+      "field": "Location",
+      "status": "verified",
+      "value": "300-mile corridor: Henderson NV → Paulden → Prescott → Phoenix → Tucson edge.",
+      "source": "NUFORC geographic mapping of 700+ reports."
+    },
+    {
+      "field": "Weather",
+      "status": "verified",
+      "value": "Clear skies over most of Arizona. Good visibility across Phoenix metro.",
+      "source": "NOAA historical weather records."
+    },
+    {
+      "field": "Military Presence",
+      "status": "verified",
+      "value": "104th FS (MD ANG) conducting Operation Snowbird at Davis-Monthan AFB and Barry Goldwater Range.",
+      "source": "Maryland ANG unit history (2000); USAF public affairs."
+    },
+    {
+      "field": "Governor Testimony",
+      "status": "verified",
+      "value": "Symington confirmed sighting in 2007 CNN commentary and National Press Club (Nov 2007).",
+      "source": "CNN archive, video record."
+    },
+    {
+      "field": "ATC Recording",
+      "status": "partial",
+      "value": "Kurt Russell's ATC exchange confirmed aired on television. Original FAA recording status unknown.",
+      "source": "BBC interview (2017); ATC broadcast excerpts."
+    },
+    {
+      "field": "FAA Radar Data",
+      "status": "lost",
+      "value": "Erased per 2-week retention policy. No preservation request made.",
+      "source": "FAA data retention policy; investigator reports."
+    },
+    {
+      "field": "Luke AFB Response",
+      "status": "contested",
+      "value": "Initially denied activity. Later acknowledged Operation Snowbird. Unverified F-15C scramble claim.",
+      "source": "Arizona Republic (1997); NUFORC unverified report."
+    }
+  ],
+  "evidenceChain": [
+    {
+      "num": 1,
+      "source": "700+ Witness Accounts",
+      "note": "Compiled by Barwood and NUFORC. Consistent descriptions across 300 miles.",
+      "strength": "strong",
+      "strengthLabel": "Strong — volume and consistency"
+    },
+    {
+      "num": 2,
+      "source": "Governor Symington Testimony",
+      "note": "Sitting governor. 10-year delayed admission. Air Force veteran.",
+      "strength": "strong",
+      "strengthLabel": "Strong — credentialed, delayed disclosure"
+    },
+    {
+      "num": 3,
+      "source": "Kurt Russell ATC Recording",
+      "note": "Real-time pilot report. Pre-media-narrative. Delayed self-identification.",
+      "strength": "strong",
+      "strengthLabel": "Strong — real-time documentation"
+    },
+    {
+      "num": 4,
+      "source": "Krzyston Video (Event 2 only)",
+      "note": "Most circulated footage. Competing forensic analyses. Possibly flares.",
+      "strength": "moderate",
+      "strengthLabel": "Moderate — contested interpretation"
+    },
+    {
+      "num": 5,
+      "source": "Operation Snowbird Records",
+      "note": "Confirms military exercises in area. Specific flight logs not public.",
+      "strength": "moderate",
+      "strengthLabel": "Moderate — incomplete documentation"
+    },
+    {
+      "num": 6,
+      "source": "FAA Radar Data",
+      "note": "Erased. Would have been definitive. Biggest evidence loss.",
+      "strength": "lost",
+      "strengthLabel": "Lost — erased per retention policy"
+    }
+  ],
+  "solvabilityFactors": [
+    {
+      "name": "Largest witness pool in US UAP history",
+      "score": "+15",
+      "type": "positive"
+    },
+    {
+      "name": "Governor witness with delayed admission",
+      "score": "+12",
+      "type": "positive"
+    },
+    {
+      "name": "Pilot ATC recording (real-time)",
+      "score": "+10",
+      "type": "positive"
+    },
+    {
+      "name": "Star-occlusion testimony (solid object)",
+      "score": "+8",
+      "type": "positive"
+    },
+    {
+      "name": "FOIA avenues unexplored",
+      "score": "+10",
+      "type": "positive"
+    },
+    {
+      "name": "FAA radar data erased",
+      "score": "-12",
+      "type": "negative"
+    },
+    {
+      "name": "No video of Event 1 (V-formation)",
+      "score": "-10",
+      "type": "negative"
+    },
+    {
+      "name": "No military sensor data",
+      "score": "-8",
+      "type": "negative"
+    },
+    {
+      "name": "Plausible flare explanation for Event 2",
+      "score": "-5",
+      "type": "negative"
+    },
+    {
+      "name": "28-year evidence degradation",
+      "score": "-5",
+      "type": "negative"
+    }
+  ],
+  "solvabilityScore": 58,
+  "nextSteps": [
+    {
+      "priority": "high",
+      "text": "File FOIA for 104th Fighter Squadron sortie records, March 13, 1997"
+    },
+    {
+      "priority": "high",
+      "text": "File FOIA for Luke AFB incident logs and scramble orders, March 13, 1997"
+    },
+    {
+      "priority": "high",
+      "text": "Search FAA archives for surviving ATC recordings from Phoenix TRACON"
+    },
+    {
+      "priority": "medium",
+      "text": "Locate and interview additional Prescott Valley star-occlusion witnesses"
+    },
+    {
+      "priority": "medium",
+      "text": "Obtain Maryland ANG after-action report referenced in 2000 unit history"
+    },
+    {
+      "priority": "medium",
+      "text": "Replicate Dilettoso brightness-constancy analysis with modern tools"
+    },
+    {
+      "priority": "low",
+      "text": "Canvas for undiscovered Event 1 video footage (1997 camcorder era)"
+    }
+  ],
+  "searchDemoResults": [
+    {
+      "type": "web",
+      "source": "Web · CNN",
+      "title": "Governor Symington: 'I saw a UFO in the Arizona sky'",
+      "snippet": "Former Arizona Governor Fife Symington III admits witnessing the Phoenix Lights. 'It was otherworldly,' he states, reversing his 1997 press conference dismissal..."
+    },
+    {
+      "type": "academic",
+      "source": "Skeptical Inquirer",
+      "title": "The Phoenix Lights: Sorted Out (Brian Dunning)",
+      "snippet": "Detailed analysis attributing Event 1 to Operation Snowbird A-10 formation and Event 2 to LUU-2B/B flares. Discusses illusory contours and how formation flights can appear solid..."
+    },
+    {
+      "type": "video",
+      "source": "YouTube · KGUN9",
+      "title": "Man behind famous Phoenix Lights footage still mystified 25 years later",
+      "snippet": "Mike Krzyston revisits his Moon Valley footage on the 25th anniversary. 'I still don't know what I filmed,' he says. Includes side-by-side comparison with known flare drops..."
+    },
+    {
+      "type": "reddit",
+      "source": "Reddit · r/UFOs",
+      "title": "Phoenix Lights star-occlusion testimonies compiled",
+      "snippet": "User compiles 14 independent Prescott Valley witness accounts describing stars disappearing behind the V-formation. If accurate, this eliminates the A-10 formation hypothesis entirely..."
+    },
+    {
+      "type": "foia",
+      "source": "FOIA · The Black Vault",
+      "title": "Operation Snowbird: Partial Records Retrieved",
+      "snippet": "FOIA response from Maryland ANG provides partial records confirming A-10 deployment but specific March 13 flight logs 'not located.' Follow-up appeal pending..."
+    }
+  ],
+  "achHypotheses": [
+    "A-10 Formation",
+    "LUU-2B/B Flares",
+    "Unknown Craft",
+    "Multiple Causes",
+    "Mass Misperception"
+  ],
+  "achEvidence": [
+    {
+      "evidence": "700+ consistent witness descriptions",
+      "ai": [
+        "I",
+        "N",
+        "C",
+        "C",
+        "I"
+      ]
+    },
+    {
+      "evidence": "Star occlusion (Prescott Valley)",
+      "ai": [
+        "I",
+        "N",
+        "C",
+        "N",
+        "I"
+      ]
+    },
+    {
+      "evidence": "Governor Symington testimony",
+      "ai": [
+        "I",
+        "I",
+        "C",
+        "C",
+        "I"
+      ]
+    },
+    {
+      "evidence": "Kurt Russell ATC recording",
+      "ai": [
+        "N",
+        "N",
+        "C",
+        "C",
+        "I"
+      ]
+    },
+    {
+      "evidence": "Krzyston video (Event 2)",
+      "ai": [
+        "N",
+        "C",
+        "N",
+        "C",
+        "N"
+      ]
+    },
+    {
+      "evidence": "Cognitech mountain-occlusion analysis",
+      "ai": [
+        "N",
+        "C",
+        "I",
+        "C",
+        "N"
+      ]
+    },
+    {
+      "evidence": "4-month delayed military explanation",
+      "ai": [
+        "N",
+        "N",
+        "C",
+        "N",
+        "N"
+      ]
+    },
+    {
+      "evidence": "FAA radar data erased",
+      "ai": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ]
+    }
+  ],
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "image",
+      "priority": "high",
+      "status": "open",
+      "title": "FLIR1 Video Still Frames (Case 001 — cross-case)",
+      "description": "Download official FLIR1 video from NAVAIR FOIA Reading Room. Extract 3-4 key still frames: (1) first acquisition, (2) object rotation, (3) object at center frame, (4) loss of lock moment.",
+      "source_url": "https://www.navair.navy.mil/foia/documents",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Department of Defense / Naval Air Systems Command",
+      "save_to": "public/images/cases/001/",
+      "file_names": [
+        "flir1-acquisition.png",
+        "flir1-rotation.png",
+        "flir1-center.png",
+        "flir1-lock-loss.png"
+      ],
+      "notes": "These are the most important images in the entire project. US Government work = no copyright restrictions."
+    },
+    {
+      "id": "IT-002",
+      "type": "image",
+      "priority": "high",
+      "status": "open",
+      "title": "Phoenix Lights — Krzyston Video Stills (Event 2)",
+      "description": "Locate the most widely circulated still frames from Mike Krzyston's 10 PM footage. These appear in nearly every documentary and news piece. Need 2-3 frames showing: (1) full arc of lights, (2) lights beginning to disappear, (3) comparison with daytime mountain ridgeline.",
+      "source_url": "https://www.kgun9.com/news/state/man-behind-famous-phoenix-lights-footage-still-mystified-25-years-later",
+      "license": "Fair use — research/educational, non-commercial",
+      "attribution": "Mike Krzyston / [broadcast network if applicable]",
+      "save_to": "public/images/cases/002/",
+      "file_names": [
+        "event2-full-arc.png",
+        "event2-disappearing.png",
+        "event2-daytime-comparison.png"
+      ],
+      "notes": "Krzyston footage is copyrighted. Use under fair use for research. Always credit. If Krzyston himself grants permission, note it here."
+    },
+    {
+      "id": "IT-003",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Symington Press Conference Photo (1997)",
+      "description": "Find the widely published AP/Reuters photo of Governor Symington's June 1997 press conference with the aide in an alien costume. This is a key historical image for the institutional response narrative.",
+      "source_url": null,
+      "license": "Fair use — news/historical, non-commercial research",
+      "attribution": "AP Photo / [photographer name if identifiable]",
+      "save_to": "public/images/cases/002/",
+      "file_names": [
+        "symington-press-conference-1997.jpg"
+      ],
+      "notes": "Wire service photo. Widely reproduced. Fair use for non-commercial research."
+    },
+    {
+      "id": "IT-004",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Phoenix Lights — Geographic Transit Map",
+      "description": "Create or source a map showing the V-formation's 300-mile path from Henderson NV through Paulden, Prescott, Phoenix to Tucson. Include timestamps at key points. Could be sourced from existing analysis or created from NUFORC data.",
+      "source_url": null,
+      "license": "Create original (OpenStreetMap base) or source CC-licensed",
+      "attribution": "Meridian Project / OpenStreetMap contributors",
+      "save_to": "public/images/cases/002/",
+      "file_names": [
+        "v-formation-transit-map.png"
+      ],
+      "notes": "Best if we create this ourselves using NUFORC coordinate data. OpenStreetMap base layer is CC-BY-SA."
+    },
+    {
+      "id": "IT-005",
+      "type": "image",
+      "priority": "high",
+      "status": "open",
+      "title": "FLIR1 / GIMBAL / GOFAST — Official DoD Release Set (Case 001)",
+      "description": "Download all three official DoD UAP videos. Extract representative still frames from each. GIMBAL and GOFAST are from Case 006 (USS Roosevelt) but cross-reference to Case 001.",
+      "source_url": "https://www.navair.navy.mil/foia/documents",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Department of Defense / Naval Air Systems Command",
+      "save_to": "public/images/cases/001/",
+      "file_names": [
+        "gimbal-frame.png",
+        "gofast-frame.png"
+      ],
+      "notes": "GIMBAL and GOFAST are USS Roosevelt (Case 006) but released alongside FLIR1. Cross-case reference images."
+    },
+    {
+      "id": "IT-006",
+      "type": "document",
+      "priority": "medium",
+      "status": "open",
+      "title": "SCU Nimitz Forensic Analysis — Key Figures",
+      "description": "The 270-page SCU report contains trajectory reconstruction diagrams, acceleration charts, and radar track visualizations. Extract 3-4 key figures that illustrate the physics analysis.",
+      "source_url": "https://www.academia.edu/40212818/A_Forensic_Analysis_of_Navy_Carrier_Strike_Group_Elevens_Encounter_with_an_Anomalous_Aerial_Vehicle",
+      "license": "Academic fair use — research citation",
+      "attribution": "Scientific Coalition for UAP Studies (SCU), 2019",
+      "save_to": "public/images/cases/001/",
+      "file_names": [
+        "scu-trajectory-reconstruction.png",
+        "scu-acceleration-chart.png",
+        "scu-radar-track.png"
+      ],
+      "notes": "Academic publication. Cite properly. Figures may be extractable from the PDF."
+    },
+    {
+      "id": "IT-007",
+      "type": "image",
+      "priority": "low",
+      "status": "open",
+      "title": "Barry Goldwater Range — Satellite/Map View",
+      "description": "Source a satellite or map view showing the Barry Goldwater Range relative to Phoenix. This helps visualize the line-of-sight geometry for the flare explanation (Event 2). Distance: ~50-70 miles.",
+      "source_url": null,
+      "license": "Create original (satellite imagery or OpenStreetMap)",
+      "attribution": "Meridian Project / OpenStreetMap contributors",
+      "save_to": "public/images/cases/002/",
+      "file_names": [
+        "goldwater-range-phoenix-map.png"
+      ],
+      "notes": "Shows why flares at the range would be visible from Phoenix. Geometric context for the Cognitech analysis."
+    },
+    {
+      "id": "IT-008",
+      "type": "video",
+      "priority": "low",
+      "status": "open",
+      "title": "Kurt Russell ATC Exchange — Audio/Video Clip",
+      "description": "Locate the broadcast clip containing Kurt Russell's air traffic control exchange from March 13, 1997. This was aired on a television program and is how Russell himself identified his involvement.",
+      "source_url": null,
+      "license": "Fair use — news/historical research",
+      "attribution": "ATC recording / [broadcast network]",
+      "save_to": "public/media/cases/002/",
+      "file_names": [
+        "russell-atc-exchange.mp3"
+      ],
+      "notes": "The original ATC recording is likely government record (public domain). The broadcast edit may have copyright overlay."
+    }
+  ]
+}

@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case 001: Timeline Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wdth,wght@0,8..144,50..150,100..900;1,8..144,50..150,100..900&family=JetBrains+Mono:wght@300;400;500;600&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --board-bg: #EDECE8;
+    --border: rgba(0,0,0,0.07);
+    --border-strong: rgba(0,0,0,0.12);
+    --text-1: #272727;
+    --text-2: #6B6560;
+    --text-3: #A09A92;
+    --gold: #9A7A2E;
+    --gold-soft: rgba(154,122,46,0.12);
+    --gold-line: rgba(154,122,46,0.18);
+    --orange: #B86A2E;
+    --orange-soft: rgba(184,106,46,0.1);
+    --purple: #7B5D9A;
+    --purple-soft: rgba(123,93,154,0.08);
+    --red: #B04A4A;
+    --red-soft: rgba(176,74,74,0.08);
+    --blue: #4A6A9A;
+    --blue-soft: rgba(74,106,154,0.08);
+    --grid: 32px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--board-bg);
+    color: var(--text-1);
+    font-family: 'Roboto Serif', Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    cursor: grab; user-select: none; -webkit-user-select: none;
+  }
+  body.dragging-card { cursor: default !important; }
+  body.panning { cursor: grabbing !important; }
+
+  /* ============================================ */
+  /* TOOLBAR (dark)                               */
+  /* ============================================ */
+  .toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 48px;
+    background: #1A1816; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .tb-left { display: flex; align-items: center; gap: 8px; }
+  .tb-back {
+    font-family: 'Roboto Serif', serif;
+    font-size: 10px; font-weight: 900; font-stretch: 150%;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(200,196,184,0.5); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 10px 6px 6px; border-radius: 4px; transition: color 0.2s;
+  }
+  .tb-back svg { stroke: rgba(200,196,184,0.5); }
+  .tb-back:hover { color: #C8C4B8; }
+  .tb-back:hover svg { stroke: #C8C4B8; }
+  .tb-center {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tb-center .case-num { font-size: 10px; font-weight: 500; color: rgba(200,196,184,0.4); }
+  .tb-center h1 {
+    font-family: 'Roboto Serif', serif; font-weight: 600; font-stretch: 125%;
+    font-size: 17px; color: #C8C4B8; letter-spacing: -0.2px;
+  }
+  .status-pill {
+    padding: 3px 10px; font-size: 9px; letter-spacing: 0.5px;
+    border-radius: 10px; display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(176,74,74,0.15); color: #D46A6A; font-weight: 500;
+  }
+  .status-pill::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: #D46A6A; animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .tb-right { display: flex; align-items: center; gap: 10px; }
+  .tb-link {
+    font-family: 'Roboto Serif', serif;
+    font-size: 10px; font-weight: 900; font-stretch: 150%;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(200,196,184,0.5); text-decoration: none;
+    padding: 6px 10px; border-radius: 4px; transition: color 0.2s;
+  }
+  .tb-link:hover { color: #C8C4B8; }
+  .inv-avatars { display: flex; }
+  .inv-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+    border: 2px solid #1A1816; margin-left: -6px;
+  }
+  .inv-avatar:first-child { margin-left: 0; }
+  .inv-avatar.human { background: var(--orange); color: #fff; }
+  .inv-avatar.ai { background: var(--purple); color: #fff; }
+
+  /* ============================================ */
+  /* FLOATING SUB-BAR                             */
+  /* ============================================ */
+  .sub-bar {
+    position: fixed; top: 56px; left: 50%; transform: translateX(-50%);
+    z-index: 99; display: flex; align-items: center; gap: 8px;
+  }
+  .filter-tabs {
+    display: flex; gap: 1px; background: #FFFFFF;
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 3px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    height: 32px; align-items: center;
+  }
+  .filter-tab {
+    padding: 0 12px; height: 24px; line-height: 24px;
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    color: var(--text-3); background: transparent; border: none;
+    cursor: pointer; border-radius: 4px; transition: all 0.15s; white-space: nowrap;
+  }
+  .filter-tab:hover { color: var(--text-1); background: var(--bg); }
+  .filter-tab.active { color: #FFFFFF; background: var(--gold); font-weight: 500; }
+  .search-wrap { position: relative; height: 32px; }
+  .search-icon-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: #FFFFFF; border: 1px solid var(--border); border-radius: 6px;
+    cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    color: var(--text-3); transition: all 0.2s;
+  }
+  .search-icon-btn:hover { color: var(--text-1); }
+  .search-icon-btn.hidden { display: none; }
+  .search-box {
+    width: 0; height: 32px; padding: 0;
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    color: var(--text-1); background: #FFFFFF;
+    border: 1px solid var(--border); border-radius: 6px; outline: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); opacity: 0; overflow: hidden;
+    transition: width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+  }
+  .search-box.open { width: 180px; padding: 0 10px; opacity: 1; }
+  .search-box:focus { border-color: var(--gold); }
+  .zoom-wrap { position: relative; height: 32px; }
+  .zoom-icon-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: #FFFFFF; border: 1px solid var(--border); border-radius: 6px;
+    cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    color: var(--text-3); font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    font-weight: 500; transition: all 0.2s;
+  }
+  .zoom-icon-btn:hover { color: var(--text-1); }
+  .zoom-icon-btn.hidden { display: none; }
+  .zoom-controls {
+    display: flex; align-items: center;
+    background: #FFFFFF; border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    height: 32px; opacity: 0; width: 0;
+    transition: width 0.25s ease, opacity 0.2s ease;
+  }
+  .zoom-controls.open { width: 104px; opacity: 1; }
+  .tool-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--text-3);
+    background: transparent; border: none; cursor: pointer;
+    transition: all 0.15s; font-family: 'JetBrains Mono', monospace;
+  }
+  .tool-btn:hover { color: var(--text-1); background: var(--bg); }
+  #zoom-display {
+    font-size: 10px; color: var(--text-2); padding: 0 4px;
+    min-width: 40px; text-align: center;
+    border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+  }
+
+  /* ============================================ */
+  /* CANVAS                                       */
+  /* ============================================ */
+  .canvas-viewport { width: 100vw; height: 100vh; overflow: hidden; position: relative; }
+  .canvas-world { position: absolute; transform-origin: 0 0; will-change: transform; }
+
+  /* Vignette overlay — fixed to screen, never moves with pan/zoom */
+  .canvas-vignette {
+    position: fixed; inset: 0; z-index: 90; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,0.18) 100%);
+  }
+
+  /* Graph paper grid */
+  .canvas-grid {
+    position: absolute; width: 16000px; height: 4800px;
+    left: -2000px; top: -800px; pointer-events: none;
+    background:
+      linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  /* Major grid every 4 cells (128px) */
+  .canvas-grid-major {
+    position: absolute; width: 16000px; height: 4800px;
+    left: -2000px; top: -800px; pointer-events: none;
+    background:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 128px 128px;
+  }
+
+  /* ============================================ */
+  /* YEAR MARKERS (aligned to timeline)           */
+  /* ============================================ */
+  .year-marker {
+    position: absolute; z-index: 6; pointer-events: none;
+    font-family: 'Roboto Serif', serif;
+    font-weight: 300; font-stretch: 75%; font-size: 72px;
+    color: #272727;
+    line-height: 0.85;
+    letter-spacing: -1px;
+  }
+  .year-marker .year-sub {
+    display: block;
+    font-family: 'Roboto Serif', serif;
+    font-weight: 400; font-stretch: 100%; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #888;
+    margin-top: 6px;
+  }
+
+  /* ============================================ */
+  /* TIMELINE RIVER (black line)                  */
+  /* ============================================ */
+  .river {
+    position: absolute; top: 160px; left: 0;
+    width: 12000px; height: 2px; pointer-events: none; z-index: 5;
+  }
+  .river-line {
+    position: absolute; top: 0; height: 2px;
+    left: 440px; right: calc(12000px - 11028px);
+    background: #272727;
+  }
+  /* Gold progress overlay — width updated via JS */
+  .river-progress {
+    position: absolute; top: 0; height: 2px;
+    left: 440px; width: 0;
+    background: var(--gold);
+    transition: width 0.5s ease;
+    z-index: 1;
+  }
+  .river-endcap {
+    position: absolute; top: -3px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #272727;
+    transform: translateX(-4px);
+  }
+  .river-gap {
+    position: absolute; z-index: 6; pointer-events: none;
+    font-family: 'Roboto Serif', serif;
+    font-weight: 300; font-stretch: 75%; font-size: 72px;
+    line-height: 0.85;
+    letter-spacing: -1px;
+    white-space: nowrap;
+  }
+  .river-gap .year-sub {
+    display: block;
+    font-family: 'Roboto Serif', serif;
+    font-weight: 400; font-stretch: 100%; font-size: 11px;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  /* Node circles on the timeline */
+  .river-node {
+    position: absolute; top: -5px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid #272727;
+    transform: translateX(-6px);
+    z-index: 2;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .river-node.key {
+    width: 14px; height: 14px; top: -6px;
+    transform: translateX(-7px);
+    background: #272727;
+    border-color: #272727;
+  }
+  .river-node.alert {
+    border-color: var(--red);
+    background: var(--red);
+  }
+  .river-node.visited {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* ============================================ */
+  /* CONNECTORS (straight, grid-snapped)          */
+  /* ============================================ */
+  .connectors {
+    position: absolute; top: 0; left: 0; pointer-events: none; z-index: 4;
+    overflow: visible;
+  }
+  .conn { fill: none; stroke-linecap: square; }
+  .conn-branch { stroke: #272727; stroke-width: 2; opacity: 0.5; }
+  .conn-ai { stroke: #7B5D9A; stroke-width: 1.5; opacity: 0.3; stroke-dasharray: 4 4; }
+  .conn-cross { stroke: #7B5D9A; stroke-width: 1; stroke-dasharray: 3 5; opacity: 0.15; }
+  .conn-dot { stroke-width: 0; }
+  .conn-trunk { stroke: #272727; stroke-width: 2; opacity: 0.5; }
+  .conn-guide { stroke: #272727; stroke-width: 1; opacity: 0.15; }
+  .conn-sibling { stroke: #272727; stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.2; }
+
+  /* ============================================ */
+  /* TIMELINE CARDS (landscape, uniform width)    */
+  /* ============================================ */
+  .tl-card {
+    position: absolute; z-index: 10;
+    width: 448px; /* 14 grid units */
+    background: var(--surface);
+    border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; cursor: grab;
+    display: flex; flex-direction: row;
+    transition: box-shadow 0.25s, border-color 0.2s;
+  }
+  .tl-card:active { cursor: grabbing; }
+  .tl-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    border-color: var(--border-strong); z-index: 60;
+  }
+  .tl-card.alert { border-left: 3px solid var(--red); }
+
+  /* Book cover cards (intro & outro) */
+  .tl-card.book-cover {
+    background: #1A1816; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px; box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+  .tl-card.book-cover:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  /* No card ::after dot — using river-node circles instead */
+
+  /* Photo side (left) — 4:3 landscape */
+  .tl-photo {
+    width: 192px; min-height: 144px; flex-shrink: 0;
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .tl-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to left, rgba(0,0,0,0.25) 0%, transparent 50%);
+  }
+  .tl-photo-credit {
+    position: absolute; bottom: 4px; left: 6px;
+    font-size: 6px; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.5px; z-index: 2;
+  }
+
+  /* Visual illustration side (left) — matches photo 4:3 */
+  .tl-vis {
+    width: 192px; min-height: 144px; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+
+  /* Text side (right) */
+  .tl-inner { padding: 24px 28px; flex: 1; min-width: 0; }
+  .tl-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 500; color: var(--text-3); margin-bottom: 6px;
+  }
+  .tl-headline {
+    font-family: 'Roboto Serif', serif;
+    font-size: 20px; font-weight: 300; font-stretch: 100%;
+    color: var(--text-1); line-height: 1.15; margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .tl-date {
+    font-family: 'Roboto Serif', serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-1); line-height: 1.1; letter-spacing: -0.2px;
+    margin-bottom: 1px;
+  }
+  .tl-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    color: var(--gold); letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .tl-card.alert .tl-time { color: var(--red); }
+  .tl-body {
+    font-family: 'Roboto Serif', serif;
+    font-size: 10px; font-stretch: 90%; color: var(--text-2); line-height: 1.65; font-weight: 400;
+  }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .tl-tag {
+    font-size: 7px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; padding: 3px 6px; border-radius: 3px;
+  }
+  .tl-tag.witness { background: var(--orange-soft); color: var(--orange); }
+  .tl-tag.sensor { background: var(--blue-soft); color: var(--blue); }
+  .tl-tag.official { background: var(--gold-soft); color: var(--gold); }
+  .tl-tag.question { background: var(--red-soft); color: var(--red); }
+
+  /* ============================================ */
+  /* EVIDENCE / BRANCH CARDS (below timeline)     */
+  /* ============================================ */
+  .card {
+    position: absolute; z-index: 5;
+    background: var(--surface);
+    border: 1px solid var(--border); border-radius: 6px;
+    cursor: grab; overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .card:active { cursor: grabbing; }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    border-color: var(--border-strong); z-index: 50;
+  }
+  .card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; border-radius: 6px 0 0 6px;
+  }
+  .card.t-witness::before { background: var(--orange); }
+  .card.t-evidence::before { background: var(--gold); }
+  .card.t-ai::before { background: var(--purple); }
+  .card.t-document::before { background: var(--text-3); }
+  .card.t-anomaly::before { background: var(--red); }
+  .card.t-sensor::before { background: var(--blue); }
+
+  .card-photo {
+    width: 100%; height: 96px; /* ~16:9 at 224px wide */
+    background-size: cover; background-position: center;
+    border-bottom: 1px solid var(--border); position: relative;
+  }
+  .card-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%);
+  }
+  .card-photo-label {
+    position: absolute; bottom: 4px; left: 10px;
+    font-size: 7px; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); font-weight: 500; z-index: 2;
+  }
+
+  .card-inner { padding: 14px 16px 14px 18px; }
+  .card-eyebrow {
+    font-size: 8px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .card.t-witness .card-eyebrow { color: var(--orange); }
+  .card.t-evidence .card-eyebrow { color: var(--gold); }
+  .card.t-ai .card-eyebrow { color: var(--purple); }
+  .card.t-document .card-eyebrow { color: var(--text-3); }
+  .card.t-anomaly .card-eyebrow { color: var(--red); }
+  .card.t-sensor .card-eyebrow { color: var(--blue); }
+  .card-badge {
+    font-size: 7px; letter-spacing: 0.5px; font-weight: 500;
+    padding: 2px 5px; border-radius: 3px; float: right;
+  }
+  .badge-witness { background: var(--orange-soft); color: var(--orange); }
+  .badge-sensor { background: var(--blue-soft); color: var(--blue); }
+  .badge-official { background: var(--gold-soft); color: var(--gold); }
+  .badge-ai { background: var(--purple-soft); color: var(--purple); }
+  .badge-anomaly { background: var(--red-soft); color: var(--red); }
+
+  .card-title { font-family: 'Roboto Serif', serif; font-size: 14px; font-weight: 300; font-stretch: 100%; color: var(--text-1); line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.1px; }
+  .card-body { font-family: 'Roboto Serif', serif; font-size: 10px; font-stretch: 90%; color: var(--text-2); line-height: 1.65; font-weight: 400; }
+  .card-quote {
+    font-family: 'Roboto Serif', serif; font-style: italic;
+    font-size: 12px; color: var(--text-1); line-height: 1.4;
+    margin-top: 6px; padding-left: 8px; border-left: 2px solid var(--gold-soft);
+  }
+  .card-quote-src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; color: var(--text-3); margin-top: 2px;
+    font-style: normal; letter-spacing: 0.3px;
+  }
+  .card-annotation { margin-top: 6px; padding: 6px 8px; border-radius: 4px; }
+  .card-annotation.human {
+    background: var(--orange-soft);
+    font-family: 'Roboto Serif', serif; font-style: italic; font-size: 12px; line-height: 1.3; color: #8A4E1A;
+  }
+  .card-annotation.ai {
+    background: var(--purple-soft);
+    font-size: 8px; line-height: 1.5; color: #5A3D7A;
+  }
+  .card-annotation .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; opacity: 0.6; margin-bottom: 2px; display: block;
+  }
+
+  /* Card visual illustrations (reused from before) */
+  .card-vis { width: 100%; height: 80px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+
+  .vis-flir { background: #080E08; }
+  .vis-flir .grid-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(rgba(0,255,80,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,80,0.03) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+  .vis-flir .tic-tac {
+    position: absolute; top: 45%; left: 54%; transform: translate(-50%,-50%);
+    width: 32px; height: 14px;
+    background: radial-gradient(ellipse, rgba(180,255,180,0.85) 0%, rgba(80,180,80,0.4) 50%, transparent 75%);
+    border-radius: 50%; filter: blur(1.5px);
+  }
+  .vis-flir .hud { position: absolute; font-size: 6px; color: rgba(0,255,80,0.4); letter-spacing: 0.5px; }
+  .vis-flir .hud.tl { top: 4px; left: 6px; }
+  .vis-flir .hud.tr { top: 4px; right: 6px; }
+  .vis-flir .hud.bl { bottom: 4px; left: 6px; }
+
+  .vis-radar { background: #080A14; }
+  .vis-radar .sweep {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 50px; height: 50px; border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.08);
+  }
+  .vis-radar .sweep::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 1px; height: 24px; transform-origin: bottom;
+    background: linear-gradient(to top, rgba(80,200,120,0.25), transparent);
+    animation: rspin 3.5s linear infinite;
+  }
+  @keyframes rspin { to { transform: rotate(360deg); } }
+  .vis-radar .blip {
+    position: absolute; width: 4px; height: 4px;
+    background: rgba(80,255,120,0.75); border-radius: 50%;
+    box-shadow: 0 0 6px rgba(80,255,120,0.4);
+  }
+
+  .vis-ocean { background: linear-gradient(175deg, #1A3A5A 0%, #0E2A4A 40%, #0A1E3A 100%); }
+  .vis-ocean .waves {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(170deg, transparent, transparent 6px, rgba(100,180,220,0.05) 6px, rgba(100,180,220,0.05) 7px);
+  }
+  .vis-ocean .disturbance {
+    position: absolute; top: 45%; left: 48%; transform: translate(-50%,-50%);
+    width: 36px; height: 20px; border-radius: 50%;
+    border: 1px solid rgba(200,220,240,0.2);
+    background: radial-gradient(ellipse, rgba(200,220,240,0.12) 0%, transparent 70%);
+  }
+
+  .vis-doc { background: #F2EFE6; padding: 8px 10px; }
+  .vis-doc .line { height: 2px; border-radius: 1px; background: rgba(0,0,0,0.06); margin-bottom: 3px; }
+  .vis-doc .line.h { height: 3px; background: rgba(0,0,0,0.12); width: 50%; margin-bottom: 5px; }
+  .vis-doc .line.redact { height: 3px; background: rgba(0,0,0,0.5); }
+  .vis-doc .stamp {
+    position: absolute; bottom: 6px; left: 10px;
+    font-family: 'Oswald'; font-size: 7px; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(176,74,74,0.22);
+    transform: rotate(-8deg); border: 1px solid rgba(176,74,74,0.15); padding: 1px 4px;
+  }
+
+  /* ============================================ */
+  /* NOTE CARDS (these CAN overlap)               */
+  /* ============================================ */
+  .note {
+    position: absolute; z-index: 15;
+    width: 160px; padding: 10px 12px;
+    border-radius: 6px; cursor: grab;
+    border: 1px solid transparent; transition: box-shadow 0.2s;
+  }
+  .note:active { cursor: grabbing; }
+  .note:hover { z-index: 55; box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .note.human-note {
+    background: var(--orange-soft); border-color: rgba(184,106,46,0.15);
+    font-family: 'Roboto Serif', serif; font-style: italic; font-size: 15px; line-height: 1.3; color: #7A4A1A;
+  }
+  .note.ai-note {
+    background: var(--purple-soft); border-color: rgba(123,93,154,0.12);
+    font-size: 10px; line-height: 1.5; color: #5A3D7A;
+  }
+  .note-author {
+    margin-top: 8px; font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; opacity: 0.5; font-weight: 500;
+  }
+
+  /* Selected state — black outline */
+  .tl-card.selected {
+    border-color: #272727 !important;
+    box-shadow: 0 0 0 0.5px #272727, 0 8px 32px rgba(0,0,0,0.12) !important;
+    z-index: 70 !important;
+  }
+  .tl-card.book-cover.selected {
+    border-color: #FFFFFF !important;
+    box-shadow: 0 0 0 0.5px #FFFFFF, 0 12px 40px rgba(0,0,0,0.35) !important;
+  }
+  .card.selected, .note.selected {
+    box-shadow: 0 0 0 0.5px #272727, 0 4px 16px rgba(0,0,0,0.1) !important;
+    z-index: 55 !important;
+  }
+
+  /* ============================================ */
+  /* SWIMLANES (horizontal bands for evidence)    */
+  /* Labels styled like year markers — condensed, */
+  /* light, horizontal. Dotted separator lines.   */
+  /* ============================================ */
+  .swimlane-label {
+    position: absolute; z-index: 3; pointer-events: none;
+    font-family: 'Roboto Serif', serif;
+    font-weight: 300; font-stretch: 75%;
+    font-size: 40px; line-height: 0.85;
+    letter-spacing: -0.5px;
+    color: #272727;
+    width: 220px;
+    text-align: right;
+    transform: translateY(-50%);
+  }
+  .swimlane-label .lane-sub {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400; font-size: 9px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #888;
+    margin-top: 8px;
+  }
+  .swimlane-line {
+    position: absolute; z-index: 1; pointer-events: none;
+    left: 288px; width: 12000px; height: 0;
+    border-top: 1px dashed rgba(0,0,0,0.18);
+  }
+
+  /* Dimming */
+  .tl-card.dimmed, .card.dimmed, .note.dimmed { opacity: 0.15; pointer-events: none; }
+
+  /* ============================================ */
+  /* MINIMAP / LEGEND / HINT (same as before)     */
+  /* ============================================ */
+  .minimap-toggle, .legend-toggle {
+    position: fixed; z-index: 100;
+    width: 32px; height: 32px;
+    background: #FFFFFF; border: 1px solid var(--border); border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-3); transition: all 0.2s;
+  }
+  .minimap-toggle { bottom: 16px; right: 16px; }
+  .legend-toggle { bottom: 16px; left: 16px; }
+  .minimap-toggle:hover, .legend-toggle:hover { color: var(--text-1); }
+  .minimap-toggle.hidden, .legend-toggle.hidden { display: none; }
+
+  .minimap {
+    position: fixed; bottom: 16px; right: 16px; z-index: 100;
+    width: 200px; height: 60px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: none;
+  }
+  .minimap.open { display: block; }
+  .minimap-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); z-index: 2;
+  }
+  .mm-river {
+    position: absolute; top: 40%; left: 8%; right: 8%;
+    height: 2px; background: var(--gold-line); transform: translateY(-50%);
+  }
+  .mm-dots { position: absolute; inset: 0; }
+  .mm-dot { position: absolute; width: 3px; height: 3px; border-radius: 1px; }
+  .mm-vp {
+    position: absolute; border: 1.5px solid var(--gold);
+    background: rgba(154,122,46,0.05); border-radius: 2px; pointer-events: none;
+  }
+
+  .legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 100;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 14px;
+    display: none; flex-direction: column; gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .legend.open { display: flex; }
+  .legend-title { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); font-weight: 500; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-2); }
+  .legend-swatch { width: 12px; height: 3px; border-radius: 1px; }
+
+  .hint {
+    position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%);
+    z-index: 200; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px;
+    font-size: 10px; color: var(--text-3);
+    display: flex; gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    opacity: 1; transition: opacity 0.8s;
+  }
+  .hint.hidden { opacity: 0; pointer-events: none; }
+
+  /* ============================================ */
+  /* TIMELINE NAVIGATOR (bottom bar)              */
+  /* ============================================ */
+  .tl-nav {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 150; display: flex; align-items: center; gap: 0;
+    background: #1A1816; border-radius: 10px;
+    padding: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .tl-nav-btn {
+    width: 36px; height: 36px; border: none; background: transparent;
+    color: rgba(200,196,184,0.5); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; transition: all 0.15s;
+  }
+  .tl-nav-btn:hover { color: #C8C4B8; background: rgba(255,255,255,0.06); }
+  .tl-nav-btn:disabled { opacity: 0.2; cursor: default; }
+  .tl-nav-btn:disabled:hover { color: rgba(200,196,184,0.5); background: transparent; }
+  .tl-nav-info {
+    padding: 0 12px; min-width: 200px; text-align: center;
+  }
+  .tl-nav-title {
+    font-family: 'Roboto Serif', serif; font-size: 12px;
+    font-weight: 600; color: #C8C4B8; white-space: nowrap;
+  }
+  .tl-nav-sub {
+    font-family: 'JetBrains Mono', monospace; font-size: 8px;
+    letter-spacing: 0.5px; color: rgba(200,196,184,0.35);
+    margin-top: 1px;
+  }
+  .tl-nav-pips {
+    display: flex; gap: 6px; align-items: center;
+    padding: 0 10px; border-left: 1px solid rgba(255,255,255,0.06);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    margin: 0 4px; height: 28px;
+  }
+  .tl-nav-pip {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(200,196,184,0.15); cursor: pointer;
+    transition: all 0.2s; border: none; padding: 0;
+  }
+  .tl-nav-pip:hover { background: rgba(200,196,184,0.35); }
+  .tl-nav-pip.active { background: var(--gold); width: 8px; height: 8px; }
+  .tl-nav-pip.alert { background: var(--red); }
+  .kbd {
+    display: inline-block; padding: 1px 5px; margin: 0 2px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 3px; font-size: 9px; font-weight: 500;
+  }
+  .wf-label {
+    position: fixed; top: 54px; right: 12px;
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); z-index: 99;
+  }
+  /* Trunk arrows — small nav buttons on vertical connector lines */
+  .trunk-arrow {
+    position: absolute; z-index: 8; pointer-events: all;
+    width: 16px; height: 16px;
+    background: var(--surface);
+    border: 1px solid rgba(39,39,39,0.22);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+    color: rgba(39,39,39,0.45);
+    transform: translate(-50%, -50%);
+    opacity: 0.55;
+    transition: opacity 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .trunk-arrow:hover {
+    opacity: 1; background: #272727; color: #ffffff; border-color: #272727;
+  }
+  /* Junction dots on trunk lines */
+  .conn-junction { fill: #272727; opacity: 0.32; }
+</style>
+</head>
+<body>
+
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="tb-left">
+    <a class="tb-back" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      MERIDIAN
+    </a>
+  </div>
+  <div class="tb-center">
+    <span class="case-num">CASE-001</span>
+    <h1>USS Nimitz Encounter</h1>
+    <span class="status-pill">Investigating</span>
+  </div>
+  <div class="tb-right">
+    <div class="inv-avatars">
+      <div class="inv-avatar human" title="Nemo">N</div>
+      <div class="inv-avatar ai" title="Claude">C</div>
+    </div>
+    <a class="tb-link" href="#">Case File &rarr;</a>
+  </div>
+</div>
+
+<!-- SUB-BAR -->
+<div class="sub-bar">
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All</button>
+    <button class="filter-tab" data-filter="witness">Witnesses</button>
+    <button class="filter-tab" data-filter="evidence">Evidence</button>
+    <button class="filter-tab" data-filter="ai">AI Analysis</button>
+    <button class="filter-tab" data-filter="document">Documents</button>
+  </div>
+  <div class="search-wrap">
+    <button class="search-icon-btn" id="search-icon" title="Search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <input class="search-box" id="search-box" type="text" placeholder="Search...">
+  </div>
+  <div class="zoom-wrap">
+    <button class="zoom-icon-btn" id="zoom-icon" title="Zoom"></button>
+    <div class="zoom-controls" id="zoom-controls">
+      <button id="zoom-out" class="tool-btn">&minus;</button>
+      <span id="zoom-display">50%</span>
+      <button id="zoom-in" class="tool-btn">+</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<button class="legend-toggle" id="legend-toggle" title="Legend">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="8" y2="6"/><line x1="12" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="8" y2="18"/><line x1="12" y1="18" x2="21" y2="18"/></svg>
+</button>
+<div class="legend" id="legend">
+  <span class="legend-title">Legend</span>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--orange)"></div> Witness</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--gold)"></div> Evidence</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--purple)"></div> AI Analysis</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--red)"></div> Anomaly</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--text-3)"></div> Document</div>
+</div>
+
+<!-- MINIMAP -->
+<button class="minimap-toggle" id="minimap-toggle" title="Map">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+</button>
+<div class="minimap" id="minimap">
+  <div class="minimap-label">MAP</div>
+  <div class="mm-river"></div>
+  <div class="mm-dots" id="mm-dots"></div>
+  <div class="mm-vp" id="mm-vp"></div>
+</div>
+
+<!-- HINT -->
+<div class="hint" id="hint">
+  <span><kbd class="kbd">Scroll</kbd> Zoom</span>
+  <span><kbd class="kbd">Drag</kbd> Pan</span>
+  <span><kbd class="kbd">&larr;</kbd><kbd class="kbd">&rarr;</kbd> Navigate</span>
+  <span><kbd class="kbd">1</kbd> Fit</span>
+</div>
+
+<!-- TIMELINE NAVIGATOR -->
+<div class="tl-nav" id="tl-nav">
+  <button class="tl-nav-btn" id="nav-prev" title="Previous event">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="tl-nav-pips" id="nav-pips"></div>
+  <div class="tl-nav-info">
+    <div class="tl-nav-title" id="nav-title">The Tic Tac Incident</div>
+    <div class="tl-nav-sub" id="nav-sub">Intro · 0 of 8</div>
+  </div>
+  <button class="tl-nav-btn" id="nav-next" title="Next event">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<!-- ======================== -->
+<!-- CANVAS                   -->
+<!-- ======================== -->
+<div class="canvas-viewport" id="viewport">
+<div class="canvas-vignette"></div>
+<div class="canvas-world" id="world">
+  <div class="canvas-grid"></div>
+  <div class="canvas-grid-major"></div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- YEAR MARKERS — condensed, light                -->
+  <!-- Bottom-left aligned with corresponding node,   -->
+  <!-- 100px above river (y=160). Bottom at y≈60.     -->
+  <!-- ════════════════════════════════════════════ -->
+  <!-- Gap marker — sits in the 13-year silence between 2004 events and 2017 AATIP -->
+  <div class="river-gap" style="left:6728px; top:36px;">
+    2005–2016
+  </div>
+
+  <div class="year-marker" style="left:968px; top:36px;">
+    2004
+    <span class="year-sub">OCT — NOV</span>
+  </div>
+  <div class="year-marker" style="left:8456px; top:36px;">
+    2017
+    <span class="year-sub">DEC</span>
+  </div>
+  <div class="year-marker" style="left:9608px; top:36px;">
+    2019
+    <span class="year-sub">— 2023</span>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TIMELINE RIVER (at y=160, black line)        -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="river">
+    <div class="river-line"></div>
+    <div class="river-progress" id="river-progress"></div>
+    <div class="river-endcap" style="left:440px;"></div>
+    <div class="river-endcap" style="left:11028px;"></div>
+    <!-- Node circles at each event position (left = TL card center-x) -->
+    <div class="river-node key" style="left:968px;"></div>
+    <div class="river-node key" style="left:2120px;"></div>
+    <div class="river-node key" style="left:3272px;"></div>
+    <div class="river-node" style="left:4424px;"></div>
+    <div class="river-node key" style="left:5576px;"></div>
+    <div class="river-node alert" style="left:6728px;"></div>
+    <div class="river-node key" style="left:8456px;"></div>
+    <div class="river-node" style="left:9608px;"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- CONNECTOR LINES (straight, orthogonal)       -->
+  <!-- All lines are axis-aligned (horizontal or    -->
+  <!-- vertical only) and snap to 32px grid.        -->
+  <!-- Pattern: vertical down from TL card dot,     -->
+  <!-- then horizontal to evidence card.             -->
+  <!-- ════════════════════════════════════════════ -->
+  <!-- ════════════════════════════════════════════ -->
+  <!-- CONNECTORS: straight lines from river nodes  -->
+  <!-- River at y=160, TL cards at y=192,            -->
+  <!-- Evidence row at y=416, AI row at y=640        -->
+  <!-- Lines go: node(160) → down through TL card →  -->
+  <!-- continue to evidence card                     -->
+  <!-- ════════════════════════════════════════════ -->
+    <!-- ═══ TRUNK ARROWS — clickable nav buttons on vertical connector lines ═══ -->
+  <button class="trunk-arrow" data-target-left="1000" data-target-top="736" style="left:968px; top:480px;" title="Kevin Day">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="2152" data-target-top="736" style="left:2120px; top:480px;" title="Fravor">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="3304" data-target-top="736" style="left:3272px; top:480px;" title="Slaight">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="4456" data-target-top="1152" style="left:4424px; top:688px;" title="60-mile relocation">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="5608" data-target-top="1152" style="left:5576px; top:688px;" title="FLIR footage">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="6760" data-target-top="736" style="left:6728px; top:480px;" title="Hughes & Voorhis">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="8488" data-target-top="1984" style="left:8456px; top:1104px;" title="AATIP documents">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="trunk-arrow" data-target-left="9640" data-target-top="736" style="left:9608px; top:480px;" title="Fravor podcast">
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+<svg class="connectors" width="12000" height="3200" viewBox="0 0 12000 3200" style="position:absolute;top:0;left:0;width:12000px;height:3200px;pointer-events:none;z-index:4;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- CONNECTOR SYSTEM                                           -->
+    <!-- • River → TL card top (dot at top-center)                  -->
+    <!-- • TL card bottom → trunk drops down, elbows at last branch -->
+    <!-- • All lines black (#272727). Branches go RIGHT.            -->
+    <!-- • Dotted lines connect sibling cards in same lane.         -->
+    <!-- • Intro card guide line introduces swimlane titles.        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ═══ INTRO CARD → RIVER ═══ -->
+    <!-- Intro card right edge (440) to first node (704) at y=160 -->
+    <line class="conn conn-trunk" x1="440" y1="160" x2="968" y2="160"/>
+
+    <!-- ═══ RIVER NODE → TL CARD TOP ═══ -->
+    <!-- Straight vertical lines. Nodes now aligned with card centers. -->
+    <!-- Dot lands on card top-center (y=192).                         -->
+    <line class="conn conn-trunk" x1="968" y1="162" x2="968" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="2120" y1="162" x2="2120" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="3272" y1="162" x2="3272" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="4424" y1="162" x2="4424" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="5576" y1="162" x2="5576" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="6728" y1="162" x2="6728" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="8456" y1="162" x2="8456" y2="192"/>
+    
+    <line class="conn conn-trunk" x1="9608" y1="162" x2="9608" y2="192"/>
+    
+
+    <!-- ═══ INTRO CARD GUIDE LINE → SWIMLANE TITLES ═══ -->
+    <!-- Vertical guide at x=288 (9×grid), drops from intro card bottom area -->
+    <circle cx="288" cy="384" r="3.5" fill="#272727" opacity="0.25"/>
+    <line class="conn conn-guide" x1="288" y1="384" x2="288" y2="2784"/>
+    <!-- Tick marks: short nubs on guide at each swimlane level -->
+    <line class="conn conn-guide" x1="272" y1="672" x2="288" y2="672"/>
+    <line class="conn conn-guide" x1="272" y1="1088" x2="288" y2="1088"/>
+    <line class="conn conn-guide" x1="272" y1="1504" x2="288" y2="1504"/>
+    <line class="conn conn-guide" x1="272" y1="1920" x2="288" y2="1920"/>
+    <line class="conn conn-guide" x1="272" y1="2336" x2="288" y2="2336"/>
+    <line class="conn conn-guide" x1="272" y1="2752" x2="288" y2="2752"/>
+
+    <!-- ═══ TL CARD TRUNKS ═══ -->
+    <!-- Each trunk is one continuous line from card TOP-CENTER (y=192)  -->
+    <!-- straight down through the card, emerging below it, elbowing     -->
+    <!-- right at the deepest branch. The card (z-index 10) covers the   -->
+    <!-- middle of the line — it enters at top, exits at bottom.         -->
+
+    <!-- ═══ TL1 (cx=704) — witness only ═══ -->
+    <!-- Trunk: card top (192) → elbows at witness (768) → card (736) -->
+    <polyline class="conn conn-trunk" points="968,192 968,768 1000,768"/>
+
+    <!-- ═══ TL2 (cx=1280) — witness only ═══ -->
+    <polyline class="conn conn-trunk" points="2120,192 2120,768 2152,768"/>
+    <!-- Sibling: Fravor(1312,w224) → Dietrich(1568) -->
+    <line class="conn conn-sibling" x1="2376" y1="768" x2="2408" y2="768"/>
+
+    <!-- ═══ TL3 (cx=1856) — witness + anomaly ═══ -->
+    <!-- Trunk elbows at deepest: anomaly lane (y=1600) -->
+    <polyline class="conn conn-trunk" points="3272,192 3272,2848 3304,2848"/>
+    <!-- Intermediate branch RIGHT → Slaight witness (x=1888) -->
+    <line class="conn conn-branch" x1="3272" y1="768" x2="3304" y2="768"/>
+
+    <!-- ═══ TL4 (cx=2432) — evidence only ═══ -->
+    <polyline class="conn conn-trunk" points="4424,192 4424,2848 4456,2848"/>
+
+    <!-- ═══ TL5 (cx=3008) — evidence only ═══ -->
+    <polyline class="conn conn-trunk" points="5576,192 5576,2848 5608,2848"/>
+
+    <!-- ═══ TL6 (cx=3584) — witness + document ═══ -->
+    <!-- Trunk elbows at deepest: document lane (y=2016) -->
+    <polyline class="conn conn-trunk" points="6728,192 6728,2848 6760,2848"/>
+    <!-- Intermediate branch RIGHT → Hughes witness (x=3616) -->
+    <line class="conn conn-branch" x1="6728" y1="768" x2="6760" y2="768"/>
+
+    <!-- ═══ TL7 (cx=4448) — document only ═══ -->
+    <polyline class="conn conn-trunk" points="8456,192 8456,2848 8488,2848"/>
+    <!-- Sibling: AATIP(4480,w224) → AARO(4736) -->
+    <line class="conn conn-sibling" x1="8712" y1="2016" x2="8744" y2="2016"/>
+
+    <!-- ═══ TL8 (cx=5024) — witness only ═══ -->
+    <polyline class="conn conn-trunk" points="9608,192 9608,768 9640,768"/>
+    <!-- Sibling: Fravor podcast(5056,w224) → Dietrich 60min(5312) -->
+    <line class="conn conn-sibling" x1="9864" y1="768" x2="9896" y2="768"/>
+
+    <!-- ═══ AI CONNECTIONS (dashed purple) — from trunk junction down to AI lane ═══ -->
+    <!-- TL3: from anomaly elbow (1856,1600) down to AI (y=2432) -->
+
+    <!-- ═══ AI BRANCHES (black, part of tree) ═══ -->
+    <line class="conn conn-branch" x1="3272" y1="2432" x2="3304" y2="2432"/>
+    <line class="conn conn-branch" x1="4424" y1="2432" x2="4456" y2="2432"/>
+    <line class="conn conn-branch" x1="8456" y1="2432" x2="8488" y2="2432"/>
+
+    <!-- ═══ NOTES BRANCHES (one per connected column) ═══ -->
+    <line class="conn conn-branch" x1="3272" y1="2848" x2="3304" y2="2848"/>
+    <line class="conn conn-branch" x1="4424" y1="2848" x2="4456" y2="2848"/>
+    <line class="conn conn-branch" x1="5576" y1="2848" x2="5608" y2="2848"/>
+    <line class="conn conn-branch" x1="6728" y1="2848" x2="6760" y2="2848"/>
+    <line class="conn conn-branch" x1="8456" y1="2848" x2="8488" y2="2848"/>
+
+    <!-- ═══ JUNCTION DOTS — small filled circles at each branch point ═══ -->
+    <!-- TL1 -->
+    <circle class="conn-junction" cx="968" cy="768" r="2.5"/>
+    <!-- TL2 -->
+    <circle class="conn-junction" cx="2120" cy="768" r="2.5"/>
+    <!-- TL3 -->
+    <circle class="conn-junction" cx="3272" cy="768" r="2.5"/>
+    <circle class="conn-junction" cx="3272" cy="1600" r="2.5"/>
+    <circle class="conn-junction" cx="3272" cy="2432" r="2.5"/>
+    <!-- TL4 -->
+    <circle class="conn-junction" cx="4424" cy="1184" r="2.5"/>
+    <circle class="conn-junction" cx="4424" cy="2432" r="2.5"/>
+    <!-- TL5 -->
+    <circle class="conn-junction" cx="5576" cy="1184" r="2.5"/>
+    <!-- TL6 -->
+    <circle class="conn-junction" cx="6728" cy="768" r="2.5"/>
+    <circle class="conn-junction" cx="6728" cy="2016" r="2.5"/>
+    <!-- TL7 -->
+    <circle class="conn-junction" cx="8456" cy="2016" r="2.5"/>
+    <circle class="conn-junction" cx="8456" cy="2432" r="2.5"/>
+    <!-- TL8 -->
+    <circle class="conn-junction" cx="9608" cy="768" r="2.5"/>
+
+  </svg>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- INTRO CARD (black book cover, below line)    -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="tl-card book-cover" data-event="0" style="left:32px; top:-64px; width:408px; min-height:448px; flex-direction:column;">
+    <div class="tl-inner" style="padding:44px 40px 36px; display:flex; flex-direction:column; min-height:448px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.2); margin-bottom:6px;">Meridian Project · Case File</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.15);">Classification: Unresolved</div>
+
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:28px 0;">
+        <div style="font-family:'Roboto Serif',serif; font-size:48px; font-weight:300; font-stretch:100%; color:#FFFFFF; line-height:1.0; letter-spacing:-1px; margin-bottom:12px;">The Tic Tac<br>Incident</div>
+        <div style="font-family:'Roboto Serif',serif; font-size:16px; font-weight:400; font-style:italic; color:rgba(200,196,184,0.45); line-height:1.4;">USS Nimitz Carrier Strike Group<br>Pacific Ocean, November 2004</div>
+        <div style="width:48px; height:2px; background:var(--gold); margin:20px 0;"></div>
+        <div class="tl-body" style="color:rgba(255,255,255,0.45); font-size:12px; line-height:1.8;">During pre-deployment exercises off San Diego, the USS Nimitz CSG encountered multiple anomalous aerial vehicles over five days. The primary encounter involved visual contact by two F/A-18F crews, AN/SPY-1B radar tracking, and infrared video capture. The object — white, featureless, approximately 40 feet long — demonstrated flight characteristics far beyond any known technology.</div>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:16px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.15); margin-bottom:8px;">Case-001 · Tier 1 · 5-Channel Corroboration</div>
+        <div class="tl-tags" style="margin-top:0;">
+          <span class="tl-tag sensor">Multi-sensor</span>
+          <span class="tl-tag witness">Multi-witness</span>
+          <span class="tl-tag official">Tier 1</span>
+          <span class="tl-tag question">Unidentified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TIMELINE SPINE CARDS                         -->
+  <!-- All below river (y=160). Cards at y=192.     -->
+  <!-- 384px wide, landscape. NOT draggable.        -->
+  <!-- ════════════════════════════════════════════ -->
+
+  <!-- TL1: Radar contacts — x=480 -->
+  <div class="tl-card" data-event="1" style="left:744px; top:192px;">
+    <div class="tl-vis">
+      <div class="vis-radar" style="width:100%;height:100%;">
+        <div class="sweep"></div>
+        <div class="blip" style="top:30%;left:58%"></div>
+        <div class="blip" style="top:42%;left:63%;width:3px;height:3px;opacity:0.4"></div>
+      </div>
+    </div>
+    <div class="tl-inner">
+      <div class="tl-eyebrow">Late October 2004</div>
+      <div class="tl-headline">Anomalous radar contacts begin</div>
+      <div class="tl-date">Oct '04</div>
+      <div class="tl-time">~2 weeks before intercept</div>
+      <div class="tl-body">USS Princeton's AN/SPY-1B radar detects objects at 80,000+ ft, descending to sea level in seconds — rates exceeding ballistic missile profiles. Senior Chief Kevin Day tracks multiple returns over two weeks. Objects appear in clusters, linger, then vanish. No IFF transponder. No flight plan. Princeton's radar team rules out clutter and equipment malfunction.</div>
+      <div class="tl-tags"><span class="tl-tag sensor">SPY-1</span><span class="tl-tag sensor">Radar</span></div>
+    </div>
+  </div>
+
+  <!-- TL2: Pilots vectored — x=1056 -->
+  <div class="tl-card" data-event="2" style="left:1896px; top:192px;">
+    <div class="tl-photo" style="background-image: url('https://images.unsplash.com/photo-1580820267682-426da823b514?w=600&q=80')">
+      <span class="tl-photo-credit">US Navy</span>
+    </div>
+    <div class="tl-inner">
+      <div class="tl-eyebrow">November 14, 2004</div>
+      <div class="tl-headline">Fravor & Dietrich vectored to contact</div>
+      <div class="tl-date">1:00 PM</div>
+      <div class="tl-time">Pacific Standard Time</div>
+      <div class="tl-body">CDR David Fravor and LCDR Alex Dietrich, flying two F/A-18F Super Hornets from VFA-41 "Black Aces," are diverted from a training exercise. USS Princeton's combat information center vectors them to a live radar return approximately 100 miles southwest of San Diego. They're told: "You won't believe what we've been tracking."</div>
+      <div class="tl-tags">
+        <span class="tl-tag witness">Fravor</span>
+        <span class="tl-tag witness">Dietrich</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL3: The Intercept — x=1632 -->
+  <div class="tl-card" data-event="3" style="left:3048px; top:192px;">
+    <div class="tl-photo" style="background-image: url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80')">
+      <span class="tl-photo-credit">Pacific Ocean</span>
+    </div>
+    <div class="tl-inner">
+      <div class="tl-eyebrow">November 14, 2004</div>
+      <div class="tl-headline">Visual contact — the Tic Tac above churning ocean</div>
+      <div class="tl-date">1:10 PM</div>
+      <div class="tl-time">The Intercept</div>
+      <div class="tl-body">At altitude, both crews spot a cross-shaped disturbance in the water — whitewater the size of a 737. Hovering 50 ft above it: a smooth, white, oblong object roughly 40 feet long. No wings, no exhaust, no visible propulsion. As Fravor descends, the object mirrors his movements — then accelerates away in under two seconds.</div>
+      <div class="tl-tags">
+        <span class="tl-tag witness">Fravor</span>
+        <span class="tl-tag sensor">Visual</span>
+        <span class="tl-tag question">Anomaly</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL4: Object vanishes — x=2208 -->
+  <div class="tl-card" data-event="4" style="left:4200px; top:192px;">
+    <div class="tl-inner" style="padding-left:16px;">
+      <div class="tl-eyebrow">November 14, 2004</div>
+      <div class="tl-headline">Object vanishes — reappears 60 miles away</div>
+      <div class="tl-date">1:12 PM</div>
+      <div class="tl-time">~2 min later</div>
+      <div class="tl-body">The Tic Tac accelerates from a near-hover to beyond visual range in less than two seconds. Within moments, Princeton's SPY-1 picks it up again — at the fighters' CAP point, 60 miles away. No sonic boom. No deceleration signature. The transit implies speeds exceeding 46,000 mph.</div>
+      <div class="tl-tags">
+        <span class="tl-tag sensor">SPY-1</span>
+        <span class="tl-tag question">No sonic boom</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL5: FLIR captured — x=2784 -->
+  <div class="tl-card" data-event="5" style="left:5352px; top:192px;">
+    <div class="tl-vis">
+      <div class="vis-flir" style="width:100%;height:100%;">
+        <div class="grid-overlay"></div>
+        <div class="tic-tac"></div>
+        <div class="hud tl">FLIR1</div>
+        <div class="hud tr">IR · WHT</div>
+        <div class="hud bl">NAR</div>
+      </div>
+    </div>
+    <div class="tl-inner">
+      <div class="tl-eyebrow">November 14, 2004</div>
+      <div class="tl-headline">FLIR1 infrared video captured</div>
+      <div class="tl-date">2:00 PM</div>
+      <div class="tl-time">Second flight</div>
+      <div class="tl-body">A second flight launches. WSO Chad Underwood acquires the object on the F/A-18's ATFLIR pod and records 76 seconds of infrared video. The footage shows a featureless oblong with no exhaust plume, no control surfaces, and no visible propulsion — rotating on its longitudinal axis while maintaining flight. The object eventually accelerates off-screen left.</div>
+      <div class="tl-tags">
+        <span class="tl-tag sensor">FLIR</span>
+        <span class="tl-tag witness">Underwood</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL6: Data confiscated — x=3360 -->
+  <div class="tl-card alert" data-event="6" style="left:6504px; top:192px;">
+    <div class="tl-vis">
+      <div class="vis-doc" style="width:100%;height:100%;">
+        <div class="line h"></div>
+        <div class="line" style="width:85%"></div>
+        <div class="line redact" style="width:70%"></div>
+        <div class="line" style="width:80%"></div>
+        <div class="stamp">Classified</div>
+      </div>
+    </div>
+    <div class="tl-inner">
+      <div class="tl-eyebrow">Late 2004 – Early 2005</div>
+      <div class="tl-headline">Hard drives confiscated — data vanishes</div>
+      <div class="tl-date">Unknown</div>
+      <div class="tl-time" style="color:var(--red);">Date unrecorded</div>
+      <div class="tl-body">Shortly after the encounter, unidentified individuals in plain clothes arrive aboard USS Princeton, collect the radar data tapes and FLIR recordings, and depart. Multiple crew members corroborate this independently. No receipts. No chain of custody documentation. The original high-resolution recordings have never resurfaced.</div>
+      <div class="tl-tags">
+        <span class="tl-tag question">Data gap</span>
+        <span class="tl-tag witness">Crew</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL7: AATIP — x=4224 -->
+  <div class="tl-card" data-event="7" style="left:8232px; top:192px;">
+    <div class="tl-photo" style="background-image: url('https://images.unsplash.com/photo-1606567595334-d39972c85dbe?w=600&q=80')">
+      <span class="tl-photo-credit">Press</span>
+    </div>
+    <div class="tl-inner">
+      <div class="tl-eyebrow">December 16, 2017</div>
+      <div class="tl-headline">Pentagon confirms AATIP, releases FLIR1</div>
+      <div class="tl-date">2017</div>
+      <div class="tl-time">NYT breaks story</div>
+      <div class="tl-body">The New York Times publishes a bombshell investigation: the Pentagon ran a $22 million secret program studying UAPs — the Advanced Aerospace Threat Identification Program. The DoD officially releases the FLIR1 video after 13 years of classification. Luis Elizondo, who ran AATIP, resigns in protest over secrecy.</div>
+      <div class="tl-tags">
+        <span class="tl-tag official">DoD</span>
+        <span class="tl-tag official">NYT</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL8: Public testimony — x=4800 -->
+  <div class="tl-card" data-event="8" style="left:9384px; top:192px;">
+    <div class="tl-inner" style="padding-left:16px;">
+      <div class="tl-eyebrow">2019 – 2023</div>
+      <div class="tl-headline">Congressional hearings & public testimony</div>
+      <div class="tl-date">Public Era</div>
+      <div class="tl-time">Witnesses come forward</div>
+      <div class="tl-body">Fravor testifies before Congress under oath, July 2023. Dietrich appears on 60 Minutes. Kevin Day speaks publicly for the first time. AARO (All-domain Anomaly Resolution Office) is established. The Nimitz encounter becomes the single most cited UAP case in legislative history.</div>
+      <div class="tl-tags">
+        <span class="tl-tag witness">Multiple</span>
+        <span class="tl-tag official">Congress</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- FINAL CARD (black book cover, end marker)    -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="tl-card book-cover" data-event="9" style="left:11028px; top:-64px; width:408px; min-height:448px; flex-direction:column;">
+    <div class="tl-inner" style="padding:44px 40px 36px; display:flex; flex-direction:column; min-height:448px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.2); margin-bottom:6px;">Meridian Project · Case File</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.15);">Case Status: Unresolved</div>
+
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:28px 0;">
+        <div style="font-family:'Roboto Serif',serif; font-size:48px; font-weight:300; font-stretch:100%; color:#FFFFFF; line-height:1.0; letter-spacing:-1px; margin-bottom:12px;">Investigation<br>Open</div>
+        <div style="font-family:'Roboto Serif',serif; font-size:16px; font-weight:400; font-style:italic; color:rgba(200,196,184,0.45); line-height:1.4;">USS Nimitz Carrier Strike Group<br>Status as of 2024</div>
+        <div style="width:48px; height:2px; background:var(--gold); margin:20px 0;"></div>
+        <div class="tl-body" style="color:rgba(255,255,255,0.5); font-size:10px; line-height:1.75;">After 20 years, the encounter remains unexplained. Five-channel sensor corroboration, confiscated data, and flight characteristics exceeding known technology by orders of magnitude. No conventional explanation has survived scrutiny.</div>
+      </div>
+
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:0.5px; padding:3px 8px; border-radius:3px; background:rgba(176,74,74,0.2); color:#D46A6A;">UNRESOLVED</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:0.5px; padding:3px 8px; border-radius:3px; background:rgba(154,122,46,0.2); color:#C8A84E;">FOIA PENDING</span>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:7px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.15);">Meridian Project · 2024</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SWIMLANES — evidence organized by type              -->
+  <!-- Dotted separator lines, condensed labels like years -->
+  <!-- Plenty of space between lanes. Cards connect back   -->
+  <!-- to their corresponding timeline moment.             -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <!--
+    Lane grid (generous spacing):
+      Dotted line → y=660   │ WITNESS label → y=668  │ Cards → y=720
+      Dotted line → y=1080  │ EVIDENCE label → y=1088│ Cards → y=1140
+      Dotted line → y=1500  │ ANOMALY label → y=1508 │ Cards → y=1560
+      Dotted line → y=1920  │ DOCUMENT label → y=1928│ Cards → y=1980
+      Dotted line → y=2340  │ AI label → y=2348      │ Cards → y=2400
+      Dotted line → y=2760  │ NOTES label → y=2768   │ Notes → y=2820
+  -->
+
+  <!-- ─── DOTTED LINES (snapped to 32px grid) ─── -->
+  <div class="swimlane-line" style="top:672px;"></div>
+  <div class="swimlane-line" style="top:1088px;"></div>
+  <div class="swimlane-line" style="top:1504px;"></div>
+  <div class="swimlane-line" style="top:1920px;"></div>
+  <div class="swimlane-line" style="top:2336px;"></div>
+  <div class="swimlane-line" style="top:2752px;"></div>
+
+  <!-- ─── LANE LABELS (condensed, black — like year markers) ─── -->
+  <div class="swimlane-label" style="left:32px; top:672px;">
+    Witness
+    <span class="lane-sub">Testimony · Interviews</span>
+  </div>
+  <div class="swimlane-label" style="left:32px; top:1088px;">
+    Evidence
+    <span class="lane-sub">Sensor · Physical</span>
+  </div>
+  <div class="swimlane-label" style="left:32px; top:1504px;">
+    Anomaly
+    <span class="lane-sub">Unexplained</span>
+  </div>
+  <div class="swimlane-label" style="left:32px; top:1920px;">
+    Document
+    <span class="lane-sub">Official · Classified</span>
+  </div>
+  <div class="swimlane-label" style="left:32px; top:2336px;">
+    AI Analysis
+    <span class="lane-sub">Claude · Pattern Detection</span>
+  </div>
+  <div class="swimlane-label" style="left:32px; top:2752px;">
+    Notes
+    <span class="lane-sub">Human &amp; AI Commentary</span>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- LANE 1: WITNESS  (cards at y=720)  -->
+  <!-- ═══════════════════════════════════ -->
+
+  <!-- Kevin Day — from TL1 (node 672) -->
+  <div class="card t-witness" style="left:1000px; top:736px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Radar Operator <span class="card-badge badge-witness">Key Witness</span></div>
+      <div class="card-title">Sr. Chief Kevin Day</div>
+      <div class="card-body">USS Princeton CIC. First to identify anomalous radar returns over two weeks. Personally vectored Fravor's flight to the intercept. Later reported cognitive effects post-encounter. Went public in 2019 through multiple interviews and documentary appearances.</div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Credibility: 20+ yrs Navy · Top Secret clearance<br>Sources: Unidentified (2019), Fravor testimony</div>
+    </div>
+  </div>
+
+  <!-- Fravor — from TL2 (node 1248) -->
+  <div class="card t-witness" style="left:2152px; top:736px; width:224px;">
+    <div class="card-photo" style="background-image: url('https://images.unsplash.com/photo-1579912437766-7896df6d3cd3?w=400&q=80')">
+      <span class="card-photo-label">F/A-18F · VFA-41</span>
+    </div>
+    <div class="card-inner">
+      <div class="card-eyebrow">Primary Witness <span class="card-badge badge-witness">Key</span></div>
+      <div class="card-title">CDR David Fravor</div>
+      <div class="card-body">Commanding Officer, VFA-41 "Black Aces." 18 years experience, 3,500+ flight hours including combat missions over Iraq. Top Gun graduate. Described the object as exhibiting "no known flight characteristics." Testified under oath before Congress, July 2023.</div>
+      <div class="card-quote">"It accelerated like nothing I've ever seen."<div class="card-quote-src">JRE #1361 · 2019</div></div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Rank: Commander, USN (Ret.)<br>Sources: JRE, Lex Fridman, 60 Min, Congress</div>
+    </div>
+  </div>
+
+  <!-- Dietrich — from TL2 (node 1248) -->
+  <div class="card t-witness" style="left:2408px; top:736px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Primary Witness <span class="card-badge badge-witness">Corroborating</span></div>
+      <div class="card-title">LCDR Alex Dietrich</div>
+      <div class="card-body">Fravor's wingman. Observed the Tic Tac from a higher altitude and independently corroborated all details — the ocean disturbance, the mirroring behavior, the instantaneous departure. First female fighter pilot to speak publicly about the encounter.</div>
+      <div class="card-quote">"I don't identify it as any kind of aircraft that I know."<div class="card-quote-src">60 Minutes · May 2021</div></div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Rank: Lt. Commander, USN<br>Sources: 60 Minutes, multiple interviews</div>
+    </div>
+  </div>
+
+  <!-- Slaight — from TL3 (node 1824) -->
+  <div class="card t-witness" style="left:3304px; top:736px; width:192px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Weapon Systems Officer</div>
+      <div class="card-title">Jim Slaight</div>
+      <div class="card-body">Back-seat WSO in Fravor's F/A-18F. Present during the entire intercept. Observed the Tic Tac and ocean disturbance from the cockpit. Has made no public statements as of 2024 — one of the few silent witnesses.</div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Status: No public testimony<br>Corroborated by: Fravor's account</div>
+    </div>
+  </div>
+
+  <!-- Hughes & Voorhis — from TL6 (node 3552) -->
+  <div class="card t-witness" style="left:6760px; top:736px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Witnesses <span class="card-badge badge-witness">Crew</span></div>
+      <div class="card-title">PO Hughes & PO Voorhis</div>
+      <div class="card-body">Two Princeton crew members who independently describe unidentified men confiscating data. Their accounts align but remain officially unverified. Both went public through documentary interviews.</div>
+    </div>
+  </div>
+
+  <!-- Fravor podcast — from TL8 (node 4992) -->
+  <div class="card t-witness" style="left:9640px; top:736px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Testimony</div>
+      <div class="card-title">Fravor · Lex Fridman</div>
+      <div class="card-body">Podcast #122, Oct 2020. The most detailed public account of the encounter — over 3 hours. Fravor describes the "mirroring" behavior, the whitewater, and the instantaneous acceleration.</div>
+      <div class="card-quote">"It was aware of us. It reacted to us."<div class="card-quote-src">Lex Fridman #122 · 2020</div></div>
+    </div>
+  </div>
+
+  <!-- Dietrich 60min — from TL8 (node 4992) -->
+  <div class="card t-witness" style="left:9896px; top:736px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Testimony</div>
+      <div class="card-title">Dietrich · 60 Minutes</div>
+      <div class="card-body">May 2021. First national TV appearance. Provided new details on the ocean disturbance and the object's "impossible" acceleration. Her testimony lent additional credibility as an independent second observer.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- LANE 2: EVIDENCE  (cards at y=1152) -->
+  <!-- ═══════════════════════════════════ -->
+
+  <!-- 60-mile relocation — from TL4 (node 2400) -->
+  <div class="card t-evidence" style="left:4456px; top:1152px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Sensor Data <span class="card-badge badge-sensor">SPY-1</span></div>
+      <div class="card-title">60-mile instant relocation</div>
+      <div class="card-body">Object reappears at the fighters' Combat Air Patrol point — a pre-assigned coordinate known only to Navy personnel. No deceleration observed. No sonic boom detected by any asset. Multiple Princeton CIC operators confirmed the track in real time. The CAP point knowledge implies the object had awareness of Navy operations.</div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Implied speed: ~46,000 mph / Mach 60<br>Confirmed by: Princeton radar, Kevin Day</div>
+    </div>
+  </div>
+
+  <!-- FLIR footage — from TL5 (node 2976) -->
+  <div class="card t-evidence" style="left:5608px; top:1152px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Physical Evidence <span class="card-badge badge-sensor">Video</span></div>
+      <div class="card-title">FLIR1 footage analysis</div>
+      <div class="card-body">76 seconds recorded, only 35 seconds publicly released. Infrared imaging shows zero exhaust plume — thermodynamically impossible for any known jet or rocket propulsion. Object rotates on its longitudinal axis while maintaining trajectory. SCU analysis estimates acceleration of 75–5,000g. The missing 41 seconds remain classified.</div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Analysis: SCU, TTSA, multiple physicists<br>Resolution: Downgraded copy (original confiscated)</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- LANE 3: ANOMALY  (cards at y=1568) -->
+  <!-- ═══════════════════════════════════ -->
+
+  <!-- Ocean anomaly — from TL3 (node 1824) -->
+  <div class="card t-anomaly" style="left:3304px; top:1568px; width:224px;">
+    <div class="card-vis">
+      <div class="vis-ocean" style="width:100%;height:100%;">
+        <div class="waves"></div>
+        <div class="disturbance"></div>
+      </div>
+    </div>
+    <div class="card-inner">
+      <div class="card-eyebrow">Anomaly <span class="card-badge badge-anomaly">Unresolved</span></div>
+      <div class="card-title">Ocean disturbance</div>
+      <div class="card-body">Cross-shaped roiling whitewater roughly the size of a Boeing 737. No submarine or surface vessel detected in the area by Princeton's sensors. Disturbance ceased simultaneously with the Tic Tac's departure. Suggests possible subsurface component or interaction with the water column.</div>
+      <div style="margin-top:8px; font-size:8px; color:var(--text-3); line-height:1.5; font-family:'JetBrains Mono',monospace;">Witnesses: Fravor, Dietrich, 2 WSOs<br>Similar: Shag Harbour '67, Aguadilla '13</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- LANE 4: DOCUMENT  (cards at y=1984)-->
+  <!-- ═══════════════════════════════════ -->
+
+  <!-- Confiscated data — from TL6 (node 3552) -->
+  <div class="card t-document" style="left:6760px; top:1984px; width:224px;">
+    <div class="card-vis">
+      <div class="vis-doc" style="width:100%;height:100%;">
+        <div class="line h"></div>
+        <div class="line" style="width:85%"></div>
+        <div class="line redact" style="width:70%"></div>
+        <div class="stamp">Classified</div>
+      </div>
+    </div>
+    <div class="card-inner">
+      <div class="card-eyebrow">Data Gap <span class="card-badge badge-anomaly">Missing</span></div>
+      <div class="card-title">Confiscated recordings</div>
+      <div class="card-body">Original SPY-1 data tapes, full FLIR recordings, and radar logs. Two crew members (PO Hughes & PO Voorhis) describe men in plain clothes arriving by helicopter. Chain of custody entirely unknown. Only a lower-resolution copy of FLIR1 survived.</div>
+    </div>
+  </div>
+
+  <!-- AATIP docs — from TL7 (node 4416) -->
+  <div class="card t-document" style="left:8488px; top:1984px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Official <span class="card-badge badge-official">DoD</span></div>
+      <div class="card-title">AATIP documents</div>
+      <div class="card-body">FLIR1 officially declassified. DoD confirms $22M Advanced Aerospace Threat Identification Program budget (2007–2012). 38 research papers commissioned on exotic propulsion and spacetime metrics.</div>
+    </div>
+  </div>
+
+  <!-- AARO report — from TL7 (node 4416) -->
+  <div class="card t-document" style="left:8744px; top:1984px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">Official <span class="card-badge badge-official">AARO</span></div>
+      <div class="card-title">AARO Report Vol. 1</div>
+      <div class="card-body">Published March 2024. Nimitz cited as among the most significant unresolved cases. Report concludes "no evidence of extraterrestrial activity" — but the classified annex remains sealed and inaccessible to Congress.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════ -->
+  <!-- LANE 5: AI ANALYSIS (cards at y=2400) -->
+  <!-- ════════════════════════════════════ -->
+
+  <div class="card t-ai" style="left:3304px; top:2400px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">AI Finding <span class="card-badge badge-ai">Pattern</span></div>
+      <div class="card-title">Cross-corpus: water disturbance pattern</div>
+      <div class="card-body">Water interaction observed in 3 other high-credibility cases: Shag Harbour 1967 (recovered physical traces), Aguadilla 2013 (thermal video), Catalina Channel 1958 (military witnesses).</div>
+      <div class="card-annotation ai"><span class="label">Claude · Pattern Analysis</span>P(coincidence) &lt;0.3%. Four independent water-interaction events across 56 years, 3 continents. Suggests a recurring operational signature.</div>
+    </div>
+  </div>
+
+  <div class="card t-ai" style="left:4456px; top:2400px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">AI Finding <span class="card-badge badge-ai">Anomaly</span></div>
+      <div class="card-title">Acceleration analysis: 75g – 12,600g</div>
+      <div class="card-body">SCU estimates 75–5,000g based on FLIR1 tracking data. Alternative calculation using radar timestamps yields ~12,600g. Human tolerance: 9g. F-35 structural limit: 13.5g.</div>
+      <div class="card-annotation ai"><span class="label">Claude · Physics Review</span>Both estimates are orders of magnitude beyond any known aerospace technology. Even the conservative figure (75g) implies propulsion physics not described in the current literature.</div>
+    </div>
+  </div>
+
+  <div class="card t-ai" style="left:8488px; top:2400px; width:224px;">
+    <div class="card-inner">
+      <div class="card-eyebrow">AI Finding <span class="card-badge badge-ai">Context</span></div>
+      <div class="card-title">13-year disclosure gap analysis</div>
+      <div class="card-body">Belgian Wave: 20 years to full acknowledgment. Tehran 1976: decades, released only through FOIA. Nimitz: 13 years. The pattern across cases suggests deliberate institutional delay, not routine bureaucratic process. AATIP's own existence was classified for 10 years.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- LANE 6: NOTES  (notes at y=2816)   -->
+  <!-- ═══════════════════════════════════ -->
+
+  <div class="note human-note draggable" style="left:3304px; top:2816px;">
+    This is the moment. 4 trained pilots, broad daylight, clear skies. Whatever this was — it was real.
+    <div class="note-author">&mdash; Nemo</div>
+  </div>
+
+  <div class="note human-note draggable" style="left:4456px; top:2816px;">
+    The 60-mile jump is the single most extraordinary claim. Backed by radar from a billion-dollar warship.
+    <div class="note-author">&mdash; Nemo</div>
+  </div>
+
+  <div class="note ai-note draggable" style="left:3336px; top:2848px; width:160px;">
+    "Mirroring" behavior seen in Tehran '76 and Belgian Wave. Suggests reactive intelligence.
+    <div class="note-author">&mdash; Claude</div>
+  </div>
+
+  <div class="note human-note draggable" style="left:6760px; top:2816px;">
+    If it was nothing, why take the hard drives? Data confiscation is the biggest red flag.
+    <div class="note-author">&mdash; Nemo</div>
+  </div>
+
+  <div class="note ai-note draggable" style="left:5608px; top:2848px; width:160px;">
+    5-channel corroboration: visual, radar, IR, 3+ witnesses, behavior. Extremely rare in UAP literature.
+    <div class="note-author">&mdash; Claude</div>
+  </div>
+
+  <div class="note human-note draggable" style="left:8488px; top:2816px;">
+    What's in the classified annex? FOIA pending. This is the thread to pull.
+    <div class="note-author">&mdash; Nemo</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  var viewport = document.getElementById('viewport');
+  var world = document.getElementById('world');
+  var zoomDisplay = document.getElementById('zoom-display');
+  var hint = document.getElementById('hint');
+
+  var scale = 0.45, panX = 0, panY = 0;
+  var isPanning = false, panStartX = 0, panStartY = 0;
+  var dragTarget = null, dragOffsetX = 0, dragOffsetY = 0;
+  var dragStartX = 0, dragStartY = 0;
+  var spaceHeld = false;
+  var MIN_SCALE = 0.1, MAX_SCALE = 3;
+  var WW = 12000, WH = 3200, MW = 200, MH = 60;
+
+  function applyTransform() {
+    world.style.transform = 'translate(' + panX + 'px, ' + panY + 'px) scale(' + scale + ')';
+    zoomDisplay.textContent = Math.round(scale * 100) + '%';
+    var zi = document.getElementById('zoom-icon');
+    if (zi && !zi.classList.contains('hidden')) zi.textContent = Math.round(scale * 100) + '%';
+    updateMinimap();
+  }
+
+  function fitCards() {
+    var els = document.querySelectorAll('.tl-card, .card');
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    els.forEach(function(el) {
+      var x = parseFloat(el.style.left) || 0;
+      var y = parseFloat(el.style.top) || 0;
+      var w = el.offsetWidth || 384;
+      var h = el.offsetHeight || 192;
+      if (x < minX) minX = x; if (y < minY) minY = y;
+      if (x + w > maxX) maxX = x + w; if (y + h > maxY) maxY = y + h;
+    });
+    if (minX === Infinity) return;
+    var pad = 96;
+    var cw = maxX - minX + pad * 2;
+    var ch = maxY - minY + pad * 2;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+    scale = Math.min(vw / cw, vh / ch, 1);
+    panX = (vw - cw * scale) / 2 - minX * scale + pad * scale;
+    panY = (vh - ch * scale) / 2 - minY * scale + pad * scale + 48;
+    applyTransform();
+  }
+
+  // Init: navigator handles initial view via goToEvent(0)
+
+  // Wheel zoom
+  viewport.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var rect = viewport.getBoundingClientRect();
+    var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    var f = e.deltaY > 0 ? 0.93 : 1.07;
+    var ns = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * f));
+    panX = mx - (mx - panX) * (ns / scale);
+    panY = my - (my - panY) * (ns / scale);
+    scale = ns; applyTransform();
+  }, { passive: false });
+
+  // Pan & drag
+  viewport.addEventListener('mousedown', function(e) {
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    var d = e.target.closest('.draggable');
+    if (d && !spaceHeld) {
+      e.preventDefault(); dragTarget = d; d.style.zIndex = 60;
+      document.body.classList.add('dragging-card');
+      dragOffsetX = (e.clientX - panX) / scale - parseFloat(d.style.left);
+      dragOffsetY = (e.clientY - panY) / scale - parseFloat(d.style.top);
+      return;
+    }
+    isPanning = true; panStartX = e.clientX - panX; panStartY = e.clientY - panY;
+    document.body.classList.add('panning');
+  });
+  window.addEventListener('mousemove', function(e) {
+    if (dragTarget) {
+      dragTarget.style.left = ((e.clientX - panX) / scale - dragOffsetX) + 'px';
+      dragTarget.style.top = ((e.clientY - panY) / scale - dragOffsetY) + 'px';
+      return;
+    }
+    if (isPanning) { panX = e.clientX - panStartX; panY = e.clientY - panStartY; applyTransform(); }
+  });
+  window.addEventListener('mouseup', function(e) {
+    if (dragTarget) { dragTarget.style.zIndex = ''; document.body.classList.remove('dragging-card'); dragTarget = null; return; }
+    if (isPanning) { isPanning = false; document.body.classList.remove('panning'); }
+    // Click (not drag) on any card/note → center it
+    if (Math.abs(e.clientX - dragStartX) < 5 && Math.abs(e.clientY - dragStartY) < 5) {
+      var clicked = e.target.closest('.tl-card, .card, .note');
+      if (clicked && !clicked.closest('.toolbar') && !clicked.closest('.tl-nav')) {
+        goToElement(clicked);
+      }
+    }
+  });
+
+  // Space key
+  window.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && !spaceHeld) { e.preventDefault(); spaceHeld = true; document.body.style.cursor = 'grab'; }
+    if (e.target.classList && e.target.classList.contains('search-box')) return;
+    if (e.key === '1' && !e.metaKey) fitCards();
+  });
+  window.addEventListener('keyup', function(e) { if (e.code === 'Space') { spaceHeld = false; document.body.style.cursor = ''; } });
+
+  // Zoom buttons
+  document.getElementById('zoom-in').addEventListener('click', function() {
+    var cx = window.innerWidth/2, cy = window.innerHeight/2, ns = Math.min(MAX_SCALE, scale*1.25);
+    panX = cx-(cx-panX)*(ns/scale); panY = cy-(cy-panY)*(ns/scale); scale = ns; applyTransform();
+  });
+  document.getElementById('zoom-out').addEventListener('click', function() {
+    var cx = window.innerWidth/2, cy = window.innerHeight/2, ns = Math.max(MIN_SCALE, scale*0.75);
+    panX = cx-(cx-panX)*(ns/scale); panY = cy-(cy-panY)*(ns/scale); scale = ns; applyTransform();
+  });
+
+  // Filter tabs
+  document.querySelectorAll('.filter-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var filter = tab.dataset.filter;
+      document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.toggle('active', t === tab); });
+      var typeMap = { 'all': null, 'witness': ['t-witness','human-note'], 'evidence': ['t-evidence','t-sensor','t-anomaly'], 'ai': ['t-ai','ai-note'], 'document': ['t-document'] };
+      var allowed = typeMap[filter];
+      document.querySelectorAll('.card, .note').forEach(function(el) {
+        if (!allowed) { el.classList.remove('dimmed'); return; }
+        var match = allowed.some(function(cls) { return el.classList.contains(cls); });
+        el.classList.toggle('dimmed', !match);
+      });
+      document.querySelectorAll('.tl-card').forEach(function(el) { el.classList.remove('dimmed'); });
+      var svg = document.querySelector('.connectors');
+      if (svg) svg.style.opacity = filter === 'all' ? '1' : '0.3';
+    });
+  });
+
+  // Search toggle
+  var searchIcon = document.getElementById('search-icon');
+  var searchBox = document.getElementById('search-box');
+  searchIcon.addEventListener('click', function() { searchIcon.classList.add('hidden'); searchBox.classList.add('open'); searchBox.focus(); });
+  searchBox.addEventListener('blur', function() { if (!searchBox.value) { searchBox.classList.remove('open'); searchIcon.classList.remove('hidden'); } });
+
+  // Zoom toggle
+  var zoomIcon = document.getElementById('zoom-icon');
+  var zoomCtrl = document.getElementById('zoom-controls');
+  zoomIcon.textContent = Math.round(scale * 100) + '%';
+  zoomIcon.addEventListener('click', function(e) { e.stopPropagation(); zoomIcon.classList.add('hidden'); zoomCtrl.classList.add('open'); });
+  zoomCtrl.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', function() {
+    if (zoomCtrl.classList.contains('open')) { zoomCtrl.classList.remove('open'); zoomIcon.classList.remove('hidden'); zoomIcon.textContent = Math.round(scale*100)+'%'; }
+  });
+
+  // Legend toggle
+  var legendToggle = document.getElementById('legend-toggle');
+  var legendPanel = document.getElementById('legend');
+  legendToggle.addEventListener('click', function(e) { e.stopPropagation(); legendToggle.classList.add('hidden'); legendPanel.classList.add('open'); });
+  legendPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', function() { if (legendPanel.classList.contains('open')) { legendPanel.classList.remove('open'); legendToggle.classList.remove('hidden'); } });
+
+  // Minimap toggle
+  var minimapToggle = document.getElementById('minimap-toggle');
+  var minimapPanel = document.getElementById('minimap');
+  minimapToggle.addEventListener('click', function(e) { e.stopPropagation(); minimapToggle.classList.add('hidden'); minimapPanel.classList.add('open'); buildMM(); });
+  minimapPanel.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var r = minimapPanel.getBoundingClientRect();
+    panX = window.innerWidth/2 - ((e.clientX-r.left)/MW)*WW*scale;
+    panY = window.innerHeight/2 - ((e.clientY-r.top)/MH)*WH*scale;
+    applyTransform();
+  });
+  document.addEventListener('click', function() { if (minimapPanel.classList.contains('open')) { minimapPanel.classList.remove('open'); minimapToggle.classList.remove('hidden'); } });
+
+  function buildMM() {
+    var c = document.getElementById('mm-dots'); c.innerHTML = '';
+    document.querySelectorAll('.tl-card,.card').forEach(function(el) {
+      var x = parseFloat(el.style.left)||0, y = parseFloat(el.style.top)||0;
+      var d = document.createElement('div'); d.className = 'mm-dot';
+      d.style.left = (x/WW*MW)+'px'; d.style.top = (y/WH*MH)+'px';
+      if (el.classList.contains('tl-card')) d.style.background = 'var(--gold)';
+      else if (el.classList.contains('t-witness')) d.style.background = 'var(--orange)';
+      else if (el.classList.contains('t-ai')) d.style.background = 'var(--purple)';
+      else if (el.classList.contains('t-anomaly')) d.style.background = 'var(--red)';
+      else d.style.background = 'var(--text-3)';
+      c.appendChild(d);
+    });
+  }
+
+  function updateMinimap() {
+    var vp = document.getElementById('mm-vp'); if (!vp) return;
+    vp.style.left = Math.max(0, -panX/scale/WW*MW)+'px';
+    vp.style.top = Math.max(0, -panY/scale/WH*MH)+'px';
+    vp.style.width = Math.min(MW, window.innerWidth/scale/WW*MW)+'px';
+    vp.style.height = Math.min(MH, window.innerHeight/scale/WH*MH)+'px';
+  }
+
+  // Dismiss hint
+  setTimeout(function() { hint.classList.add('hidden'); }, 5000);
+  viewport.addEventListener('mousedown', function() { hint.classList.add('hidden'); }, { once: true });
+
+  // ============================================
+  // TIMELINE NAVIGATOR — Miro-style zoom-to-event
+  // ============================================
+  var navEvents = [
+    { x: 32, w: 408, title: 'The Tic Tac Incident', sub: 'Intro', alert: false },
+    { x: 744, w: 448, title: 'Anomalous Radar Contacts', sub: 'Oct 2004', alert: false },
+    { x: 1896, w: 448, title: 'Fravor & Dietrich Vectored', sub: 'Nov 14, 2004 · 1:00 PM', alert: false },
+    { x: 3048, w: 448, title: 'Visual Contact — The Intercept', sub: 'Nov 14, 2004 · 1:10 PM', alert: false },
+    { x: 4200, w: 448, title: 'Object Vanishes — 60mi Relocation', sub: 'Nov 14, 2004 · 1:12 PM', alert: false },
+    { x: 5352, w: 448, title: 'FLIR1 Video Captured', sub: 'Nov 14, 2004 · 2:00 PM', alert: false },
+    { x: 6504, w: 448, title: 'Data Confiscated', sub: 'Late 2004', alert: true },
+    { x: 8232, w: 448, title: 'AATIP Revealed — NYT', sub: 'Dec 16, 2017', alert: false },
+    { x: 9384, w: 448, title: 'Congressional Hearings', sub: '2019 – 2023', alert: false },
+    { x: 11028, w: 408, title: 'Investigation Open', sub: 'Status', alert: true }
+  ];
+
+  var currentEvent = -1;
+  var navTitle = document.getElementById('nav-title');
+  var navSub = document.getElementById('nav-sub');
+  var navPrev = document.getElementById('nav-prev');
+  var navNext = document.getElementById('nav-next');
+  var navPips = document.getElementById('nav-pips');
+
+  // Build pips
+  navEvents.forEach(function(ev, i) {
+    var pip = document.createElement('button');
+    pip.className = 'tl-nav-pip' + (ev.alert ? ' alert' : '');
+    pip.addEventListener('click', function(e) { e.stopPropagation(); goToEvent(i); });
+    navPips.appendChild(pip);
+  });
+
+  function updateNavUI() {
+    navPrev.disabled = currentEvent <= 0;
+    navNext.disabled = currentEvent >= navEvents.length - 1;
+    var ev = navEvents[currentEvent] || navEvents[0];
+    navTitle.textContent = ev.title;
+    navSub.textContent = ev.sub + ' · ' + (currentEvent + 1) + ' of ' + navEvents.length;
+    var pips = navPips.querySelectorAll('.tl-nav-pip');
+    pips.forEach(function(p, i) { p.classList.toggle('active', i === currentEvent); });
+  }
+
+  // Track visited events
+  var visitedEvents = {};
+
+  // River node positions (must match HTML river-node left values)
+  var riverNodePositions = [968, 2120, 3272, 4424, 5576, 6728, 8456, 9608];
+  // River start/end
+  var riverStart = 440;
+  var riverEnd = 11028;
+
+  function updateGoldProgress(idx) {
+    var progress = document.getElementById('river-progress');
+    if (!progress) return;
+    // Map event index to a position on the river
+    // Events 0 (intro) and 9 (final) are book covers, events 1-8 have river nodes
+    var targetX;
+    if (idx <= 0) { targetX = riverStart; }
+    else if (idx >= navEvents.length - 1) { targetX = riverEnd; }
+    else { targetX = riverNodePositions[idx - 1] || riverStart; }
+    progress.style.width = (targetX - riverStart) + 'px';
+  }
+
+  function updateSelectedCard(idx) {
+    // Remove selected from all
+    document.querySelectorAll('.tl-card.selected').forEach(function(el) {
+      el.classList.remove('selected');
+    });
+    // Add selected to current
+    var card = document.querySelector('.tl-card[data-event="' + idx + '"]');
+    if (card) card.classList.add('selected');
+  }
+
+  function updateVisitedNodes(idx) {
+    visitedEvents[idx] = true;
+    var nodes = document.querySelectorAll('.river-node');
+    nodes.forEach(function(node, i) {
+      // Node i corresponds to event i+1 (events 1-8 have nodes)
+      var eventIdx = i + 1;
+      if (visitedEvents[eventIdx] && !node.classList.contains('alert')) {
+        node.classList.add('visited');
+      }
+    });
+  }
+
+  function goToEvent(idx) {
+    if (idx < 0 || idx >= navEvents.length) return;
+    currentEvent = idx;
+    var ev = navEvents[idx];
+    // Zoom level: zoom in tight to each card
+    var targetScale = 1.05;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+    var cardCenterX = ev.x + ev.w / 2;
+    // Intro + outro cards centered on river (y=-64 → center 160), others at y=192
+    var cardCenterY = (idx === 0 || idx === navEvents.length - 1) ? 160 : 320;
+
+    // Animate to the position
+    var startScale = scale, startPanX = panX, startPanY = panY;
+    var endScale = targetScale;
+    var endPanX = vw / 2 - cardCenterX * endScale;
+    var endPanY = vh / 2 - cardCenterY * endScale + 48;
+
+    var duration = 500;
+    var startTime = performance.now();
+
+    function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+    function animate(now) {
+      var t = Math.min(1, (now - startTime) / duration);
+      var e = easeInOut(t);
+      scale = startScale + (endScale - startScale) * e;
+      panX = startPanX + (endPanX - startPanX) * e;
+      panY = startPanY + (endPanY - startPanY) * e;
+      applyTransform();
+      if (t < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // Update gold progress, selected state, visited nodes
+    updateGoldProgress(idx);
+    updateSelectedCard(idx);
+    updateVisitedNodes(idx);
+    updateNavUI();
+  }
+  function goToElement(el) {
+    // Apply selection state
+    document.querySelectorAll('.tl-card.selected, .card.selected, .note.selected').forEach(function(c) {
+      c.classList.remove('selected');
+    });
+    el.classList.add('selected');
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+    var cx = parseFloat(el.style.left) + (el.offsetWidth || 224) / 2;
+    var cy = parseFloat(el.style.top) + (el.offsetHeight || 192) / 2;
+    var targetScale = 1.05;
+    var startScale = scale, startPanX = panX, startPanY = panY;
+    var endPanX = vw / 2 - cx * targetScale;
+    var endPanY = vh / 2 - cy * targetScale + 48;
+    var duration = 500, startTime = performance.now();
+    function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+    function animate(now) {
+      var t = easeInOut(Math.min(1, (now - startTime) / duration));
+      scale = startScale + (targetScale - startScale) * t;
+      panX = startPanX + (endPanX - startPanX) * t;
+      panY = startPanY + (endPanY - startPanY) * t;
+      applyTransform();
+      if (t < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // goToCardAt — navigate to a specific card by its left/top position
+  function goToCardAt(left, top) {
+    var el = Array.from(document.querySelectorAll('.card, .note')).find(function(c) {
+      return parseFloat(c.style.left) === left && parseFloat(c.style.top) === top;
+    });
+    if (el) goToElement(el);
+  }
+  // Wire up trunk arrow buttons
+  document.querySelectorAll('.trunk-arrow').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      goToCardAt(parseFloat(btn.dataset.targetLeft), parseFloat(btn.dataset.targetTop));
+    });
+  });
+
+  navPrev.addEventListener('click', function(e) { e.stopPropagation(); goToEvent(currentEvent - 1); });
+  navNext.addEventListener('click', function(e) { e.stopPropagation(); goToEvent(currentEvent + 1); });
+  document.getElementById('tl-nav').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  // Arrow key navigation
+  window.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goToEvent(currentEvent + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goToEvent(currentEvent - 1); }
+  });
+
+  // Click-to-navigate on cards
+  document.querySelectorAll('[data-event]').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      // Only navigate if it wasn't a drag
+      var dx = Math.abs(e.clientX - dragStartX);
+      var dy = Math.abs(e.clientY - dragStartY);
+      if (dx < 5 && dy < 5) {
+        var idx = parseInt(el.dataset.event);
+        goToEvent(idx);
+      }
+    });
+  });
+
+  // Start zoomed to first event
+  setTimeout(function() { goToEvent(0); }, 300);
+})();
+</script>
+
+</body>
+</html>

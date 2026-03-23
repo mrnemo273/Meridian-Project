@@ -1,0 +1,2540 @@
+{
+  "case_id": "CASE-001",
+  "title": "USS Nimitz Encounter",
+  "subtitle": "The Tic Tac Incident",
+  "date": "2004-11-14",
+  "date_display": "November 14, 2004",
+  "date_range": {
+    "first_radar_contact": "2004-11-10",
+    "primary_encounter": "2004-11-14",
+    "last_known_activity": "2004-11-14"
+  },
+  "location": {
+    "description": "Pacific Ocean, approximately 100 miles southwest of San Diego, California",
+    "lat": 31.33,
+    "lng": -117.17,
+    "area": "Southern California Operating Area (SOCAL OPAREA)"
+  },
+  "duration": {
+    "radar_tracking_period": "~5 days (Nov 10-14, 2004)",
+    "primary_visual_encounter": "~5 minutes",
+    "flir_recording": "~76 seconds (35 seconds publicly released)"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 92,
+  "credibility_tier": "TIER 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "multi-sensor",
+    "multi-witness",
+    "radar-confirmed",
+    "infrared-confirmed",
+    "visual-confirmed",
+    "carrier-strike-group",
+    "data-confiscation",
+    "congressional-testimony",
+    "officially-unidentified"
+  ],
+  "related_case_ids": [
+    "CASE-002",
+    "CASE-003",
+    "CASE-005"
+  ],
+  "event_summary": {
+    "overview": "During routine pre-deployment training exercises in the Pacific Ocean off Southern California, the USS Nimitz Carrier Strike Group (CSG-11) encountered multiple anomalous aerial vehicles over a period of approximately five days. The primary encounter on November 14, 2004 involved visual contact by two F/A-18F Super Hornet crews, radar tracking by the AN/SPY-1B system aboard USS Princeton, and infrared video capture via the AN/ASQ-228 ATFLIR pod. The object — described as a white, featureless, elongated shape approximately 40 feet long resembling a Tic Tac candy — demonstrated flight characteristics far beyond any known technology, including instantaneous acceleration, hypersonic speed without sonic boom, and apparent awareness of intercepting aircraft.",
+    "weather": "Clear skies, calm seas, excellent visibility. Blue sky, no clouds below 25,000 feet.",
+    "sea_conditions": "Calm with light winds. Witnesses noted a localized disturbance on the ocean surface — a cross-shaped area of churning whitewater approximately the size of a 737 aircraft — despite the calm surrounding seas.",
+    "military_units": [
+      {
+        "unit": "USS Nimitz (CVN-68)",
+        "type": "Nimitz-class nuclear aircraft carrier",
+        "role": "Carrier Strike Group flagship, launched intercept aircraft"
+      },
+      {
+        "unit": "USS Princeton (CG-59)",
+        "type": "Ticonderoga-class guided-missile cruiser",
+        "role": "AEGIS radar tracking, air defense coordination, directed intercept"
+      },
+      {
+        "unit": "VFA-41 'Black Aces'",
+        "type": "Strike Fighter Squadron, F/A-18F Super Hornets",
+        "role": "Primary intercept flight (FASTEAGLE 01/02)"
+      },
+      {
+        "unit": "VFA-122 'Flying Eagles'",
+        "type": "Strike Fighter Squadron, F/A-18F Super Hornets",
+        "role": "Second intercept flight, captured FLIR1 video"
+      },
+      {
+        "unit": "VAW-117 'Wallbangers'",
+        "type": "Carrier Airborne Early Warning Squadron, E-2C Hawkeye",
+        "role": "Airborne early warning and radar coordination"
+      },
+      {
+        "unit": "USS Louisville (SSN-724)",
+        "type": "Los Angeles-class submarine",
+        "role": "Reported as part of the strike group; sonar data status unknown"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "id": "W-001",
+      "type": "witness",
+      "title": "Commander (CDR) David Fravor",
+      "summary": "Observed a white, smooth, elongated object approximately 40 feet long with no wings, no exhaust, no visible propulsion — shaped like a Tic Tac candy. The object was hovering erratically above a cross-shaped whitewater disturbance on the ocean surface.",
+      "detail": "Observed a white, smooth, elongated object approximately 40 feet long with no wings, no exhaust, no visible propulsion — shaped like a Tic Tac candy. The object was hovering erratically above a cross-shaped whitewater disturbance on the ocean surface. When Fravor descended to investigate, the object appeared to mirror his movements, ascending to meet him. As he attempted to cut across the circle to intercept, the object accelerated instantaneously and disappeared. It was detected by radar on the USS Princeton approximately 60 miles away within less than a minute — at Fravor's pre-planned CAP point.",
+      "source": {
+        "citation": "The New York Times article by Helene Cooper, Ralph Blumenthal, and Leslie Kean",
+        "url": "https://www.nytimes.com/2017/12/16/us/politics/pentagon-program-ufo-harry-reid.html"
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "witness",
+          "label": "Observed disturbance"
+        },
+        {
+          "target_id": "E-005",
+          "type": "witness",
+          "label": "No sonic boom"
+        },
+        {
+          "target_id": "E-001",
+          "type": "witness",
+          "label": "Encounter subject of"
+        }
+      ]
+    },
+    {
+      "id": "W-002",
+      "type": "witness",
+      "title": "Lieutenant Commander (LCDR) Alex Dietrich",
+      "summary": "Observed the same Tic Tac object from a higher altitude while Fravor descended to investigate. Confirmed the object's erratic, unpredictable movement and its sudden acceleration and disappearance.",
+      "detail": "Observed the same Tic Tac object from a higher altitude while Fravor descended to investigate. Confirmed the object's erratic, unpredictable movement and its sudden acceleration and disappearance. Described the encounter as 'unsettling' — not because of fear, but because of the inability to explain what was observed using any known framework.",
+      "source": {
+        "citation": "60 Minutes, CBS",
+        "url": "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "witness",
+          "label": "Observed disturbance"
+        },
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "Wingman to"
+        }
+      ]
+    },
+    {
+      "id": "W-003",
+      "type": "witness",
+      "title": "Senior Chief Operations Specialist Kevin Day",
+      "summary": "Beginning approximately November 10, 2004, Day and his radar team tracked groups of anomalous aerial contacts on the SPY-1 radar. The objects appeared at approximately 80,000+ feet altitude, descended to near sea level in less than a second, loitered for hours, then returned to extreme altitude.",
+      "detail": "Beginning approximately November 10, 2004, Day and his radar team tracked groups of anomalous aerial contacts on the SPY-1 radar. The objects appeared at approximately 80,000+ feet altitude, descended to near sea level in less than a second, loitered for hours, then returned to extreme altitude. Day tracked these objects for several days before the November 14 intercept. He made the decision to vector Fravor's flight toward the contacts. After the visual encounter, Day tracked the object as it appeared at Fravor's CAP point — approximately 60 miles away — within seconds of disappearing from Fravor's visual range.",
+      "source": {
+        "citation": "Various podcast interviews (began speaking publicly circa 2019)",
+        "url": null
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "S-001",
+          "type": "evidence",
+          "label": "Operated"
+        },
+        {
+          "target_id": "E-003",
+          "type": "evidence",
+          "label": "Generated data"
+        }
+      ]
+    },
+    {
+      "id": "W-004",
+      "type": "witness",
+      "title": "Lieutenant Commander (LCDR) Chad Underwood",
+      "summary": "During the second intercept flight approximately 90 minutes after Fravor's encounter, Underwood acquired the object on the AN/ASQ-228 ATFLIR targeting pod. He tracked it in infrared for approximately 76 seconds and captured the footage now known as the FLIR1 video.",
+      "detail": "During the second intercept flight approximately 90 minutes after Fravor's encounter, Underwood acquired the object on the AN/ASQ-228 ATFLIR targeting pod. He tracked it in infrared for approximately 76 seconds and captured the footage now known as the FLIR1 video. Underwood did not observe the object with his own eyes — he focused on maintaining the FLIR track. He noted the object exhibited no visible exhaust plume despite the thermal signature, erratic movement, and apparent ability to jam or evade the radar lock.",
+      "source": {
+        "citation": "New York Magazine / Intelligencer interview",
+        "url": "https://nymag.com/intelligencer/2019/12/tic-tac-ufo-video-q-and-a-with-navy-pilot-chad-underwood.html"
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 950
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "witness",
+          "label": "Filmed"
+        },
+        {
+          "target_id": "S-002",
+          "type": "evidence",
+          "label": "Operated"
+        }
+      ]
+    },
+    {
+      "id": "W-005",
+      "type": "witness",
+      "title": "Petty Officer (Aviation Technician) Patrick 'PJ' Hughes",
+      "summary": "Hughes was responsible for handling data recorders from the E-2C Hawkeye airborne early warning aircraft. He reported that after the encounter, two unidentified individuals in civilian clothes arrived by helicopter, presented themselves as having authority, and confiscated the data recorder hard drives from the Hawkeyes.",
+      "detail": "Hughes was responsible for handling data recorders from the E-2C Hawkeye airborne early warning aircraft. He reported that after the encounter, two unidentified individuals in civilian clothes arrived by helicopter, presented themselves as having authority, and confiscated the data recorder hard drives from the Hawkeyes. Hughes was ordered not to discuss the incident.",
+      "source": {
+        "citation": "Various interviews and The Nimitz Encounters documentary",
+        "url": null
+      },
+      "badge": {
+        "label": "Corroborating",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 580,
+        "y": 950
+      },
+      "connections": [
+        {
+          "target_id": "E-006",
+          "type": "witness",
+          "label": "Reported confiscation"
+        }
+      ]
+    },
+    {
+      "id": "W-006",
+      "type": "witness",
+      "title": "Petty Officer 3rd Class Gary Voorhis",
+      "summary": "Voorhis began noticing anomalous radar tracks on November 10, 2004. The tracks appeared as 'ghost tracks' and 'clutter' that did not behave like normal radar artifacts.",
+      "detail": "Voorhis began noticing anomalous radar tracks on November 10, 2004. The tracks appeared as 'ghost tracks' and 'clutter' that did not behave like normal radar artifacts. He reported a longer, higher-resolution video of the encounter existed (approximately 10 minutes) beyond the 35-second FLIR1 clip released publicly. He also reported that unidentified personnel confiscated data tapes and hard drives from the Princeton after the incident.",
+      "source": {
+        "citation": "Various interviews and The Nimitz Encounters documentary",
+        "url": null
+      },
+      "badge": {
+        "label": "Corroborating",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 580,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-006",
+          "type": "witness",
+          "label": "Reported confiscation"
+        },
+        {
+          "target_id": "W-007",
+          "type": "witness",
+          "label": "Corroborates"
+        }
+      ]
+    },
+    {
+      "id": "W-007",
+      "type": "witness",
+      "title": "Petty Officer 3rd Class Jason Turner",
+      "summary": "Turner confirmed Gary Voorhis's account of a longer, higher-resolution video of the UAP encounter. Turner reported being able to see details of the object in that extended video that were not visible in the publicly released 35-second FLIR1 clip.",
+      "detail": "Turner confirmed Gary Voorhis's account of a longer, higher-resolution video of the UAP encounter. Turner reported being able to see details of the object in that extended video that were not visible in the publicly released 35-second FLIR1 clip.",
+      "source": {
+        "citation": "Various interviews",
+        "url": null
+      },
+      "badge": {
+        "label": "Corroborating",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 580,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "witness",
+          "label": "Confirms longer video"
+        }
+      ]
+    },
+    {
+      "id": "W-008",
+      "type": "witness",
+      "title": "Jim Slaight (WSO)",
+      "summary": "Fravor's Weapon Systems Officer in the back seat of FASTEAGLE 01. No public statements.",
+      "detail": "Jim Slaight was the WSO (back-seater) in CDR David Fravor's F/A-18F Super Hornet during the November 14, 2004 intercept. Despite being a direct participant in the encounter, Slaight has made no public statements about the incident.",
+      "source": {
+        "citation": "Referenced in Fravor interviews",
+        "url": null
+      },
+      "badge": {
+        "label": "No Statement",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "He was RIGHT THERE in the back seat. What did he see? Why hasn't he talked?"
+        }
+      ],
+      "position": {
+        "x": 120,
+        "y": 1200
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "WSO for Fravor"
+        }
+      ]
+    },
+    {
+      "id": "S-001",
+      "type": "sensor",
+      "title": "AN/SPY-1B AEGIS Radar",
+      "summary": "The SPY-1B is a passive electronically scanned array radar and the primary sensor of the AEGIS Combat System — one of the most advanced military radar systems in the world. Beginning approximately November 10, 2004, the system tracked multiple anomalous aerial contacts.",
+      "detail": "The SPY-1B is a passive electronically scanned array radar and the primary sensor of the AEGIS Combat System — one of the most advanced military radar systems in the world. Beginning approximately November 10, 2004, the system tracked multiple anomalous aerial contacts. Objects were detected at altitudes exceeding 80,000 feet, descending to near sea level in less than one second — implying speeds and accelerations far beyond any known aircraft. Objects were tracked intermittently for approximately 5 days. On November 14, the system tracked the object during and after Fravor's visual encounter, detecting it at his CAP point (~60 miles away) within seconds of it disappearing from visual range.",
+      "source": {
+        "citation": "USS Princeton / Kevin Day testimony",
+        "url": null
+      },
+      "badge": {
+        "label": "Military Sensor",
+        "style": "sensor"
+      },
+      "visual": "radar",
+      "annotations": [],
+      "position": {
+        "x": 580,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "W-003",
+          "type": "evidence",
+          "label": "Operated by"
+        },
+        {
+          "target_id": "E-003",
+          "type": "evidence",
+          "label": "Data source"
+        }
+      ]
+    },
+    {
+      "id": "S-002",
+      "type": "sensor",
+      "title": "AN/ASQ-228 ATFLIR (Advanced Targeting Forward Looking Infrared)",
+      "summary": "The ATFLIR is a multi-sensor electro-optical targeting pod equipped with a mid-wave infrared thermographic camera, low-light television sensor, and laser rangefinder/designator. On November 14, 2004, approximately 90 minutes after Fravor's visual encounter, Underwood acquired and tracked the Tic Tac object for approximately 76 seconds.",
+      "detail": "The ATFLIR is a multi-sensor electro-optical targeting pod equipped with a mid-wave infrared thermographic camera, low-light television sensor, and laser rangefinder/designator. On November 14, 2004, approximately 90 minutes after Fravor's visual encounter, Underwood acquired and tracked the Tic Tac object for approximately 76 seconds. The resulting footage — designated FLIR1 — shows a white, oblong object with no visible exhaust plume against a dark background. The object displays erratic lateral movement. The video became the first officially acknowledged UAP footage when released by the DoD.",
+      "source": {
+        "citation": "USS Princeton / Kevin Day testimony",
+        "url": null
+      },
+      "badge": {
+        "label": "Military Sensor",
+        "style": "sensor"
+      },
+      "visual": "flir",
+      "annotations": [],
+      "position": {
+        "x": 1040,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "W-004",
+          "type": "evidence",
+          "label": "Operated by"
+        },
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Captured"
+        }
+      ]
+    },
+    {
+      "id": "S-003",
+      "type": "sensor",
+      "title": "E-2C Hawkeye Airborne Radar",
+      "summary": "The E-2C Hawkeye is an all-weather, carrier-based tactical airborne early warning aircraft with a powerful AN/APS-145 radar. The Hawkeye was airborne during the encounter period and would have had independent radar data on the objects.",
+      "detail": "The E-2C Hawkeye is an all-weather, carrier-based tactical airborne early warning aircraft with a powerful AN/APS-145 radar. The Hawkeye was airborne during the encounter period and would have had independent radar data on the objects. Its data recorders were among those reportedly confiscated.",
+      "source": {
+        "citation": "USS Princeton / Kevin Day testimony",
+        "url": null
+      },
+      "badge": {
+        "label": "Military Sensor",
+        "style": "sensor"
+      },
+      "visual": "jet",
+      "annotations": [],
+      "position": {
+        "x": 1040,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-005",
+          "type": "evidence",
+          "label": "Data confiscated from"
+        }
+      ]
+    },
+    {
+      "id": "E-001",
+      "type": "media",
+      "title": "FLIR1 Video",
+      "summary": "Infrared footage captured by LCDR Chad Underwood showing the Tic Tac object. Approximately 76 seconds recorded; 35 seconds released publicly. Shows a white oblong object with no exhaust plume, displaying erratic movement. First UAP video officially released by the Department of Defense.",
+      "detail": "The FLIR1 video was captured using the AN/ASQ-228 ATFLIR targeting pod on an F/A-18F Super Hornet during the second intercept flight on November 14, 2004. The infrared footage shows a white, elongated object (the 'Tic Tac') against a dark background. Key observations: (1) The object shows a consistent thermal signature with no exhaust plume, (2) It displays sudden lateral movements, (3) The FLIR system appears to lose lock multiple times, (4) The object rotates or changes orientation. The video was leaked to the public in 2007, then officially released by the DoD through the Naval Air Systems Command FOIA Reading Room in April 2020.",
+      "source": {
+        "citation": "Department of Defense, released via Naval Air Systems Command FOIA Reading Room",
+        "date": "2020-04-27",
+        "url": "https://www.defense.gov/News/Releases/Release/Article/2165713/statement-by-the-department-of-defense-on-the-release-of-historical-navy-videos/"
+      },
+      "badge": {
+        "label": "FLIR Video",
+        "style": "sensor"
+      },
+      "visual": "flir",
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "Frame analysis of FLIR1 shows no exhaust plume or thermal trail behind the object, which is inconsistent with any known propulsion system that could achieve the observed velocities. The infrared signature itself is relatively cool compared to what would be expected from a powered vehicle at these speeds."
+        },
+        {
+          "author": "Nemo",
+          "text": "This is the single most important piece of evidence. But where's the other 40+ seconds? Multiple witnesses say a longer cut exists. That missing footage is a major gap."
+        }
+      ],
+      "position": {
+        "x": 1040,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "W-004",
+          "type": "witness",
+          "label": "Filmed by"
+        },
+        {
+          "target_id": "S-002",
+          "type": "evidence",
+          "label": "Captured with"
+        },
+        {
+          "target_id": "E-004",
+          "type": "evidence",
+          "label": "Referenced in"
+        }
+      ]
+    },
+    {
+      "id": "E-002",
+      "type": "evidence",
+      "title": "Ocean Surface Disturbance",
+      "summary": "A cross-shaped area of churning whitewater on the calm ocean surface, approximately the size of a Boeing 737 aircraft, observed by both Fravor and Dietrich directly beneath the Tic Tac object's hovering position.",
+      "detail": "During the initial encounter, both CDR Fravor and LCDR Dietrich observed a large disturbance on the ocean surface directly below the Tic Tac object. The disturbance was described as a cross-shaped pattern of roiling, churning whitewater in otherwise calm seas. Fravor estimated it was roughly the size of a Boeing 737. The disturbance suggested either a large submerged object or some effect from the aerial object on the water surface. When the Tic Tac departed, the ocean disturbance also dissipated. This detail has led to speculation about a possible submerged component to the encounter.",
+      "source": {
+        "citation": "CDR David Fravor testimony, multiple venues (Joe Rogan Experience, Lex Fridman Podcast, Congressional testimony)",
+        "date": "2019-10-05",
+        "url": null
+      },
+      "badge": {
+        "label": "Physical Evidence",
+        "style": "official"
+      },
+      "visual": "ocean",
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "Cross-pattern ocean disturbance is consistent with cross-case pattern: water anomalies co-located with UAP sightings appear in at least 4 other verified cases (Shag Harbour 1967, Aguadilla 2013, multiple Project Blue Book reports). The pattern suggests possible submerged component or surface effect from propulsion mechanism."
+        },
+        {
+          "author": "Nemo",
+          "text": "This detail gets overlooked but it might be the most important part. Something was in the water. Was it related to the Tic Tac? A USO? The sub was there — did it detect anything?"
+        }
+      ],
+      "position": {
+        "x": 1500,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "Observed by"
+        },
+        {
+          "target_id": "W-002",
+          "type": "witness",
+          "label": "Observed by"
+        },
+        {
+          "target_id": "AI-005",
+          "type": "ai",
+          "label": "Pattern match"
+        }
+      ]
+    },
+    {
+      "id": "E-003",
+      "type": "evidence",
+      "title": "SPY-1 Radar Track Data",
+      "summary": "AN/SPY-1B AEGIS radar aboard USS Princeton tracked anomalous aerial objects for approximately 5 days (Nov 10-14, 2004). Objects descended from 80,000+ ft to sea level in under one second.",
+      "detail": "The AN/SPY-1B passive electronically scanned array radar aboard USS Princeton provided the most comprehensive tracking data of the encounter. Senior Chief Kevin Day and his team documented: (1) Multiple contacts appearing at 80,000+ feet altitude, (2) Instantaneous descent to 20,000 feet and then sea level in under one second, (3) Objects loitering at low altitude for extended periods, (4) Returns to extreme altitude, (5) On Nov 14, tracked the Tic Tac as it departed Fravor's location and appeared at the CAP point ~60 miles away in seconds. The implied velocities exceeded 46,000 mph, with acceleration estimates ranging from 75g to over 5,000g according to subsequent analysis.",
+      "source": {
+        "citation": "Senior Chief Kevin Day testimony; SCU forensic analysis",
+        "date": "2004-11-14",
+        "url": null
+      },
+      "badge": {
+        "label": "SPY-1 Radar",
+        "style": "sensor"
+      },
+      "visual": "radar",
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "SPY-1B is among the most sophisticated military radar systems in existence. False returns at these altitudes and with these flight profiles are extremely unlikely given the system's design. The data represents perhaps the strongest sensor evidence in the case."
+        }
+      ],
+      "position": {
+        "x": 1500,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-003",
+          "type": "witness",
+          "label": "Operated by"
+        },
+        {
+          "target_id": "S-001",
+          "type": "evidence",
+          "label": "Recorded by"
+        },
+        {
+          "target_id": "AI-001",
+          "type": "ai",
+          "label": "Analyzed in"
+        }
+      ]
+    },
+    {
+      "id": "E-004",
+      "type": "document",
+      "title": "Executive Summary Report (leaked 2009)",
+      "summary": "A detailed after-action report on the Nimitz encounters that circulated within military and intelligence communities before the 2017 public disclosure.",
+      "detail": "An executive summary report detailing the USS Nimitz encounter circulated in classified and semi-classified channels beginning around 2009. The report compiled witness accounts, sensor data summaries, and preliminary analysis. It was one of the documents reviewed as part of the AATIP program. The report's existence was confirmed when portions were leaked and later referenced in official government proceedings.",
+      "source": {
+        "citation": "Department of Defense / AATIP program files",
+        "date": "2009-01-01",
+        "url": null
+      },
+      "badge": {
+        "label": "DoD Report",
+        "style": "official"
+      },
+      "visual": "document-scan",
+      "annotations": [],
+      "position": {
+        "x": 1500,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "E-005",
+      "type": "evidence",
+      "title": "Absence of Sonic Boom",
+      "summary": "Despite observed speeds estimated at Mach 30-60, no sonic boom was detected by any personnel or sensor system during the encounter.",
+      "detail": "One of the most significant physical anomalies of the encounter: the Tic Tac object was observed accelerating from a near-hover to hypersonic speeds (radar-estimated velocities of Mach 30-60) without producing any detectable sonic boom. This violates fundamental aerodynamic principles — any physical object moving through atmosphere at supersonic speeds must produce a shock wave. The absence of a sonic boom, combined with the absence of exhaust plume and thermal wake, suggests either: (1) a propulsion mechanism that does not interact with the atmosphere conventionally, (2) some form of field effect that moves the surrounding air with the craft, or (3) sensor/observation error (considered unlikely given multi-sensor confirmation).",
+      "source": {
+        "citation": "Multiple witness accounts; SCU analysis paper",
+        "date": "2004-11-14",
+        "url": null
+      },
+      "badge": {
+        "label": "Anomaly",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The absence of sonic boom is one of the '5 Observables' identified by AATIP program manager Lue Elizondo. This observable maps strongly to this case. Known physics requires a shock wave at supersonic speeds — no proposed conventional explanation accounts for its absence at the speeds recorded."
+        }
+      ],
+      "position": {
+        "x": 1960,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "AI-002",
+          "type": "ai",
+          "label": "5 Observables mapping"
+        },
+        {
+          "target_id": "E-003",
+          "type": "evidence",
+          "label": "Speed data from"
+        }
+      ]
+    },
+    {
+      "id": "E-006",
+      "type": "evidence",
+      "title": "Data Confiscation Reports",
+      "summary": "Multiple witnesses from both USS Nimitz and USS Princeton report that unidentified individuals confiscated radar data tapes, hard drives, and video recordings shortly after the encounter.",
+      "detail": "PJ Hughes (USS Nimitz) reported that two individuals in civilian clothes arrived by helicopter and confiscated data recorder hard drives from the E-2C Hawkeye aircraft. Gary Voorhis (USS Princeton) reported that data tapes from the SPY-1 radar system were collected by unidentified personnel. Both witnesses independently reported being told not to discuss the incident. The identity of the individuals and the authority under which they acted has never been publicly confirmed. This confiscation, if accurate, represents the removal of potentially the most valuable sensor data from the encounter.",
+      "source": {
+        "citation": "PJ Hughes and Gary Voorhis testimony, various interviews 2019",
+        "date": "2019-12-01",
+        "url": null
+      },
+      "badge": {
+        "label": "Data Gap",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "This is the part that keeps me up at night. Who were these people? Under what authority? Where did the data go? This is the FOIA rabbit hole we need to dig into."
+        },
+        {
+          "author": "Claude",
+          "text": "Data confiscation post-sighting is a pattern that appears in multiple military UAP cases (Rendlesham Forest 1980, multiple Project Blue Book incidents). Cross-referenced 5 similar cases. The pattern suggests institutional knowledge management protocols for UAP encounters may exist."
+        }
+      ],
+      "position": {
+        "x": 1960,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-005",
+          "type": "witness",
+          "label": "Reported by"
+        },
+        {
+          "target_id": "W-006",
+          "type": "witness",
+          "label": "Reported by"
+        },
+        {
+          "target_id": "Q-001",
+          "type": "evidence",
+          "label": "Raises question"
+        }
+      ]
+    },
+    {
+      "id": "AI-001",
+      "type": "ai-finding",
+      "title": "Acceleration Analysis: Beyond Known Physics",
+      "summary": "Based on radar data from USS Princeton's SPY-1 system (objects descending from 80,000+ feet to sea level in under one second) and the post-intercept detection at the CAP point (60 miles traversed in under one minute), the implied accelerations range from 75g to over 5,000g. For reference: human tolerance is approximately 9g sustained; the highest g-force survived by a human was 46.",
+      "detail": "Based on radar data from USS Princeton's SPY-1 system (objects descending from 80,000+ feet to sea level in under one second) and the post-intercept detection at the CAP point (60 miles traversed in under one minute), the implied accelerations range from 75g to over 5,000g. For reference: human tolerance is approximately 9g sustained; the highest g-force survived by a human was 46.2g in a brief deceleration event. F/A-18 airframe limit is approximately 7.5g. No known propulsion technology — including scramjets, pulse detonation engines, or any classified system acknowledged by the DoD — can produce these accelerations, particularly without observable exhaust plume or sonic boom.",
+      "source": {
+        "citation": "Kinematic analysis using radar-derived position/time data. Calculations follow standard Newtonian mechanics. Cross-referenced with SCU forensic analysis (2019) which independently estimated 75g to 5,000g+ acceleration ranges using the same data sources.",
+        "url": null
+      },
+      "badge": {
+        "label": "anomaly_flag",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 1960,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-003",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "S-001",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "W-003",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-002",
+      "type": "ai-finding",
+      "title": "The Five Observables — Case Mapping",
+      "summary": "The USS Nimitz case maps to all five of the 'observables' identified by former AATIP program manager Luis Elizondo as characteristic of genuine UAP encounters: (1) Anti-gravity lift — the Tic Tac hovered with no visible means of propulsion, no wings, no rotors; (2) Sudden and instantaneous acceleration — from hover to hypersonic in seconds; (3) Hypersonic velocities without signatures — speeds of Mach 30-60 with no sonic boom, no exhaust, no thermal wake; (4) Low observability — despite being tracked on radar, the object appeared to have some ability to evade or jam targeting systems; (5) Trans-medium travel — the ocean disturbance suggests possible water-to-air capability. This is the only publicly known case that maps to all five observables with multi-sensor confirmation.",
+      "detail": "The USS Nimitz case maps to all five of the 'observables' identified by former AATIP program manager Luis Elizondo as characteristic of genuine UAP encounters: (1) Anti-gravity lift — the Tic Tac hovered with no visible means of propulsion, no wings, no rotors; (2) Sudden and instantaneous acceleration — from hover to hypersonic in seconds; (3) Hypersonic velocities without signatures — speeds of Mach 30-60 with no sonic boom, no exhaust, no thermal wake; (4) Low observability — despite being tracked on radar, the object appeared to have some ability to evade or jam targeting systems; (5) Trans-medium travel — the ocean disturbance suggests possible water-to-air capability. This is the only publicly known case that maps to all five observables with multi-sensor confirmation.",
+      "source": {
+        "citation": "Systematic comparison of case evidence against the five observable characteristics. Each observable assessed independently against witness testimony, sensor data, and physical evidence.",
+        "url": null
+      },
+      "badge": {
+        "label": "pattern_match",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2420,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "E-002",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "E-003",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "E-005",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-003",
+      "type": "ai-finding",
+      "title": "Witness Credibility Matrix",
+      "summary": "The Nimitz case features an unusually strong witness pool. All primary witnesses are trained military professionals with relevant technical expertise: Fravor (3,500+ flight hours, TOPGUN, CO of a strike fighter squadron), Dietrich (experienced combat pilot, one of the first women to fly Super Hornets in combat), Day (20+ years, TOPGUN Air Intercept Controller, SPY-1 expert), Underwood (trained WSO who captured the only physical evidence).",
+      "detail": "The Nimitz case features an unusually strong witness pool. All primary witnesses are trained military professionals with relevant technical expertise: Fravor (3,500+ flight hours, TOPGUN, CO of a strike fighter squadron), Dietrich (experienced combat pilot, one of the first women to fly Super Hornets in combat), Day (20+ years, TOPGUN Air Intercept Controller, SPY-1 expert), Underwood (trained WSO who captured the only physical evidence). Witnesses did not seek financial gain — Fravor went public only when approached by NYT reporters after the AATIP story broke. Dietrich waited 17 years. Testimony has been consistent across venues and years. Multiple witnesses have testified under oath. Independent witness accounts corroborate each other on key details without evidence of coordination.",
+      "source": {
+        "citation": "Structured credibility assessment examining: professional qualifications, consistency of testimony over time, independence of witnesses, potential motivations, corroboration between accounts, and willingness to testify under oath.",
+        "url": null
+      },
+      "badge": {
+        "label": "credibility_assessment",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2420,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "W-002",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "W-003",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "W-004",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-004",
+      "type": "ai-finding",
+      "title": "Mirroring Behavior Pattern Across Cases",
+      "summary": "The Tic Tac's apparent reaction to Fravor's maneuvers — ascending to match his descent, appearing to 'mirror' his movements — matches a behavioral pattern observed in at least three other well-documented military intercept cases: (1) Tehran 1976 — the UAP appeared to react to the F-4's weapons lock by deploying a countermeasure-like object; (2) Belgian Wave 1990 — objects tracked by F-16 radar appeared to react to lock-on attempts with sudden acceleration; (3) USS Roosevelt encounters 2014-15 — objects appeared to demonstrate awareness of military aircraft positions. This 'reactive awareness' pattern suggests either: sophisticated sensor capability detecting the interceptors, or coincidental timing of pre-programmed maneuvers.",
+      "detail": "The Tic Tac's apparent reaction to Fravor's maneuvers — ascending to match his descent, appearing to 'mirror' his movements — matches a behavioral pattern observed in at least three other well-documented military intercept cases: (1) Tehran 1976 — the UAP appeared to react to the F-4's weapons lock by deploying a countermeasure-like object; (2) Belgian Wave 1990 — objects tracked by F-16 radar appeared to react to lock-on attempts with sudden acceleration; (3) USS Roosevelt encounters 2014-15 — objects appeared to demonstrate awareness of military aircraft positions. This 'reactive awareness' pattern suggests either: sophisticated sensor capability detecting the interceptors, or coincidental timing of pre-programmed maneuvers.",
+      "source": {
+        "citation": "Cross-case behavioral analysis comparing UAP response patterns during military intercept attempts. Cases selected for multi-sensor confirmation and official documentation.",
+        "url": null
+      },
+      "badge": {
+        "label": "cross_reference",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2420,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "W-002",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "E-003",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-005",
+      "type": "ai-finding",
+      "title": "Water Disturbance Pattern Across Cases",
+      "summary": "The cross-shaped ocean disturbance observed beneath the Tic Tac shares characteristics with water anomalies in other UAP cases: (1) Shag Harbour 1967 — object observed entering water, yellow foam and disturbance persisted, Canadian military divers investigated; (2) Aguadilla, Puerto Rico 2013 — DHS thermal video showed object entering and exiting water without deceleration; (3) Multiple Project Blue Book water-associated cases. The pattern suggests either a submerged component (USO — Unidentified Submerged Object) or a surface effect from the aerial object's propulsion mechanism.",
+      "detail": "The cross-shaped ocean disturbance observed beneath the Tic Tac shares characteristics with water anomalies in other UAP cases: (1) Shag Harbour 1967 — object observed entering water, yellow foam and disturbance persisted, Canadian military divers investigated; (2) Aguadilla, Puerto Rico 2013 — DHS thermal video showed object entering and exiting water without deceleration; (3) Multiple Project Blue Book water-associated cases. The pattern suggests either a submerged component (USO — Unidentified Submerged Object) or a surface effect from the aerial object's propulsion mechanism. The trans-medium capability implied is one of the '5 observables.'",
+      "source": {
+        "citation": "Cross-case analysis of water-associated UAP encounters. Cases selected for official documentation and sensor/physical evidence.",
+        "url": null
+      },
+      "badge": {
+        "label": "cross_reference",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "AI-006",
+      "type": "ai-finding",
+      "title": "Missing Data Inventory",
+      "summary": "Critical data gaps in the Nimitz case that, if filled, could significantly advance understanding: (1) Full SPY-1 radar recordings — confiscated, location unknown; (2) Complete FLIR footage — only 35 of ~76+ seconds released; witnesses report an 8-10 minute extended version; (3) E-2C Hawkeye data — hard drives confiscated per PJ Hughes; (4) USS Louisville submarine sonar data — status unknown, never publicly addressed; (5) Satellite imagery — the SOCAL OPAREA was likely under satellite observation, data never surfaced; (6) Full AATIP analysis files — referenced in AARO report but not fully declassified; (7) The classified AARO report annex — Volume 1 references additional classified material. Each of these data sources could independently corroborate or contradict the witness testimony.",
+      "detail": "Critical data gaps in the Nimitz case that, if filled, could significantly advance understanding: (1) Full SPY-1 radar recordings — confiscated, location unknown; (2) Complete FLIR footage — only 35 of ~76+ seconds released; witnesses report an 8-10 minute extended version; (3) E-2C Hawkeye data — hard drives confiscated per PJ Hughes; (4) USS Louisville submarine sonar data — status unknown, never publicly addressed; (5) Satellite imagery — the SOCAL OPAREA was likely under satellite observation, data never surfaced; (6) Full AATIP analysis files — referenced in AARO report but not fully declassified; (7) The classified AARO report annex — Volume 1 references additional classified material. Each of these data sources could independently corroborate or contradict the witness testimony.",
+      "source": {
+        "citation": "Systematic inventory of expected data sources for a carrier strike group operation, cross-referenced with publicly available data to identify gaps.",
+        "url": null
+      },
+      "badge": {
+        "label": "data_gap",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-006",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "S-001",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "S-002",
+          "type": "ai",
+          "label": "Supports"
+        },
+        {
+          "target_id": "S-003",
+          "type": "ai",
+          "label": "Supports"
+        }
+      ]
+    },
+    {
+      "id": "Q-001",
+      "type": "anomaly",
+      "title": "Who confiscated the sensor data, and under what authority?",
+      "summary": "Who confiscated the sensor data, and under what authority?",
+      "detail": "Multiple witnesses from both USS Nimitz and USS Princeton independently report that unidentified individuals in civilian clothes confiscated radar tapes, hard drives, and other sensor recordings in the days following the encounter. The identity and authority of these individuals has never been publicly confirmed.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "critical",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-006",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-005",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-006",
+          "type": "evidence",
+          "label": "Related to"
+        }
+      ]
+    },
+    {
+      "id": "Q-002",
+      "type": "anomaly",
+      "title": "Where is the full-length FLIR footage?",
+      "summary": "Where is the full-length FLIR footage?",
+      "detail": "Only 35 seconds of the FLIR1 video have been released. Chad Underwood recorded approximately 76 seconds. Gary Voorhis and Jason Turner report seeing a longer, higher-resolution version of approximately 8-10 minutes. Multiple versions of this footage may exist in classified archives.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "critical",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 880
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-004",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-006",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-007",
+          "type": "evidence",
+          "label": "Related to"
+        }
+      ]
+    },
+    {
+      "id": "Q-003",
+      "type": "anomaly",
+      "title": "What did the submarine's sonar detect?",
+      "summary": "What did the submarine's sonar detect?",
+      "detail": "USS Louisville (SSN-724), a Los Angeles-class submarine, was part of CSG-11 during the encounter period. Given the ocean surface disturbance observed by Fravor and Dietrich, any submerged sonar data would be extremely relevant. No public statement has ever been made about the submarine's sensor data.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "high",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 1060
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "evidence",
+          "label": "Related to"
+        }
+      ]
+    },
+    {
+      "id": "Q-004",
+      "type": "anomaly",
+      "title": "Why did it take 5 days of radar tracking before an interc...",
+      "summary": "Why did it take 5 days of radar tracking before an intercept was ordered?",
+      "detail": "Kevin Day's team tracked anomalous objects on the SPY-1 radar from approximately November 10-14, 2004. Despite increasingly unusual readings from arguably the most advanced military radar in the world, no intercept was ordered until November 14. Was there a protocol gap? Were there prior orders regarding these contacts?",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "medium",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 1240
+      },
+      "connections": [
+        {
+          "target_id": "S-001",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-003",
+          "type": "evidence",
+          "label": "Related to"
+        }
+      ]
+    },
+    {
+      "id": "Q-005",
+      "type": "anomaly",
+      "title": "How did the object appear at Fravor's CAP point?",
+      "summary": "How did the object appear at Fravor's CAP point?",
+      "detail": "After the Tic Tac accelerated away from Fravor, it was detected on radar approximately 60 miles away at his pre-planned Combat Air Patrol coordinate — a point that was programmed into the mission plan. This implies the object either intercepted military communications, predicted the flight path, or arrived at the location by coincidence.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "high",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 1420
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "W-003",
+          "type": "evidence",
+          "label": "Related to"
+        },
+        {
+          "target_id": "S-001",
+          "type": "evidence",
+          "label": "Related to"
+        }
+      ]
+    },
+    {
+      "id": "Q-006",
+      "type": "anomaly",
+      "title": "What is in the classified AARO report annex?",
+      "summary": "What is in the classified AARO report annex?",
+      "detail": "AARO's Historical Record Report Volume 1 (March 2024) references additional classified material that was not included in the public release. The unclassified report's conclusions have been criticized as contradicting sworn witness testimony. The classified annex may contain information that changes the picture.",
+      "source": {
+        "citation": "Meridian Investigation",
+        "url": null
+      },
+      "badge": {
+        "label": "high",
+        "style": "anomaly"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 2880,
+        "y": 1600
+      },
+      "connections": []
+    },
+    {
+      "id": "HN-001",
+      "type": "note",
+      "title": "First Impressions",
+      "summary": "This is the gold standard.",
+      "detail": "This is the gold standard. If any UAP case is going to hold up to scrutiny, it's this one. Multiple trained military observers, the most advanced radar on the planet, infrared video, and congressional testimony under oath. If you're going to be skeptical about UAP, you have to explain THIS case first.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "This is the gold standard. If any UAP case is going to hold up to scrutiny, it's this one. Multiple trained military observers, the most advanced radar on the planet, infrared video, and congressional testimony under oath. If you're going to be skeptical about UAP, you have to explain THIS case first."
+        }
+      ],
+      "position": {
+        "x": 350,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "E-003",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "HN-002",
+      "type": "note",
+      "title": "The Water Question",
+      "summary": "Everyone focuses on the Tic Tac.",
+      "detail": "Everyone focuses on the Tic Tac. I keep coming back to the water. A cross-shaped disturbance the size of a 737 in calm seas? Was something underneath? The sub was RIGHT THERE. What did its sonar pick up? This feels like the thread nobody is pulling hard enough.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Everyone focuses on the Tic Tac. I keep coming back to the water. A cross-shaped disturbance the size of a 737 in calm seas? Was something underneath? The sub was RIGHT THERE. What did its sonar pick up? This feels like the thread nobody is pulling hard enough."
+        }
+      ],
+      "position": {
+        "x": 1730,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "Q-003",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "HN-003",
+      "type": "note",
+      "title": "The 13-Year Silence",
+      "summary": "This happened in 2004.",
+      "detail": "This happened in 2004. The NYT story broke in 2017. Thirteen years. These people sat on this for over a decade. That actually makes them MORE credible to me — if you were making it up, you'd cash in sooner. But it also means: how many other encounters are people sitting on right now?",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "This happened in 2004. The NYT story broke in 2017. Thirteen years. These people sat on this for over a decade. That actually makes them MORE credible to me — if you were making it up, you'd cash in sooner. But it also means: how many other encounters are people sitting on right now?"
+        }
+      ],
+      "position": {
+        "x": 350,
+        "y": 1150
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "W-002",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "HN-004",
+      "type": "note",
+      "title": "The CAP Point Problem",
+      "summary": "Of all the details in this case, the one that keeps me up at night is the CAP point.",
+      "detail": "Of all the details in this case, the one that keeps me up at night is the CAP point. The thing went to Fravor's PRE-PLANNED coordinate. That's not random. That's either intelligence (it intercepted comms), prediction (it modeled behavior), or the most unlikely coincidence in military aviation history.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Of all the details in this case, the one that keeps me up at night is the CAP point. The thing went to Fravor's PRE-PLANNED coordinate. That's not random. That's either intelligence (it intercepted comms), prediction (it modeled behavior), or the most unlikely coincidence in military aviation history."
+        }
+      ],
+      "position": {
+        "x": 2190,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "W-001",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "Q-005",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "HN-005",
+      "type": "note",
+      "title": "FOIA To-Do List",
+      "summary": "Need to dig into: (1) Who authorized the data confiscation?",
+      "detail": "Need to dig into: (1) Who authorized the data confiscation?, (2) USS Louisville sonar logs for Nov 10-14 2004, (3) SOCAL OPAREA satellite coverage for that period, (4) Any formal incident reports filed through Navy channels, (5) The full classified AARO annex. Some of these will get stonewalled but the denials themselves are data.",
+      "source": {
+        "citation": "Nemo — Human Investigator",
+        "url": null
+      },
+      "badge": {
+        "label": "Human Note",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "Need to dig into: (1) Who authorized the data confiscation?, (2) USS Louisville sonar logs for Nov 10-14 2004, (3) SOCAL OPAREA satellite coverage for that period, (4) Any formal incident reports filed through Navy channels, (5) The full classified AARO annex. Some of these will get stonewalled but the denials themselves are data."
+        }
+      ],
+      "position": {
+        "x": 2650,
+        "y": 700
+      },
+      "connections": [
+        {
+          "target_id": "E-006",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "Q-001",
+          "type": "witness",
+          "label": "References"
+        },
+        {
+          "target_id": "Q-003",
+          "type": "witness",
+          "label": "References"
+        }
+      ]
+    },
+    {
+      "id": "AN-001",
+      "type": "note",
+      "title": "Statistical Significance of Multi-Sensor Corroboration",
+      "summary": "The Nimitz case achieves an exceptionally rare level of sensor corroboration for a UAP encounter: AN/SPY-1B radar (passive phased array), AN/ASQ-228 ATFLIR (mid-wave infrared), visual observation by trained pilots, and E-2C Hawkeye airborne radar.",
+      "detail": "The Nimitz case achieves an exceptionally rare level of sensor corroboration for a UAP encounter: AN/SPY-1B radar (passive phased array), AN/ASQ-228 ATFLIR (mid-wave infrared), visual observation by trained pilots, and E-2C Hawkeye airborne radar. In the verified UAP case corpus, fewer than 3% of cases achieve three or more independent sensor confirmations. The probability of correlated false positives across these disparate systems is vanishingly small.",
+      "source": {
+        "citation": "Claude — AI Analyst",
+        "url": null
+      },
+      "badge": {
+        "label": "AI Note",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The Nimitz case achieves an exceptionally rare level of sensor corroboration for a UAP encounter: AN/SPY-1B radar (passive phased array), AN/ASQ-228 ATFLIR (mid-wave infrared), visual observation by trained pilots, and E-2C Hawkeye airborne radar. In the verified UAP case corpus, fewer than 3% of cases achieve three or more independent sensor confirmations. The probability of correlated false positives across these disparate systems is vanishingly small."
+        }
+      ],
+      "position": {
+        "x": 2650,
+        "y": 100
+      },
+      "connections": [
+        {
+          "target_id": "S-001",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "S-002",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "S-003",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "E-001",
+          "type": "ai",
+          "label": "Analysis of"
+        }
+      ]
+    },
+    {
+      "id": "AN-002",
+      "type": "note",
+      "title": "Conventional Explanation Assessment",
+      "summary": "Systematic evaluation of proposed conventional explanations: (1) Foreign adversary technology — implausible given that no nation has demonstrated anything approaching these capabilities 20 years later; (2) Secret US program — contradicted by the intercept being ordered by the US Navy itself; (3) Atmospheric phenomena — inconsistent with multi-day, multi-sensor tracking and structured appearance; (4) Radar malfunction — the SPY-1 was recalibrated and restarted; anomalies persisted; (5) Pilot misidentification — contradicted by FLIR evidence and multiple independent observers.",
+      "detail": "Systematic evaluation of proposed conventional explanations: (1) Foreign adversary technology — implausible given that no nation has demonstrated anything approaching these capabilities 20 years later; (2) Secret US program — contradicted by the intercept being ordered by the US Navy itself; (3) Atmospheric phenomena — inconsistent with multi-day, multi-sensor tracking and structured appearance; (4) Radar malfunction — the SPY-1 was recalibrated and restarted; anomalies persisted; (5) Pilot misidentification — contradicted by FLIR evidence and multiple independent observers. None of these conventional explanations adequately account for the full evidence set.",
+      "source": {
+        "citation": "Claude — AI Analyst",
+        "url": null
+      },
+      "badge": {
+        "label": "AI Note",
+        "style": "ai"
+      },
+      "visual": null,
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "Systematic evaluation of proposed conventional explanations: (1) Foreign adversary technology — implausible given that no nation has demonstrated anything approaching these capabilities 20 years later; (2) Secret US program — contradicted by the intercept being ordered by the US Navy itself; (3) Atmospheric phenomena — inconsistent with multi-day, multi-sensor tracking and structured appearance; (4) Radar malfunction — the SPY-1 was recalibrated and restarted; anomalies persisted; (5) Pilot misidentification — contradicted by FLIR evidence and multiple independent observers. None of these conventional explanations adequately account for the full evidence set."
+        }
+      ],
+      "position": {
+        "x": 2650,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "E-003",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "E-005",
+          "type": "ai",
+          "label": "Analysis of"
+        },
+        {
+          "target_id": "W-001",
+          "type": "ai",
+          "label": "Analysis of"
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "id": "T-001",
+      "date": "2004-10-27",
+      "date_display": "Late October 2004",
+      "title": "CSG-11 Begins Pre-Deployment Training",
+      "detail": "USS Nimitz Carrier Strike Group 11 (CSG-11), including USS Princeton (CG-59), begins pre-deployment exercises in the Southern California Operating Area (SOCAL OPAREA) before deploying to the Persian Gulf.",
+      "type": "normal",
+      "tags": [
+        "military",
+        "context"
+      ],
+      "linked_card_ids": []
+    },
+    {
+      "id": "T-002",
+      "date": "2004-11-10",
+      "date_display": "November 10, 2004",
+      "title": "First Anomalous Radar Contacts Detected",
+      "detail": "Senior Chief Kevin Day and radar operators aboard USS Princeton begin tracking anomalous aerial contacts on the AN/SPY-1B radar. Objects appear at 80,000+ feet, descend rapidly to 20,000-28,000 feet, and loiter. Day initially suspects a radar malfunction — the system is recalibrated and restarted. Anomalous tracks persist. Gary Voorhis reports 'ghost tracks' and unusual clutter patterns.",
+      "type": "key",
+      "tags": [
+        "sensor",
+        "radar"
+      ],
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "5 days of tracking before anyone scrambles a jet. That's a long time. Was there a protocol gap? Or were they told to wait?",
+          "timestamp": "2024-01-15"
+        }
+      ],
+      "linked_card_ids": [
+        "S-001",
+        "E-003",
+        "W-003",
+        "W-006"
+      ]
+    },
+    {
+      "id": "T-003",
+      "date": "2004-11-11",
+      "date_display": "November 11-13, 2004",
+      "title": "Escalating Radar Activity",
+      "detail": "Over several days, the anomalous radar returns continue and escalate. Multiple objects are tracked, sometimes appearing to travel in groups. Objects consistently demonstrate the pattern of extreme-altitude appearance, rapid descent, low-altitude loitering, and high-speed departure. Kevin Day grows increasingly concerned and decides to direct fighter aircraft to investigate.",
+      "type": "normal",
+      "tags": [
+        "sensor",
+        "radar"
+      ],
+      "linked_card_ids": [
+        "S-001",
+        "W-003"
+      ]
+    },
+    {
+      "id": "T-004",
+      "date": "2004-11-14T13:00:00",
+      "date_display": "November 14, ~1:00 PM PST",
+      "title": "Fravor & Dietrich Vectored to Intercept",
+      "detail": "CDR David Fravor (FASTEAGLE 01) and LCDR Alex Dietrich (FASTEAGLE 02), flying F/A-18F Super Hornets from VFA-41, are redirected from a routine training exercise to investigate a real-world radar contact. USS Princeton's combat direction center provides vectors to the anomalous contact's position.",
+      "type": "key",
+      "tags": [
+        "military",
+        "intercept"
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "W-002",
+        "W-003"
+      ]
+    },
+    {
+      "id": "T-005",
+      "date": "2004-11-14T13:10:00",
+      "date_display": "November 14, ~1:10 PM PST",
+      "title": "Visual Contact — The Tic Tac",
+      "detail": "Fravor and Dietrich arrive at the intercept coordinates. From approximately 20,000 feet, they observe a white, elongated, featureless object — approximately 40 feet long, shaped like a Tic Tac — hovering erratically above the ocean surface. Below it, on the calm sea surface, a cross-shaped disturbance of churning whitewater approximately the size of a Boeing 737 is visible.",
+      "type": "key",
+      "tags": [
+        "visual",
+        "witness"
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "W-002",
+        "E-002"
+      ]
+    },
+    {
+      "id": "T-006",
+      "date": "2004-11-14T13:15:00",
+      "date_display": "November 14, ~1:15 PM PST",
+      "title": "Fravor Descends to Investigate",
+      "detail": "Fravor begins a descending spiral toward the object. The Tic Tac appears to react — ascending to meet him, mirroring his circular descent. Fravor attempts to cut across the circle to close distance. The object rapidly accelerates and disappears from visual range in approximately 2 seconds. No sonic boom is heard. Dietrich observes the entire sequence from her higher altitude position.",
+      "type": "key",
+      "tags": [
+        "visual",
+        "witness",
+        "anomaly"
+      ],
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "The mirroring behavior — the object apparently reacting to and matching the interceptor's maneuvers — appears in at least 3 other verified cases (Tehran 1976, Belgian Wave 1990, USS Roosevelt 2015). This pattern of apparent situational awareness is statistically significant across the verified case corpus.",
+          "timestamp": "2024-01-15"
+        }
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "W-002",
+        "E-005"
+      ]
+    },
+    {
+      "id": "T-007",
+      "date": "2004-11-14T13:17:00",
+      "date_display": "November 14, ~1:17 PM PST",
+      "title": "Object Detected at CAP Point",
+      "detail": "Within approximately one minute of the Tic Tac disappearing from Fravor's visual range, the USS Princeton's SPY-1 radar detects the object approximately 60 miles away — at Fravor's pre-planned Combat Air Patrol (CAP) point. This is the coordinate Fravor was scheduled to fly to after the intercept. The object appeared to know where Fravor was going next.",
+      "type": "key",
+      "tags": [
+        "sensor",
+        "radar",
+        "anomaly"
+      ],
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "It went to his CAP point. His PRE-PLANNED coordinate. How? Either it was monitoring military communications, it predicted the flight path, or it's coincidence. None of those options are comfortable.",
+          "timestamp": "2024-01-15"
+        }
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "W-003",
+        "S-001",
+        "E-003"
+      ]
+    },
+    {
+      "id": "T-008",
+      "date": "2004-11-14T14:30:00",
+      "date_display": "November 14, ~2:30 PM PST",
+      "title": "Second Flight — FLIR1 Video Captured",
+      "detail": "Approximately 90 minutes after Fravor's encounter, a second pair of F/A-18F Super Hornets launches to investigate. LCDR Chad Underwood, the WSO in the back seat, acquires the Tic Tac object on the AN/ASQ-228 ATFLIR targeting pod and records approximately 76 seconds of infrared footage — now known as the FLIR1 video. Underwood does not visually observe the object but tracks it via instruments.",
+      "type": "key",
+      "tags": [
+        "sensor",
+        "FLIR",
+        "video"
+      ],
+      "linked_card_ids": [
+        "W-004",
+        "S-002",
+        "E-001"
+      ]
+    },
+    {
+      "id": "T-009",
+      "date": "2004-11-15",
+      "date_display": "November 15-16, 2004",
+      "title": "Post-Incident: Data Confiscation",
+      "detail": "In the days following the encounter, unidentified individuals reportedly arrive aboard both the USS Nimitz and USS Princeton. According to multiple witnesses (PJ Hughes, Gary Voorhis), these individuals — dressed in civilian clothes and presenting undefined authority — confiscate radar data tapes, hard drive recordings from E-2C Hawkeye aircraft, and other sensor records. Personnel are instructed not to discuss the incident.",
+      "type": "key",
+      "tags": [
+        "confiscation",
+        "official"
+      ],
+      "annotations": [
+        {
+          "author": "Claude",
+          "text": "If confirmed, the systematic confiscation of multiple independent data sources (SPY-1 radar tapes, E-2C hard drives, extended FLIR footage) from two separate ships represents a coordinated response suggesting pre-existing protocols for UAP encounter data management.",
+          "timestamp": "2024-01-15"
+        }
+      ],
+      "linked_card_ids": [
+        "W-005",
+        "W-006",
+        "E-006"
+      ]
+    },
+    {
+      "id": "T-010",
+      "date": "2007-01-01",
+      "date_display": "2007",
+      "title": "AATIP Program Investigates Nimitz Case",
+      "detail": "The Advanced Aerospace Threat Identification Program (AATIP), established by the Defense Intelligence Agency in response to congressional interest (championed by Senator Harry Reid), begins investigating the Nimitz encounter among other military UAP cases. The program operates from 2007-2012 with a $22 million budget.",
+      "type": "normal",
+      "tags": [
+        "official",
+        "investigation"
+      ],
+      "linked_card_ids": [
+        "D-002"
+      ]
+    },
+    {
+      "id": "T-011",
+      "date": "2007-11-01",
+      "date_display": "November 2007",
+      "title": "FLIR1 Video First Leaked Online",
+      "detail": "The FLIR1 video first appears on the internet, posted to various forums. Its authenticity is initially disputed. The source of the leak is never publicly confirmed.",
+      "type": "normal",
+      "tags": [
+        "media",
+        "leak"
+      ],
+      "linked_card_ids": [
+        "E-001"
+      ]
+    },
+    {
+      "id": "T-012",
+      "date": "2017-12-16",
+      "date_display": "December 16, 2017",
+      "title": "New York Times Breaks the Story",
+      "detail": "The New York Times publishes a landmark article by Helene Cooper, Ralph Blumenthal, and Leslie Kean revealing the existence of AATIP and featuring the Nimitz encounter prominently. CDR David Fravor goes on the record for the first time. The FLIR1, Gimbal, and GoFast videos are released alongside the story. This marks the beginning of mainstream disclosure.",
+      "type": "key",
+      "tags": [
+        "media",
+        "disclosure"
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "E-001",
+        "D-003"
+      ]
+    },
+    {
+      "id": "T-013",
+      "date": "2020-04-27",
+      "date_display": "April 27, 2020",
+      "title": "DoD Officially Releases Navy UAP Videos",
+      "detail": "The Department of Defense officially releases three UAP videos — FLIR1, Gimbal, and GoFast — through the Naval Air Systems Command FOIA Reading Room, confirming their authenticity. DoD states the phenomena depicted 'remain characterized as unidentified.'",
+      "type": "key",
+      "tags": [
+        "official",
+        "confirmation"
+      ],
+      "linked_card_ids": [
+        "E-001",
+        "D-004"
+      ]
+    },
+    {
+      "id": "T-014",
+      "date": "2021-05-16",
+      "date_display": "May 16, 2021",
+      "title": "60 Minutes Feature",
+      "detail": "CBS's 60 Minutes airs a segment featuring CDR David Fravor and LCDR Alex Dietrich discussing the Nimitz encounter. This marks Dietrich's first major public appearance regarding the incident — 17 years after it occurred.",
+      "type": "normal",
+      "tags": [
+        "media",
+        "witness"
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "W-002"
+      ]
+    },
+    {
+      "id": "T-015",
+      "date": "2023-07-26",
+      "date_display": "July 26, 2023",
+      "title": "House Oversight Committee Hearing",
+      "detail": "CDR David Fravor provides written testimony (under oath) to the House Oversight Committee's hearing on 'Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency.' Fravor's statement is entered into the congressional record. David Grusch also testifies at the same hearing about alleged UAP retrieval programs.",
+      "type": "key",
+      "tags": [
+        "official",
+        "congressional",
+        "testimony"
+      ],
+      "linked_card_ids": [
+        "W-001",
+        "D-005"
+      ]
+    },
+    {
+      "id": "T-016",
+      "date": "2024-03-06",
+      "date_display": "March 6, 2024",
+      "title": "AARO Historical Report Volume 1",
+      "detail": "The All-domain Anomaly Resolution Office (AARO) publishes its Historical Record Report, Volume 1. The report concludes that official investigations have not found empirical evidence that UAP sightings represent 'off-world technology' or hidden programs unreported to Congress. The report is controversial, with critics noting it contradicts multiple witness testimonies given under oath.",
+      "type": "question",
+      "tags": [
+        "official",
+        "AARO"
+      ],
+      "annotations": [
+        {
+          "author": "Nemo",
+          "text": "The AARO report's conclusions don't square with what the witnesses said under oath. Either the witnesses are lying (under penalty of perjury) or AARO didn't look hard enough. Which is it?",
+          "timestamp": "2024-03-10"
+        }
+      ],
+      "linked_card_ids": [
+        "D-006"
+      ]
+    }
+  ],
+  "witnesses": [
+    {
+      "id": "W-001",
+      "name": "David Fravor",
+      "rank_at_time": "Commander (CDR)",
+      "rank_current": "Commander, USN (Ret.)",
+      "unit": "VFA-41 'Black Aces'",
+      "role": "Commanding Officer, F/A-18F pilot (FASTEAGLE 01)",
+      "status": "retired",
+      "flight_hours": 3500,
+      "career_highlights": "TOPGUN graduate, 18 years active duty, combat deployments, commanding officer of a strike fighter squadron",
+      "what_they_observed": "Observed a white, smooth, elongated object approximately 40 feet long with no wings, no exhaust, no visible propulsion — shaped like a Tic Tac candy. The object was hovering erratically above a cross-shaped whitewater disturbance on the ocean surface. When Fravor descended to investigate, the object appeared to mirror his movements, ascending to meet him. As he attempted to cut across the circle to intercept, the object accelerated instantaneously and disappeared. It was detected by radar on the USS Princeton approximately 60 miles away within less than a minute — at Fravor's pre-planned CAP point.",
+      "first_public": {
+        "date": "2017-12-16",
+        "venue": "The New York Times article by Helene Cooper, Ralph Blumenthal, and Leslie Kean",
+        "url": "https://www.nytimes.com/2017/12/16/us/politics/pentagon-program-ufo-harry-reid.html"
+      },
+      "key_quotes": [
+        {
+          "quote": "I have no idea what I saw. It had no plumes, wings or rotors and outran our F-18s. I want to fly one.",
+          "source": "New York Times",
+          "date": "2017-12-16"
+        },
+        {
+          "quote": "The technology that we faced was far superior than anything that we had, that we have currently, or that we're going to have in the next 10 to 20 years.",
+          "source": "House Oversight Committee testimony",
+          "date": "2023-07-26"
+        },
+        {
+          "quote": "It was aware we were there.",
+          "source": "60 Minutes, CBS",
+          "date": "2021-05-16"
+        },
+        {
+          "quote": "As I got close to it, it rapidly accelerated to the south, and disappeared in less than two seconds.",
+          "source": "Joe Rogan Experience #1361",
+          "date": "2019-10-05"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2017-12-16",
+          "venue": "New York Times (print interview)",
+          "url": "https://www.nytimes.com/2017/12/16/us/politics/pentagon-program-ufo-harry-reid.html"
+        },
+        {
+          "date": "2019-10-05",
+          "venue": "Joe Rogan Experience #1361",
+          "url": "https://open.spotify.com/episode/4oy4MhOFz6sRB95mGAHv6e"
+        },
+        {
+          "date": "2020-06-12",
+          "venue": "Lex Fridman Podcast #122",
+          "url": "https://www.youtube.com/watch?v=aB8zcAttP1E"
+        },
+        {
+          "date": "2021-05-16",
+          "venue": "60 Minutes, CBS",
+          "url": "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+        },
+        {
+          "date": "2023-07-26",
+          "venue": "House Oversight Committee Hearing (under oath)",
+          "url": "https://oversight.house.gov/hearing/unidentified-anomalous-phenomena-implications-on-national-security-public-safety-and-government-transparency/"
+        }
+      ],
+      "credibility_notes": "TOPGUN graduate with 3,500+ flight hours. 18-year Navy career. No financial motive at time of initial disclosure. Testimony consistent across multiple years and venues. Testified under oath before Congress. Corroborated by multiple independent witnesses.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 200
+      }
+    },
+    {
+      "id": "W-002",
+      "name": "Alex Dietrich",
+      "rank_at_time": "Lieutenant Commander (LCDR)",
+      "rank_current": "Lieutenant Commander, USN (Ret.)",
+      "unit": "VFA-41 'Black Aces'",
+      "role": "F/A-18F pilot (FASTEAGLE 02), wingman to Fravor",
+      "status": "retired",
+      "flight_hours": 1800,
+      "career_highlights": "F/A-18 pilot, combat veteran, one of the first women to fly Super Hornets in combat",
+      "what_they_observed": "Observed the same Tic Tac object from a higher altitude while Fravor descended to investigate. Confirmed the object's erratic, unpredictable movement and its sudden acceleration and disappearance. Described the encounter as 'unsettling' — not because of fear, but because of the inability to explain what was observed using any known framework.",
+      "first_public": {
+        "date": "2021-05-16",
+        "venue": "60 Minutes, CBS",
+        "url": "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+      },
+      "key_quotes": [
+        {
+          "quote": "No predictable movement, no predictable trajectory.",
+          "source": "60 Minutes, CBS",
+          "date": "2021-05-16"
+        },
+        {
+          "quote": "I remember the 'absurdity' — I felt the weight of it, like, this can't be real.",
+          "source": "Task & Purpose interview",
+          "date": "2021-06-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2021-05-16",
+          "venue": "60 Minutes, CBS",
+          "url": "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+        },
+        {
+          "date": "2023-07-26",
+          "venue": "House Oversight Committee (referenced, did not testify)",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Highly experienced Navy pilot. Waited 17 years before speaking publicly. Corroborates Fravor's account independently. Known for understated, careful descriptions. No financial motive.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 450
+      }
+    },
+    {
+      "id": "W-003",
+      "name": "Kevin Day",
+      "rank_at_time": "Senior Chief Operations Specialist",
+      "rank_current": "Senior Chief Petty Officer, USN (Ret.)",
+      "unit": "USS Princeton (CG-59), Combat Information Center",
+      "role": "TOPGUN Air Intercept Controller, SPY-1 radar operator",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "20+ year Navy career, TOPGUN-trained Air Intercept Controller, expert operator of the AN/SPY-1B AEGIS radar system, served on USS Vincennes, USS Chosin, USS Princeton",
+      "what_they_observed": "Beginning approximately November 10, 2004, Day and his radar team tracked groups of anomalous aerial contacts on the SPY-1 radar. The objects appeared at approximately 80,000+ feet altitude, descended to near sea level in less than a second, loitered for hours, then returned to extreme altitude. Day tracked these objects for several days before the November 14 intercept. He made the decision to vector Fravor's flight toward the contacts. After the visual encounter, Day tracked the object as it appeared at Fravor's CAP point — approximately 60 miles away — within seconds of disappearing from Fravor's visual range.",
+      "first_public": {
+        "date": "2019-01-01",
+        "venue": "Various podcast interviews (began speaking publicly circa 2019)",
+        "url": null
+      },
+      "key_quotes": [
+        {
+          "quote": "The things were going from 80,000 feet to 20,000 feet in a matter of a second.",
+          "source": "Various interviews, 2019-2021",
+          "date": "2019-01-01"
+        },
+        {
+          "quote": "I'd been doing this for years and never seen anything like it. The SPY-1 is the most advanced radar in the world. These were real tracks.",
+          "source": "Various podcast interviews",
+          "date": "2019-01-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2019-01-01",
+          "venue": "Multiple podcast appearances beginning circa 2019",
+          "url": null
+        },
+        {
+          "date": "2019-12-01",
+          "venue": "History Channel 'Unidentified: Inside America's UFO Investigation'",
+          "url": null
+        }
+      ],
+      "credibility_notes": "20+ year Navy career as a TOPGUN-trained Air Intercept Controller. Expert on the SPY-1 radar system — one of the most advanced military radar systems in the world. His radar data provides the quantitative backbone of the encounter. No financial motive. Consistent testimony.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 700
+      }
+    },
+    {
+      "id": "W-004",
+      "name": "Chad Underwood",
+      "rank_at_time": "Lieutenant Commander (LCDR)",
+      "rank_current": "Lieutenant Commander, USN (Ret.)",
+      "unit": "VFA-41 'Black Aces'",
+      "role": "Weapon Systems Officer (WSO), F/A-18F — filmed the FLIR1 video",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "Naval Flight Officer, Weapon Systems Officer. Captured the only known infrared video of the Tic Tac object. Coined the term 'Tic Tac' to describe the object.",
+      "what_they_observed": "During the second intercept flight approximately 90 minutes after Fravor's encounter, Underwood acquired the object on the AN/ASQ-228 ATFLIR targeting pod. He tracked it in infrared for approximately 76 seconds and captured the footage now known as the FLIR1 video. Underwood did not observe the object with his own eyes — he focused on maintaining the FLIR track. He noted the object exhibited no visible exhaust plume despite the thermal signature, erratic movement, and apparent ability to jam or evade the radar lock.",
+      "first_public": {
+        "date": "2019-11-14",
+        "venue": "New York Magazine / Intelligencer interview",
+        "url": "https://nymag.com/intelligencer/2019/12/tic-tac-ufo-video-q-and-a-with-navy-pilot-chad-underwood.html"
+      },
+      "key_quotes": [
+        {
+          "quote": "I was more concerned with tracking it, making sure that the videotape was on so that I could bring something back to the ship, so that the intel folks could dissect whatever it is that I captured.",
+          "source": "New York Magazine",
+          "date": "2019-12-01"
+        },
+        {
+          "quote": "It was behaving in ways that aren't physically normal. That's what caught my attention.",
+          "source": "New York Magazine",
+          "date": "2019-12-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2019-12-01",
+          "venue": "New York Magazine / Intelligencer",
+          "url": "https://nymag.com/intelligencer/2019/12/tic-tac-ufo-video-q-and-a-with-navy-pilot-chad-underwood.html"
+        },
+        {
+          "date": "2019-12-01",
+          "venue": "Jeremy Corbell interview",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Trained Naval Flight Officer and WSO. Produced the single most important piece of physical evidence in the case. Careful, technical descriptions. Avoided sensationalism. Limited public appearances.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 950
+      }
+    },
+    {
+      "id": "W-005",
+      "name": "Patrick 'PJ' Hughes",
+      "rank_at_time": "Petty Officer (Aviation Technician)",
+      "rank_current": "USN (Ret.)",
+      "unit": "USS Nimitz (CVN-68), Aviation Department",
+      "role": "Aviation Technician — responsible for securing hard drive data recorders from E-2C Hawkeye aircraft",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "Aviation technician on USS Nimitz during the 2004 deployment",
+      "what_they_observed": "Hughes was responsible for handling data recorders from the E-2C Hawkeye airborne early warning aircraft. He reported that after the encounter, two unidentified individuals in civilian clothes arrived by helicopter, presented themselves as having authority, and confiscated the data recorder hard drives from the Hawkeyes. Hughes was ordered not to discuss the incident.",
+      "first_public": {
+        "date": "2019-12-01",
+        "venue": "Various interviews and The Nimitz Encounters documentary",
+        "url": null
+      },
+      "key_quotes": [
+        {
+          "quote": "Two guys in civilian clothing came aboard, showed some kind of authority, and took the hard drives.",
+          "source": "Various interviews, paraphrased",
+          "date": "2019-12-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2019-12-01",
+          "venue": "UFO Garage Podcast (with Gary Voorhis)",
+          "url": "https://open.spotify.com/episode/789u5KE83h2cKTUf5tb9M0"
+        },
+        {
+          "date": "2019-12-01",
+          "venue": "The Nimitz Encounters documentary",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Direct witness to post-incident data confiscation. Claims remain unverified but are corroborated by Gary Voorhis's similar account on USS Princeton.",
+      "photo_url": null,
+      "position": {
+        "x": 580,
+        "y": 950
+      }
+    },
+    {
+      "id": "W-006",
+      "name": "Gary Voorhis",
+      "rank_at_time": "Petty Officer 3rd Class",
+      "rank_current": "USN (Ret.)",
+      "unit": "USS Princeton (CG-59)",
+      "role": "Fire Controlman / Radar Technician — responsible for the Cooperative Engagement Capability (CEC) and SPY-1 systems",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "Radar technician aboard USS Princeton during the 2004 encounter",
+      "what_they_observed": "Voorhis began noticing anomalous radar tracks on November 10, 2004. The tracks appeared as 'ghost tracks' and 'clutter' that did not behave like normal radar artifacts. He reported a longer, higher-resolution video of the encounter existed (approximately 10 minutes) beyond the 35-second FLIR1 clip released publicly. He also reported that unidentified personnel confiscated data tapes and hard drives from the Princeton after the incident.",
+      "first_public": {
+        "date": "2019-12-01",
+        "venue": "Various interviews and The Nimitz Encounters documentary",
+        "url": null
+      },
+      "key_quotes": [
+        {
+          "quote": "They told us to turn over all the data recordings, and we were told not to discuss what had happened.",
+          "source": "Various interviews, paraphrased",
+          "date": "2019-12-01"
+        }
+      ],
+      "public_appearances": [
+        {
+          "date": "2019-12-01",
+          "venue": "UFO Garage Podcast (with PJ Hughes)",
+          "url": "https://open.spotify.com/episode/789u5KE83h2cKTUf5tb9M0"
+        },
+        {
+          "date": "2019-12-01",
+          "venue": "The Nimitz Encounters documentary",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Radar technician who directly operated the systems in question. Corroborates Kevin Day's radar observations and PJ Hughes's data confiscation claims. Reports remain unverified independently.",
+      "photo_url": null,
+      "position": {
+        "x": 580,
+        "y": 700
+      }
+    },
+    {
+      "id": "W-007",
+      "name": "Jason Turner",
+      "rank_at_time": "Petty Officer 3rd Class",
+      "rank_current": "USN (Ret.)",
+      "unit": "USS Princeton (CG-59)",
+      "role": "Operations Specialist",
+      "status": "retired",
+      "flight_hours": null,
+      "career_highlights": "Operations specialist aboard USS Princeton during the 2004 encounter",
+      "what_they_observed": "Turner confirmed Gary Voorhis's account of a longer, higher-resolution video of the UAP encounter. Turner reported being able to see details of the object in that extended video that were not visible in the publicly released 35-second FLIR1 clip.",
+      "first_public": {
+        "date": "2019-12-01",
+        "venue": "Various interviews",
+        "url": null
+      },
+      "key_quotes": [],
+      "public_appearances": [
+        {
+          "date": "2019-12-01",
+          "venue": "Various interviews, circa 2019",
+          "url": null
+        }
+      ],
+      "credibility_notes": "Corroborates Voorhis's claim of a longer video. Limited public appearances.",
+      "photo_url": null,
+      "position": {
+        "x": 580,
+        "y": 450
+      }
+    },
+    {
+      "id": "W-008",
+      "name": "Jim Slaight",
+      "rank_at_time": "Unknown",
+      "rank_current": "Unknown",
+      "unit": "VFA-41 'Black Aces'",
+      "role": "Weapon Systems Officer (WSO), F/A-18F — back seat of FASTEAGLE 01 with CDR Fravor",
+      "status": "unknown",
+      "flight_hours": null,
+      "career_highlights": "WSO aboard Fravor's aircraft during the Tic Tac encounter",
+      "what_they_observed": "No public statements. As the WSO in the back seat of Fravor's F/A-18F, Slaight would have had access to radar displays and sensor information during the intercept.",
+      "first_public": null,
+      "key_quotes": [],
+      "public_appearances": [],
+      "credibility_notes": "No public statements to assess. Known participant through Fravor's accounts.",
+      "photo_url": null,
+      "position": {
+        "x": 120,
+        "y": 1200
+      }
+    }
+  ],
+  "ai_analysis": [
+    {
+      "id": "AI-001",
+      "analysis_type": "anomaly_flag",
+      "title": "Acceleration Analysis: Beyond Known Physics",
+      "finding": "Based on radar data from USS Princeton's SPY-1 system (objects descending from 80,000+ feet to sea level in under one second) and the post-intercept detection at the CAP point (60 miles traversed in under one minute), the implied accelerations range from 75g to over 5,000g. For reference: human tolerance is approximately 9g sustained; the highest g-force survived by a human was 46.2g in a brief deceleration event. F/A-18 airframe limit is approximately 7.5g. No known propulsion technology — including scramjets, pulse detonation engines, or any classified system acknowledged by the DoD — can produce these accelerations, particularly without observable exhaust plume or sonic boom.",
+      "methodology": "Kinematic analysis using radar-derived position/time data. Calculations follow standard Newtonian mechanics. Cross-referenced with SCU forensic analysis (2019) which independently estimated 75g to 5,000g+ acceleration ranges using the same data sources.",
+      "confidence": "high",
+      "cross_references": [
+        {
+          "case_id": "CASE-002",
+          "case_name": "Belgian Wave (1989-90)",
+          "shared_pattern": "Radar-confirmed acceleration exceeding known aircraft capabilities",
+          "strength": "strong"
+        },
+        {
+          "case_id": "CASE-005",
+          "case_name": "USS Roosevelt Encounters (2014-15)",
+          "shared_pattern": "Carrier group multi-sensor detection of hypersonic UAP",
+          "strength": "strong"
+        }
+      ],
+      "supporting_evidence_ids": [
+        "E-003",
+        "S-001",
+        "W-003"
+      ],
+      "position": {
+        "x": 1960,
+        "y": 700
+      }
+    },
+    {
+      "id": "AI-002",
+      "analysis_type": "pattern_match",
+      "title": "The Five Observables — Case Mapping",
+      "finding": "The USS Nimitz case maps to all five of the 'observables' identified by former AATIP program manager Luis Elizondo as characteristic of genuine UAP encounters: (1) Anti-gravity lift — the Tic Tac hovered with no visible means of propulsion, no wings, no rotors; (2) Sudden and instantaneous acceleration — from hover to hypersonic in seconds; (3) Hypersonic velocities without signatures — speeds of Mach 30-60 with no sonic boom, no exhaust, no thermal wake; (4) Low observability — despite being tracked on radar, the object appeared to have some ability to evade or jam targeting systems; (5) Trans-medium travel — the ocean disturbance suggests possible water-to-air capability. This is the only publicly known case that maps to all five observables with multi-sensor confirmation.",
+      "methodology": "Systematic comparison of case evidence against the five observable characteristics. Each observable assessed independently against witness testimony, sensor data, and physical evidence.",
+      "confidence": "high",
+      "cross_references": [
+        {
+          "case_id": "CASE-005",
+          "case_name": "USS Roosevelt Encounters (2014-15)",
+          "shared_pattern": "Maps to 4 of 5 observables (excluding trans-medium)",
+          "strength": "strong"
+        },
+        {
+          "case_id": "CASE-003",
+          "case_name": "Tehran F-4 Intercept (1976)",
+          "shared_pattern": "Maps to 3 of 5 observables",
+          "strength": "moderate"
+        }
+      ],
+      "supporting_evidence_ids": [
+        "E-001",
+        "E-002",
+        "E-003",
+        "E-005"
+      ],
+      "position": {
+        "x": 2420,
+        "y": 200
+      }
+    },
+    {
+      "id": "AI-003",
+      "analysis_type": "credibility_assessment",
+      "title": "Witness Credibility Matrix",
+      "finding": "The Nimitz case features an unusually strong witness pool. All primary witnesses are trained military professionals with relevant technical expertise: Fravor (3,500+ flight hours, TOPGUN, CO of a strike fighter squadron), Dietrich (experienced combat pilot, one of the first women to fly Super Hornets in combat), Day (20+ years, TOPGUN Air Intercept Controller, SPY-1 expert), Underwood (trained WSO who captured the only physical evidence). Witnesses did not seek financial gain — Fravor went public only when approached by NYT reporters after the AATIP story broke. Dietrich waited 17 years. Testimony has been consistent across venues and years. Multiple witnesses have testified under oath. Independent witness accounts corroborate each other on key details without evidence of coordination.",
+      "methodology": "Structured credibility assessment examining: professional qualifications, consistency of testimony over time, independence of witnesses, potential motivations, corroboration between accounts, and willingness to testify under oath.",
+      "confidence": "high",
+      "cross_references": [],
+      "supporting_evidence_ids": [
+        "W-001",
+        "W-002",
+        "W-003",
+        "W-004"
+      ],
+      "position": {
+        "x": 2420,
+        "y": 450
+      }
+    },
+    {
+      "id": "AI-004",
+      "analysis_type": "cross_reference",
+      "title": "Mirroring Behavior Pattern Across Cases",
+      "finding": "The Tic Tac's apparent reaction to Fravor's maneuvers — ascending to match his descent, appearing to 'mirror' his movements — matches a behavioral pattern observed in at least three other well-documented military intercept cases: (1) Tehran 1976 — the UAP appeared to react to the F-4's weapons lock by deploying a countermeasure-like object; (2) Belgian Wave 1990 — objects tracked by F-16 radar appeared to react to lock-on attempts with sudden acceleration; (3) USS Roosevelt encounters 2014-15 — objects appeared to demonstrate awareness of military aircraft positions. This 'reactive awareness' pattern suggests either: sophisticated sensor capability detecting the interceptors, or coincidental timing of pre-programmed maneuvers.",
+      "methodology": "Cross-case behavioral analysis comparing UAP response patterns during military intercept attempts. Cases selected for multi-sensor confirmation and official documentation.",
+      "confidence": "medium",
+      "cross_references": [
+        {
+          "case_id": "CASE-003",
+          "case_name": "Tehran F-4 Intercept (1976)",
+          "shared_pattern": "Object reacted to interceptor approach/weapons engagement",
+          "strength": "strong"
+        },
+        {
+          "case_id": "CASE-002",
+          "case_name": "Belgian Wave (1989-90)",
+          "shared_pattern": "Object accelerated in response to radar lock attempts",
+          "strength": "moderate"
+        },
+        {
+          "case_id": "CASE-005",
+          "case_name": "USS Roosevelt Encounters (2014-15)",
+          "shared_pattern": "Objects demonstrated apparent awareness of military aircraft",
+          "strength": "moderate"
+        }
+      ],
+      "supporting_evidence_ids": [
+        "W-001",
+        "W-002",
+        "E-003"
+      ],
+      "position": {
+        "x": 2420,
+        "y": 700
+      }
+    },
+    {
+      "id": "AI-005",
+      "analysis_type": "cross_reference",
+      "title": "Water Disturbance Pattern Across Cases",
+      "finding": "The cross-shaped ocean disturbance observed beneath the Tic Tac shares characteristics with water anomalies in other UAP cases: (1) Shag Harbour 1967 — object observed entering water, yellow foam and disturbance persisted, Canadian military divers investigated; (2) Aguadilla, Puerto Rico 2013 — DHS thermal video showed object entering and exiting water without deceleration; (3) Multiple Project Blue Book water-associated cases. The pattern suggests either a submerged component (USO — Unidentified Submerged Object) or a surface effect from the aerial object's propulsion mechanism. The trans-medium capability implied is one of the '5 observables.'",
+      "methodology": "Cross-case analysis of water-associated UAP encounters. Cases selected for official documentation and sensor/physical evidence.",
+      "confidence": "medium",
+      "cross_references": [
+        {
+          "case_id": null,
+          "case_name": "Shag Harbour (1967)",
+          "shared_pattern": "Object associated with water disturbance, possible submersion",
+          "strength": "moderate"
+        },
+        {
+          "case_id": null,
+          "case_name": "Aguadilla, Puerto Rico (2013)",
+          "shared_pattern": "Thermal video of object entering/exiting water",
+          "strength": "strong"
+        }
+      ],
+      "supporting_evidence_ids": [
+        "E-002",
+        "W-001"
+      ],
+      "position": {
+        "x": 2880,
+        "y": 200
+      }
+    },
+    {
+      "id": "AI-006",
+      "analysis_type": "data_gap",
+      "title": "Missing Data Inventory",
+      "finding": "Critical data gaps in the Nimitz case that, if filled, could significantly advance understanding: (1) Full SPY-1 radar recordings — confiscated, location unknown; (2) Complete FLIR footage — only 35 of ~76+ seconds released; witnesses report an 8-10 minute extended version; (3) E-2C Hawkeye data — hard drives confiscated per PJ Hughes; (4) USS Louisville submarine sonar data — status unknown, never publicly addressed; (5) Satellite imagery — the SOCAL OPAREA was likely under satellite observation, data never surfaced; (6) Full AATIP analysis files — referenced in AARO report but not fully declassified; (7) The classified AARO report annex — Volume 1 references additional classified material. Each of these data sources could independently corroborate or contradict the witness testimony.",
+      "methodology": "Systematic inventory of expected data sources for a carrier strike group operation, cross-referenced with publicly available data to identify gaps.",
+      "confidence": "high",
+      "cross_references": [],
+      "supporting_evidence_ids": [
+        "E-006",
+        "S-001",
+        "S-002",
+        "S-003"
+      ],
+      "position": {
+        "x": 2880,
+        "y": 450
+      }
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Who confiscated the sensor data, and under what authority?",
+      "context": "Multiple witnesses from both USS Nimitz and USS Princeton independently report that unidentified individuals in civilian clothes confiscated radar tapes, hard drives, and other sensor recordings in the days following the encounter. The identity and authority of these individuals has never been publicly confirmed.",
+      "status": "open",
+      "priority": "critical",
+      "linked_evidence_ids": [
+        "E-006",
+        "W-005",
+        "W-006"
+      ]
+    },
+    {
+      "id": "Q-002",
+      "question": "Where is the full-length FLIR footage?",
+      "context": "Only 35 seconds of the FLIR1 video have been released. Chad Underwood recorded approximately 76 seconds. Gary Voorhis and Jason Turner report seeing a longer, higher-resolution version of approximately 8-10 minutes. Multiple versions of this footage may exist in classified archives.",
+      "status": "open",
+      "priority": "critical",
+      "linked_evidence_ids": [
+        "E-001",
+        "W-004",
+        "W-006",
+        "W-007"
+      ]
+    },
+    {
+      "id": "Q-003",
+      "question": "What did the submarine's sonar detect?",
+      "context": "USS Louisville (SSN-724), a Los Angeles-class submarine, was part of CSG-11 during the encounter period. Given the ocean surface disturbance observed by Fravor and Dietrich, any submerged sonar data would be extremely relevant. No public statement has ever been made about the submarine's sensor data.",
+      "status": "open",
+      "priority": "high",
+      "linked_evidence_ids": [
+        "E-002"
+      ]
+    },
+    {
+      "id": "Q-004",
+      "question": "Why did it take 5 days of radar tracking before an intercept was ordered?",
+      "context": "Kevin Day's team tracked anomalous objects on the SPY-1 radar from approximately November 10-14, 2004. Despite increasingly unusual readings from arguably the most advanced military radar in the world, no intercept was ordered until November 14. Was there a protocol gap? Were there prior orders regarding these contacts?",
+      "status": "open",
+      "priority": "medium",
+      "linked_evidence_ids": [
+        "S-001",
+        "W-003",
+        "T-002"
+      ]
+    },
+    {
+      "id": "Q-005",
+      "question": "How did the object appear at Fravor's CAP point?",
+      "context": "After the Tic Tac accelerated away from Fravor, it was detected on radar approximately 60 miles away at his pre-planned Combat Air Patrol coordinate — a point that was programmed into the mission plan. This implies the object either intercepted military communications, predicted the flight path, or arrived at the location by coincidence.",
+      "status": "open",
+      "priority": "high",
+      "linked_evidence_ids": [
+        "W-001",
+        "W-003",
+        "S-001",
+        "T-007"
+      ]
+    },
+    {
+      "id": "Q-006",
+      "question": "What is in the classified AARO report annex?",
+      "context": "AARO's Historical Record Report Volume 1 (March 2024) references additional classified material that was not included in the public release. The unclassified report's conclusions have been criticized as contradicting sworn witness testimony. The classified annex may contain information that changes the picture.",
+      "status": "open",
+      "priority": "high",
+      "linked_evidence_ids": [
+        "D-006",
+        "T-016"
+      ]
+    }
+  ],
+  "source_documents": [
+    {
+      "id": "D-001",
+      "title": "FLIR1 Video (Official DoD Release)",
+      "author": "U.S. Department of Defense",
+      "organization": "Naval Air Systems Command",
+      "date": "2020-04-27",
+      "classification": "UNCLASSIFIED",
+      "doc_type": "video",
+      "url": "https://www.defense.gov/News/Releases/Release/Article/2165713/statement-by-the-department-of-defense-on-the-release-of-historical-navy-videos/",
+      "key_excerpts": [
+        "The aerial phenomena observed in the videos remain characterized as 'unidentified.'"
+      ]
+    },
+    {
+      "id": "D-002",
+      "title": "A Forensic Analysis of Navy Carrier Strike Group Eleven's Encounter with an Anomalous Aerial Vehicle",
+      "author": "Scientific Coalition for UAP Studies (SCU)",
+      "organization": "SCU",
+      "date": "2019-01-01",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": "https://www.academia.edu/40212818/A_Forensic_Analysis_of_Navy_Carrier_Strike_Group_Elevens_Encounter_with_an_Anomalous_Aerial_Vehicle",
+      "page_count": 270,
+      "key_excerpts": [
+        "Estimated accelerations range from 75g to more than 5,000g with no observed air disturbance, no sonic booms, and no evidence of excessive heat."
+      ]
+    },
+    {
+      "id": "D-003",
+      "title": "Glowing Auras and Black Money: The Pentagon's Mysterious U.F.O. Program",
+      "author": "Helene Cooper, Ralph Blumenthal, Leslie Kean",
+      "organization": "The New York Times",
+      "date": "2017-12-16",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": "https://www.nytimes.com/2017/12/16/us/politics/pentagon-program-ufo-harry-reid.html",
+      "key_excerpts": []
+    },
+    {
+      "id": "D-004",
+      "title": "DoD Statement on the Release of Historical Navy Videos",
+      "author": "U.S. Department of Defense",
+      "organization": "DoD",
+      "date": "2020-04-27",
+      "classification": "PUBLIC",
+      "doc_type": "report",
+      "url": "https://www.defense.gov/News/Releases/Release/Article/2165713/statement-by-the-department-of-defense-on-the-release-of-historical-navy-videos/",
+      "key_excerpts": [
+        "DOD is releasing the videos in order to clear up any misconceptions by the public on whether or not the footage that has been circulating was real, or whether or not there is more to the videos."
+      ]
+    },
+    {
+      "id": "D-005",
+      "title": "David Fravor Statement for the House Oversight Committee",
+      "author": "CDR David Fravor, USN (Ret.)",
+      "organization": "U.S. House Committee on Oversight and Accountability",
+      "date": "2023-07-26",
+      "classification": "PUBLIC",
+      "doc_type": "testimony",
+      "url": "https://oversight.house.gov/wp-content/uploads/2023/07/David-Fravor-Statement-for-House-Oversight-Committee.pdf",
+      "key_excerpts": []
+    },
+    {
+      "id": "D-006",
+      "title": "Report on the Historical Record of U.S. Government Involvement with Unidentified Anomalous Phenomena, Volume I",
+      "author": "All-domain Anomaly Resolution Office (AARO)",
+      "organization": "U.S. Department of Defense",
+      "date": "2024-03-06",
+      "classification": "UNCLASSIFIED (with classified annex)",
+      "doc_type": "report",
+      "url": "https://www.aaro.mil/",
+      "key_excerpts": [
+        "AARO found no empirical evidence that any sighting of a UAP represented off-world technology or that the U.S. government or private industry has ever had access to extraterrestrial technology."
+      ]
+    },
+    {
+      "id": "D-007",
+      "title": "Estimating Flight Characteristics of Anomalous Unidentified Aerial Vehicles",
+      "author": "Kevin H. Knuth, Robert M. Powell, Peter A. Reali",
+      "organization": "Entropy (MDPI) / PMC",
+      "date": "2019-08-25",
+      "classification": "PUBLIC (peer-reviewed)",
+      "doc_type": "report",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7514271/",
+      "key_excerpts": [
+        "The UAV accelerated at a rate of approximately 5370 g."
+      ]
+    },
+    {
+      "id": "D-008",
+      "title": "Navy UAP Sighting — 60 Minutes Feature",
+      "author": "Bill Whitaker / CBS",
+      "organization": "CBS News / 60 Minutes",
+      "date": "2021-05-16",
+      "classification": "PUBLIC",
+      "doc_type": "video",
+      "url": "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/",
+      "key_excerpts": []
+    }
+  ],
+  "cross_case_patterns": [
+    {
+      "pattern": "Ocean/water disturbance associated with aerial object",
+      "nimitz_evidence": "Cross-shaped whitewater disturbance beneath Tic Tac",
+      "matching_cases": [
+        {
+          "name": "Shag Harbour (1967)",
+          "detail": "Object observed descending into water; yellow foam persisted; Canadian military investigation",
+          "strength": "moderate",
+          "source": "Canadian National Defence documents"
+        },
+        {
+          "name": "Aguadilla, Puerto Rico (2013)",
+          "detail": "DHS thermal camera captured object entering and exiting water without deceleration",
+          "strength": "strong",
+          "source": "SCU Aguadilla analysis report"
+        },
+        {
+          "name": "Catalina Island sightings (various)",
+          "detail": "Multiple reports of objects entering/exiting water near Channel Islands",
+          "strength": "weak",
+          "source": "Various witness reports"
+        }
+      ]
+    },
+    {
+      "pattern": "Object mirroring or reacting to aircraft",
+      "nimitz_evidence": "Tic Tac appeared to mirror Fravor's descent, then departed to his CAP point",
+      "matching_cases": [
+        {
+          "name": "Tehran F-4 Intercept (1976)",
+          "detail": "Object appeared to react to weapons lock with countermeasure-like response; disabled aircraft electronics",
+          "strength": "strong",
+          "source": "DIA report, declassified"
+        },
+        {
+          "name": "Belgian Wave (1989-90)",
+          "detail": "Objects tracked by F-16 radar accelerated in apparent response to lock-on attempts",
+          "strength": "moderate",
+          "source": "Belgian Air Force official report"
+        },
+        {
+          "name": "USS Roosevelt Encounters (2014-15)",
+          "detail": "Objects demonstrated apparent awareness of military aircraft positions and formations",
+          "strength": "moderate",
+          "source": "Pilot testimony, multiple sources"
+        }
+      ]
+    },
+    {
+      "pattern": "Instantaneous acceleration / impossible kinematics",
+      "nimitz_evidence": "From hover to disappearance in ~2 seconds; 60 miles traversed in under 1 minute; 80,000ft descent in under 1 second",
+      "matching_cases": [
+        {
+          "name": "Belgian Wave (1989-90)",
+          "detail": "F-16 radar recorded accelerations of 40g during pursuit",
+          "strength": "strong",
+          "source": "Belgian Air Force data"
+        },
+        {
+          "name": "Gimbal/GoFast (USS Roosevelt, 2015)",
+          "detail": "Objects displayed rapid directional changes captured on FLIR",
+          "strength": "strong",
+          "source": "DoD released videos"
+        },
+        {
+          "name": "Tehran F-4 Intercept (1976)",
+          "detail": "Object demonstrated rapid acceleration away from interceptors",
+          "strength": "moderate",
+          "source": "DIA report"
+        }
+      ]
+    },
+    {
+      "pattern": "Multi-sensor confirmation (radar + visual + IR)",
+      "nimitz_evidence": "SPY-1 radar + ATFLIR infrared + pilot visual + E-2C Hawkeye radar",
+      "matching_cases": [
+        {
+          "name": "JAL Flight 1628 (1986)",
+          "detail": "Military radar + pilot visual + co-pilot visual + flight engineer visual",
+          "strength": "moderate",
+          "source": "FAA investigation files"
+        },
+        {
+          "name": "USS Roosevelt Encounters (2014-15)",
+          "detail": "Ship radar + aircraft radar + FLIR + pilot visual over multiple months",
+          "strength": "strong",
+          "source": "Multiple pilot testimonies, DoD videos"
+        },
+        {
+          "name": "Stephenville, Texas (2008)",
+          "detail": "Multiple ground witnesses + FAA radar data",
+          "strength": "moderate",
+          "source": "MUFON investigation, FAA radar records"
+        }
+      ]
+    },
+    {
+      "pattern": "Military data confiscation or disappearance post-sighting",
+      "nimitz_evidence": "Radar tapes, hard drives, and video confiscated by unidentified individuals from USS Nimitz and USS Princeton",
+      "matching_cases": [
+        {
+          "name": "Rendlesham Forest (1980)",
+          "detail": "Key evidence reportedly confiscated or classified; witness statements allegedly altered",
+          "strength": "moderate",
+          "source": "MOD files, witness testimony"
+        },
+        {
+          "name": "Multiple Project Blue Book cases",
+          "detail": "Pattern of evidence being reclassified or disappearing from files",
+          "strength": "weak",
+          "source": "Blue Book archives"
+        }
+      ]
+    }
+  ]
+}

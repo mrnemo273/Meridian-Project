@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case Index</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --surface-hover: #FAFAF8;
+    --board-bg: #EDECE8;
+    --border: rgba(0,0,0,0.07);
+    --border-strong: rgba(0,0,0,0.12);
+    --text-1: #1A1816;
+    --text-2: #6B6560;
+    --text-3: #A09A92;
+    --gold: #9A7A2E;
+    --gold-soft: rgba(154,122,46,0.12);
+    --orange: #B86A2E;
+    --orange-soft: rgba(184,106,46,0.1);
+    --purple: #7B5D9A;
+    --purple-soft: rgba(123,93,154,0.08);
+    --red: #B04A4A;
+    --red-soft: rgba(176,74,74,0.08);
+    --green: #5A8A4A;
+    --green-soft: rgba(90,138,74,0.08);
+    --blue: #4A6A9A;
+    --blue-soft: rgba(74,106,154,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ============================================ */
+  /* SIDEBAR                                      */
+  /* ============================================ */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 220px; z-index: 100;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+  .sidebar-logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--text-3); padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo span { color: var(--gold); }
+
+  .nav-section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    padding: 16px 20px 6px;
+  }
+
+  .nav-list { list-style: none; }
+  .nav-list li a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 20px 7px 24px;
+    font-size: 10px; letter-spacing: 0.5px;
+    color: var(--text-3);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-list li a:hover {
+    color: var(--text-2);
+    background: var(--bg);
+  }
+  .nav-list li a.active {
+    color: var(--gold);
+    border-left-color: var(--gold);
+    background: var(--gold-soft);
+    font-weight: 500;
+  }
+  .nav-list .nav-badge {
+    font-size: 8px; letter-spacing: 0.5px;
+    padding: 1px 5px; border-radius: 3px;
+    text-transform: uppercase; font-weight: 500;
+    margin-left: auto;
+  }
+  .nav-badge.active-badge { background: var(--red-soft); color: var(--red); }
+  .nav-badge.queued-badge { background: var(--board-bg); color: var(--text-3); }
+  .nav-badge.count-badge { background: var(--board-bg); color: var(--text-3); }
+
+  .nav-divider {
+    height: 1px; background: var(--border);
+    margin: 12px 20px;
+  }
+
+  .sidebar-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .sidebar-footer .inv-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .sidebar-footer .inv-row:last-child { margin-bottom: 0; }
+  .inv-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .inv-dot.human { background: var(--orange); }
+  .inv-dot.ai { background: var(--purple); }
+  .inv-name {
+    font-size: 10px; color: var(--text-2);
+  }
+  .inv-role {
+    font-size: 8px; color: var(--text-3);
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  /* Hamburger for narrow screens */
+  .hamburger {
+    display: none;
+    position: fixed; top: 12px; left: 12px; z-index: 201;
+    width: 36px; height: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 4px;
+  }
+  .hamburger span {
+    display: block; width: 16px; height: 1.5px;
+    background: var(--text-2); border-radius: 1px;
+  }
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+    .hamburger { display: flex; }
+    .main-content { margin-left: 0 !important; }
+  }
+
+  /* ============================================ */
+  /* MAIN CONTENT                                 */
+  /* ============================================ */
+  .main-content {
+    margin-left: 240px;
+    max-width: 860px;
+    margin-right: auto;
+    padding: 0 24px 120px;
+  }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border-strong), transparent);
+  }
+
+  section { padding-top: 48px; margin-bottom: 48px; }
+
+  /* ============================================ */
+  /* HERO / HEADER                                */
+  /* ============================================ */
+  #hero { padding-top: 60px; }
+  .hero-brand {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 36px;
+    line-height: 1.15; color: var(--text-1);
+    letter-spacing: -0.5px; margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 18px;
+    color: var(--text-2); font-style: italic;
+    margin-bottom: 24px; line-height: 1.5;
+  }
+  .hero-stats {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .stat-block {
+    display: flex; flex-direction: column;
+  }
+  .stat-value {
+    font-size: 24px; font-weight: 600; color: var(--text-1);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); margin-top: 4px;
+  }
+
+  .methodology-brief {
+    font-size: 12px; color: var(--text-2); line-height: 1.65;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .methodology-brief .voice-nemo {
+    font-family: 'Caveat', cursive;
+    font-size: 15px; color: var(--orange);
+    border-left: 3px solid var(--orange);
+    padding-left: 12px; margin: 12px 0 0;
+    line-height: 1.4;
+  }
+
+  /* ============================================ */
+  /* ACTIVE INVESTIGATION                         */
+  /* ============================================ */
+  .active-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+    margin-bottom: 24px;
+  }
+  .active-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .active-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--gold-soft);
+  }
+  .active-card-header .case-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; font-size: 9px; letter-spacing: 0.5px;
+    border-radius: 10px; font-weight: 500; text-transform: uppercase;
+  }
+  .status-pill.investigating {
+    background: var(--red-soft); color: var(--red);
+  }
+  .status-pill.investigating .pulse-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .active-card-body {
+    padding: 24px;
+  }
+  .active-card-body h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 28px;
+    line-height: 1.2; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .active-card-body .case-subtitle {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 16px;
+    color: var(--text-2); font-style: italic;
+    margin-bottom: 12px;
+  }
+  .active-card-body .case-meta {
+    font-size: 11px; color: var(--text-2);
+    display: flex; flex-wrap: wrap; gap: 4px 14px;
+    margin-bottom: 16px;
+  }
+
+  .cred-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .cred-score {
+    font-size: 28px; font-weight: 600; color: var(--gold); line-height: 1;
+  }
+  .cred-details {
+    font-size: 10px; color: var(--text-2);
+  }
+  .cred-tier {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+
+  .tag-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .tag-pill {
+    font-size: 9px; letter-spacing: 0.5px;
+    padding: 3px 8px; border-radius: 3px;
+    background: var(--board-bg); color: var(--text-2);
+  }
+
+  .case-summary {
+    font-size: 12px; color: var(--text-2); line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  .case-progress {
+    margin-bottom: 16px;
+  }
+  .progress-label {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 6px;
+    display: flex; justify-content: space-between;
+  }
+  .progress-track {
+    height: 4px; background: var(--board-bg);
+    border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 2px;
+    background: var(--gold);
+    transition: width 0.5s ease;
+  }
+
+  .case-sections {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px; margin-bottom: 20px;
+  }
+  .case-section-chip {
+    font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 4px;
+    background: var(--bg); color: var(--text-3);
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.2s;
+  }
+  .case-section-chip .chip-count {
+    font-weight: 600; color: var(--text-2);
+  }
+  .case-section-chip.done { background: var(--green-soft); color: var(--green); }
+
+  .card-actions {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.5px;
+    padding: 10px 20px; border-radius: 6px;
+    background: var(--gold); color: white;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #8A6A22; text-decoration: none; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.5px;
+    padding: 10px 20px; border-radius: 6px;
+    border: 1px solid rgba(154,122,46,0.2);
+    color: var(--gold);
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--gold-soft); border-color: var(--gold); text-decoration: none; }
+
+  /* FLIR preview visual */
+  .active-card .mini-flir {
+    position: relative; height: 120px;
+    background: #0A1A0A; border-radius: 4px;
+    margin-bottom: 16px; overflow: hidden;
+  }
+  .mini-flir .flir-grid {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(0,255,80,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,80,0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .mini-flir .flir-object {
+    position: absolute; top: 42%; left: 52%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 16px;
+    background: radial-gradient(ellipse, rgba(200,255,200,0.9), rgba(100,200,100,0.5) 50%, transparent 70%);
+    border-radius: 50%; filter: blur(1px);
+  }
+  .mini-flir .flir-label {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; color: rgba(0,255,80,0.5);
+  }
+  .mini-flir .flir-label.tl { top: 6px; left: 8px; }
+  .mini-flir .flir-label.tr { top: 6px; right: 8px; }
+  .mini-flir .flir-label.bl { bottom: 6px; left: 8px; }
+  .mini-flir .flir-label.br { bottom: 6px; right: 8px; }
+  .mini-flir .flir-crosshair {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px; height: 40px;
+    border: 1px solid rgba(0,255,80,0.15);
+    border-radius: 50%;
+  }
+  .mini-flir .flir-crosshair::before,
+  .mini-flir .flir-crosshair::after {
+    content: ''; position: absolute;
+    background: rgba(0,255,80,0.15);
+  }
+  .mini-flir .flir-crosshair::before {
+    top: 50%; left: -12px; right: -12px; height: 1px;
+  }
+  .mini-flir .flir-crosshair::after {
+    left: 50%; top: -12px; bottom: -12px; width: 1px;
+  }
+
+  /* ============================================ */
+  /* CASE QUEUE                                   */
+  /* ============================================ */
+  .queue-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .queue-table th {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .queue-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .queue-table tr {
+    transition: background 0.15s;
+  }
+  .queue-table tr:hover {
+    background: var(--surface-hover);
+  }
+  .queue-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 1px;
+    color: var(--text-3); font-weight: 500;
+  }
+  .queue-title {
+    font-size: 13px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 2px;
+  }
+  .queue-desc {
+    font-size: 10px; color: var(--text-3); line-height: 1.5;
+  }
+  .queue-year {
+    font-size: 11px; color: var(--text-2);
+    white-space: nowrap;
+  }
+  .queue-score {
+    font-size: 11px; font-weight: 500;
+  }
+  .queue-score.high { color: var(--gold); }
+  .queue-score.medium { color: var(--text-2); }
+  .queue-tags {
+    display: flex; gap: 4px; flex-wrap: wrap;
+  }
+  .queue-tag {
+    font-size: 7px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 2px 5px; border-radius: 2px;
+  }
+  .queue-tag.military { background: var(--blue-soft); color: var(--blue); }
+  .queue-tag.radar { background: var(--purple-soft); color: var(--purple); }
+  .queue-tag.witness { background: var(--orange-soft); color: var(--orange); }
+  .queue-tag.trace { background: var(--green-soft); color: var(--green); }
+  .queue-tag.official { background: var(--gold-soft); color: var(--gold); }
+  .queue-tag.video { background: var(--purple-soft); color: var(--purple); }
+  .queue-tag.confiscation { background: var(--red-soft); color: var(--red); }
+  .queue-tag.mass { background: var(--orange-soft); color: var(--orange); }
+
+  .queue-status {
+    font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
+    background: var(--board-bg); color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  /* ============================================ */
+  /* METHODOLOGY                                  */
+  /* ============================================ */
+  .method-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) { .method-grid { grid-template-columns: 1fr; } }
+
+  .method-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .method-card h3 {
+    font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  }
+  .method-card .method-role {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .method-card.human { border-left: 3px solid var(--orange); }
+  .method-card.human h3 { color: var(--text-1); }
+  .method-card.human .method-role { color: var(--orange); }
+  .method-card.ai { border-left: 3px solid var(--purple); }
+  .method-card.ai h3 { color: var(--text-1); }
+  .method-card.ai .method-role { color: var(--purple); }
+  .method-card .method-desc {
+    font-size: 11px; color: var(--text-2); line-height: 1.6;
+  }
+  .method-card.human .method-desc {
+    font-family: 'Caveat', cursive;
+    font-size: 15px; color: var(--orange); line-height: 1.4;
+  }
+
+  /* ============================================ */
+  /* PROCESS STEPS                                */
+  /* ============================================ */
+  .process-steps {
+    display: flex; gap: 0; margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .process-step {
+    flex: 1; min-width: 120px;
+    padding: 16px;
+    position: relative;
+  }
+  .process-step::before {
+    content: '';
+    position: absolute; top: 28px; left: 0; right: 0;
+    height: 2px; background: var(--border);
+  }
+  .process-step:first-child::before { left: 50%; }
+  .process-step:last-child::before { right: 50%; }
+  .step-num {
+    position: relative; z-index: 1;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 600; color: var(--gold);
+    margin: 0 auto 8px;
+  }
+  .step-name {
+    font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: var(--text-2); text-align: center;
+  }
+  .step-desc {
+    font-size: 9px; color: var(--text-3); text-align: center;
+    margin-top: 4px; line-height: 1.4;
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  .page-footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    font-size: 10px; color: var(--text-3);
+    display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-links a { color: var(--text-3); font-size: 10px; }
+  .footer-links a:hover { color: var(--text-2); }
+</style>
+</head>
+<body>
+
+<button class="hamburger" id="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open')">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- ============================================ -->
+<!-- SIDEBAR                                      -->
+<!-- ============================================ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo"><span>Meridian</span> Project</div>
+
+  <div class="nav-section-label">Navigation</div>
+  <ul class="nav-list">
+    <li><a href="#hero" class="active">Dashboard</a></li>
+    <li><a href="#active">Active Cases</a></li>
+    <li><a href="#queue">Case Queue</a></li>
+    <li><a href="#methodology">Methodology</a></li>
+  </ul>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section-label">Cases</div>
+  <ul class="nav-list">
+    <li><a href="case-file.html">001 — USS Nimitz <span class="nav-badge active-badge">Active</span></a></li>
+    <li><a href="#">002 — Belgian Wave <span class="nav-badge queued-badge">Queue</span></a></li>
+    <li><a href="#">003 — Tehran F-4 <span class="nav-badge queued-badge">Queue</span></a></li>
+    <li><a href="#">004 — JAL 1628 <span class="nav-badge queued-badge">Queue</span></a></li>
+    <li><a href="#">005 — USS Roosevelt <span class="nav-badge queued-badge">Queue</span></a></li>
+    <li><a href="#">006 — Rendlesham <span class="nav-badge queued-badge">Queue</span></a></li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="inv-row">
+      <div class="inv-dot human"></div>
+      <span class="inv-name">Nemo</span>
+      <span class="inv-role">Investigator</span>
+    </div>
+    <div class="inv-row">
+      <div class="inv-dot ai"></div>
+      <span class="inv-name">Claude</span>
+      <span class="inv-role">AI Analyst</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================ -->
+<!-- MAIN CONTENT                                 -->
+<!-- ============================================ -->
+<main class="main-content">
+
+  <!-- HERO / DASHBOARD -->
+  <section id="hero">
+    <div class="hero-brand">Meridian Project</div>
+    <h1 class="hero-title">Case Index</h1>
+    <div class="hero-subtitle">Reopening the most credible cold cases in UAP history. Human investigator + AI analyst, working together.</div>
+
+    <div class="hero-stats">
+      <div class="stat-block">
+        <div class="stat-value">1</div>
+        <div class="stat-label">Active Case</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">5</div>
+        <div class="stat-label">In Queue</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">92</div>
+        <div class="stat-label">Highest Credibility</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">1958–2023</div>
+        <div class="stat-label">Date Range</div>
+      </div>
+    </div>
+
+    <div class="methodology-brief">
+      Every case is investigated collaboratively. A human researcher gathers sources, identifies patterns, and asks questions. An AI analyst cross-references the full corpus, scores credibility, and finds connections across decades of data.
+      <div class="voice-nemo">We don't debunk. We don't believe. We investigate.</div>
+    </div>
+  </section>
+
+  <!-- ACTIVE INVESTIGATION -->
+  <section id="active">
+    <div class="section-label">Active Investigation</div>
+
+    <div class="active-card">
+      <div class="active-card-header">
+        <span class="case-num">CASE-001</span>
+        <span class="status-pill investigating">
+          <span class="pulse-dot"></span>
+          Investigating
+        </span>
+      </div>
+      <div class="active-card-body">
+        <h2>USS Nimitz Encounter</h2>
+        <div class="case-subtitle">The Tic Tac Incident</div>
+        <div class="case-meta">
+          <span>November 14, 2004</span>
+          <span>&middot;</span>
+          <span>Pacific Ocean, SW of San Diego</span>
+          <span>&middot;</span>
+          <span>~5 min visual encounter</span>
+        </div>
+
+        <div class="cred-row">
+          <div class="cred-score">92</div>
+          <div class="cred-details">
+            <div class="cred-tier">Tier 1 — Highest Credibility</div>
+            <div style="font-size:9px;color:var(--text-3);">Multi-sensor, multi-witness, official acknowledgment</div>
+          </div>
+        </div>
+
+        <div class="tag-pills">
+          <span class="tag-pill">military</span>
+          <span class="tag-pill">multi-sensor</span>
+          <span class="tag-pill">multi-witness</span>
+          <span class="tag-pill">radar-confirmed</span>
+          <span class="tag-pill">infrared-confirmed</span>
+          <span class="tag-pill">visual-confirmed</span>
+          <span class="tag-pill">data-confiscation</span>
+          <span class="tag-pill">congressional-testimony</span>
+        </div>
+
+        <div class="mini-flir">
+          <div class="flir-grid"></div>
+          <div class="flir-crosshair"></div>
+          <div class="flir-object"></div>
+          <span class="flir-label tl">WHT</span>
+          <span class="flir-label tr">NAR</span>
+          <span class="flir-label bl">IR</span>
+          <span class="flir-label br">0032</span>
+        </div>
+
+        <div class="case-summary">
+          During pre-deployment exercises off San Diego, the USS Nimitz CSG encountered multiple anomalous aerial vehicles over five days. The primary encounter involved visual contact by two F/A-18F crews, radar tracking, and infrared video capture. The object demonstrated flight characteristics far beyond any known technology.
+        </div>
+
+        <div class="case-progress">
+          <div class="progress-label">
+            <span>Investigation Progress</span>
+            <span>~65%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 65%;"></div>
+          </div>
+        </div>
+
+        <div class="case-sections">
+          <div class="case-section-chip done"><span class="chip-count">8</span> Timeline events</div>
+          <div class="case-section-chip done"><span class="chip-count">6</span> Witnesses</div>
+          <div class="case-section-chip done"><span class="chip-count">5</span> Evidence items</div>
+          <div class="case-section-chip done"><span class="chip-count">3</span> AI analyses</div>
+          <div class="case-section-chip"><span class="chip-count">5</span> Open questions</div>
+          <div class="case-section-chip"><span class="chip-count">4</span> Cross-case links</div>
+        </div>
+
+        <div class="card-actions">
+          <a href="case-file.html" class="btn-primary">Open Case File &rarr;</a>
+          <a href="#" class="btn-secondary">View on Canvas &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE QUEUE -->
+  <section id="queue">
+    <div class="section-label">Case Queue</div>
+
+    <table class="queue-table">
+      <thead>
+        <tr>
+          <th style="width:40px;">No.</th>
+          <th>Case</th>
+          <th style="width:70px;">Year</th>
+          <th style="width:50px;">Score</th>
+          <th style="width:130px;">Tags</th>
+          <th style="width:80px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="queue-num">002</span></td>
+          <td>
+            <div class="queue-title">The Belgian Wave</div>
+            <div class="queue-desc">Multiple radar-confirmed triangular craft tracked by NATO F-16s over Belgium. Thousands of civilian witnesses. Belgian Air Force released official report.</div>
+          </td>
+          <td><span class="queue-year">1989–90</span></td>
+          <td><span class="queue-score high">88</span></td>
+          <td>
+            <div class="queue-tags">
+              <span class="queue-tag military">Military</span>
+              <span class="queue-tag radar">Radar</span>
+              <span class="queue-tag mass">Mass</span>
+            </div>
+          </td>
+          <td><span class="queue-status">Queued</span></td>
+        </tr>
+        <tr>
+          <td><span class="queue-num">003</span></td>
+          <td>
+            <div class="queue-title">Tehran F-4 Intercept</div>
+            <div class="queue-desc">Iranian F-4 Phantom jet weapons systems and communications disabled during approach. Object emitted secondary object. Declassified DIA report exists.</div>
+          </td>
+          <td><span class="queue-year">1976</span></td>
+          <td><span class="queue-score high">85</span></td>
+          <td>
+            <div class="queue-tags">
+              <span class="queue-tag military">Military</span>
+              <span class="queue-tag radar">Radar</span>
+              <span class="queue-tag official">Official</span>
+            </div>
+          </td>
+          <td><span class="queue-status">Queued</span></td>
+        </tr>
+        <tr>
+          <td><span class="queue-num">004</span></td>
+          <td>
+            <div class="queue-title">JAL Flight 1628</div>
+            <div class="queue-desc">Crew of 3 on a cargo 747 observed walnut-shaped craft for 31 minutes over Alaska. FAA radar confirmation. Captain grounded after speaking publicly.</div>
+          </td>
+          <td><span class="queue-year">1986</span></td>
+          <td><span class="queue-score high">82</span></td>
+          <td>
+            <div class="queue-tags">
+              <span class="queue-tag witness">Witness</span>
+              <span class="queue-tag radar">Radar</span>
+              <span class="queue-tag official">Official</span>
+            </div>
+          </td>
+          <td><span class="queue-status">Queued</span></td>
+        </tr>
+        <tr>
+          <td><span class="queue-num">005</span></td>
+          <td>
+            <div class="queue-title">USS Roosevelt Encounters</div>
+            <div class="queue-desc">Recurring objects tracked by carrier strike group off the US East Coast. Produced the GIMBAL and GOFAST videos. Multiple pilot witnesses including Ryan Graves.</div>
+          </td>
+          <td><span class="queue-year">2014–15</span></td>
+          <td><span class="queue-score high">90</span></td>
+          <td>
+            <div class="queue-tags">
+              <span class="queue-tag military">Military</span>
+              <span class="queue-tag video">Video</span>
+              <span class="queue-tag witness">Witness</span>
+            </div>
+          </td>
+          <td><span class="queue-status">Queued</span></td>
+        </tr>
+        <tr>
+          <td><span class="queue-num">006</span></td>
+          <td>
+            <div class="queue-title">Rendlesham Forest</div>
+            <div class="queue-desc">USAF personnel at RAF Woodbridge encounter craft on two consecutive nights. Physical trace evidence, radiation readings at landing site. Deputy base commander's audio memo recorded in real time.</div>
+          </td>
+          <td><span class="queue-year">1980</span></td>
+          <td><span class="queue-score high">86</span></td>
+          <td>
+            <div class="queue-tags">
+              <span class="queue-tag military">Military</span>
+              <span class="queue-tag trace">Trace</span>
+              <span class="queue-tag witness">Witness</span>
+            </div>
+          </td>
+          <td><span class="queue-status">Queued</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section id="methodology">
+    <div class="section-label">Methodology</div>
+
+    <div class="method-grid">
+      <div class="method-card human">
+        <h3>Nemo</h3>
+        <div class="method-role">Human Investigator</div>
+        <div class="method-desc">
+          I chase the story. I read between the lines of official reports, track down contradictions, notice when something doesn't feel right. I ask the uncomfortable questions.
+        </div>
+      </div>
+      <div class="method-card ai">
+        <h3>Claude</h3>
+        <div class="method-role">AI Analyst</div>
+        <div class="method-desc">
+          I process the data systematically. Cross-reference witness statements, compare sensor readings, identify patterns across decades and continents. I quantify uncertainty and maintain analytical rigor.
+        </div>
+      </div>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <div class="step-name">Research</div>
+        <div class="step-desc">Gather all public sources</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <div class="step-name">Extract</div>
+        <div class="step-desc">Entity extraction & scoring</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <div class="step-name">Analyze</div>
+        <div class="step-desc">AI cross-reference & patterns</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <div class="step-name">Investigate</div>
+        <div class="step-desc">Human + AI dual voice</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <div class="step-name">Publish</div>
+        <div class="step-desc">Open case file</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <span>Meridian Project &middot; 2024</span>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Methodology</a>
+      <a href="#">Contribute</a>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+// TOC highlighting
+(function() {
+  var links = document.querySelectorAll('.nav-list a[href^="#"]');
+  var sections = [];
+  links.forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var el = document.getElementById(href.substring(1));
+      if (el) sections.push({ el: el, link: link });
+    }
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function(l) { l.classList.remove('active'); });
+        sections.forEach(function(s) {
+          if (s.el === entry.target) s.link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+
+  sections.forEach(function(s) { observer.observe(s.el); });
+
+  // Smooth scroll
+  links.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        var target = document.getElementById(href.substring(1));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('sidebar').classList.remove('open');
+        }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

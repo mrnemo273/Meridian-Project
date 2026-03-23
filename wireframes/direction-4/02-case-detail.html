@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case Detail · USS Nimitz Encounter</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* --- GOLD FIELD (primary) --- */
+    --void: #1C1C1C;
+    --field: #232323;
+    --field-raised: #2C2C2C;
+    --field-line: rgba(196, 163, 90, 0.05);
+    --field-text: rgba(200, 196, 188, 0.55);
+    --field-text-bright: #D4D0C8;
+
+    /* --- ACCENT --- */
+    --accent: #8A8078;
+    --accent-dim: rgba(138, 128, 120, 0.35);
+    --accent-glow: rgba(138, 128, 120, 0.1);
+
+    /* --- PAPER (reading sections) --- */
+    --paper: #F0EDE6;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --warm-white: #FAF8F3;
+
+    /* --- SIGNAL --- */
+    --signal: #C4A35A;
+    --signal-glow: rgba(196, 163, 90, 0.15);
+    --signal-dim: rgba(196, 163, 90, 0.5);
+    --confirm: #4A7C59;
+    --caution: #B85C38;
+    --null: #7A7670;
+    --data-1: #6B8FAA;
+    --data-2: #C4A35A;
+    --data-3: #5A9B6E;
+    --data-4: #9A7D99;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--field-text-bright);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* --- MINIMAL GRID --- */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      linear-gradient(90deg, rgba(196, 163, 90, 0.04) 1px, transparent 1px),
+      linear-gradient(rgba(196, 163, 90, 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 75%);
+  }
+
+  /* --- SCROLL REVEALS --- */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.12s; }
+  .reveal-d2 { transition-delay: 0.24s; }
+  .reveal-d3 { transition-delay: 0.36s; }
+  .reveal-d4 { transition-delay: 0.48s; }
+  .reveal-d5 { transition-delay: 0.6s; }
+  .reveal-d6 { transition-delay: 0.72s; }
+
+  /* --- DECLASSIFY REVEAL --- */
+  .declassify {
+    position: relative; overflow: hidden;
+  }
+  .declassify::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--void);
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .declassify.revealed::after {
+    transform: scaleX(0);
+  }
+
+  /* ============================================ */
+  /* CLASSIFICATION BAR                           */
+  /* ============================================ */
+  .class-bar {
+    background: var(--field);
+    border-bottom: 2px solid var(--signal);
+    padding: 8px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--signal-dim);
+    position: relative; z-index: 101;
+  }
+  .class-bar .class-status { color: var(--signal); letter-spacing: 2px; }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px; border-bottom: 1px solid rgba(196, 163, 90, 0.07);
+    position: sticky; top: 0; background: rgba(28, 28, 28, 0.92);
+    backdrop-filter: blur(12px); z-index: 100;
+  }
+  .logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 15px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--field-text-bright);
+  }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--field-text); text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav ul li a:hover { color: var(--signal); }
+
+  /* ============================================ */
+  /* BREADCRUMB                                   */
+  /* ============================================ */
+  .breadcrumb {
+    max-width: 1400px; margin: 0 auto; padding: 20px 80px;
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 1px;
+    color: var(--field-text); text-transform: uppercase;
+  }
+  .breadcrumb a { color: var(--field-text-bright); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--signal); }
+  .breadcrumb .sep { margin: 0 8px; }
+
+  /* ============================================ */
+  /* CASE HEADER                                  */
+  /* ============================================ */
+  .case-header {
+    max-width: 1400px; margin: 0 auto; padding: 60px 80px;
+    display: grid; grid-template-columns: 1fr auto; gap: 80px; align-items: start;
+  }
+
+  .case-header h1 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 48px; line-height: 1.12; margin-bottom: 16px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--field-text-bright);
+  }
+
+  .case-subtitle {
+    font-size: 16px; color: var(--field-text); line-height: 1.65; max-width: 680px;
+  }
+
+  .case-meta-strip {
+    display: flex; gap: 32px; margin-top: 24px; padding-top: 24px;
+    border-top: 2px solid var(--signal);
+  }
+
+  .meta-item {}
+  .meta-label {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--field-text); margin-bottom: 4px;
+  }
+  .meta-value {
+    font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--field-text-bright);
+  }
+
+  /* --- CREDIBILITY BLOCK (right side) --- */
+  .cred-block {
+    min-width: 200px; text-align: center;
+  }
+
+  .cred-score-ring {
+    width: 140px; height: 140px; margin: 0 auto 16px;
+    position: relative; display: flex; align-items: center; justify-content: center;
+  }
+
+  .cred-score-ring svg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .cred-score-ring .track { fill: none; stroke: var(--field-line); stroke-width: 4; }
+  .cred-score-ring .fill { fill: none; stroke: var(--signal); stroke-width: 4; stroke-linecap: round; }
+
+  .cred-score-num {
+    font-family: 'DM Mono', monospace; font-size: 44px; font-weight: 500;
+    color: var(--signal); line-height: 1; position: relative;
+  }
+  .cred-score-num small {
+    font-size: 16px; font-weight: 400; color: var(--field-text);
+  }
+
+  .cred-label {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--field-text); margin-bottom: 8px;
+  }
+
+  .cred-tier {
+    font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 2.5px;
+    text-transform: uppercase; padding: 6px 20px; display: inline-block;
+    background: rgba(196, 163, 90, 0.08); color: var(--signal);
+  }
+
+  /* ============================================ */
+  /* LAYER TABS                                   */
+  /* ============================================ */
+  .layer-tabs-wrapper {
+    border-top: 1px solid var(--field-line);
+    border-bottom: 1px solid var(--field-line);
+    position: sticky; top: 61px; background: rgba(28, 28, 28, 0.95);
+    backdrop-filter: blur(12px); z-index: 90;
+  }
+
+  .layer-tabs {
+    max-width: 1400px; margin: 0 auto; padding: 0 80px;
+    display: flex; gap: 0;
+  }
+
+  .layer-tab {
+    font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 16px 28px; color: var(--field-text);
+    text-decoration: none; border-bottom: 2px solid transparent;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .layer-tab:hover { color: var(--field-text-bright); }
+  .layer-tab.active { color: var(--signal); border-bottom-color: var(--signal); }
+
+  .layer-tab .tab-num {
+    font-size: 9px; color: var(--field-text); margin-right: 6px;
+  }
+
+  /* ============================================ */
+  /* LAYER 1 — THE STORY                         */
+  /* ============================================ */
+  .layer-1 {
+    background: var(--paper);
+    padding: 60px 80px 80px;
+  }
+
+  .layer-1-inner {
+    max-width: 1400px; margin: 0 auto;
+  }
+
+  .story-layout {
+    display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: start;
+  }
+
+  .story-narrative {}
+
+  .story-section-label {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 24px;
+  }
+
+  .story-narrative h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 32px; line-height: 1.2; margin-bottom: 24px; color: var(--ink);
+    text-transform: uppercase;
+  }
+
+  .story-narrative p {
+    font-size: 17px; line-height: 1.85; margin-bottom: 20px; color: var(--ink);
+  }
+
+  .story-narrative p.first-para::first-letter {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 56px; float: left; line-height: 0.8;
+    padding-right: 8px; padding-top: 6px; color: var(--signal);
+  }
+
+  .story-pullquote {
+    font-family: 'Source Serif 4', Georgia, serif; font-style: italic;
+    font-size: 22px; line-height: 1.45; color: var(--ink);
+    padding: 28px 0 28px 28px; border-left: 3px solid var(--signal);
+    margin: 32px 0;
+  }
+
+  .story-pullquote cite {
+    display: block; font-family: 'Oswald', sans-serif; font-size: 10px;
+    font-style: normal; letter-spacing: 1px; color: var(--graphite);
+    margin-top: 12px; text-transform: uppercase;
+  }
+
+  .story-notable {
+    border: 1px solid var(--rule); background: var(--warm-white);
+    padding: 24px 28px; margin-top: 32px;
+  }
+
+  .story-notable h4 {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 12px;
+  }
+
+  .story-notable p {
+    font-size: 14px; line-height: 1.7; color: var(--graphite); margin-bottom: 0;
+  }
+
+  /* --- STORY SIDEBAR --- */
+  .story-sidebar {}
+
+  .sidebar-card {
+    border: 1px solid var(--rule); background: var(--warm-white);
+    padding: 24px; margin-bottom: 20px;
+  }
+
+  .sidebar-card-title {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+  }
+
+  .sidebar-fact {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+  }
+  .sidebar-fact:last-child { border-bottom: none; }
+
+  .sidebar-fact-label {
+    font-family: 'Oswald', sans-serif; font-size: 11px; color: var(--graphite);
+  }
+  .sidebar-fact-value {
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--ink);
+  }
+
+  .sidebar-witnesses {}
+  .witness-item {
+    padding: 10px 0; border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+  }
+  .witness-item:last-child { border-bottom: none; }
+
+  .witness-name {
+    font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 13px;
+    margin-bottom: 2px; color: var(--ink);
+  }
+  .witness-role {
+    font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--graphite);
+    letter-spacing: 0.3px;
+  }
+
+  .sidebar-map-placeholder {
+    background: rgba(196, 163, 90, 0.04); border: 1px solid var(--rule);
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .sidebar-map-placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(196, 163, 90, 0.04) 1px, transparent 1px),
+      linear-gradient(rgba(196, 163, 90, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .sidebar-map-label {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 1px;
+    color: var(--null); position: relative;
+  }
+  .sidebar-coords {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--null);
+    text-align: center; margin-top: 8px; letter-spacing: 0.5px;
+  }
+
+  /* ============================================ */
+  /* LAYER 2 — THE EVIDENCE                      */
+  /* ============================================ */
+  .layer-2 {
+    background: var(--void);
+    padding: 60px 80px 80px;
+    border-top: 2px solid var(--signal);
+  }
+
+  .layer-2-inner {
+    max-width: 1400px; margin: 0 auto;
+  }
+
+  .evidence-header {
+    margin-bottom: 48px;
+  }
+
+  .evidence-header h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 32px; margin-bottom: 8px; color: var(--field-text-bright);
+    text-transform: uppercase;
+  }
+
+  .evidence-header p {
+    font-size: 15px; color: var(--field-text); max-width: 640px;
+  }
+
+  /* --- CREDIBILITY BREAKDOWN --- */
+  .cred-breakdown {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    margin-bottom: 60px;
+  }
+
+  .cred-factors {}
+
+  .cred-factors-title {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--field-text); margin-bottom: 20px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--field-line);
+  }
+
+  .factor-row {
+    display: grid; grid-template-columns: 1fr 60px 1fr; gap: 16px; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid var(--field-line);
+  }
+
+  .factor-name {
+    font-family: 'Oswald', sans-serif; font-size: 11px; color: var(--field-text-bright);
+  }
+
+  .factor-score {
+    font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500;
+    text-align: center;
+  }
+  .factor-score.high { color: var(--signal); }
+  .factor-score.mid { color: var(--field-text); }
+  .factor-score.low { color: var(--null); }
+
+  .factor-bar {
+    height: 4px; background: rgba(196, 163, 90, 0.1); border-radius: 2px;
+  }
+  .factor-bar-fill {
+    height: 100%; border-radius: 2px; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .factor-bar-fill.gold { background: var(--signal); box-shadow: 0 0 8px var(--signal-glow); }
+  .factor-bar-fill.green { background: var(--confirm); }
+  .factor-bar-fill.slate { background: var(--null); }
+
+  .factor-total {
+    display: grid; grid-template-columns: 1fr 60px 1fr; gap: 16px; align-items: center;
+    padding: 16px 0; margin-top: 4px; border-top: 2px solid var(--signal);
+  }
+  .factor-total .factor-name { font-weight: 500; }
+  .factor-total .factor-score { font-size: 16px; color: var(--signal); }
+
+  /* --- EVIDENCE SUMMARY GRID --- */
+  .evidence-summary-title {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--field-text); margin-bottom: 20px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--field-line);
+  }
+
+  .evidence-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+
+  .ev-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; border: 1px solid var(--field-line); background: var(--field-raised);
+  }
+
+  .ev-indicator {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .ev-indicator.yes { background: var(--confirm); }
+  .ev-indicator.no { background: var(--field-line); }
+
+  .ev-text {
+    font-family: 'Oswald', sans-serif; font-size: 11px; color: var(--field-text-bright);
+    letter-spacing: 0.3px;
+  }
+
+  .ev-status {
+    margin-left: auto; font-family: 'Oswald', sans-serif; font-size: 9px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .ev-status.confirmed { color: var(--confirm); }
+  .ev-status.absent { color: var(--null); }
+
+  /* --- AI-EXTRACTED DESCRIPTORS --- */
+  .descriptors-section {
+    margin-top: 60px; padding-top: 48px; border-top: 1px solid var(--field-line);
+  }
+
+  .descriptors-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 28px;
+  }
+
+  .descriptors-header h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 28px;
+    color: var(--field-text-bright); text-transform: uppercase;
+  }
+
+  .ai-label {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--field-text);
+    padding: 4px 10px; border: 1px solid var(--field-line);
+  }
+
+  .descriptor-groups {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+  }
+
+  .descriptor-group {}
+  .desc-group-label {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--field-line);
+  }
+
+  .desc-item {
+    padding: 8px 0; border-bottom: 1px solid var(--field-line);
+    font-size: 14px; color: var(--field-text-bright);
+  }
+  .desc-item:last-child { border-bottom: none; }
+
+  .desc-confidence {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 0.5px;
+    color: var(--field-text); margin-left: 8px;
+  }
+
+  /* --- SOURCE DOCUMENTS --- */
+  .sources-section {
+    margin-top: 60px; padding-top: 48px; border-top: 1px solid var(--field-line);
+  }
+
+  .sources-section h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 28px;
+    margin-bottom: 24px; color: var(--field-text-bright); text-transform: uppercase;
+  }
+
+  .source-list { display: flex; flex-direction: column; gap: 0; }
+
+  .source-item {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center;
+    padding: 16px 0; border-bottom: 1px solid var(--field-line);
+    cursor: pointer; transition: background 0.2s;
+  }
+  .source-item:hover { background: rgba(196, 163, 90, 0.02); }
+
+  .source-type-badge {
+    font-family: 'Oswald', sans-serif; font-size: 8px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 10px; min-width: 80px; text-align: center;
+  }
+  .source-type-badge.govt { background: rgba(74, 127, 175, 0.12); color: var(--data-1); }
+  .source-type-badge.military { background: rgba(196, 163, 90, 0.08); color: var(--signal); }
+  .source-type-badge.testimony { background: rgba(196, 120, 58, 0.12); color: var(--confirm); }
+  .source-type-badge.media { background: rgba(154, 125, 153, 0.12); color: var(--data-4); }
+
+  .source-info {}
+  .source-title { font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 14px; color: var(--field-text-bright); }
+  .source-meta {
+    font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--field-text);
+    letter-spacing: 0.3px; margin-top: 2px;
+  }
+
+  .source-link {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--data-1); text-decoration: none;
+  }
+
+  /* ============================================ */
+  /* LAYER 3 — THE CONNECTIONS                   */
+  /* ============================================ */
+  .layer-3 {
+    background: var(--void);
+    padding: 60px 80px 80px;
+    border-top: 2px solid var(--signal);
+  }
+
+  .layer-3-inner {
+    max-width: 1400px; margin: 0 auto;
+  }
+
+  .connections-header {
+    margin-bottom: 48px;
+  }
+
+  .connections-header h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 32px; margin-bottom: 8px; color: var(--field-text-bright);
+    text-transform: uppercase;
+  }
+
+  .connections-header p {
+    font-size: 15px; color: var(--field-text); max-width: 640px;
+  }
+
+  /* --- RELATED CASES --- */
+  .related-cases { margin-bottom: 60px; }
+
+  .related-label {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 20px;
+  }
+
+  .related-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+
+  .related-card {
+    border: 1px solid var(--field-line); background: var(--field-raised);
+    padding: 24px; cursor: pointer; transition: transform 0.3s, border-color 0.3s;
+  }
+  .related-card:hover { transform: translateY(-2px); border-color: var(--signal); }
+
+  .related-card-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .related-score {
+    font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--signal);
+  }
+
+  .related-similarity {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 8px;
+    background: rgba(196, 120, 58, 0.12); color: var(--confirm);
+  }
+
+  .related-card h4 {
+    font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 17px;
+    margin-bottom: 4px; color: var(--field-text-bright); text-transform: uppercase;
+  }
+  .related-card .rc-meta {
+    font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--field-text);
+    letter-spacing: 0.3px; margin-bottom: 12px;
+  }
+
+  .shared-descriptors {
+    display: flex; flex-wrap: wrap; gap: 4px;
+  }
+
+  .shared-desc {
+    font-family: 'Oswald', sans-serif; font-size: 8px; letter-spacing: 0.5px;
+    text-transform: uppercase; padding: 3px 8px;
+    background: rgba(196, 163, 90, 0.08); color: var(--signal);
+  }
+
+  /* --- PATTERN FINDINGS --- */
+  .pattern-findings { margin-bottom: 60px; }
+
+  .findings-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+
+  .finding-card {
+    border: 1px solid var(--field-line); padding: 28px; cursor: pointer;
+    transition: border-color 0.3s; background: var(--field-raised);
+  }
+  .finding-card:hover { border-color: var(--signal); }
+
+  .finding-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .finding-type {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--field-text);
+  }
+
+  .confidence-pill {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 2px;
+  }
+  .confidence-pill.high { background: rgba(196, 120, 58, 0.12); color: var(--confirm); }
+  .confidence-pill.medium { background: rgba(196, 163, 90, 0.08); color: var(--signal); }
+
+  .finding-card h4 {
+    font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 16px;
+    margin-bottom: 8px; line-height: 1.35; color: var(--field-text-bright);
+  }
+
+  .finding-card p {
+    font-size: 13px; color: var(--field-text); line-height: 1.55;
+    margin-bottom: 12px;
+  }
+
+  .finding-cases-cited {
+    font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--field-text);
+    letter-spacing: 0.3px;
+  }
+
+  /* --- SOURCE TRAIL --- */
+  .source-trail { margin-bottom: 60px; }
+
+  .trail-title {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 20px;
+  }
+
+  .trail-timeline {
+    position: relative; padding-left: 28px;
+  }
+
+  .trail-timeline::before {
+    content: ''; position: absolute; left: 4px; top: 8px; bottom: 8px;
+    width: 1px; background: var(--field-line);
+  }
+
+  .trail-item {
+    position: relative; padding: 12px 0; padding-left: 20px;
+  }
+
+  .trail-item::before {
+    content: ''; position: absolute; left: -24px; top: 18px;
+    width: 7px; height: 7px; border-radius: 50%; border: 2px solid var(--signal);
+    background: var(--void);
+  }
+
+  .trail-claim {
+    font-size: 14px; line-height: 1.6; margin-bottom: 4px; color: var(--field-text-bright);
+  }
+
+  .trail-source {
+    font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--field-text);
+    letter-spacing: 0.3px;
+  }
+
+  .trail-source a { color: var(--data-1); text-decoration: none; }
+
+  /* --- ANNOTATIONS --- */
+  .annotations-section {}
+  .annotations-title {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 20px;
+  }
+
+  .annotation-card {
+    border: 1px solid var(--field-line); padding: 24px; margin-bottom: 16px;
+    background: var(--field-raised);
+  }
+
+  .annotation-top {
+    display: flex; gap: 12px; align-items: center; margin-bottom: 12px;
+  }
+
+  .annotation-type {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 3px 10px;
+  }
+  .annotation-type.corroboration { background: rgba(196, 120, 58, 0.12); color: var(--confirm); }
+  .annotation-type.context { background: rgba(74, 127, 175, 0.12); color: var(--data-1); }
+
+  .annotation-author {
+    font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--field-text);
+    letter-spacing: 0.3px;
+  }
+
+  .annotation-body {
+    font-size: 14px; line-height: 1.65; color: var(--field-text-bright);
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid var(--field-line); padding: 40px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--field);
+  }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'Oswald', sans-serif; font-size: 10px; color: var(--field-text); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--field-text);
+    background: rgba(28, 28, 28, 0.9); padding: 6px 12px;
+    border: 1px solid var(--field-line); z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Direction 4c · Case Detail</div>
+
+<!-- CLASSIFICATION BAR -->
+<div class="class-bar">
+  <span>DECLASSIFIED · MRD-2004-NIMITZ-001</span>
+  <span class="class-status">VERIFIED</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="01-homepage.html">Cases</a></li>
+    <li><a href="#">Patterns</a></li>
+    <li><a href="#">Ask</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Cases</a>
+  <span class="sep">/</span>
+  <a href="#">Tier 1</a>
+  <span class="sep">/</span>
+  USS Nimitz Encounter
+</div>
+
+<!-- CASE HEADER -->
+<section class="case-header">
+  <div class="reveal">
+    <h1>The USS Nimitz Encounter</h1>
+    <p class="case-subtitle">In November 2004, U.S. Navy pilots from the USS Nimitz carrier strike group encountered a white, oblong, featureless object — now known as the "Tic Tac" — during routine training exercises off the coast of San Diego.</p>
+
+    <div class="case-meta-strip">
+      <div class="meta-item">
+        <div class="meta-label">Date</div>
+        <div class="meta-value">14 Nov 2004</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Location</div>
+        <div class="meta-value">Pacific Ocean, SW of San Diego</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Duration</div>
+        <div class="meta-value">~5 minutes</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Witnesses</div>
+        <div class="meta-value">6+ credentialed</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Source</div>
+        <div class="meta-value">USN / AATIP / Congress</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cred-block reveal reveal-d2">
+    <div class="cred-label">Credibility Score</div>
+    <div class="cred-score-ring">
+      <svg viewBox="0 0 120 120">
+        <circle class="track" cx="60" cy="60" r="52" />
+        <circle class="fill" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="36" />
+      </svg>
+      <span class="cred-score-num">89<small>/100</small></span>
+    </div>
+    <div class="cred-tier">Tier 1</div>
+  </div>
+</section>
+
+<!-- LAYER TABS -->
+<div class="layer-tabs-wrapper">
+  <div class="layer-tabs">
+    <a class="layer-tab active" href="#the-story">
+      <span class="tab-num">01</span> The Story
+    </a>
+    <a class="layer-tab" href="#the-evidence">
+      <span class="tab-num">02</span> The Evidence
+    </a>
+    <a class="layer-tab" href="#the-connections">
+      <span class="tab-num">03</span> The Connections
+    </a>
+  </div>
+</div>
+
+<!-- LAYER 1 — THE STORY -->
+<section class="layer-1" id="the-story">
+  <div class="layer-1-inner">
+    <div class="story-layout">
+
+      <div class="story-narrative">
+        <div class="story-section-label reveal">01 · The Story</div>
+
+        <h2 class="reveal reveal-d1">What Happened</h2>
+
+        <p class="first-para reveal reveal-d2">On the afternoon of November 14, 2004, Commander David Fravor and Lieutenant Commander Alex Dietrich were flying F/A-18F Super Hornets on a routine training mission approximately 100 miles southwest of San Diego. They were vectored by the USS Princeton, which had been tracking anomalous radar contacts for the previous two weeks — objects that appeared at 80,000 feet, then dropped to 20,000 feet in a matter of seconds.</p>
+
+        <p class="reveal reveal-d3">When Fravor and Dietrich arrived at the coordinates, they observed a disturbance in the ocean below — a churning, cross-shaped area of whitewater roughly the size of a 737. Above this disturbance, a white, oblong object approximately 40 feet long hovered erratically, moving rapidly side to side and up and down, "like a ping pong ball bouncing off a wall."</p>
+
+        <div class="story-pullquote reveal reveal-d4">
+          "It accelerated like nothing I've ever seen. I was a pilot for eighteen years at that point. I'd seen a lot of stuff. This was beyond anything."
+          <cite>Commander David Fravor, USN (Ret.)</cite>
+        </div>
+
+        <p class="reveal reveal-d5">As Fravor descended to investigate, the object appeared to mirror his movements — ascending to meet him as he spiraled down. When he attempted to close distance, the object accelerated away in less than two seconds, disappearing from visual range. It was next detected by the Princeton's radar approximately 60 miles away — having covered that distance almost instantaneously.</p>
+
+        <p class="reveal reveal-d6">A second flight launched shortly after. Lieutenant Chad Underwood, flying a Super Hornet equipped with an ATFLIR targeting pod, captured the now-famous infrared video showing the object — later released as the "Tic Tac" video. The object exhibited no visible flight surfaces, exhaust plume, or propulsion mechanism.</p>
+
+        <h2 class="reveal reveal-d1" style="margin-top: 40px;">Why This Case Matters</h2>
+
+        <p class="reveal reveal-d2">The Nimitz encounter is widely considered the most significant UAP case of the 21st century. It combines multiple independent sensor systems (radar, infrared, visual observation from trained military aviators), official government acknowledgment (the Department of Defense confirmed the video's authenticity in 2017), and sworn congressional testimony.</p>
+
+        <p class="reveal reveal-d3">The case directly contributed to the establishment of the UAP Task Force and subsequent AARO investigations. Commander Fravor's testimony before the House Oversight Committee in July 2023 brought the account into the official congressional record under oath.</p>
+
+        <div class="story-notable reveal reveal-d4">
+          <h4>What makes this case exceptional</h4>
+          <p>Multiple independent sensor confirmations (SPY-1 radar, ATFLIR infrared, visual), credentialed military witnesses with no incentive to fabricate, official DoD video authentication, and sworn congressional testimony. The object demonstrated flight characteristics — including instantaneous acceleration, hypersonic speed without a sonic boom, and apparent transmedium capability — that exceed known human technology as assessed by the witnesses and subsequent investigators.</p>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="story-sidebar">
+        <div class="sidebar-card reveal reveal-d1">
+          <div class="sidebar-card-title">Key Facts</div>
+          <div class="sidebar-fact">
+            <span class="sidebar-fact-label">Date</span>
+            <span class="sidebar-fact-value">14 Nov 2004</span>
+          </div>
+          <div class="sidebar-fact">
+            <span class="sidebar-fact-label">Time</span>
+            <span class="sidebar-fact-value">~1500 PST</span>
+          </div>
+          <div class="sidebar-fact">
+            <span class="sidebar-fact-label">Duration</span>
+            <span class="sidebar-fact-value">~5 min</span>
+          </div>
+          <div class="sidebar-fact">
+            <span class="sidebar-fact-label">Altitude</span>
+            <span class="sidebar-fact-value">~28,000 ft</span>
+          </div>
+          <div class="sidebar-fact">
+            <span class="sidebar-fact-label">Craft size (est.)</span>
+            <span class="sidebar-fact-value">~40 ft</span>
+          </div>
+          <div class="sidebar-fact">
+            <span class="sidebar-fact-label">Shape</span>
+            <span class="sidebar-fact-value">Oblong / "Tic Tac"</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card reveal reveal-d2">
+          <div class="sidebar-card-title">Key Witnesses</div>
+          <div class="sidebar-witnesses">
+            <div class="witness-item">
+              <div class="witness-name">Cmdr. David Fravor</div>
+              <div class="witness-role">CO VFA-41 "Black Aces" · F/A-18F pilot</div>
+            </div>
+            <div class="witness-item">
+              <div class="witness-name">Lt. Cmdr. Alex Dietrich</div>
+              <div class="witness-role">VFA-41 · F/A-18F pilot</div>
+            </div>
+            <div class="witness-item">
+              <div class="witness-name">Lt. Chad Underwood</div>
+              <div class="witness-role">VFA-41 · Captured FLIR video</div>
+            </div>
+            <div class="witness-item">
+              <div class="witness-name">Kevin Day</div>
+              <div class="witness-role">Senior Chief · USS Princeton radar operator</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-card reveal reveal-d3">
+          <div class="sidebar-card-title">Location</div>
+          <div class="sidebar-map-placeholder">
+            <span class="sidebar-map-label">Pacific Ocean</span>
+          </div>
+          <div class="sidebar-coords">31.5°N, 117.9°W · ~100 mi SW of San Diego</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 2 — THE EVIDENCE -->
+<section class="layer-2" id="the-evidence">
+  <div class="layer-2-inner">
+    <div class="evidence-header">
+      <div class="story-section-label reveal">02 · The Evidence</div>
+      <h2 class="reveal reveal-d1">Credibility Assessment & Evidence Record</h2>
+      <p class="reveal reveal-d2">Every score is transparent. Every factor is visible. No black box.</p>
+    </div>
+
+    <div class="cred-breakdown">
+      <!-- CREDIBILITY FACTORS -->
+      <div class="cred-factors reveal">
+        <div class="cred-factors-title">Credibility Factor Breakdown</div>
+
+        <div class="factor-row">
+          <span class="factor-name">Witness count</span>
+          <span class="factor-score high">18/20</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 90%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Witness credentials</span>
+          <span class="factor-score high">20/20</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 100%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Radar corroboration</span>
+          <span class="factor-score high">15/15</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 100%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Video evidence</span>
+          <span class="factor-score high">8/10</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 80%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Photo evidence</span>
+          <span class="factor-score low">0/5</span>
+          <div class="factor-bar"><div class="factor-bar-fill slate" style="width: 0%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Physical trace</span>
+          <span class="factor-score low">0/10</span>
+          <div class="factor-bar"><div class="factor-bar-fill slate" style="width: 0%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Official investigation</span>
+          <span class="factor-score high">10/10</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 100%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Official acknowledgment</span>
+          <span class="factor-score high">15/15</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 100%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Cross-reference matches</span>
+          <span class="factor-score mid">9/15</span>
+          <div class="factor-bar"><div class="factor-bar-fill green" style="width: 60%;"></div></div>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Internal consistency (AI)</span>
+          <span class="factor-score high">10/10</span>
+          <div class="factor-bar"><div class="factor-bar-fill gold" style="width: 100%;"></div></div>
+        </div>
+
+        <div class="factor-total">
+          <span class="factor-name">Total</span>
+          <span class="factor-score">105/130</span>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--field-text);">Normalized: 89/100</div>
+        </div>
+      </div>
+
+      <!-- EVIDENCE SUMMARY -->
+      <div class="reveal reveal-d1">
+        <div class="evidence-summary-title">Evidence Summary</div>
+        <div class="evidence-grid">
+          <div class="ev-item">
+            <div class="ev-indicator yes"></div>
+            <span class="ev-text">Radar corroboration</span>
+            <span class="ev-status confirmed">Confirmed</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator yes"></div>
+            <span class="ev-text">Infrared video</span>
+            <span class="ev-status confirmed">Confirmed</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator yes"></div>
+            <span class="ev-text">Multiple witnesses</span>
+            <span class="ev-status confirmed">6+ crew</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator yes"></div>
+            <span class="ev-text">Official investigation</span>
+            <span class="ev-status confirmed">AATIP / AARO</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator yes"></div>
+            <span class="ev-text">Official acknowledgment</span>
+            <span class="ev-status confirmed">DoD 2017</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator yes"></div>
+            <span class="ev-text">Congressional testimony</span>
+            <span class="ev-status confirmed">July 2023</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator no"></div>
+            <span class="ev-text">Photo evidence</span>
+            <span class="ev-status absent">None</span>
+          </div>
+          <div class="ev-item">
+            <div class="ev-indicator no"></div>
+            <span class="ev-text">Physical trace</span>
+            <span class="ev-status absent">None</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI-EXTRACTED DESCRIPTORS -->
+    <div class="descriptors-section">
+      <div class="descriptors-header reveal">
+        <h3>Extracted Descriptors</h3>
+        <span class="ai-label">AI-Extracted from Source Text</span>
+      </div>
+
+      <div class="descriptor-groups reveal reveal-d1">
+        <div class="descriptor-group">
+          <div class="desc-group-label">Craft Description</div>
+          <div class="desc-item">Oblong / elongated ellipsoid <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">White / bright surface <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">Featureless — no wings, fins, or seams <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">~40 ft in length (estimated) <span class="desc-confidence">MED</span></div>
+          <div class="desc-item">No visible exhaust or propulsion <span class="desc-confidence">HIGH</span></div>
+        </div>
+        <div class="descriptor-group">
+          <div class="desc-group-label">Flight Behavior</div>
+          <div class="desc-item">Instantaneous acceleration <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">Hovering / station-keeping <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">Erratic lateral movement <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">Apparent mirroring of pilot maneuvers <span class="desc-confidence">MED</span></div>
+          <div class="desc-item">Hypersonic travel (~60 mi in seconds) <span class="desc-confidence">HIGH</span></div>
+        </div>
+        <div class="descriptor-group">
+          <div class="desc-group-label">Environmental Effects</div>
+          <div class="desc-item">Ocean surface disturbance (cross-shaped) <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">No sonic boom despite high speed <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">No visible exhaust plume on IR <span class="desc-confidence">HIGH</span></div>
+          <div class="desc-item">Radar anomalies on SPY-1 (2 weeks) <span class="desc-confidence">MED</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOURCE DOCUMENTS -->
+    <div class="sources-section">
+      <h3 class="reveal">Source Documents</h3>
+      <div class="source-list">
+        <div class="source-item reveal">
+          <span class="source-type-badge military">Military</span>
+          <div class="source-info">
+            <div class="source-title">FLIR1 / "Tic Tac" Video — Declassified DoD Footage</div>
+            <div class="source-meta">Released: Dec 2017 · Authenticated by DoD Apr 2020</div>
+          </div>
+          <a class="source-link" href="#">View →</a>
+        </div>
+        <div class="source-item reveal reveal-d1">
+          <span class="source-type-badge govt">Government</span>
+          <div class="source-info">
+            <div class="source-title">AATIP Executive Summary Report (excerpts)</div>
+            <div class="source-meta">Advanced Aerospace Threat Identification Program · 2009</div>
+          </div>
+          <a class="source-link" href="#">View →</a>
+        </div>
+        <div class="source-item reveal reveal-d2">
+          <span class="source-type-badge testimony">Testimony</span>
+          <div class="source-info">
+            <div class="source-title">Cmdr. Fravor Congressional Testimony — House Oversight Committee</div>
+            <div class="source-meta">26 Jul 2023 · Sworn testimony under oath</div>
+          </div>
+          <a class="source-link" href="#">View →</a>
+        </div>
+        <div class="source-item reveal reveal-d3">
+          <span class="source-type-badge testimony">Testimony</span>
+          <div class="source-info">
+            <div class="source-title">Lt. Cmdr. Dietrich Account — Corroborating Statement</div>
+            <div class="source-meta">Multiple interviews, 2019–2021</div>
+          </div>
+          <a class="source-link" href="#">View →</a>
+        </div>
+        <div class="source-item reveal reveal-d4">
+          <span class="source-type-badge media">Report</span>
+          <div class="source-info">
+            <div class="source-title">SCU Nimitz UAP Analysis Report</div>
+            <div class="source-meta">Scientific Coalition for UAP Studies · 2019</div>
+          </div>
+          <a class="source-link" href="#">View →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 3 — THE CONNECTIONS -->
+<section class="layer-3" id="the-connections">
+  <div class="layer-3-inner">
+    <div class="connections-header">
+      <div class="story-section-label reveal">03 · The Connections</div>
+      <h2 class="reveal reveal-d1">How This Case Connects</h2>
+      <p class="reveal reveal-d2">AI-surfaced relationships: cases with shared descriptors, pattern findings that cite this case, and the full source trail from claim to document.</p>
+    </div>
+
+    <!-- RELATED CASES -->
+    <div class="related-cases">
+      <div class="related-label reveal">AI-Surfaced Related Cases · By Descriptor Similarity</div>
+      <div class="related-grid">
+        <div class="related-card reveal reveal-d1">
+          <div class="related-card-top">
+            <span class="related-score">76</span>
+            <span class="related-similarity">87% Match</span>
+          </div>
+          <h4>USS Theodore Roosevelt Encounters</h4>
+          <div class="rc-meta">2014–2015 · Atlantic Ocean, Virginia coast</div>
+          <div class="shared-descriptors">
+            <span class="shared-desc">Featureless exterior</span>
+            <span class="shared-desc">No visible propulsion</span>
+            <span class="shared-desc">Hypersonic speed</span>
+            <span class="shared-desc">Radar corroboration</span>
+          </div>
+        </div>
+        <div class="related-card reveal reveal-d2">
+          <div class="related-card-top">
+            <span class="related-score">71</span>
+            <span class="related-similarity">74% Match</span>
+          </div>
+          <h4>Japan Airlines Flight 1628</h4>
+          <div class="rc-meta">17 Nov 1986 · Alaska airspace</div>
+          <div class="shared-descriptors">
+            <span class="shared-desc">Radar corroboration</span>
+            <span class="shared-desc">Credentialed witness</span>
+            <span class="shared-desc">Instantaneous acceleration</span>
+            <span class="shared-desc">Official investigation</span>
+          </div>
+        </div>
+        <div class="related-card reveal reveal-d3">
+          <div class="related-card-top">
+            <span class="related-score">68</span>
+            <span class="related-similarity">71% Match</span>
+          </div>
+          <h4>Aguadilla, Puerto Rico</h4>
+          <div class="rc-meta">25 Apr 2013 · Rafael Hernández Airport</div>
+          <div class="shared-descriptors">
+            <span class="shared-desc">Infrared video</span>
+            <span class="shared-desc">No visible propulsion</span>
+            <span class="shared-desc">Transmedium</span>
+            <span class="shared-desc">Military observation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATTERN FINDINGS -->
+    <div class="pattern-findings">
+      <div class="related-label reveal">Pattern Findings Citing This Case</div>
+      <div class="findings-grid">
+        <div class="finding-card reveal reveal-d1">
+          <div class="finding-top">
+            <span class="finding-type">Descriptor Convergence</span>
+            <span class="confidence-pill high">High Confidence</span>
+          </div>
+          <h4>Silent propulsion appears in 23% of verified-unidentified cases at 8.4σ above random</h4>
+          <p>Across 189 cases spanning seven independent archives, the absence of audible propulsion is reported at a rate that far exceeds what would be expected from random distribution.</p>
+          <div class="finding-cases-cited">Cites 189 cases including this one · Published v3 · Feb 2026</div>
+        </div>
+        <div class="finding-card reveal reveal-d2">
+          <div class="finding-top">
+            <span class="finding-type">Descriptor Convergence</span>
+            <span class="confidence-pill high">High Confidence</span>
+          </div>
+          <h4>Instantaneous acceleration reported across 18% of cases from 6 independent archives</h4>
+          <p>Descriptions of objects accelerating from stationary or low speed to extreme velocity — without observed transitional acceleration — appear in 148 verified cases.</p>
+          <div class="finding-cases-cited">Cites 148 cases including this one · Published v3 · Feb 2026</div>
+        </div>
+        <div class="finding-card reveal reveal-d3">
+          <div class="finding-top">
+            <span class="finding-type">Witness Experience</span>
+            <span class="confidence-pill medium">Medium Confidence</span>
+          </div>
+          <h4>Ocean surface disturbance reported in 12 cases involving objects near water</h4>
+          <p>A pattern of localized water disturbance — churning, whitewater, or visible wake — is reported in cases where objects are observed in proximity to ocean or lake surfaces.</p>
+          <div class="finding-cases-cited">Cites 12 cases including this one · Published v2 · Jan 2026</div>
+        </div>
+        <div class="finding-card reveal reveal-d4">
+          <div class="finding-top">
+            <span class="finding-type">Temporal Pattern</span>
+            <span class="confidence-pill medium">Medium Confidence</span>
+          </div>
+          <h4>Post-2004 military encounters cluster around Navy training ranges</h4>
+          <p>Beginning with the Nimitz encounter, verified military UAP sightings show a geographic concentration around active naval training and exercise areas off both U.S. coasts.</p>
+          <div class="finding-cases-cited">Cites 34 cases including this one · Published v2 · Jan 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOURCE TRAIL -->
+    <div class="source-trail">
+      <div class="trail-title reveal">Full Source Trail — Every Claim Traced</div>
+      <div class="trail-timeline">
+        <div class="trail-item reveal">
+          <div class="trail-claim">"Object was approximately 40 feet long, white, oblong, with no wings, no rotors, no exhaust plume."</div>
+          <div class="trail-source">Source: <a href="#">Cmdr. Fravor Congressional Testimony, 26 Jul 2023, p. 4</a></div>
+        </div>
+        <div class="trail-item reveal reveal-d1">
+          <div class="trail-claim">"It accelerated like nothing I've ever seen… gone in less than two seconds."</div>
+          <div class="trail-source">Source: <a href="#">Cmdr. Fravor Congressional Testimony, 26 Jul 2023, p. 7</a></div>
+        </div>
+        <div class="trail-item reveal reveal-d2">
+          <div class="trail-claim">Radar tracks object 60 miles away after instantaneous acceleration event.</div>
+          <div class="trail-source">Source: <a href="#">USS Princeton SPY-1 radar log, 14 Nov 2004, declassified 2017</a></div>
+        </div>
+        <div class="trail-item reveal reveal-d3">
+          <div class="trail-claim">Infrared video shows object hovering, with no exhaust signature at any spectral band.</div>
+          <div class="trail-source">Source: <a href="#">FLIR1 Video (ATFLIR pod) — DoD authenticated, 2020</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANNOTATIONS -->
+    <div class="annotations-section">
+      <div class="annotations-title reveal">Researcher Annotations</div>
+      <div class="annotation-card reveal reveal-d1">
+        <div class="annotation-top">
+          <span class="annotation-type corroboration">Corroboration</span>
+          <span class="annotation-author">Dr. James E. Lacatski</span>
+        </div>
+        <div class="annotation-body">This incident represents the first modern instance of multiple independent sensor modalities corroborating a UAP observation. The convergence of visual, radar, and infrared data from trained observers sets the methodological standard for case evaluation.</div>
+      </div>
+      <div class="annotation-card reveal reveal-d2">
+        <div class="annotation-type context">Context</div>
+        <span class="annotation-author">Luis Elizondo, AATIP Director</span>
+        <div class="annotation-body">The Nimitz case motivated the establishment of structured protocols for analyzing future UAP incidents within the Department of Defense. The credibility of the witnesses and the strength of the evidence directly influenced policy decisions regarding disclosure and investigation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>Direction 4 · Declassified Intelligence Observatory · Data Verified Through 2026</p>
+</footer>
+
+<script>
+  // Scroll reveals
+  const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Layer tabs scroll detection
+  const tabLinks = document.querySelectorAll('.layer-tab');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 200) current = section.getAttribute('id');
+    });
+
+    tabLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

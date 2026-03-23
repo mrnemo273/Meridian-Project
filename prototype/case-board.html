@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case Board · Infinite Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Instrument+Serif&family=JetBrains+Mono:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --surface-hover: #FAFAF8;
+    --board-bg: #EDECE8;
+    --border: rgba(0,0,0,0.07);
+    --border-strong: rgba(0,0,0,0.12);
+    --text-1: #1A1816;
+    --text-2: #6B6560;
+    --text-3: #A09A92;
+    --gold: #9A7A2E;
+    --gold-soft: rgba(154,122,46,0.12);
+    --orange: #B86A2E;
+    --orange-soft: rgba(184,106,46,0.1);
+    --purple: #7B5D9A;
+    --purple-soft: rgba(123,93,154,0.08);
+    --red: #B04A4A;
+    --red-soft: rgba(176,74,74,0.08);
+    --green: #5A8A4A;
+    --green-soft: rgba(90,138,74,0.08);
+    --blue: #4A6A9A;
+    --blue-soft: rgba(74,106,154,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--board-bg);
+    color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  body.dragging-card { cursor: default !important; }
+  body.panning { cursor: grabbing !important; }
+
+  /* ============================================ */
+  /* TOOLBAR                                      */
+  /* ============================================ */
+  /* ---- Top nav bar (dark) ---- */
+  .toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    height: 48px;
+    background: #1A1816;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .tb-left {
+    display: flex; align-items: center; gap: 8px;
+    flex: 0 0 auto;
+  }
+  .tb-back {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(200,196,184,0.5); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    transition: color 0.2s;
+    padding: 6px 10px 6px 6px;
+    border-radius: 4px;
+  }
+  .tb-back svg { stroke: rgba(200,196,184,0.5); }
+  .tb-back:hover { color: #C8C4B8; }
+  .tb-back:hover svg { stroke: #C8C4B8; }
+
+  .tb-center {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tb-center .case-num {
+    font-size: 10px; font-weight: 500; color: rgba(200,196,184,0.4);
+  }
+  .tb-center h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 17px; color: #C8C4B8; letter-spacing: -0.2px;
+    text-transform: uppercase;
+  }
+  .status-pill {
+    padding: 3px 10px; font-size: 9px; letter-spacing: 0.5px;
+    border-radius: 10px;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(176,74,74,0.15); color: #D46A6A;
+    font-weight: 500;
+  }
+  .status-pill::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: #D46A6A;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .tb-right {
+    display: flex; align-items: center; gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .tb-link {
+    font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: rgba(200,196,184,0.5); text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+  .tb-link:hover { color: #C8C4B8; }
+
+  /* ---- Floating sub-bar (no container) ---- */
+  .sub-bar {
+    position: fixed; top: 56px; left: 50%; transform: translateX(-50%);
+    z-index: 99;
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Filter tabs */
+  .filter-tabs {
+    display: flex; gap: 1px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    height: 32px;
+    align-items: center;
+  }
+  .filter-tab {
+    padding: 0 12px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .filter-tab:hover { color: var(--text-1); background: var(--bg); }
+  .filter-tab.active {
+    color: #FFFFFF;
+    background: var(--gold);
+    font-weight: 500;
+  }
+
+  /* Search box */
+  .search-wrap {
+    position: relative;
+    height: 32px;
+  }
+  .search-icon-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    color: var(--text-3);
+    transition: all 0.2s;
+  }
+  .search-icon-btn:hover { color: var(--text-1); }
+  .search-icon-btn.hidden { display: none; }
+  .search-box {
+    width: 0; height: 32px;
+    padding: 0;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-1);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    opacity: 0;
+    overflow: hidden;
+    transition: width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+    transition: border-color 0.2s;
+  }
+  .search-box.open {
+    width: 180px;
+    padding: 0 10px;
+    opacity: 1;
+  }
+  .search-box:focus {
+    border-color: var(--gold);
+  }
+  .search-box::placeholder { color: var(--text-3); }
+
+  /* Zoom controls */
+  .zoom-wrap {
+    position: relative;
+    height: 32px;
+  }
+  .zoom-icon-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    color: var(--text-3);
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .zoom-icon-btn:hover { color: var(--text-1); }
+  .zoom-icon-btn.hidden { display: none; }
+  .zoom-controls {
+    display: flex; align-items: center; gap: 0;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    height: 32px;
+    opacity: 0;
+    width: 0;
+    transition: width 0.25s ease, opacity 0.2s ease;
+  }
+  .zoom-controls.open {
+    width: 104px;
+    opacity: 1;
+  }
+  .tool-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--text-3);
+    background: transparent; border: none; cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+  .tool-btn:hover { color: var(--text-1); background: var(--bg); }
+  #zoom-display {
+    font-size: 10px; color: var(--text-2); padding: 0 4px;
+    min-width: 40px; text-align: center;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Investigator avatars */
+  .inv-avatars { display: flex; }
+  .inv-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+    border: 2px solid var(--surface);
+    margin-left: -6px;
+  }
+  .inv-avatar:first-child { margin-left: 0; }
+  .inv-avatar.human { background: var(--orange); color: #fff; }
+  .inv-avatar.ai { background: var(--purple); color: #fff; }
+
+  /* ============================================ */
+  /* CANVAS                                       */
+  /* ============================================ */
+  .canvas-viewport {
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  .canvas-world {
+    position: absolute;
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+
+  .canvas-grid {
+    position: absolute;
+    width: 8000px; height: 6000px;
+    left: -1000px; top: -800px;
+    pointer-events: none;
+    background:
+      radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ============================================ */
+  /* CONNECTORS (SVG)                             */
+  /* ============================================ */
+  .connectors {
+    position: absolute;
+    left: 0; top: 0;
+    width: 5000px; height: 4000px;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+  }
+  .conn { stroke-linecap: round; fill: none; }
+  .conn-witness { stroke: var(--orange); stroke-width: 1.5; opacity: 0.2; stroke-dasharray: 4 3; }
+  .conn-evidence { stroke: var(--gold); stroke-width: 1.5; opacity: 0.2; }
+  .conn-ai { stroke: var(--purple); stroke-width: 1.5; opacity: 0.18; stroke-dasharray: 2 3; }
+
+  /* Connection dots at endpoints */
+  .conn-dot { fill: none; stroke-width: 1.5; }
+  .conn-dot.witness { stroke: var(--orange); opacity: 0.3; }
+  .conn-dot.evidence { stroke: var(--gold); opacity: 0.3; }
+  .conn-dot.ai { stroke: var(--purple); opacity: 0.25; }
+
+  /* ============================================ */
+  /* SECTION LABELS (on canvas)                   */
+  /* ============================================ */
+  .section-label {
+    position: absolute; z-index: 0;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(0,0,0,0.08);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* ============================================ */
+  /* CARDS                                        */
+  /* ============================================ */
+  .card {
+    position: absolute; z-index: 2;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: grab;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    overflow: hidden;
+  }
+  .card:active { cursor: grabbing; }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-color: var(--border-strong);
+    z-index: 50;
+  }
+
+  /* Color accent -- left border stripe */
+  .card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; border-radius: 6px 0 0 6px;
+  }
+  .card.type-witness::before { background: var(--orange); }
+  .card.type-evidence::before { background: var(--gold); }
+  .card.type-ai::before { background: var(--purple); }
+  .card.type-document::before { background: var(--text-3); }
+  .card.type-anomaly::before { background: var(--red); }
+  .card.type-sensor::before { background: var(--blue); }
+  .card.type-media::before { background: var(--gold); }
+
+  .card-inner { padding: 12px 14px 12px 16px; }
+
+  .card-type {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .card-type-label {
+    font-size: 9px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .card-badge {
+    font-size: 8px; letter-spacing: 0.5px; font-weight: 500;
+    padding: 2px 6px; border-radius: 3px;
+  }
+  .badge-witness { background: var(--orange-soft); color: var(--orange); }
+  .badge-sensor { background: var(--blue-soft); color: var(--blue); }
+  .badge-official { background: var(--gold-soft); color: var(--gold); }
+  .badge-anomaly { background: var(--red-soft); color: var(--red); }
+  .badge-ai { background: var(--purple-soft); color: var(--purple); }
+
+  .card-title {
+    font-size: 11px; font-weight: 600; color: var(--text-1);
+    line-height: 1.35; margin-bottom: 6px;
+  }
+  .card-body {
+    font-size: 10px; color: var(--text-2); line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* Annotation (human or AI) inside a card */
+  .card-annotation {
+    margin-top: 8px; padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 11px; line-height: 1.35;
+  }
+  .card-annotation.human {
+    background: var(--orange-soft);
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    color: var(--orange);
+  }
+  .card-annotation.ai {
+    background: var(--purple-soft);
+    color: var(--purple);
+    font-size: 9px; line-height: 1.5;
+  }
+  .card-annotation .ann-label {
+    font-size: 8px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; opacity: 0.7;
+    margin-bottom: 2px; display: block;
+  }
+
+  /* Media card variant */
+  .card-media {
+    aspect-ratio: 16/10;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: var(--text-3); letter-spacing: 0.5px;
+    text-transform: uppercase; font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+
+  /* ---- FLIR / Thermal view ---- */
+  .visual-flir {
+    background: #0A1A0A;
+    position: relative; overflow: hidden;
+  }
+  .visual-flir .flir-grid {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(0,255,80,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,80,0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .visual-flir .flir-crosshair {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+  }
+  .visual-flir .flir-object {
+    position: absolute; top: 42%; left: 52%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 16px;
+    background: radial-gradient(ellipse, rgba(200,255,200,0.9) 0%, rgba(100,200,100,0.5) 50%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(1px);
+  }
+  .visual-flir .flir-hud {
+    position: absolute; font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; color: rgba(0,255,80,0.5);
+  }
+  .visual-flir .flir-hud.tl { top: 6px; left: 8px; }
+  .visual-flir .flir-hud.tr { top: 6px; right: 8px; }
+  .visual-flir .flir-hud.bl { bottom: 6px; left: 8px; }
+  .visual-flir .flir-hud.br { bottom: 6px; right: 8px; }
+  .visual-flir .flir-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(0,255,80,0.4);
+  }
+
+  /* ---- Radar display ---- */
+  .visual-radar {
+    background: #0A0E1A;
+    position: relative; overflow: hidden;
+  }
+  .visual-radar .radar-sweep {
+    position: absolute; top: 50%; left: 50%;
+    width: 120px; height: 120px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.12);
+  }
+  .visual-radar .radar-ring {
+    position: absolute; top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.06);
+    transform: translate(-50%, -50%);
+  }
+  .visual-radar .radar-line {
+    position: absolute; top: 50%; left: 50%;
+    width: 1px; height: 55px;
+    background: linear-gradient(to top, rgba(80,200,120,0.3), transparent);
+    transform-origin: bottom center;
+    animation: radar-spin 4s linear infinite;
+  }
+  @keyframes radar-spin { to { transform: rotate(360deg); } }
+  .visual-radar .radar-blip {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: rgba(80,255,120,0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(80,255,120,0.5);
+  }
+  .visual-radar .radar-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(80,200,120,0.4);
+  }
+
+  /* ---- Ocean aerial ---- */
+  .visual-ocean {
+    background: linear-gradient(175deg, #1A3A5A 0%, #0E2A4A 40%, #0A1E3A 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-ocean .ocean-waves {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(
+        170deg,
+        transparent,
+        transparent 8px,
+        rgba(100,180,220,0.06) 8px,
+        rgba(100,180,220,0.06) 9px
+      );
+  }
+  .visual-ocean .ocean-disturbance {
+    position: absolute; top: 45%; left: 48%;
+    transform: translate(-50%, -50%);
+    width: 50px; height: 30px;
+    border: 1px solid rgba(200,220,240,0.2);
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(200,220,240,0.15) 0%, transparent 70%);
+  }
+  .visual-ocean .ocean-disturbance::after {
+    content: '+';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px; color: rgba(200,220,240,0.25);
+  }
+  .visual-ocean .ocean-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(200,220,240,0.35);
+  }
+
+  /* ---- Ship silhouette ---- */
+  .visual-ship {
+    background: linear-gradient(180deg, #C8D8E8 0%, #8AA8C8 40%, #4A6A8A 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-ship .ship-horizon {
+    position: absolute; bottom: 35%; left: 0; right: 0;
+    height: 1px; background: rgba(0,0,0,0.08);
+  }
+  .visual-ship .ship-body {
+    position: absolute; bottom: 33%; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 12px;
+    background: #3A4A5A;
+    clip-path: polygon(5% 100%, 0% 40%, 15% 0%, 85% 0%, 100% 40%, 95% 100%);
+  }
+  .visual-ship .ship-tower {
+    position: absolute; bottom: 44%; left: 52%;
+    transform: translateX(-50%);
+    width: 10px; height: 14px;
+    background: #3A4A5A;
+    clip-path: polygon(10% 100%, 20% 0%, 80% 0%, 90% 100%);
+  }
+  .visual-ship .ship-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(40,60,80,0.4);
+  }
+
+  /* ---- Document scan ---- */
+  .visual-doc {
+    background: #F5F2EA;
+    position: relative; overflow: hidden;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: flex-start; justify-content: flex-start;
+  }
+  .visual-doc .doc-seal {
+    position: absolute; top: 8px; right: 10px;
+    width: 28px; height: 28px;
+    border: 1.5px solid rgba(0,0,0,0.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: rgba(0,0,0,0.15); font-weight: 600;
+  }
+  .visual-doc .scan-line {
+    height: 2px; border-radius: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+  .visual-doc .scan-line.heading {
+    height: 3px; background: rgba(0,0,0,0.15); margin-bottom: 4px;
+  }
+  .visual-doc .scan-line.redacted {
+    height: 4px; background: rgba(0,0,0,0.6);
+  }
+  .visual-doc .stamp {
+    position: absolute; bottom: 10px; left: 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(176,74,74,0.25);
+    transform: rotate(-8deg);
+    border: 1.5px solid rgba(176,74,74,0.2);
+    padding: 2px 6px;
+  }
+
+  /* ---- F/A-18 jet ---- */
+  .visual-jet {
+    background: linear-gradient(180deg, #D8E4F0 0%, #A8C0D8 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-jet .jet-body {
+    position: absolute; top: 38%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 44px; height: 8px;
+    background: #4A5A6A;
+    border-radius: 4px 12px 12px 4px;
+  }
+  .visual-jet .jet-wing {
+    position: absolute; top: 42%; left: 48%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 12px; height: 36px;
+    background: #4A5A6A;
+    clip-path: polygon(50% 0%, 100% 30%, 100% 70%, 50% 100%, 0% 70%, 0% 30%);
+  }
+  .visual-jet .jet-tail {
+    position: absolute; top: 32%; left: 42%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 6px; height: 20px;
+    background: #4A5A6A;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  }
+  .visual-jet .jet-trail {
+    position: absolute; top: 40%; left: 68%;
+    transform: rotate(-5deg);
+    width: 50px; height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.6), transparent);
+  }
+  .visual-jet .jet-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(40,60,80,0.35);
+  }
+
+  /* Redacted doc lines (alternate style) */
+  .doc-lines {
+    display: flex; flex-direction: column; gap: 3px;
+    margin-top: 8px;
+  }
+  .doc-line {
+    height: 2px; border-radius: 1px;
+    background: rgba(0,0,0,0.06);
+  }
+  .doc-line.heading { background: var(--gold-soft); width: 55%; height: 3px; }
+  .doc-line.redacted { background: rgba(0,0,0,0.45); height: 3px; border-radius: 1px; }
+
+  /* ============================================ */
+  /* NOTE CARDS (stickies replacement)            */
+  /* ============================================ */
+  .note {
+    position: absolute; z-index: 3;
+    width: 160px; padding: 12px 14px;
+    border-radius: 6px;
+    cursor: grab;
+    transition: box-shadow 0.2s;
+    border: 1px solid transparent;
+  }
+  .note:active { cursor: grabbing; }
+  .note:hover { z-index: 50; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+  .note.human-note {
+    background: var(--orange-soft);
+    border-color: rgba(184,106,46,0.15);
+    font-family: 'Caveat', cursive;
+    font-size: 15px; line-height: 1.3;
+    color: #7A4A1A;
+  }
+  .note.ai-note {
+    background: var(--purple-soft);
+    border-color: rgba(123,93,154,0.12);
+    font-size: 10px; line-height: 1.5;
+    color: #5A3D7A;
+  }
+  .note-author {
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; opacity: 0.5; font-weight: 500;
+    font-style: normal;
+  }
+
+  /* ============================================ */
+  /* TIMELINE STRIP                               */
+  /* ============================================ */
+  .timeline-strip {
+    position: absolute; z-index: 2;
+    display: flex; align-items: flex-start;
+  }
+  .tl-card {
+    width: 210px; padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    position: relative;
+    cursor: grab;
+    flex-shrink: 0;
+  }
+  .tl-card:active { cursor: grabbing; }
+  .tl-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--border-strong); z-index: 5; }
+  .tl-connector {
+    width: 32px; height: 2px; margin-top: 26px;
+    background: var(--border-strong);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .tl-connector::after {
+    content: ''; position: absolute; right: -2px; top: -3px;
+    width: 0; height: 0;
+    border-left: 5px solid var(--border-strong);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+
+  .tl-dot {
+    position: absolute; top: -5px; left: 16px;
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--border-strong); background: var(--surface);
+  }
+  .tl-dot.key { background: var(--gold); border-color: var(--gold); }
+  .tl-dot.question { background: var(--red); border-color: var(--red); }
+
+  .tl-date {
+    font-size: 9px; letter-spacing: 0.5px; font-weight: 500;
+    color: var(--text-3); margin-bottom: 4px; text-transform: uppercase;
+  }
+  .tl-title {
+    font-size: 11px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px; line-height: 1.35;
+  }
+  .tl-detail {
+    font-size: 9px; color: var(--text-2); line-height: 1.5; font-weight: 300;
+  }
+  .tl-annotation {
+    margin-top: 8px; padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 10px; line-height: 1.35;
+  }
+  .tl-annotation.human {
+    background: var(--orange-soft);
+    font-family: 'Caveat', cursive;
+    font-size: 13px; color: var(--orange);
+  }
+  .tl-annotation.ai {
+    background: var(--purple-soft);
+    color: var(--purple); font-size: 9px; line-height: 1.5;
+  }
+  .tl-annotation .ann-label {
+    font-size: 7px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; opacity: 0.7;
+    margin-bottom: 2px; display: block;
+  }
+
+  /* ============================================ */
+  /* MINIMAP                                      */
+  /* ============================================ */
+  .minimap-toggle {
+    position: fixed; bottom: 16px; right: 16px; z-index: 100;
+    width: 32px; height: 32px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-3);
+    transition: all 0.2s;
+  }
+  .minimap-toggle:hover { color: var(--text-1); }
+  .minimap-toggle.hidden { display: none; }
+  .minimap {
+    position: fixed; bottom: 16px; right: 16px; z-index: 100;
+    width: 160px; height: 100px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: none;
+  }
+  .minimap.open { display: block; }
+  .minimap-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); z-index: 2;
+  }
+  .minimap-dots { position: absolute; inset: 0; }
+  .minimap-dot {
+    position: absolute;
+    width: 4px; height: 4px; border-radius: 1px;
+  }
+  .minimap-viewport {
+    position: absolute;
+    border: 1.5px solid var(--gold);
+    background: rgba(154,122,46,0.06);
+    border-radius: 2px;
+    pointer-events: none;
+    transition: all 0.1s;
+  }
+
+  /* ============================================ */
+  /* LEGEND                                       */
+  /* ============================================ */
+  .legend-toggle {
+    position: fixed; bottom: 16px; left: 16px; z-index: 100;
+    width: 32px; height: 32px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-3);
+    transition: all 0.2s;
+  }
+  .legend-toggle:hover { color: var(--text-1); }
+  .legend-toggle.hidden { display: none; }
+  .legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 100;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: none; flex-direction: column; gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .legend.open { display: flex; }
+  .legend-title {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; color: var(--text-2);
+  }
+  .legend-swatch {
+    width: 12px; height: 3px; border-radius: 1px;
+  }
+
+  /* ============================================ */
+  /* HINTS                                        */
+  /* ============================================ */
+  .hint {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 200;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px;
+    font-size: 10px; color: var(--text-3);
+    display: flex; gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    opacity: 1; transition: opacity 0.8s;
+  }
+  .hint.hidden { opacity: 0; pointer-events: none; }
+  .kbd {
+    display: inline-block;
+    padding: 1px 5px; margin: 0 2px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 9px; font-weight: 500;
+  }
+
+  /* ============================================ */
+  /* DETAIL PANEL                                 */
+  /* ============================================ */
+  .detail-panel {
+    position: fixed; top: 48px; right: -380px; width: 380px;
+    height: calc(100vh - 48px);
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    z-index: 150;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: -4px 0 16px rgba(0,0,0,0.04);
+  }
+  .detail-panel.open { right: 0; }
+  .detail-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-3);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .detail-close:hover { color: var(--text-1); background: var(--surface); }
+
+  /* ============================================ */
+  /* CARD STATES                                  */
+  /* ============================================ */
+  .card.dimmed { opacity: 0.15; pointer-events: none; }
+  .note.dimmed { opacity: 0.15; pointer-events: none; }
+  .card.selected {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 2px var(--gold-soft) !important;
+    z-index: 10;
+  }
+  .note.selected {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 2px var(--gold-soft) !important;
+    z-index: 10;
+  }
+
+  /* ============================================ */
+  /* SECTION LABEL on timeline                    */
+  /* ============================================ */
+  .tl-section-label {
+    position: absolute;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(0,0,0,0.08);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================== -->
+<!-- TOOLBAR                  -->
+<!-- ======================== -->
+<div class="toolbar">
+  <div class="tb-left">
+    <a class="tb-back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      MERIDIAN
+    </a>
+  </div>
+
+  <div class="tb-center" id="tb-title">
+    <span class="case-num">CASE-001</span>
+    <h1>USS Nimitz Encounter</h1>
+    <span class="status-pill">Investigating</span>
+  </div>
+
+  <div class="tb-right">
+    <div class="inv-avatars">
+      <div class="inv-avatar human" title="Nemo">N</div>
+      <div class="inv-avatar ai" title="Claude">C</div>
+    </div>
+    <a class="tb-link" href="case-file.html">Case File &rarr;</a>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- SUB-BAR (floating)       -->
+<!-- ======================== -->
+<div class="sub-bar">
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All</button>
+    <button class="filter-tab" data-filter="witness">Witnesses</button>
+    <button class="filter-tab" data-filter="evidence">Evidence</button>
+    <button class="filter-tab" data-filter="ai">AI Analysis</button>
+    <button class="filter-tab" data-filter="document">Documents</button>
+    <button class="filter-tab" data-filter="anomaly">Questions</button>
+  </div>
+  <div class="search-wrap">
+    <button class="search-icon-btn" id="search-icon" title="Search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <input class="search-box" id="search-box" type="text" placeholder="Search cards...">
+  </div>
+  <div class="zoom-wrap">
+    <button class="zoom-icon-btn" id="zoom-icon" title="Zoom"></button>
+    <div class="zoom-controls" id="zoom-controls">
+      <button id="zoom-out" class="tool-btn">&minus;</button>
+      <span id="zoom-display">55%</span>
+      <button id="zoom-in" class="tool-btn">+</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- CANVAS                   -->
+<!-- ======================== -->
+<div class="canvas-viewport" id="viewport">
+  <div class="canvas-world" id="world">
+    <div class="canvas-grid"></div>
+    <svg class="connectors" id="connectors"></svg>
+    <!-- Cards rendered by JS -->
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- DETAIL PANEL             -->
+<!-- ======================== -->
+<div class="detail-panel" id="detail-panel"></div>
+
+<!-- ======================== -->
+<!-- MINIMAP                  -->
+<!-- ======================== -->
+<button class="minimap-toggle" id="minimap-toggle" title="Map">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+</button>
+<div class="minimap" id="minimap">
+  <div class="minimap-label">MAP</div>
+  <div class="minimap-dots" id="minimap-dots"></div>
+  <div class="minimap-viewport" id="minimap-vp"></div>
+</div>
+
+<!-- ======================== -->
+<!-- LEGEND                   -->
+<!-- ======================== -->
+<button class="legend-toggle" id="legend-toggle" title="Legend">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="8" y2="6"/><line x1="12" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="8" y2="18"/><line x1="12" y1="18" x2="21" y2="18"/><circle cx="5.5" cy="6" r="1.5" fill="currentColor"/><circle cx="5.5" cy="12" r="1.5" fill="currentColor"/><circle cx="5.5" cy="18" r="1.5" fill="currentColor"/></svg>
+</button>
+<div class="legend" id="legend">
+  <span class="legend-title">LEGEND</span>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--orange)"></div> Witness</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--gold)"></div> Evidence</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--purple)"></div> AI Analysis</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--red)"></div> Anomaly</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--blue)"></div> Sensor</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--text-3)"></div> Document</div>
+</div>
+
+<!-- ======================== -->
+<!-- HINT BAR                 -->
+<!-- ======================== -->
+<div class="hint" id="hint">
+  <span><kbd class="kbd">Scroll</kbd> Zoom</span>
+  <span><kbd class="kbd">Drag</kbd> Pan</span>
+  <span><kbd class="kbd">1</kbd> Fit cards</span>
+  <span><kbd class="kbd">0</kbd> Fit all</span>
+  <span><kbd class="kbd">Esc</kbd> Close panel</span>
+</div>
+
+<!-- ======================== -->
+<!-- DATA                     -->
+<!-- ======================== -->
+<script src="data/case-data.js"></script>
+
+<script>
+(function() {
+  const data = CASE_DATA;
+  const cards = data.cards;
+  const world = document.getElementById('world');
+  const viewport = document.getElementById('viewport');
+  const zoomDisplay = document.getElementById('zoom-display');
+  const hint = document.getElementById('hint');
+
+  // ---- Populate toolbar from data ----
+  (function populateToolbar() {
+    const tbTitle = document.getElementById('tb-title');
+    if (tbTitle) {
+      tbTitle.querySelector('.case-num').textContent = data.case_id;
+      tbTitle.querySelector('h1').textContent = data.title;
+      const pill = tbTitle.querySelector('.status-pill');
+      pill.textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
+    }
+  })();
+
+  // ---- STATE ----
+  let scale = 0.55;
+  let panX = 0, panY = 0;
+  let isPanning = false, panStartX = 0, panStartY = 0;
+  let dragTarget = null, dragOffsetX = 0, dragOffsetY = 0;
+  let dragStartX = 0, dragStartY = 0;
+  let spaceHeld = false;
+  let activeFilter = 'all';
+  let selectedCardId = null;
+  const cardElements = new Map();
+  const MIN_SCALE = 0.1, MAX_SCALE = 3;
+
+  // ---- CONNECTION INDEX ----
+  function buildConnectionIndex(cards) {
+    const idx = new Map();
+    for (const card of cards) {
+      if (!idx.has(card.id)) idx.set(card.id, []);
+      for (const conn of (card.connections || [])) {
+        idx.get(card.id).push({ targetId: conn.target_id, type: conn.type, label: conn.label });
+        if (!idx.has(conn.target_id)) idx.set(conn.target_id, []);
+        idx.get(conn.target_id).push({ targetId: card.id, type: conn.type, label: conn.label });
+      }
+    }
+    return idx;
+  }
+  const connectionIndex = buildConnectionIndex(cards);
+
+  // ---- TYPE HELPERS ----
+  function getCardTypeClass(type) {
+    const map = {
+      'witness': 'type-witness', 'evidence': 'type-evidence', 'sensor': 'type-sensor',
+      'media': 'type-evidence', 'document': 'type-document', 'ai-finding': 'type-ai',
+      'anomaly': 'type-anomaly', 'note': 'type-note'
+    };
+    return map[type] || 'type-evidence';
+  }
+
+  function getCardTypeLabel(type) {
+    const map = {
+      'witness': 'WITNESS', 'evidence': 'EVIDENCE', 'sensor': 'SENSOR DATA',
+      'media': 'MEDIA', 'document': 'DOCUMENT', 'ai-finding': 'AI ANALYSIS',
+      'anomaly': 'OPEN QUESTION', 'note': 'NOTE'
+    };
+    return map[type] || type.toUpperCase();
+  }
+
+  function getTypeColor(type) {
+    const map = {
+      'witness': 'orange', 'evidence': 'gold', 'sensor': 'blue', 'media': 'gold',
+      'document': 'text-3', 'ai-finding': 'purple', 'anomaly': 'red', 'note': 'purple'
+    };
+    return map[type] || 'text-3';
+  }
+
+  // ---- VISUAL ILLUSTRATIONS ----
+  function renderVisual(visualType) {
+    if (visualType === 'flir') return '<div class="card-media visual-flir">' +
+      '<div class="flir-grid"></div>' +
+      '<svg class="flir-crosshair" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;" viewBox="0 0 60 60" fill="none" stroke="rgba(0,255,80,0.3)" stroke-width="0.5">' +
+        '<line x1="30" y1="0" x2="30" y2="22"/><line x1="30" y1="38" x2="30" y2="60"/>' +
+        '<line x1="0" y1="30" x2="22" y2="30"/><line x1="38" y1="30" x2="60" y2="30"/>' +
+        '<circle cx="30" cy="30" r="12"/>' +
+      '</svg>' +
+      '<div class="flir-object"></div>' +
+      '<div class="flir-hud tl">FLIR1</div>' +
+      '<div class="flir-hud tr">IR &middot; WHT</div>' +
+      '<div class="flir-hud bl">NAR</div>' +
+      '<div class="flir-hud br">0.9&times; Z</div>' +
+      '<div class="flir-label" style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-family:\'JetBrains Mono\',monospace;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,255,80,0.4);">DoD Release</div>' +
+      '</div>';
+
+    if (visualType === 'radar') return '<div class="card-media visual-radar">' +
+      '<svg viewBox="0 0 160 100" style="position:absolute;inset:0;width:100%;height:100%">' +
+        '<circle cx="80" cy="50" r="40" fill="none" stroke="rgba(80,200,120,0.08)" stroke-width="1"/>' +
+        '<circle cx="80" cy="50" r="27" fill="none" stroke="rgba(80,200,120,0.06)" stroke-width="1"/>' +
+        '<circle cx="80" cy="50" r="14" fill="none" stroke="rgba(80,200,120,0.06)" stroke-width="1"/>' +
+        '<line x1="80" y1="10" x2="80" y2="90" stroke="rgba(80,200,120,0.04)" stroke-width="0.5"/>' +
+        '<line x1="40" y1="50" x2="120" y2="50" stroke="rgba(80,200,120,0.04)" stroke-width="0.5"/>' +
+      '</svg>' +
+      '<div class="radar-line" style="top:50%;left:50%"></div>' +
+      '<div class="radar-blip" style="top:32%;left:58%"></div>' +
+      '<div class="radar-blip" style="top:38%;left:62%;opacity:0.4;width:3px;height:3px"></div>' +
+      '<div class="radar-blip" style="top:65%;left:45%;width:3px;height:3px;opacity:0.5"></div>' +
+      '<div class="radar-label" style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-family:\'JetBrains Mono\',monospace;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(80,200,120,0.4);">SPY-1 Radar</div>' +
+      '</div>';
+
+    if (visualType === 'ocean') return '<div class="card-media visual-ocean">' +
+      '<div class="ocean-waves"></div>' +
+      '<div class="ocean-disturbance"></div>' +
+      '<div style="position:absolute;bottom:6px;right:8px;font-family:\'JetBrains Mono\',monospace;font-size:7px;color:rgba(200,220,240,0.4);">31.33&deg;N</div>' +
+      '</div>';
+
+    if (visualType === 'ship') return '<div class="card-media visual-ship">' +
+      '<div class="ship-horizon"></div>' +
+      '<div class="ship-body"></div>' +
+      '<div class="ship-tower"></div>' +
+      '<div style="position:absolute;bottom:6px;right:8px;font-family:\'JetBrains Mono\',monospace;font-size:7px;color:rgba(0,0,0,0.15);">CG-59</div>' +
+      '</div>';
+
+    if (visualType === 'jet') return '<div class="card-media visual-jet">' +
+      '<div class="jet-trail"></div>' +
+      '<div class="jet-body"></div>' +
+      '<div class="jet-wing"></div>' +
+      '<div class="jet-tail" style="position:absolute;top:32%;left:42%;transform:translate(-50%,-50%) rotate(-5deg);width:6px;height:20px;background:#4A5A6A;clip-path:polygon(50% 0%,100% 100%,0% 100%);"></div>' +
+      '<div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-family:\'JetBrains Mono\',monospace;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(40,60,80,0.35);">F/A-18F</div>' +
+      '</div>';
+
+    if (visualType === 'document-scan') return '<div class="card-media visual-doc">' +
+      '<div class="doc-seal">DOD</div>' +
+      '<div class="scan-line heading" style="width:65%"></div>' +
+      '<div class="scan-line" style="width:90%"></div>' +
+      '<div class="scan-line" style="width:85%"></div>' +
+      '<div class="scan-line" style="width:78%"></div>' +
+      '<div class="scan-line redacted" style="width:70%"></div>' +
+      '<div class="scan-line" style="width:82%"></div>' +
+      '<div class="scan-line" style="width:75%"></div>' +
+      '<div class="scan-line redacted" style="width:60%"></div>' +
+      '<div class="scan-line" style="width:88%"></div>' +
+      '<div class="stamp">CLASSIFIED</div>' +
+      '</div>';
+
+    return '';
+  }
+
+  // ---- RENDER CARD ----
+  function renderCard(card) {
+    // Note cards
+    if (card.type === 'note') {
+      const isHuman = card.badge && card.badge.style === 'witness';
+      const noteDiv = document.createElement('div');
+      noteDiv.className = 'note ' + (isHuman ? 'human-note' : 'ai-note') + ' draggable';
+      noteDiv.id = 'card-' + card.id;
+      noteDiv.dataset.cardId = card.id;
+      noteDiv.dataset.type = card.type;
+      noteDiv.style.left = card.position.x + 'px';
+      noteDiv.style.top = card.position.y + 'px';
+      noteDiv.style.width = '180px';
+      noteDiv.innerHTML =
+        '<div style="font-size:' + (isHuman ? '11' : '9') + 'px;font-weight:600;margin-bottom:6px;opacity:0.7;letter-spacing:0.5px;text-transform:uppercase;font-family:\'JetBrains Mono\',monospace;">' + escapeHtml(card.title) + '</div>' +
+        '<div>' + escapeHtml(card.summary) + '</div>' +
+        '<div class="note-author">' + (isHuman ? '&mdash; Nemo' : '&mdash; Claude') + '</div>';
+      return noteDiv;
+    }
+
+    // Regular card
+    const div = document.createElement('div');
+    div.className = 'card ' + getCardTypeClass(card.type) + ' draggable';
+    div.id = 'card-' + card.id;
+    div.dataset.cardId = card.id;
+    div.dataset.type = card.type;
+    div.style.left = card.position.x + 'px';
+    div.style.top = card.position.y + 'px';
+    div.style.width = '220px';
+
+    var html = '';
+
+    // Visual illustration
+    if (card.visual) {
+      html += renderVisual(card.visual);
+    }
+
+    // Card inner
+    html += '<div class="card-inner">' +
+      '<div class="card-type">' +
+        '<span class="card-type-label" style="color:var(--' + getTypeColor(card.type) + ')">' + getCardTypeLabel(card.type) + '</span>';
+    if (card.badge) {
+      html += '<span class="card-badge badge-' + card.badge.style + '">' + escapeHtml(card.badge.label) + '</span>';
+    }
+    html += '</div>' +
+      '<div class="card-title">' + escapeHtml(card.title) + '</div>' +
+      '<div class="card-body">' + escapeHtml(card.summary).substring(0, 200) + (card.summary.length > 200 ? '...' : '') + '</div>';
+
+    // Annotation (first one only on card face)
+    if (card.annotations && card.annotations.length > 0) {
+      var ann = card.annotations[0];
+      var isHuman = ann.author === 'Nemo';
+      var annText = ann.text.length > 120 ? ann.text.substring(0, 120) + '...' : ann.text;
+      html += '<div class="card-annotation ' + (isHuman ? 'human' : 'ai') + '">' +
+        '<span class="ann-label">' + escapeHtml(ann.author) + '</span>' +
+        escapeHtml(annText) +
+        '</div>';
+    }
+
+    html += '</div>';
+    div.innerHTML = html;
+    return div;
+  }
+
+  function escapeHtml(text) {
+    if (!text) return '';
+    var el = document.createElement('span');
+    el.textContent = text;
+    return el.innerHTML;
+  }
+
+  // ---- RENDER ALL CARDS ----
+  function renderCards() {
+    // Section labels
+    var labels = [
+      { text: 'Witnesses', x: 80, y: 160 },
+      { text: 'Sensor Data', x: 540, y: 160 },
+      { text: 'Key Evidence', x: 1000, y: 160 },
+      { text: 'Physical & Radar', x: 1460, y: 160 },
+      { text: 'Analysis & Anomalies', x: 1920, y: 160 },
+      { text: 'AI Findings', x: 2380, y: 160 },
+      { text: 'Open Questions', x: 2840, y: 660 }
+    ];
+    labels.forEach(function(lbl) {
+      var el = document.createElement('div');
+      el.className = 'section-label';
+      el.style.left = lbl.x + 'px';
+      el.style.top = lbl.y + 'px';
+      el.textContent = lbl.text;
+      world.appendChild(el);
+    });
+
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var el = renderCard(card);
+      world.appendChild(el);
+      cardElements.set(card.id, el);
+    }
+  }
+
+  // ---- CONNECTORS ----
+  function getCenter(el) {
+    var x = parseFloat(el.style.left) + (el.offsetWidth || 220) / 2;
+    var y = parseFloat(el.style.top) + (el.offsetHeight || 150) / 2;
+    return { x: x, y: y };
+  }
+
+  function getEdgePoint(fromEl, toEl) {
+    var fc = getCenter(fromEl);
+    var tc = getCenter(toEl);
+    var dx = tc.x - fc.x, dy = tc.y - fc.y;
+    var w = (fromEl.offsetWidth || 220) / 2, h = (fromEl.offsetHeight || 150) / 2;
+    if (dx === 0 && dy === 0) return fc;
+    var absDx = Math.abs(dx), absDy = Math.abs(dy);
+    var s;
+    if (absDx / w > absDy / h) {
+      s = w / absDx;
+    } else {
+      s = h / absDy;
+    }
+    return { x: fc.x + dx * s, y: fc.y + dy * s };
+  }
+
+  function renderConnectors() {
+    var svg = document.getElementById('connectors');
+    svg.innerHTML = '';
+    var drawn = {};
+
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var conns = card.connections || [];
+      for (var j = 0; j < conns.length; j++) {
+        var conn = conns[j];
+        var key = [card.id, conn.target_id].sort().join('--');
+        if (drawn[key]) continue;
+        drawn[key] = true;
+
+        var fromEl = cardElements.get(card.id);
+        var toEl = cardElements.get(conn.target_id);
+        if (!fromEl || !toEl) continue;
+
+        var from = getEdgePoint(fromEl, toEl);
+        var to = getEdgePoint(toEl, fromEl);
+
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', from.x);
+        line.setAttribute('y1', from.y);
+        line.setAttribute('x2', to.x);
+        line.setAttribute('y2', to.y);
+        line.classList.add('conn', 'conn-' + conn.type);
+        svg.appendChild(line);
+
+        // Endpoint dots
+        [from, to].forEach(function(pt) {
+          var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', pt.x);
+          circle.setAttribute('cy', pt.y);
+          circle.setAttribute('r', '3');
+          circle.classList.add('conn-dot', conn.type);
+          svg.appendChild(circle);
+        });
+      }
+    }
+  }
+
+  // ---- TIMELINE ----
+  function renderTimeline() {
+    var timeline = data.timeline;
+    if (!timeline || timeline.length === 0) return;
+
+    // Timeline section label
+    var tlLabel = document.createElement('div');
+    tlLabel.className = 'section-label';
+    tlLabel.style.left = '80px';
+    tlLabel.style.top = '1920px';
+    tlLabel.textContent = 'Timeline \u00B7 Reconstructed';
+    world.appendChild(tlLabel);
+
+    var strip = document.createElement('div');
+    strip.className = 'timeline-strip';
+    strip.id = 'timeline-strip';
+    strip.style.left = '80px';
+    strip.style.top = '1960px';
+
+    timeline.forEach(function(event, i) {
+      if (i > 0) {
+        var connector = document.createElement('div');
+        connector.className = 'tl-connector';
+        strip.appendChild(connector);
+      }
+
+      var card = document.createElement('div');
+      card.className = 'tl-card';
+      card.id = 'timeline-' + event.id;
+      card.dataset.timelineId = event.id;
+
+      var dotClass = '';
+      if (event.type === 'key') dotClass = 'key';
+      else if (event.type === 'question') dotClass = 'question';
+
+      var detailText = event.detail || '';
+      if (detailText.length > 150) detailText = detailText.substring(0, 150) + '...';
+
+      var html = '<div class="tl-dot ' + dotClass + '"></div>' +
+        '<div class="tl-date">' + escapeHtml(event.date_display) + '</div>' +
+        '<div class="tl-title">' + escapeHtml(event.title) + '</div>' +
+        '<div class="tl-detail">' + escapeHtml(detailText) + '</div>';
+
+      // Timeline annotations
+      if (event.annotations && event.annotations.length > 0) {
+        event.annotations.forEach(function(ann) {
+          var isHuman = ann.author === 'Nemo' || ann.author === 'human';
+          html += '<div class="tl-annotation ' + (isHuman ? 'human' : 'ai') + '">' +
+            '<span class="ann-label">' + escapeHtml(ann.author) + '</span>' +
+            escapeHtml(ann.text) +
+            '</div>';
+        });
+      }
+
+      card.innerHTML = html;
+      strip.appendChild(card);
+    });
+
+    world.appendChild(strip);
+  }
+
+  // ---- MINIMAP ----
+  var WORLD_W = 3500, WORLD_H = 2400;
+  var MM_W = 160, MM_H = 100;
+
+  function renderMinimap() {
+    var minimapDots = document.getElementById('minimap-dots');
+    minimapDots.innerHTML = '';
+
+    cardElements.forEach(function(el, id) {
+      var x = parseFloat(el.style.left) || 0;
+      var y = parseFloat(el.style.top) || 0;
+      var dot = document.createElement('div');
+      dot.className = 'minimap-dot';
+      dot.style.left = (x / WORLD_W * MM_W) + 'px';
+      dot.style.top = (y / WORLD_H * MM_H) + 'px';
+
+      if (el.classList.contains('type-witness')) dot.style.background = 'var(--orange)';
+      else if (el.classList.contains('type-sensor')) dot.style.background = 'var(--blue)';
+      else if (el.classList.contains('type-evidence')) dot.style.background = 'var(--gold)';
+      else if (el.classList.contains('type-ai')) dot.style.background = 'var(--purple)';
+      else if (el.classList.contains('type-anomaly')) dot.style.background = 'var(--red)';
+      else if (el.classList.contains('type-document')) dot.style.background = 'var(--text-3)';
+      else if (el.classList.contains('human-note')) dot.style.background = 'var(--orange)';
+      else if (el.classList.contains('ai-note')) dot.style.background = 'var(--purple)';
+      else dot.style.background = 'var(--text-3)';
+
+      minimapDots.appendChild(dot);
+    });
+  }
+
+  function updateMinimap() {
+    var minimapVp = document.getElementById('minimap-vp');
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var vl = -panX / scale, vt = -panY / scale;
+    var vWidth = vw / scale, vHeight = vh / scale;
+    minimapVp.style.left = Math.max(0, vl / WORLD_W * MM_W) + 'px';
+    minimapVp.style.top = Math.max(0, vt / WORLD_H * MM_H) + 'px';
+    minimapVp.style.width = Math.min(MM_W, vWidth / WORLD_W * MM_W) + 'px';
+    minimapVp.style.height = Math.min(MM_H, vHeight / WORLD_H * MM_H) + 'px';
+  }
+
+  // ---- DETAIL PANEL ----
+  function openDetail(cardId) {
+    var card = cards.find(function(c) { return c.id === cardId; });
+    if (!card) return;
+
+    selectedCardId = cardId;
+    var panel = document.getElementById('detail-panel');
+
+    var html = '<button class="detail-close" id="detail-close-btn">&times;</button>';
+    html += '<div class="card-type"><span class="card-type-label" style="color:var(--' + getTypeColor(card.type) + ')">' + getCardTypeLabel(card.type) + '</span>';
+    if (card.badge) html += ' <span class="card-badge badge-' + card.badge.style + '">' + escapeHtml(card.badge.label) + '</span>';
+    html += '</div>';
+    html += '<h2 style="font-family:\'Instrument Serif\',serif;font-size:20px;margin:12px 0 8px;color:var(--text-1);">' + escapeHtml(card.title) + '</h2>';
+    html += '<p style="font-size:12px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">' + escapeHtml(card.detail) + '</p>';
+
+    // Source
+    if (card.source && card.source.citation) {
+      html += '<div style="font-size:10px;color:var(--text-3);margin-bottom:12px;padding:8px;background:var(--bg);border-radius:4px;">' +
+        '<span style="font-weight:600;">SOURCE:</span> ' + escapeHtml(card.source.citation);
+      if (card.source.url) {
+        html += '<br><a href="' + escapeHtml(card.source.url) + '" target="_blank" style="color:var(--gold);word-break:break-all;">' + escapeHtml(card.source.url) + '</a>';
+      }
+      html += '</div>';
+    }
+
+    // All annotations
+    if (card.annotations && card.annotations.length > 0) {
+      html += '<div style="margin-bottom:16px;">';
+      card.annotations.forEach(function(ann) {
+        var isHuman = ann.author === 'Nemo';
+        html += '<div class="card-annotation ' + (isHuman ? 'human' : 'ai') + '" style="margin-bottom:8px;">' +
+          '<span class="ann-label">' + escapeHtml(ann.author) + '</span>' +
+          escapeHtml(ann.text) +
+          '</div>';
+      });
+      html += '</div>';
+    }
+
+    // Witness profile
+    if (card.type === 'witness' && data.witnesses) {
+      var witness = data.witnesses.find(function(w) { return w.id === cardId; });
+      if (witness) {
+        html += '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;">' +
+          '<div style="font-size:9px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;margin-bottom:8px;">WITNESS PROFILE</div>' +
+          '<div style="font-size:11px;color:var(--text-2);line-height:1.5;">' +
+            '<strong>Rank:</strong> ' + escapeHtml(witness.rank_current || witness.rank_at_time) + '<br>' +
+            '<strong>Unit:</strong> ' + escapeHtml(witness.unit) + '<br>' +
+            '<strong>Role:</strong> ' + escapeHtml(witness.role) + '<br>';
+        if (witness.flight_hours) {
+          html += '<strong>Flight Hours:</strong> ' + witness.flight_hours.toLocaleString() + '<br>';
+        }
+        if (witness.credibility_notes) {
+          html += '<strong>Credibility:</strong> ' + escapeHtml(witness.credibility_notes);
+        }
+        html += '</div>';
+
+        if (witness.key_quotes && witness.key_quotes.length > 0) {
+          html += '<div style="margin-top:10px;font-size:9px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;">KEY QUOTES</div>';
+          witness.key_quotes.forEach(function(q) {
+            html += '<blockquote style="margin:6px 0;padding:6px 10px;border-left:2px solid var(--orange);font-family:\'Caveat\',cursive;font-size:14px;color:var(--orange);">' +
+              '&ldquo;' + escapeHtml(q.quote) + '&rdquo;' +
+              '<br><span style="font-family:\'JetBrains Mono\';font-size:9px;color:var(--text-3);font-style:normal;">&mdash; ' + escapeHtml(q.source) + ', ' + escapeHtml(q.date) + '</span>' +
+              '</blockquote>';
+          });
+        }
+        html += '</div>';
+      }
+    }
+
+    // AI Analysis cross-references
+    if (card.type === 'ai-finding' && data.ai_analysis) {
+      var analysis = data.ai_analysis.find(function(a) { return a.id === cardId; });
+      if (analysis && analysis.cross_references && analysis.cross_references.length > 0) {
+        html += '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;">' +
+          '<div style="font-size:9px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;margin-bottom:8px;">CROSS-CASE REFERENCES</div>';
+        analysis.cross_references.forEach(function(ref) {
+          html += '<div style="padding:6px 8px;background:var(--purple-soft);border-radius:4px;margin-bottom:4px;font-size:10px;">' +
+            '<strong style="color:var(--purple);">' + escapeHtml(ref.case_name) + '</strong><br>' +
+            '<span style="color:var(--text-2);">' + escapeHtml(ref.shared_pattern) + '</span>' +
+            ' <span style="display:inline-block;padding:1px 5px;border-radius:3px;background:var(--bg);font-size:8px;color:var(--text-3);margin-left:4px;">' + escapeHtml(ref.strength) + '</span>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
+    }
+
+    // Open question detail
+    if (card.type === 'anomaly' && data.open_questions) {
+      var question = data.open_questions.find(function(q) { return q.id === cardId; });
+      if (question) {
+        html += '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;">';
+        if (question.implications) {
+          html += '<div style="font-size:9px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;margin-bottom:8px;">IMPLICATIONS</div>' +
+            '<p style="font-size:11px;color:var(--text-2);line-height:1.5;margin-bottom:12px;">' + escapeHtml(question.implications) + '</p>';
+        }
+        if (question.potential_sources && question.potential_sources.length > 0) {
+          html += '<div style="font-size:9px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;margin-bottom:8px;">POTENTIAL SOURCES</div>';
+          question.potential_sources.forEach(function(src) {
+            html += '<div style="padding:4px 8px;background:var(--bg);border-radius:4px;margin-bottom:3px;font-size:10px;color:var(--text-2);">' + escapeHtml(src) + '</div>';
+          });
+        }
+        html += '</div>';
+      }
+    }
+
+    // Linked cards
+    var links = connectionIndex.get(cardId) || [];
+    if (links.length > 0) {
+      // De-duplicate
+      var seen = {};
+      var uniqueLinks = links.filter(function(l) {
+        if (seen[l.targetId]) return false;
+        seen[l.targetId] = true;
+        return true;
+      });
+
+      html += '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;">' +
+        '<div style="font-size:9px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;margin-bottom:8px;">LINKED CARDS (' + uniqueLinks.length + ')</div>';
+      uniqueLinks.forEach(function(link) {
+        var linked = cards.find(function(c) { return c.id === link.targetId; });
+        if (linked) {
+          html += '<div class="linked-card" data-id="' + linked.id + '" style="padding:6px 8px;background:var(--bg);border-radius:4px;margin-bottom:4px;font-size:10px;cursor:pointer;border:1px solid var(--border);transition:border-color 0.2s;">' +
+            '<span style="color:var(--' + getTypeColor(linked.type) + ');font-weight:600;">' + escapeHtml(linked.id) + '</span> ' + escapeHtml(linked.title) +
+            '<span style="float:right;font-size:9px;color:var(--text-3);">' + escapeHtml(link.label) + '</span>' +
+            '</div>';
+        }
+      });
+      html += '</div>';
+    }
+
+    panel.innerHTML = html;
+    panel.classList.add('open');
+
+    // Wire up close button
+    document.getElementById('detail-close-btn').addEventListener('click', closeDetail);
+
+    // Wire up linked cards
+    panel.querySelectorAll('.linked-card').forEach(function(el) {
+      el.addEventListener('click', function() {
+        openDetail(el.dataset.id);
+        // Pan to the card
+        var targetEl = cardElements.get(el.dataset.id);
+        if (targetEl) {
+          var cx = parseFloat(targetEl.style.left) + (targetEl.offsetWidth || 220) / 2;
+          var cy = parseFloat(targetEl.style.top) + (targetEl.offsetHeight || 150) / 2;
+          panX = window.innerWidth / 2 - cx * scale - 180;
+          panY = window.innerHeight / 2 - cy * scale;
+          applyTransform();
+        }
+      });
+    });
+
+    // Highlight selected card
+    document.querySelectorAll('.card.selected, .note.selected').forEach(function(el) { el.classList.remove('selected'); });
+    var cardEl = cardElements.get(cardId);
+    if (cardEl) cardEl.classList.add('selected');
+  }
+
+  function closeDetail() {
+    document.getElementById('detail-panel').classList.remove('open');
+    document.querySelectorAll('.card.selected, .note.selected').forEach(function(el) { el.classList.remove('selected'); });
+    selectedCardId = null;
+  }
+
+  // ---- FILTERING ----
+  function applyFilter(filterType) {
+    activeFilter = filterType;
+    var typeMap = {
+      'all': null,
+      'witness': ['witness'],
+      'evidence': ['evidence', 'sensor', 'media'],
+      'ai': ['ai-finding'],
+      'document': ['document'],
+      'anomaly': ['anomaly']
+    };
+    var allowedTypes = typeMap[filterType];
+
+    cards.forEach(function(card) {
+      var el = cardElements.get(card.id);
+      if (!el) return;
+      if (allowedTypes === null) {
+        el.classList.remove('dimmed');
+      } else {
+        // Notes follow their linked type or show for all
+        if (card.type === 'note') {
+          el.classList.toggle('dimmed', filterType !== 'all');
+        } else {
+          el.classList.toggle('dimmed', allowedTypes.indexOf(card.type) === -1);
+        }
+      }
+    });
+
+    // Connector visibility
+    var svg = document.getElementById('connectors');
+    svg.style.opacity = (filterType === 'all') ? '1' : '0.3';
+
+    // Update active tab
+    document.querySelectorAll('.filter-tab').forEach(function(tab) {
+      tab.classList.toggle('active', tab.dataset.filter === filterType);
+    });
+  }
+
+  // ---- SEARCH ----
+  function applySearch(query) {
+    var q = query.toLowerCase().trim();
+    cards.forEach(function(card) {
+      var el = cardElements.get(card.id);
+      if (!el) return;
+      if (!q) {
+        if (activeFilter === 'all') el.classList.remove('dimmed');
+        return;
+      }
+      var text = (card.title + ' ' + card.summary + ' ' + card.detail + ' ' + card.id).toLowerCase();
+      el.classList.toggle('dimmed', text.indexOf(q) === -1);
+    });
+  }
+
+  // ---- CANVAS TRANSFORM ----
+  function applyTransform() {
+    world.style.transform = 'translate(' + panX + 'px, ' + panY + 'px) scale(' + scale + ')';
+    zoomDisplay.textContent = Math.round(scale * 100) + '%';
+    var zi = document.getElementById('zoom-icon');
+    if (zi) zi.textContent = zoomDisplay.textContent;
+    updateMinimap();
+  }
+
+  // ---- ZOOM (WHEEL) ----
+  viewport.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var rect = viewport.getBoundingClientRect();
+    var mx = e.clientX - rect.left;
+    var my = e.clientY - rect.top;
+    var factor = e.deltaY > 0 ? 0.93 : 1.07;
+    var ns = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * factor));
+    panX = mx - (mx - panX) * (ns / scale);
+    panY = my - (my - panY) * (ns / scale);
+    scale = ns;
+    applyTransform();
+  }, { passive: false });
+
+  // ---- PAN & DRAG ----
+  viewport.addEventListener('mousedown', function(e) {
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+
+    var draggable = e.target.closest('.draggable');
+    if (draggable && !spaceHeld) {
+      e.preventDefault();
+      dragTarget = draggable;
+      dragTarget.style.zIndex = 50;
+      document.body.classList.add('dragging-card');
+      dragOffsetX = (e.clientX - panX) / scale - parseFloat(draggable.style.left);
+      dragOffsetY = (e.clientY - panY) / scale - parseFloat(draggable.style.top);
+      return;
+    }
+    isPanning = true;
+    panStartX = e.clientX - panX;
+    panStartY = e.clientY - panY;
+    document.body.classList.add('panning');
+  });
+
+  window.addEventListener('mousemove', function(e) {
+    if (dragTarget) {
+      dragTarget.style.left = ((e.clientX - panX) / scale - dragOffsetX) + 'px';
+      dragTarget.style.top = ((e.clientY - panY) / scale - dragOffsetY) + 'px';
+      // Redraw connectors while dragging
+      renderConnectors();
+      return;
+    }
+    if (isPanning) {
+      panX = e.clientX - panStartX;
+      panY = e.clientY - panStartY;
+      applyTransform();
+    }
+  });
+
+  window.addEventListener('mouseup', function(e) {
+    if (dragTarget) {
+      // Check if it was a click (not a drag)
+      var wasDrag = Math.abs(e.clientX - dragStartX) > 5 || Math.abs(e.clientY - dragStartY) > 5;
+      dragTarget.style.zIndex = '';
+      document.body.classList.remove('dragging-card');
+
+      if (!wasDrag) {
+        var cid = dragTarget.dataset.cardId;
+        if (cid) openDetail(cid);
+      }
+
+      dragTarget = null;
+      renderConnectors();
+      return;
+    }
+    if (isPanning) {
+      isPanning = false;
+      document.body.classList.remove('panning');
+
+      // Click on background closes detail
+      if (Math.abs(e.clientX - dragStartX) < 5 && Math.abs(e.clientY - dragStartY) < 5) {
+        if (!e.target.closest('.card') && !e.target.closest('.note') && !e.target.closest('.tl-card')) {
+          closeDetail();
+        }
+      }
+    }
+  });
+
+  // Space for pan mode
+  window.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && !spaceHeld) {
+      e.preventDefault();
+      spaceHeld = true;
+      document.body.style.cursor = 'grab';
+    }
+  });
+  window.addEventListener('keyup', function(e) {
+    if (e.code === 'Space') { spaceHeld = false; document.body.style.cursor = ''; }
+  });
+
+  // Zoom buttons
+  document.getElementById('zoom-in').addEventListener('click', function() {
+    var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    var ns = Math.min(MAX_SCALE, scale * 1.25);
+    panX = cx - (cx - panX) * (ns / scale);
+    panY = cy - (cy - panY) * (ns / scale);
+    scale = ns;
+    applyTransform();
+  });
+  document.getElementById('zoom-out').addEventListener('click', function() {
+    var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    var ns = Math.max(MIN_SCALE, scale * 0.75);
+    panX = cx - (cx - panX) * (ns / scale);
+    panY = cy - (cy - panY) * (ns / scale);
+    scale = ns;
+    applyTransform();
+  });
+
+  // ---- FIT FUNCTIONS ----
+  function fitCards() {
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    cardElements.forEach(function(el, id) {
+      var card = cards.find(function(c) { return c.id === id; });
+      if (!card) return;
+      var x = card.position.x, y = card.position.y;
+      var w = el.offsetWidth || 220, h = el.offsetHeight || 150;
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x + w);
+      maxY = Math.max(maxY, y + h);
+    });
+
+    if (minX === Infinity) return;
+
+    var padding = 100;
+    var contentW = maxX - minX + padding * 2;
+    var contentH = maxY - minY + padding * 2;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+
+    scale = Math.min(vw / contentW, vh / contentH, 1);
+    panX = (vw - contentW * scale) / 2 - minX * scale + padding * scale;
+    panY = (vh - contentH * scale) / 2 - minY * scale + padding * scale + 48;
+    applyTransform();
+  }
+
+  function fitAll() {
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    // Include cards
+    cardElements.forEach(function(el) {
+      var x = parseFloat(el.style.left), y = parseFloat(el.style.top);
+      var w = el.offsetWidth || 220, h = el.offsetHeight || 150;
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x + w);
+      maxY = Math.max(maxY, y + h);
+    });
+    // Include timeline
+    var tlStrip = document.getElementById('timeline-strip');
+    if (tlStrip) {
+      var tx = parseFloat(tlStrip.style.left);
+      var ty = parseFloat(tlStrip.style.top);
+      minX = Math.min(minX, tx);
+      minY = Math.min(minY, ty);
+      maxX = Math.max(maxX, tx + tlStrip.scrollWidth);
+      maxY = Math.max(maxY, ty + tlStrip.scrollHeight);
+    }
+
+    if (minX === Infinity) return;
+
+    var padding = 80;
+    var contentW = maxX - minX + padding * 2;
+    var contentH = maxY - minY + padding * 2;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+
+    scale = Math.min(vw / contentW, vh / contentH, 1);
+    panX = (vw - contentW * scale) / 2 - minX * scale + padding * scale;
+    panY = (vh - contentH * scale) / 2 - minY * scale + padding * scale + 48;
+    applyTransform();
+  }
+
+  // ---- KEYBOARD SHORTCUTS ----
+  window.addEventListener('keydown', function(e) {
+    if (e.metaKey || e.ctrlKey) return;
+    // Don't capture when typing in search
+    if (e.target.classList.contains('search-box')) return;
+
+    if (e.key === 'Escape') closeDetail();
+    if (e.key === '1') fitCards();
+    if (e.key === '0') fitAll();
+  });
+
+  // ---- MINIMAP CLICK TO PAN ----
+  document.getElementById('minimap').addEventListener('click', function(e) {
+    var rect = this.getBoundingClientRect();
+    var wx = ((e.clientX - rect.left) / MM_W) * WORLD_W;
+    var wy = ((e.clientY - rect.top) / MM_H) * WORLD_H;
+    panX = window.innerWidth / 2 - wx * scale;
+    panY = window.innerHeight / 2 - wy * scale;
+    applyTransform();
+  });
+
+  // ---- FILTER TAB LISTENERS ----
+  document.querySelectorAll('.filter-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      // Clear search when switching filters
+      document.querySelector('.search-box').value = '';
+      applyFilter(tab.dataset.filter);
+    });
+  });
+
+  // ---- SEARCH LISTENER ----
+  document.querySelector('.search-box').addEventListener('input', function(e) {
+    applySearch(e.target.value);
+  });
+
+  // ---- SEARCH ICON TOGGLE ----
+  var searchIcon = document.getElementById('search-icon');
+  var searchBox = document.getElementById('search-box');
+  searchIcon.addEventListener('click', function() {
+    searchIcon.classList.add('hidden');
+    searchBox.classList.add('open');
+    searchBox.focus();
+  });
+  searchBox.addEventListener('blur', function() {
+    if (!searchBox.value) {
+      searchBox.classList.remove('open');
+      searchIcon.classList.remove('hidden');
+    }
+  });
+  searchBox.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      searchBox.value = '';
+      applySearch('');
+      searchBox.blur();
+    }
+  });
+
+  // ---- ZOOM ICON TOGGLE ----
+  var zoomIcon = document.getElementById('zoom-icon');
+  var zoomCtrl = document.getElementById('zoom-controls');
+  function updateZoomIconText() {
+    zoomIcon.textContent = zoomDisplay.textContent;
+  }
+  updateZoomIconText();
+  zoomIcon.addEventListener('click', function(e) {
+    e.stopPropagation();
+    zoomIcon.classList.add('hidden');
+    zoomCtrl.classList.add('open');
+  });
+  zoomCtrl.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', function() {
+    if (zoomCtrl.classList.contains('open')) {
+      zoomCtrl.classList.remove('open');
+      zoomIcon.classList.remove('hidden');
+      updateZoomIconText();
+    }
+  });
+
+  // ---- LEGEND TOGGLE ----
+  var legendToggle = document.getElementById('legend-toggle');
+  var legendPanel = document.getElementById('legend');
+  legendToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    legendToggle.classList.add('hidden');
+    legendPanel.classList.add('open');
+  });
+  legendPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', function() {
+    if (legendPanel.classList.contains('open')) {
+      legendPanel.classList.remove('open');
+      legendToggle.classList.remove('hidden');
+    }
+  });
+
+  // ---- MINIMAP TOGGLE ----
+  var minimapToggle = document.getElementById('minimap-toggle');
+  var minimapPanel = document.getElementById('minimap');
+  minimapToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    minimapToggle.classList.add('hidden');
+    minimapPanel.classList.add('open');
+  });
+  minimapPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', function() {
+    if (minimapPanel.classList.contains('open')) {
+      minimapPanel.classList.remove('open');
+      minimapToggle.classList.remove('hidden');
+    }
+  });
+
+  // ---- INIT ----
+  function init() {
+    renderCards();
+
+    // Wait for DOM paint so offsetWidth/Height are available
+    requestAnimationFrame(function() {
+      renderConnectors();
+      renderTimeline();
+      renderMinimap();
+      fitCards();
+    });
+
+    // Dismiss hint
+    setTimeout(function() { hint.classList.add('hidden'); }, 5000);
+    viewport.addEventListener('mousedown', function() { hint.classList.add('hidden'); }, { once: true });
+    viewport.addEventListener('wheel', function() { hint.classList.add('hidden'); }, { once: true });
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>

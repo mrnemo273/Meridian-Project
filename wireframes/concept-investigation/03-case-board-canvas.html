@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case 001: USS Nimitz · Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --surface-hover: #FAFAF8;
+    --board-bg: #EDECE8;
+    --border: rgba(0,0,0,0.07);
+    --border-strong: rgba(0,0,0,0.12);
+    --text-1: #1A1816;
+    --text-2: #6B6560;
+    --text-3: #A09A92;
+    --gold: #9A7A2E;
+    --gold-soft: rgba(154,122,46,0.12);
+    --orange: #B86A2E;
+    --orange-soft: rgba(184,106,46,0.1);
+    --purple: #7B5D9A;
+    --purple-soft: rgba(123,93,154,0.08);
+    --red: #B04A4A;
+    --red-soft: rgba(176,74,74,0.08);
+    --green: #5A8A4A;
+    --green-soft: rgba(90,138,74,0.08);
+    --blue: #4A6A9A;
+    --blue-soft: rgba(74,106,154,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--board-bg);
+    color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  body.dragging-card { cursor: default !important; }
+  body.panning { cursor: grabbing !important; }
+
+  /* ============================================ */
+  /* TOOLBAR                                      */
+  /* ============================================ */
+  .toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px;
+    height: 48px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tb-left { display: flex; align-items: center; gap: 12px; }
+  .tb-back {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    transition: color 0.2s;
+    padding: 6px 10px 6px 6px;
+    border-radius: 4px;
+  }
+  .tb-back:hover { color: var(--text-1); background: var(--bg); }
+  .tb-back svg { opacity: 0.5; }
+  .tb-sep { width: 1px; height: 20px; background: var(--border); }
+
+  .tb-title { display: flex; align-items: center; gap: 8px; }
+  .tb-title .case-num {
+    font-size: 10px; font-weight: 500; color: var(--text-3);
+  }
+  .tb-title h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 17px; color: var(--text-1); letter-spacing: -0.2px;
+  }
+  .status-pill {
+    padding: 3px 10px; font-size: 9px; letter-spacing: 0.5px;
+    border-radius: 10px;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--red-soft); color: var(--red);
+    font-weight: 500;
+  }
+  .status-pill::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .tb-center {
+    display: flex; align-items: center; gap: 1px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px;
+  }
+  .tool-btn {
+    width: 32px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--text-3);
+    background: transparent; border: none; cursor: pointer;
+    border-radius: 4px; transition: all 0.15s;
+  }
+  .tool-btn:hover { color: var(--text-1); background: var(--surface); }
+  .tool-btn.active { color: var(--text-1); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+
+  .tb-right { display: flex; align-items: center; gap: 10px; }
+  .zoom-group {
+    display: flex; align-items: center; gap: 0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .zoom-btn {
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--text-3);
+    background: transparent; border: none; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .zoom-btn:hover { color: var(--text-1); background: var(--surface); }
+  .zoom-level {
+    font-size: 10px; color: var(--text-2); padding: 0 6px;
+    min-width: 44px; text-align: center;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  .inv-avatars { display: flex; }
+  .inv-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+    border: 2px solid var(--surface);
+    margin-left: -6px;
+  }
+  .inv-avatar:first-child { margin-left: 0; }
+  .inv-avatar.human { background: var(--orange); color: #fff; }
+  .inv-avatar.ai { background: var(--purple); color: #fff; }
+
+  /* ============================================ */
+  /* MINIMAP                                      */
+  /* ============================================ */
+  .minimap {
+    position: fixed; bottom: 16px; right: 16px; z-index: 100;
+    width: 160px; height: 100px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .minimap-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); z-index: 2;
+  }
+  .minimap-dots { position: absolute; inset: 0; }
+  .minimap-dot {
+    position: absolute;
+    width: 4px; height: 4px; border-radius: 1px;
+  }
+  .minimap-viewport {
+    position: absolute;
+    border: 1.5px solid var(--gold);
+    background: rgba(154,122,46,0.06);
+    border-radius: 2px;
+    pointer-events: none;
+    transition: all 0.1s;
+  }
+
+  /* ============================================ */
+  /* LEGEND                                       */
+  /* ============================================ */
+  .legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 100;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .legend-title {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; color: var(--text-2);
+  }
+  .legend-swatch {
+    width: 12px; height: 3px; border-radius: 1px;
+  }
+
+  /* ============================================ */
+  /* CANVAS                                       */
+  /* ============================================ */
+  .canvas-viewport {
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  .canvas-world {
+    position: absolute;
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+
+  .canvas-grid {
+    position: absolute;
+    width: 6000px; height: 4000px;
+    left: -1000px; top: -800px;
+    pointer-events: none;
+    background:
+      radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ============================================ */
+  /* CONNECTORS (SVG)                             */
+  /* ============================================ */
+  .connectors {
+    position: absolute;
+    width: 4000px; height: 3000px;
+    left: -500px; top: -500px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .conn { stroke-linecap: round; fill: none; }
+  .conn-witness { stroke: var(--orange); stroke-width: 1.5; opacity: 0.2; stroke-dasharray: 4 3; }
+  .conn-evidence { stroke: var(--gold); stroke-width: 1.5; opacity: 0.2; }
+  .conn-ai { stroke: var(--purple); stroke-width: 1.5; opacity: 0.18; stroke-dasharray: 2 3; }
+
+  /* Connection dots at endpoints */
+  .conn-dot { fill: none; stroke-width: 1.5; }
+  .conn-dot.witness { stroke: var(--orange); opacity: 0.3; }
+  .conn-dot.evidence { stroke: var(--gold); opacity: 0.3; }
+  .conn-dot.ai { stroke: var(--purple); opacity: 0.25; }
+
+  /* ============================================ */
+  /* SECTION LABELS (on canvas)                   */
+  /* ============================================ */
+  .section-label {
+    position: absolute; z-index: 0;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(0,0,0,0.08);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* ============================================ */
+  /* CARDS                                        */
+  /* ============================================ */
+  .card {
+    position: absolute; z-index: 2;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: grab;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    overflow: hidden;
+  }
+  .card:active { cursor: grabbing; }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-color: var(--border-strong);
+    z-index: 50;
+  }
+
+  /* Color accent — left border stripe */
+  .card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; border-radius: 6px 0 0 6px;
+  }
+  .card.type-witness::before { background: var(--orange); }
+  .card.type-evidence::before { background: var(--gold); }
+  .card.type-ai::before { background: var(--purple); }
+  .card.type-document::before { background: var(--text-3); }
+  .card.type-anomaly::before { background: var(--red); }
+
+  .card-inner { padding: 12px 14px 12px 16px; }
+
+  .card-type {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .card-type-label {
+    font-size: 9px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase;
+  }
+  .card.type-witness .card-type-label { color: var(--orange); }
+  .card.type-evidence .card-type-label { color: var(--gold); }
+  .card.type-ai .card-type-label { color: var(--purple); }
+  .card.type-document .card-type-label { color: var(--text-3); }
+  .card.type-anomaly .card-type-label { color: var(--red); }
+
+  .card-badge {
+    font-size: 8px; letter-spacing: 0.5px; font-weight: 500;
+    padding: 2px 6px; border-radius: 3px;
+  }
+  .badge-witness { background: var(--orange-soft); color: var(--orange); }
+  .badge-sensor { background: var(--purple-soft); color: var(--purple); }
+  .badge-official { background: var(--gold-soft); color: var(--gold); }
+  .badge-anomaly { background: var(--red-soft); color: var(--red); }
+  .badge-ai { background: var(--purple-soft); color: var(--purple); }
+
+  .card-title {
+    font-size: 11px; font-weight: 600; color: var(--text-1);
+    line-height: 1.35; margin-bottom: 6px;
+  }
+  .card-body {
+    font-size: 10px; color: var(--text-2); line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* Annotation (human or AI) inside a card */
+  .card-annotation {
+    margin-top: 8px; padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 11px; line-height: 1.35;
+  }
+  .card-annotation.human {
+    background: var(--orange-soft);
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    color: var(--orange);
+  }
+  .card-annotation.ai {
+    background: var(--purple-soft);
+    color: var(--purple);
+    font-size: 9px; line-height: 1.5;
+  }
+  .card-annotation .ann-label {
+    font-size: 8px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; opacity: 0.7;
+    margin-bottom: 2px; display: block;
+  }
+
+  /* Media card variant */
+  .card-media {
+    aspect-ratio: 16/10;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: var(--text-3); letter-spacing: 0.5px;
+    text-transform: uppercase; font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+
+  /* ---- FLIR / Thermal view ---- */
+  .visual-flir {
+    background: #0A1A0A;
+    position: relative; overflow: hidden;
+  }
+  .visual-flir .flir-grid {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(0,255,80,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,80,0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .visual-flir .flir-crosshair {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+  }
+  .visual-flir .flir-object {
+    position: absolute; top: 42%; left: 52%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 16px;
+    background: radial-gradient(ellipse, rgba(200,255,200,0.9) 0%, rgba(100,200,100,0.5) 50%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(1px);
+  }
+  .visual-flir .flir-hud {
+    position: absolute; font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; color: rgba(0,255,80,0.5);
+  }
+  .visual-flir .flir-hud.tl { top: 6px; left: 8px; }
+  .visual-flir .flir-hud.tr { top: 6px; right: 8px; }
+  .visual-flir .flir-hud.bl { bottom: 6px; left: 8px; }
+  .visual-flir .flir-hud.br { bottom: 6px; right: 8px; }
+  .visual-flir .flir-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(0,255,80,0.4);
+  }
+
+  /* ---- Radar display ---- */
+  .visual-radar {
+    background: #0A0E1A;
+    position: relative; overflow: hidden;
+  }
+  .visual-radar .radar-sweep {
+    position: absolute; top: 50%; left: 50%;
+    width: 120px; height: 120px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.12);
+  }
+  .visual-radar .radar-ring {
+    position: absolute; top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.06);
+    transform: translate(-50%, -50%);
+  }
+  .visual-radar .radar-line {
+    position: absolute; top: 50%; left: 50%;
+    width: 1px; height: 55px;
+    background: linear-gradient(to top, rgba(80,200,120,0.3), transparent);
+    transform-origin: bottom center;
+    animation: radar-spin 4s linear infinite;
+  }
+  @keyframes radar-spin { to { transform: rotate(360deg); } }
+  .visual-radar .radar-blip {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: rgba(80,255,120,0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(80,255,120,0.5);
+  }
+  .visual-radar .radar-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(80,200,120,0.4);
+  }
+
+  /* ---- Ocean aerial ---- */
+  .visual-ocean {
+    background: linear-gradient(175deg, #1A3A5A 0%, #0E2A4A 40%, #0A1E3A 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-ocean .ocean-waves {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(
+        170deg,
+        transparent,
+        transparent 8px,
+        rgba(100,180,220,0.06) 8px,
+        rgba(100,180,220,0.06) 9px
+      );
+  }
+  .visual-ocean .ocean-disturbance {
+    position: absolute; top: 45%; left: 48%;
+    transform: translate(-50%, -50%);
+    width: 50px; height: 30px;
+    border: 1px solid rgba(200,220,240,0.2);
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(200,220,240,0.15) 0%, transparent 70%);
+  }
+  .visual-ocean .ocean-disturbance::after {
+    content: '+';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px; color: rgba(200,220,240,0.25);
+  }
+  .visual-ocean .ocean-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(200,220,240,0.35);
+  }
+
+  /* ---- Ship silhouette ---- */
+  .visual-ship {
+    background: linear-gradient(180deg, #C8D8E8 0%, #8AA8C8 40%, #4A6A8A 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-ship .ship-horizon {
+    position: absolute; bottom: 35%; left: 0; right: 0;
+    height: 1px; background: rgba(0,0,0,0.08);
+  }
+  .visual-ship .ship-body {
+    position: absolute; bottom: 33%; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 12px;
+    background: #3A4A5A;
+    clip-path: polygon(5% 100%, 0% 40%, 15% 0%, 85% 0%, 100% 40%, 95% 100%);
+  }
+  .visual-ship .ship-tower {
+    position: absolute; bottom: 44%; left: 52%;
+    transform: translateX(-50%);
+    width: 10px; height: 14px;
+    background: #3A4A5A;
+    clip-path: polygon(10% 100%, 20% 0%, 80% 0%, 90% 100%);
+  }
+  .visual-ship .ship-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(40,60,80,0.4);
+  }
+
+  /* ---- Document scan ---- */
+  .visual-doc {
+    background: #F5F2EA;
+    position: relative; overflow: hidden;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: flex-start; justify-content: flex-start;
+  }
+  .visual-doc .doc-seal {
+    position: absolute; top: 8px; right: 10px;
+    width: 28px; height: 28px;
+    border: 1.5px solid rgba(0,0,0,0.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: rgba(0,0,0,0.15); font-weight: 600;
+  }
+  .visual-doc .scan-line {
+    height: 2px; border-radius: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+  .visual-doc .scan-line.heading {
+    height: 3px; background: rgba(0,0,0,0.15); margin-bottom: 4px;
+  }
+  .visual-doc .scan-line.redacted {
+    height: 4px; background: rgba(0,0,0,0.6);
+  }
+  .visual-doc .stamp {
+    position: absolute; bottom: 10px; left: 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(176,74,74,0.25);
+    transform: rotate(-8deg);
+    border: 1.5px solid rgba(176,74,74,0.2);
+    padding: 2px 6px;
+  }
+
+  /* ---- F/A-18 jet ---- */
+  .visual-jet {
+    background: linear-gradient(180deg, #D8E4F0 0%, #A8C0D8 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-jet .jet-body {
+    position: absolute; top: 38%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 44px; height: 8px;
+    background: #4A5A6A;
+    border-radius: 4px 12px 12px 4px;
+  }
+  .visual-jet .jet-wing {
+    position: absolute; top: 42%; left: 48%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 12px; height: 36px;
+    background: #4A5A6A;
+    clip-path: polygon(50% 0%, 100% 30%, 100% 70%, 50% 100%, 0% 70%, 0% 30%);
+  }
+  .visual-jet .jet-tail {
+    position: absolute; top: 30%; left: 32%;
+    transform: rotate(-5deg);
+    width: 5px; height: 16px;
+    background: #4A5A6A;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+  }
+  .visual-jet .jet-trail {
+    position: absolute; top: 40%; left: 68%;
+    transform: rotate(-5deg);
+    width: 50px; height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.6), transparent);
+  }
+  .visual-jet .jet-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(40,60,80,0.35);
+  }
+
+  /* Redacted doc lines */
+  .doc-lines {
+    display: flex; flex-direction: column; gap: 3px;
+    margin-top: 8px;
+  }
+  .doc-line {
+    height: 2px; border-radius: 1px;
+    background: rgba(0,0,0,0.06);
+  }
+  .doc-line.heading { background: var(--gold-soft); width: 55%; height: 3px; }
+  .doc-line.redacted { background: rgba(0,0,0,0.45); height: 3px; border-radius: 1px; }
+
+  /* ============================================ */
+  /* NOTE CARDS (stickies replacement)            */
+  /* ============================================ */
+  .note {
+    position: absolute; z-index: 3;
+    width: 160px; padding: 12px 14px;
+    border-radius: 6px;
+    cursor: grab;
+    transition: box-shadow 0.2s;
+    border: 1px solid transparent;
+  }
+  .note:active { cursor: grabbing; }
+  .note:hover { z-index: 50; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+  .note.human-note {
+    background: var(--orange-soft);
+    border-color: rgba(184,106,46,0.15);
+    font-family: 'Caveat', cursive;
+    font-size: 15px; line-height: 1.3;
+    color: #7A4A1A;
+  }
+  .note.ai-note {
+    background: var(--purple-soft);
+    border-color: rgba(123,93,154,0.12);
+    font-size: 10px; line-height: 1.5;
+    color: #5A3D7A;
+  }
+  .note-author {
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; opacity: 0.5; font-weight: 500;
+    font-style: normal;
+  }
+
+  /* ============================================ */
+  /* TIMELINE STRIP                               */
+  /* ============================================ */
+  .timeline-strip {
+    position: absolute; z-index: 2;
+    display: flex; align-items: flex-start;
+  }
+  .tl-card {
+    width: 210px; padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    position: relative;
+    cursor: grab;
+  }
+  .tl-card:active { cursor: grabbing; }
+  .tl-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--border-strong); z-index: 5; }
+  .tl-connector {
+    width: 32px; height: 2px; margin-top: 26px;
+    background: var(--border-strong);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .tl-connector::after {
+    content: ''; position: absolute; right: -2px; top: -3px;
+    width: 0; height: 0;
+    border-left: 5px solid var(--border-strong);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+
+  .tl-dot {
+    position: absolute; top: -5px; left: 16px;
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--border-strong); background: var(--surface);
+  }
+  .tl-dot.key { background: var(--gold); border-color: var(--gold); }
+  .tl-dot.question { background: var(--red); border-color: var(--red); }
+
+  .tl-date {
+    font-size: 9px; letter-spacing: 0.5px; font-weight: 500;
+    color: var(--text-3); margin-bottom: 4px; text-transform: uppercase;
+  }
+  .tl-title {
+    font-size: 11px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px; line-height: 1.35;
+  }
+  .tl-detail {
+    font-size: 9px; color: var(--text-2); line-height: 1.5; font-weight: 300;
+  }
+  .tl-annotation {
+    margin-top: 8px; padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 10px; line-height: 1.35;
+  }
+  .tl-annotation.human {
+    background: var(--orange-soft);
+    font-family: 'Caveat', cursive;
+    font-size: 13px; color: var(--orange);
+  }
+  .tl-annotation.ai {
+    background: var(--purple-soft);
+    color: var(--purple); font-size: 9px; line-height: 1.5;
+  }
+  .tl-annotation .ann-label {
+    font-size: 7px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase; opacity: 0.7;
+    margin-bottom: 2px; display: block;
+  }
+
+  /* ============================================ */
+  /* HINTS                                        */
+  /* ============================================ */
+  .hint {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 200;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px;
+    font-size: 10px; color: var(--text-3);
+    display: flex; gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    opacity: 1; transition: opacity 0.8s;
+  }
+  .hint.hidden { opacity: 0; pointer-events: none; }
+  .kbd {
+    display: inline-block;
+    padding: 1px 5px; margin: 0 2px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 9px; font-weight: 500;
+  }
+
+  .wireframe-label {
+    position: fixed; top: 54px; right: 12px;
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); z-index: 99;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Concept · Infinite Canvas</div>
+
+<!-- ======================== -->
+<!-- TOOLBAR                  -->
+<!-- ======================== -->
+<div class="toolbar">
+  <div class="tb-left">
+    <a class="tb-back" href="01-homepage.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Cases
+    </a>
+    <div class="tb-sep"></div>
+    <div class="tb-title">
+      <span class="case-num">001</span>
+      <h1>USS Nimitz Encounter</h1>
+      <span class="status-pill">Investigating</span>
+    </div>
+  </div>
+
+  <div class="tb-center">
+    <button class="tool-btn active" title="Select">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+    </button>
+    <button class="tool-btn" title="Pan">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+    </button>
+    <button class="tool-btn" title="Add Card">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+    <button class="tool-btn" title="Add Note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v6a2 2 0 0 0 2 2h6"/></svg>
+    </button>
+    <button class="tool-btn" title="Connect">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
+  </div>
+
+  <div class="tb-right">
+    <div class="zoom-group">
+      <button class="zoom-btn" id="zoom-out">−</button>
+      <div class="zoom-level" id="zoom-display">100%</div>
+      <button class="zoom-btn" id="zoom-in">+</button>
+    </div>
+    <div class="inv-avatars">
+      <div class="inv-avatar human" title="Nemo">N</div>
+      <div class="inv-avatar ai" title="Claude">C</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- LEGEND                   -->
+<!-- ======================== -->
+<div class="legend">
+  <div class="legend-title">Connections</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--orange)"></div> Witness</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--gold)"></div> Evidence</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--purple)"></div> AI link</div>
+</div>
+
+<!-- ======================== -->
+<!-- MINIMAP                  -->
+<!-- ======================== -->
+<div class="minimap" id="minimap">
+  <div class="minimap-label">Map</div>
+  <div class="minimap-dots" id="minimap-dots"></div>
+  <div class="minimap-viewport" id="minimap-vp"></div>
+</div>
+
+<!-- ======================== -->
+<!-- HINT                     -->
+<!-- ======================== -->
+<div class="hint" id="hint">
+  <span>Scroll to zoom · Drag background to pan · Drag cards to rearrange · <span class="kbd">Space</span> hold for pan</span>
+</div>
+
+<!-- ======================== -->
+<!-- INFINITE CANVAS          -->
+<!-- ======================== -->
+<div class="canvas-viewport" id="viewport">
+  <div class="canvas-world" id="world">
+
+    <div class="canvas-grid"></div>
+
+    <!-- Section labels -->
+    <div class="section-label" style="left: 50px; top: 50px;">Witnesses</div>
+    <div class="section-label" style="left: 620px; top: 30px;">Key Evidence</div>
+    <div class="section-label" style="left: 1130px; top: 50px;">Sensors & Intel</div>
+    <div class="section-label" style="left: 1370px; top: 50px;">Official Records</div>
+    <div class="section-label" style="left: 200px; top: 540px;">AI Analysis</div>
+    <div class="section-label" style="left: 80px; top: 920px;">Timeline · Reconstructed</div>
+
+    <!-- Connectors -->
+    <svg class="connectors" viewBox="-500 -500 4000 3000">
+      <!-- Witness links (orange dashed) -->
+      <line class="conn conn-witness" x1="180" y1="150" x2="400" y2="130"/>
+      <line class="conn conn-witness" x1="180" y1="150" x2="170" y2="340"/>
+      <line class="conn conn-witness" x1="400" y1="130" x2="170" y2="340"/>
+      <!-- Witness → Evidence -->
+      <line class="conn conn-witness" x1="180" y1="150" x2="720" y2="120"/>
+      <line class="conn conn-witness" x1="400" y1="130" x2="720" y2="120"/>
+      <!-- Evidence chain (gold solid) -->
+      <line class="conn conn-evidence" x1="600" y1="120" x2="720" y2="120"/>
+      <line class="conn conn-evidence" x1="720" y1="120" x2="730" y2="340"/>
+      <line class="conn conn-evidence" x1="730" y1="340" x2="980" y2="150"/>
+      <line class="conn conn-evidence" x1="980" y1="150" x2="1050" y2="340"/>
+      <line class="conn conn-evidence" x1="720" y1="120" x2="980" y2="150"/>
+      <line class="conn conn-evidence" x1="980" y1="150" x2="1210" y2="140"/>
+      <line class="conn conn-evidence" x1="1210" y1="140" x2="1440" y2="140"/>
+      <line class="conn conn-evidence" x1="1440" y1="140" x2="1440" y2="400"/>
+      <line class="conn conn-evidence" x1="460" y1="340" x2="730" y2="340"/>
+      <line class="conn conn-evidence" x1="1210" y1="380" x2="1050" y2="340"/>
+      <!-- AI connections (purple dotted) -->
+      <line class="conn conn-ai" x1="730" y1="320" x2="340" y2="640"/>
+      <line class="conn conn-ai" x1="980" y1="150" x2="680" y2="650"/>
+      <line class="conn conn-ai" x1="340" y1="640" x2="680" y2="650"/>
+      <line class="conn conn-ai" x1="680" y1="650" x2="1020" y2="640"/>
+      <line class="conn conn-ai" x1="1050" y1="320" x2="1020" y2="640"/>
+    </svg>
+
+    <!-- ========================================== -->
+    <!-- WITNESS CARDS                              -->
+    <!-- ========================================== -->
+    <div class="card type-witness draggable" style="left: 60px; top: 80px; width: 210px;" data-id="w1">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Witness 01</span>
+          <span class="card-badge badge-witness">Primary</span>
+        </div>
+        <div class="card-title">CDR David Fravor</div>
+        <div class="card-body">CO VFA-41. 18 yrs flight experience. Observed object directly. Attempted intercept. "Tic Tac" descriptor originates here.</div>
+        <div class="card-annotation human">This is our most credible witness — career Navy, nothing to gain</div>
+      </div>
+    </div>
+
+    <div class="card type-witness draggable" style="left: 310px; top: 65px; width: 200px;" data-id="w2">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Witness 02</span>
+          <span class="card-badge badge-witness">Primary</span>
+        </div>
+        <div class="card-title">LCDR Alex Dietrich</div>
+        <div class="card-body">Wingman to Fravor. Corroborates account independently. Observed object from different angle. Came forward publicly 2021.</div>
+      </div>
+    </div>
+
+    <div class="card type-witness draggable" style="left: 50px; top: 290px; width: 210px;" data-id="w3">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Witness 03</span>
+          <span class="card-badge badge-witness">Corroborating</span>
+        </div>
+        <div class="card-title">USS Princeton Radar Operators</div>
+        <div class="card-body">Multiple operators tracked objects for 2 weeks on SPY-1 radar. Senior Chief Kevin Day primary. Objects appeared at 80k ft.</div>
+        <div class="card-annotation human">Two weeks of radar data before the intercept — why wasn't this investigated sooner?</div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- KEY EVIDENCE CARDS                         -->
+    <!-- ========================================== -->
+    <div class="card type-evidence draggable" style="left: 610px; top: 55px; width: 230px;" data-id="e1">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Key Event</span>
+          <span class="card-badge badge-sensor">Radar + Visual</span>
+        </div>
+        <div class="card-title">The Intercept — 14 Nov 2004</div>
+        <div class="card-body">Fravor & Dietrich vectored to anomalous contact. White oblong object ~40ft above churning ocean. Erratic movement. Mirrored Fravor's descent. Vanished — reappeared 60 mi away on radar.</div>
+      </div>
+    </div>
+
+    <div class="card type-evidence draggable" style="left: 620px; top: 270px; width: 200px;" data-id="e2">
+      <div class="card-media visual-flir">
+        <div class="flir-grid"></div>
+        <svg class="flir-crosshair" viewBox="0 0 60 60" fill="none" stroke="rgba(0,255,80,0.3)" stroke-width="0.5">
+          <line x1="30" y1="0" x2="30" y2="22"/><line x1="30" y1="38" x2="30" y2="60"/>
+          <line x1="0" y1="30" x2="22" y2="30"/><line x1="38" y1="30" x2="60" y2="30"/>
+          <circle cx="30" cy="30" r="12"/>
+        </svg>
+        <div class="flir-object"></div>
+        <div class="flir-hud tl">FLIR1</div>
+        <div class="flir-hud tr">IR · WHT</div>
+        <div class="flir-hud bl">NAR</div>
+        <div class="flir-hud br">0.9× Z</div>
+        <div class="flir-label">DoD Release · 2017</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Media</span>
+          <span class="card-badge badge-sensor">FLIR Video</span>
+        </div>
+        <div class="card-title">FLIR1 — IR Video Capture</div>
+        <div class="card-body">Second flight WSO captured infrared footage. Object: no exhaust, no wings, no visible propulsion. Officially released by DoD 2017.</div>
+      </div>
+    </div>
+
+    <div class="card type-evidence draggable" style="left: 880px; top: 80px; width: 210px;" data-id="e3">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Sensor Data</span>
+          <span class="card-badge badge-sensor">SPY-1 Radar</span>
+        </div>
+        <div class="card-title">USS Princeton SPY-1 Track</div>
+        <div class="card-body">Objects descending 80,000→20,000 ft in seconds. No deceleration curve. Multiple tracks over 2-week period. 60-mile instant reappearance.</div>
+        <div class="card-annotation human">The 60-mile jump is the hardest part to explain. Near-instantaneous.</div>
+      </div>
+    </div>
+
+    <div class="card type-evidence draggable" style="left: 950px; top: 270px; width: 200px;" data-id="e4">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Analysis</span>
+          <span class="card-badge badge-anomaly">5 Observables</span>
+        </div>
+        <div class="card-title">Performance Characteristics</div>
+        <div class="card-body">Sudden acceleration · No visible propulsion · Trans-medium travel · Hypersonic without sonic boom · Apparent counter-intelligence or reactive behavior</div>
+        <div class="card-annotation human">These 5 match the DoD's own framework. That's not a coincidence.</div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VISUAL EVIDENCE CARDS                      -->
+    <!-- ========================================== -->
+    <div class="card type-evidence draggable" style="left: 1130px; top: 70px; width: 160px;" data-id="v1">
+      <div class="card-media visual-radar">
+        <svg viewBox="0 0 160 100" style="position:absolute;inset:0;width:100%;height:100%">
+          <circle cx="80" cy="50" r="40" fill="none" stroke="rgba(80,200,120,0.08)" stroke-width="1"/>
+          <circle cx="80" cy="50" r="27" fill="none" stroke="rgba(80,200,120,0.06)" stroke-width="1"/>
+          <circle cx="80" cy="50" r="14" fill="none" stroke="rgba(80,200,120,0.06)" stroke-width="1"/>
+          <line x1="80" y1="10" x2="80" y2="90" stroke="rgba(80,200,120,0.04)" stroke-width="0.5"/>
+          <line x1="40" y1="50" x2="120" y2="50" stroke="rgba(80,200,120,0.04)" stroke-width="0.5"/>
+        </svg>
+        <div class="radar-line" style="top:50%;left:50%"></div>
+        <div class="radar-blip" style="top:32%;left:58%"></div>
+        <div class="radar-blip" style="top:38%;left:62%;opacity:0.4;width:3px;height:3px"></div>
+        <div class="radar-label">SPY-1 Radar · USS Princeton</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Sensor</span>
+          <span class="card-badge badge-sensor">Radar</span>
+        </div>
+        <div class="card-title">SPY-1 Track Data</div>
+        <div class="card-body">Objects tracked descending 80k → 20k ft. Then 60-mile instant relocation. 2 weeks of contacts.</div>
+      </div>
+    </div>
+
+    <div class="card type-anomaly draggable" style="left: 1130px; top: 310px; width: 160px;" data-id="v2">
+      <div class="card-media visual-ocean">
+        <div class="ocean-waves"></div>
+        <div class="ocean-disturbance"></div>
+        <div class="ocean-label">Pacific · 100 mi SW San Diego</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Physical</span>
+          <span class="card-badge badge-anomaly">Anomaly</span>
+        </div>
+        <div class="card-title">Ocean Disturbance</div>
+        <div class="card-body">Cross-shaped whitewater. Size of a 737. Ceased when object departed.</div>
+      </div>
+    </div>
+
+    <div class="card type-witness draggable" style="left: 520px; top: 55px; width: 160px;" data-id="v3">
+      <div class="card-media visual-jet">
+        <div class="jet-trail"></div>
+        <div class="jet-body"></div>
+        <div class="jet-wing"></div>
+        <div class="jet-tail"></div>
+        <div class="jet-label">F/A-18F · VFA-41 Black Aces</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Platform</span>
+          <span class="card-badge badge-witness">Intercept</span>
+        </div>
+        <div class="card-title">VFA-41 Intercept Flight</div>
+        <div class="card-body">Two F/A-18F Super Hornets diverted from training exercise. Fravor (lead) and Dietrich (wing).</div>
+      </div>
+    </div>
+
+    <div class="card type-evidence draggable" style="left: 380px; top: 270px; width: 160px;" data-id="v4">
+      <div class="card-media visual-ship">
+        <div class="ship-horizon"></div>
+        <div class="ship-body"></div>
+        <div class="ship-tower"></div>
+        <div class="ship-label">USS Nimitz (CVN-68)</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Location</span>
+          <span class="card-badge badge-official">USN</span>
+        </div>
+        <div class="card-title">USS Nimitz CSG</div>
+        <div class="card-body">Nimitz Carrier Strike Group. Pacific deployment, Nov 2004. Including USS Princeton (CG-59).</div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- OFFICIAL RECORDS                           -->
+    <!-- ========================================== -->
+    <div class="card type-document draggable" style="left: 1360px; top: 70px; width: 190px;" data-id="o1">
+      <div class="card-media visual-doc">
+        <div class="doc-seal">DoD</div>
+        <div class="scan-line heading" style="width:65%"></div>
+        <div class="scan-line" style="width:90%"></div>
+        <div class="scan-line" style="width:85%"></div>
+        <div class="scan-line" style="width:78%"></div>
+        <div class="scan-line redacted" style="width:70%"></div>
+        <div class="scan-line" style="width:82%"></div>
+        <div class="scan-line" style="width:75%"></div>
+        <div class="scan-line redacted" style="width:60%"></div>
+        <div class="scan-line" style="width:88%"></div>
+        <div class="stamp">Declassified</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Official</span>
+          <span class="card-badge badge-official">DoD</span>
+        </div>
+        <div class="card-title">AATIP Acknowledgment</div>
+        <div class="card-body">Dec 2017 — Pentagon confirms Advanced Aerospace Threat ID Program. FLIR1 officially released.</div>
+      </div>
+    </div>
+
+    <div class="card type-document draggable" style="left: 1360px; top: 340px; width: 190px;" data-id="o2">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">Context</span>
+          <span class="card-badge badge-official">AARO</span>
+        </div>
+        <div class="card-title">AARO Historical Report Vol. 1</div>
+        <div class="card-body">2024 — All-domain Anomaly Resolution Office references Nimitz as significant case. Classified annex may contain additional data.</div>
+        <div class="card-annotation human">What's in the classified annex? FOIA request pending.</div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- AI FINDINGS                                -->
+    <!-- ========================================== -->
+    <div class="card type-ai draggable" style="left: 220px; top: 580px; width: 230px;" data-id="a1">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">AI Finding</span>
+          <span class="card-badge badge-ai">Pattern Match</span>
+        </div>
+        <div class="card-title">Cross-Corpus: Ocean Disturbance</div>
+        <div class="card-body">3 other verified cases describe similar water disturbance: Shag Harbour 1967, Aguadilla 2013, Blue Book 1958 off Catalina. Probability of coincidence: &lt;0.3%.</div>
+        <div class="card-annotation ai">
+          <span class="ann-label">Claude</span>
+          4 independent water events across 56 years — pulling the Catalina case next for comparison.
+        </div>
+      </div>
+    </div>
+
+    <div class="card type-ai draggable" style="left: 560px; top: 590px; width: 220px;" data-id="a2">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">AI Finding</span>
+          <span class="card-badge badge-ai">Extraction</span>
+        </div>
+        <div class="card-title">Extracted Descriptors (9)</div>
+        <div class="card-body">Silent · Oblong/featureless · White · ~40ft · Instantaneous acceleration · Hovering · Apparent mirroring · No sonic boom · Trans-medium association</div>
+      </div>
+    </div>
+
+    <div class="card type-ai draggable" style="left: 900px; top: 580px; width: 220px;" data-id="a3">
+      <div class="card-inner">
+        <div class="card-type">
+          <span class="card-type-label">AI Finding</span>
+          <span class="card-badge badge-ai">Anomaly Flag</span>
+        </div>
+        <div class="card-title">Acceleration: ~12,600g</div>
+        <div class="card-body">Based on Princeton radar: ~60 miles in &lt;2 seconds. Far exceeds any known aircraft. SCU analysis corroborates.</div>
+        <div class="card-annotation ai">
+          <span class="ann-label">Claude</span>
+          Cross-ref Belgian Wave F-16 radar — similar impossible acceleration signature?
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NOTES (human & AI)                         -->
+    <!-- ========================================== -->
+    <div class="note human-note draggable" style="left: 1540px; top: 60px;" data-id="n1">
+      Next: pull Shag Harbour case file and compare water disturbance descriptions
+      <div class="note-author">Nemo</div>
+    </div>
+
+    <div class="note human-note draggable" style="left: 20px; top: 510px;" data-id="n2">
+      WHY were the contacts tracked for 2 weeks before anyone scrambled jets??
+      <div class="note-author">Nemo</div>
+    </div>
+
+    <div class="note ai-note draggable" style="left: 500px; top: 480px;" data-id="n3">
+      Credibility check: all witnesses are career military with no financial motive. No book deals at time of initial reporting. ✓
+      <div class="note-author">Claude</div>
+    </div>
+
+    <div class="note ai-note draggable" style="left: 1180px; top: 570px;" data-id="n4">
+      5-channel corroboration: visual, radar, IR, witnesses (×3), behavior. Extremely rare in UAP literature.
+      <div class="note-author">Claude</div>
+    </div>
+
+    <div class="note human-note draggable" style="left: 1540px; top: 300px;" data-id="n5">
+      Data confiscation is the red flag. Who took the hard drives? Need to FOIA the chain of custody.
+      <div class="note-author">Nemo</div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TIMELINE                                   -->
+    <!-- ========================================== -->
+    <div class="timeline-strip" style="left: 60px; top: 960px;">
+      <div class="tl-card">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Late Oct 2004</div>
+        <div class="tl-title">Anomalous radar contacts begin</div>
+        <div class="tl-detail">SPY-1 detects objects at 80,000+ ft descending rapidly. Persists 2 weeks.</div>
+        <div class="tl-annotation human">Two weeks of daily contacts and nobody called it in?</div>
+      </div>
+      <div class="tl-connector"></div>
+
+      <div class="tl-card">
+        <div class="tl-dot key"></div>
+        <div class="tl-date">14 Nov · ~1:00 PM</div>
+        <div class="tl-title">Fravor & Dietrich vectored</div>
+        <div class="tl-detail">Two F/A-18Fs diverted from training. Princeton vectors them toward contact.</div>
+      </div>
+      <div class="tl-connector"></div>
+
+      <div class="tl-card">
+        <div class="tl-dot key"></div>
+        <div class="tl-date">14 Nov · ~1:10 PM</div>
+        <div class="tl-title">Visual contact + ocean disturbance</div>
+        <div class="tl-detail">Churning whitewater below, white oblong ~40ft above. Mirrors Fravor's descent.</div>
+        <div class="tl-annotation ai">
+          <span class="ann-label">Claude · Pattern</span>
+          "Mirroring" appears in Tehran 1976 and Belgian Wave — suggests reactive intelligence.
+        </div>
+      </div>
+      <div class="tl-connector"></div>
+
+      <div class="tl-card">
+        <div class="tl-dot key"></div>
+        <div class="tl-date">14 Nov · ~1:12 PM</div>
+        <div class="tl-title">Object vanishes, reappears 60 mi away</div>
+        <div class="tl-detail">Accelerates in &lt;2 sec. No sonic boom. Reappears at CAP point on radar.</div>
+        <div class="tl-annotation human">60-mile jump backed by billion-dollar warship radar. Hard to dismiss.</div>
+      </div>
+      <div class="tl-connector"></div>
+
+      <div class="tl-card">
+        <div class="tl-dot"></div>
+        <div class="tl-date">14 Nov · ~2:00 PM</div>
+        <div class="tl-title">FLIR1 video captured</div>
+        <div class="tl-detail">Second flight WSO captures IR footage. No wings, exhaust, or flight surfaces.</div>
+      </div>
+      <div class="tl-connector"></div>
+
+      <div class="tl-card">
+        <div class="tl-dot question"></div>
+        <div class="tl-date">Late 2004 – Early 2005</div>
+        <div class="tl-title">Hard drives collected, data vanishes</div>
+        <div class="tl-detail">Unidentified individuals reportedly confiscate radar data and FLIR recordings.</div>
+        <div class="tl-annotation human">If this was nothing, why confiscate the data?</div>
+      </div>
+      <div class="tl-connector"></div>
+
+      <div class="tl-card">
+        <div class="tl-dot"></div>
+        <div class="tl-date">December 2017</div>
+        <div class="tl-title">Pentagon confirms AATIP, releases FLIR1</div>
+        <div class="tl-detail">NYT breaks story. 13-year gap between event and disclosure.</div>
+        <div class="tl-annotation ai">
+          <span class="ann-label">Claude · Context</span>
+          13-year gap consistent with Belgian Wave (20 yrs) and Tehran (decades via FOIA). Institutional delay.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  const viewport = document.getElementById('viewport');
+  const world = document.getElementById('world');
+  const zoomDisplay = document.getElementById('zoom-display');
+  const hint = document.getElementById('hint');
+
+  // Center board content in viewport on load
+  let scale = 0.7;
+  let panX = (window.innerWidth - 1700 * scale) / 2;
+  let panY = (window.innerHeight - 850 * scale) / 2 + 24;
+  let isPanning = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let spaceHeld = false;
+
+  let dragTarget = null;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  const MIN_SCALE = 0.15;
+  const MAX_SCALE = 3;
+
+  function applyTransform() {
+    world.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+    zoomDisplay.textContent = Math.round(scale * 100) + '%';
+    updateMinimap();
+  }
+  applyTransform();
+
+  // ---- ZOOM ----
+  viewport.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const rect = viewport.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const factor = e.deltaY > 0 ? 0.93 : 1.07;
+    const ns = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * factor));
+    panX = mx - (mx - panX) * (ns / scale);
+    panY = my - (my - panY) * (ns / scale);
+    scale = ns;
+    applyTransform();
+  }, { passive: false });
+
+  // ---- PAN & DRAG ----
+  viewport.addEventListener('mousedown', (e) => {
+    const draggable = e.target.closest('.draggable');
+    if (draggable && !spaceHeld) {
+      e.preventDefault();
+      dragTarget = draggable;
+      dragTarget.style.zIndex = 50;
+      document.body.classList.add('dragging-card');
+      dragOffsetX = (e.clientX - panX) / scale - parseFloat(draggable.style.left);
+      dragOffsetY = (e.clientY - panY) / scale - parseFloat(draggable.style.top);
+      return;
+    }
+    isPanning = true;
+    panStartX = e.clientX - panX;
+    panStartY = e.clientY - panY;
+    document.body.classList.add('panning');
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (dragTarget) {
+      dragTarget.style.left = ((e.clientX - panX) / scale - dragOffsetX) + 'px';
+      dragTarget.style.top = ((e.clientY - panY) / scale - dragOffsetY) + 'px';
+      return;
+    }
+    if (isPanning) {
+      panX = e.clientX - panStartX;
+      panY = e.clientY - panStartY;
+      applyTransform();
+    }
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (dragTarget) {
+      dragTarget.style.zIndex = '';
+      document.body.classList.remove('dragging-card');
+      dragTarget = null;
+    }
+    isPanning = false;
+    document.body.classList.remove('panning');
+  });
+
+  // Space for pan mode
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !spaceHeld) {
+      e.preventDefault();
+      spaceHeld = true;
+      document.body.style.cursor = 'grab';
+    }
+  });
+  window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space') { spaceHeld = false; document.body.style.cursor = ''; }
+  });
+
+  // Zoom buttons
+  document.getElementById('zoom-in').addEventListener('click', () => {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    const ns = Math.min(MAX_SCALE, scale * 1.25);
+    panX = cx - (cx - panX) * (ns / scale);
+    panY = cy - (cy - panY) * (ns / scale);
+    scale = ns; applyTransform();
+  });
+  document.getElementById('zoom-out').addEventListener('click', () => {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    const ns = Math.max(MIN_SCALE, scale * 0.75);
+    panX = cx - (cx - panX) * (ns / scale);
+    panY = cy - (cy - panY) * (ns / scale);
+    scale = ns; applyTransform();
+  });
+
+  // Keyboard shortcuts
+  window.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey) return;
+    if (e.key === '1') {
+      scale = 0.7;
+      panX = (window.innerWidth - 1700 * scale) / 2;
+      panY = (window.innerHeight - 850 * scale) / 2 + 24;
+      applyTransform();
+    }
+    if (e.key === '0') {
+      scale = 0.42;
+      panX = (window.innerWidth - 1900 * scale) / 2;
+      panY = (window.innerHeight - 1300 * scale) / 2;
+      applyTransform();
+    }
+  });
+
+  // ---- MINIMAP ----
+  const minimapEl = document.getElementById('minimap');
+  const minimapVp = document.getElementById('minimap-vp');
+  const minimapDots = document.getElementById('minimap-dots');
+  const WORLD_W = 2000, WORLD_H = 1300;
+  const MM_W = 160, MM_H = 100;
+
+  document.querySelectorAll('.card, .note').forEach(el => {
+    const x = parseFloat(el.style.left) || 0;
+    const y = parseFloat(el.style.top) || 0;
+    const dot = document.createElement('div');
+    dot.className = 'minimap-dot';
+    dot.style.left = (x / WORLD_W * MM_W) + 'px';
+    dot.style.top = (y / WORLD_H * MM_H) + 'px';
+    if (el.classList.contains('type-witness')) dot.style.background = 'var(--orange)';
+    else if (el.classList.contains('type-evidence')) dot.style.background = 'var(--gold)';
+    else if (el.classList.contains('type-ai')) dot.style.background = 'var(--purple)';
+    else if (el.classList.contains('type-anomaly')) dot.style.background = 'var(--red)';
+    else if (el.classList.contains('human-note')) dot.style.background = 'var(--orange)';
+    else if (el.classList.contains('ai-note')) dot.style.background = 'var(--purple)';
+    else dot.style.background = 'var(--text-3)';
+    minimapDots.appendChild(dot);
+  });
+
+  function updateMinimap() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const vl = -panX / scale, vt = -panY / scale;
+    const vWidth = vw / scale, vHeight = vh / scale;
+    minimapVp.style.left = (vl / WORLD_W * MM_W) + 'px';
+    minimapVp.style.top = (vt / WORLD_H * MM_H) + 'px';
+    minimapVp.style.width = (vWidth / WORLD_W * MM_W) + 'px';
+    minimapVp.style.height = (vHeight / WORLD_H * MM_H) + 'px';
+  }
+
+  minimapEl.addEventListener('click', (e) => {
+    const rect = minimapEl.getBoundingClientRect();
+    const wx = ((e.clientX - rect.left) / MM_W) * WORLD_W;
+    const wy = ((e.clientY - rect.top) / MM_H) * WORLD_H;
+    panX = window.innerWidth / 2 - wx * scale;
+    panY = window.innerHeight / 2 - wy * scale;
+    applyTransform();
+  });
+
+  // Dismiss hint
+  setTimeout(() => hint.classList.add('hidden'), 5000);
+  viewport.addEventListener('mousedown', () => hint.classList.add('hidden'), { once: true });
+  viewport.addEventListener('wheel', () => hint.classList.add('hidden'), { once: true });
+})();
+</script>
+
+</body>
+</html>

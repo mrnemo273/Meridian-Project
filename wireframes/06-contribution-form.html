@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Contribution Form Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC; --ink: #1A1814; --graphite: #4A4640;
+    --rule: #D4CFC7; --signal: #C4A35A; --confirm: #4A7C59;
+    --caution: #B85C38; --null: #7A8A8C; --data-1: #2D4A6B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; line-height: 1.6; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; border-bottom: 1px solid var(--rule); }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--graphite); text-decoration: none; }
+  nav ul li a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+  /* --- FORM LAYOUT --- */
+  .form-container {
+    max-width: 800px; margin: 0 auto; padding: 60px 40px 80px;
+  }
+
+  .form-container h1 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .form-intro {
+    color: var(--graphite); font-size: 15px; margin-bottom: 12px;
+  }
+
+  .form-note {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    letter-spacing: 0.5px; margin-bottom: 40px; line-height: 1.6;
+  }
+
+  /* --- PROGRESS INDICATOR --- */
+  .progress {
+    display: flex; align-items: center; gap: 0; margin-bottom: 48px;
+  }
+
+  .progress-step {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .progress-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+  }
+
+  .progress-dot.active { background: var(--ink); color: var(--paper); }
+  .progress-dot.complete { background: var(--confirm); color: white; }
+  .progress-dot.pending { background: transparent; border: 1px solid var(--rule); color: var(--null); }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .progress-label.active { color: var(--ink); }
+  .progress-label.pending { color: var(--null); }
+
+  .progress-line {
+    flex: 1; height: 1px; background: var(--rule); margin: 0 12px;
+  }
+
+  /* --- FORM SECTIONS --- */
+  .form-section {
+    margin-bottom: 40px;
+  }
+
+  .form-section-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 20px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block; font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.5px; color: var(--ink); margin-bottom: 4px; font-weight: 500;
+  }
+
+  .form-group .field-hint {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    margin-bottom: 8px; line-height: 1.5;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--rule);
+    background: #FDFBF7; font-family: 'Source Serif 4', serif; font-size: 14px;
+    color: var(--ink); outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--graphite);
+  }
+
+  .form-group select {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234A4640'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .form-group textarea {
+    height: 120px; resize: vertical;
+  }
+
+  .form-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .form-row-3 {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  }
+
+  /* --- SUBMISSION TYPE CARDS --- */
+  .type-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;
+  }
+
+  .type-card {
+    border: 1px solid var(--rule); padding: 20px; cursor: pointer; background: #FDFBF7;
+  }
+
+  .type-card.selected { border-color: var(--ink); background: rgba(26, 24, 20, 0.02); }
+
+  .type-card h4 {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  .type-card p {
+    font-size: 13px; color: var(--graphite); line-height: 1.5;
+  }
+
+  /* --- CHECKBOX / RADIO --- */
+  .checkbox-group {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .checkbox-item {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink);
+  }
+
+  .checkbox-item input[type="checkbox"],
+  .checkbox-item input[type="radio"] {
+    width: 16px; height: 16px; accent-color: var(--ink);
+  }
+
+  /* --- ANONYMOUS TOGGLE --- */
+  .anonymous-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border: 1px solid var(--rule); background: #FDFBF7;
+    margin-bottom: 24px;
+  }
+
+  .anonymous-toggle .toggle-text {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.5px;
+  }
+
+  .anonymous-toggle .toggle-hint {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+  }
+
+  .toggle-switch {
+    width: 44px; height: 24px; border-radius: 12px;
+    background: var(--rule); position: relative; cursor: pointer;
+  }
+
+  .toggle-switch::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 18px; height: 18px; border-radius: 50%; background: white;
+  }
+
+  /* --- CREDIBILITY NOTE --- */
+  .credibility-note {
+    background: rgba(196, 163, 90, 0.06); border: 1px solid rgba(196, 163, 90, 0.2);
+    padding: 16px 20px; margin-bottom: 32px;
+  }
+
+  .credibility-note .note-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 6px;
+  }
+
+  .credibility-note p {
+    font-size: 13px; color: var(--graphite); line-height: 1.5;
+  }
+
+  /* --- FORM ACTIONS --- */
+  .form-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; border-top: 1px solid var(--rule);
+  }
+
+  .btn-back {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 12px 24px;
+    border: 1px solid var(--rule); background: transparent; color: var(--graphite);
+    cursor: pointer;
+  }
+
+  .btn-next {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 12px 32px;
+    border: none; background: var(--ink); color: var(--paper); cursor: pointer;
+  }
+
+  footer { border-top: 1px solid var(--rule); padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Contribution Form</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Evidence Index</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">Query</a></li>
+    <li><a href="#" class="active">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<div class="form-container">
+
+  <h1>Contribute to the Record</h1>
+  <p class="form-intro">Your account may contribute to our research. All submissions are structured, AI-screened for consistency, and tiered for credibility.</p>
+  <p class="form-note">Submissions are never publicly attributed without consent. Structured detail improves credibility scoring. All fields beyond Step 1 are optional but weighted.</p>
+
+  <!-- PROGRESS -->
+  <div class="progress">
+    <div class="progress-step">
+      <div class="progress-dot complete">✓</div>
+      <span class="progress-label active">Type</span>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step">
+      <div class="progress-dot active">2</div>
+      <span class="progress-label active">Details</span>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step">
+      <div class="progress-dot pending">3</div>
+      <span class="progress-label pending">Evidence</span>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step">
+      <div class="progress-dot pending">4</div>
+      <span class="progress-label pending">Review</span>
+    </div>
+  </div>
+
+  <!-- SUBMISSION TYPE (Step 1 — shown as completed) -->
+  <div class="form-section">
+    <div class="form-section-title">Step 1 — Submission Type</div>
+    <div class="type-cards">
+      <div class="type-card selected">
+        <h4>Personal Witness Account</h4>
+        <p>You observed something directly and want to report what you saw</p>
+      </div>
+      <div class="type-card">
+        <h4>Physical Evidence</h4>
+        <p>Photos, video, material samples, or instrument readings</p>
+      </div>
+      <div class="type-card">
+        <h4>Documentary Evidence</h4>
+        <p>Official documents, records, or declassified materials</p>
+      </div>
+      <div class="type-card">
+        <h4>Case Corroboration</h4>
+        <p>You can corroborate an existing case in the index</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: DETAILS -->
+  <div class="form-section">
+    <div class="form-section-title">Step 2 — Observation Details</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date of Observation</label>
+        <div class="field-hint">As precise as you can recall</div>
+        <input type="date">
+      </div>
+      <div class="form-group">
+        <label>Time of Observation</label>
+        <div class="field-hint">Approximate time is acceptable</div>
+        <input type="time">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <div class="field-hint">Precise location increases credibility score. GPS coordinates ideal, but city/region accepted.</div>
+      <input type="text" placeholder="Enter address, coordinates, or describe the location">
+    </div>
+
+    <div class="form-row-3">
+      <div class="form-group">
+        <label>Duration</label>
+        <select>
+          <option>Select duration</option>
+          <option>< 10 seconds</option>
+          <option>10–60 seconds</option>
+          <option>1–5 minutes</option>
+          <option>5–30 minutes</option>
+          <option>30+ minutes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Number of Witnesses</label>
+        <select>
+          <option>Select</option>
+          <option>Just me</option>
+          <option>2–3</option>
+          <option>4–10</option>
+          <option>10+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Weather Conditions</label>
+        <select>
+          <option>Select</option>
+          <option>Clear</option>
+          <option>Partly cloudy</option>
+          <option>Overcast</option>
+          <option>Rain/Storm</option>
+          <option>Don't recall</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Describe What You Observed</label>
+      <div class="field-hint">Be as specific as possible: shape, size, color, movement, sound, and any unusual characteristics. Specificity directly improves credibility scoring.</div>
+      <textarea placeholder="Describe the object or phenomenon in your own words..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Physical or Physiological Effects</label>
+      <div class="field-hint">Did you experience any unusual physical sensations, equipment interference, or environmental effects?</div>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox"> None</label>
+        <label class="checkbox-item"><input type="checkbox"> Equipment malfunction</label>
+        <label class="checkbox-item"><input type="checkbox"> Physical sensation (heat, tingling, nausea)</label>
+        <label class="checkbox-item"><input type="checkbox"> Environmental silence</label>
+        <label class="checkbox-item"><input type="checkbox"> Animal behavior change</label>
+        <label class="checkbox-item"><input type="checkbox"> Other (describe below)</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Your Background (Optional)</label>
+      <div class="field-hint">Relevant professional background (military, aviation, law enforcement, science) increases credibility weight but is not required.</div>
+      <select>
+        <option>Prefer not to say</option>
+        <option>Military (active or retired)</option>
+        <option>Aviation professional</option>
+        <option>Law enforcement</option>
+        <option>Scientist / Academic</option>
+        <option>Other professional</option>
+        <option>Civilian — no relevant background</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ANONYMOUS TOGGLE -->
+  <div class="anonymous-toggle">
+    <div>
+      <div class="toggle-text">Submit Anonymously</div>
+      <div class="toggle-hint">Anonymous submissions are fully anonymized — no IP or identity stored. Credentialed submissions score higher.</div>
+    </div>
+    <div class="toggle-switch"></div>
+  </div>
+
+  <!-- CREDIBILITY NOTE -->
+  <div class="credibility-note">
+    <div class="note-label">How Your Submission Is Scored</div>
+    <p>Every submission is AI-screened for internal consistency, specificity, and cross-referenced against the existing corpus. Your credibility tier (1–4) is determined by factors including witness count, corroborating evidence, professional credentials, and detail specificity. This process is transparent — you'll see your preliminary tier on the review page.</p>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="form-actions">
+    <button class="btn-back">← Back</button>
+    <button class="btn-next">Continue to Evidence →</button>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project</p>
+</footer>
+
+</body>
+</html>

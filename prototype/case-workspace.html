@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case 001 · Investigation Workspace</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --surface-hover: #FAFAF8;
+    --board-bg: #EDECE8;
+    --border: rgba(0,0,0,0.07);
+    --border-strong: rgba(0,0,0,0.12);
+    --text-1: #1A1816;
+    --text-2: #6B6560;
+    --text-3: #A09A92;
+    --gold: #9A7A2E;
+    --gold-soft: rgba(154,122,46,0.12);
+    --orange: #B86A2E;
+    --orange-soft: rgba(184,106,46,0.12);
+    --purple: #7B5D9A;
+    --purple-soft: rgba(123,93,154,0.1);
+    --red: #B04A4A;
+    --red-soft: rgba(176,74,74,0.08);
+    --green: #5A8A4A;
+    --green-soft: rgba(90,138,74,0.08);
+    --blue: #4A6A9A;
+    --blue-soft: rgba(74,106,154,0.08);
+    --sidebar-w: 200px;
+    /* Nemo highlight color */
+    --hl-nemo: rgba(184,106,46,0.22);
+    --hl-nemo-strong: rgba(184,106,46,0.4);
+    --hl-claude: rgba(123,93,154,0.18);
+    --hl-claude-strong: rgba(123,93,154,0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ═══════════════════════════════════════════════
+     LAYOUT: sidebar | case content | investigation column
+     ═══════════════════════════════════════════════ */
+  .app {
+    display: flex; height: 100vh; width: 100%;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w); flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .sidebar-logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--text-3); padding: 16px 16px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-logo span { color: var(--gold); }
+
+  .sidebar-section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    padding: 14px 16px 4px;
+  }
+
+  .toc-list { list-style: none; flex: 1; overflow-y: auto; padding-bottom: 8px; }
+  .toc-list li a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 16px;
+    font-size: 9px; letter-spacing: 0.3px;
+    color: var(--text-3); text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .toc-list li a:hover { color: var(--text-2); background: var(--bg); }
+  .toc-list li a.active {
+    color: var(--gold); border-left-color: var(--gold);
+    background: var(--gold-soft); font-weight: 500;
+  }
+  .toc-list .toc-badge {
+    font-size: 7px; padding: 1px 4px; border-radius: 2px;
+    margin-left: auto; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .toc-badge.tool { background: var(--purple-soft); color: var(--purple); }
+  .toc-badge.human { background: var(--orange-soft); color: var(--orange); }
+
+  .sidebar-divider { height: 1px; background: var(--border); margin: 4px 16px; }
+
+  .sidebar-footer {
+    padding: 12px 16px; border-top: 1px solid var(--border);
+    font-size: 9px; color: var(--text-3);
+  }
+  .sidebar-footer .inv-row {
+    display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+  }
+  .sidebar-footer .inv-row:last-child { margin-bottom: 0; }
+  .inv-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .inv-dot.human { background: var(--orange); }
+  .inv-dot.ai { background: var(--purple); }
+
+  /* ── MAIN CONTENT (case file) ── */
+  .main-content {
+    flex: 1; min-width: 0;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+  .content-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: sticky; top: 0; z-index: 50;
+    height: 3px; width: 0%;
+    background: var(--gold);
+    transition: width 0.1s linear;
+  }
+
+  section { padding-top: 48px; margin-bottom: 48px; }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border-strong), transparent);
+  }
+
+  /* ── INVESTIGATION COLUMN (right) ── */
+  .invest-column {
+    width: 460px; flex-shrink: 0;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .invest-tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    flex-shrink: 0; overflow-x: auto;
+    background: var(--bg);
+  }
+  .invest-tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; letter-spacing: 0.8px; text-transform: uppercase;
+    padding: 10px 12px; color: var(--text-3);
+    border: none; background: none; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .invest-tab:hover { color: var(--text-2); }
+  .invest-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 500; background: var(--surface); }
+
+  .invest-body {
+    flex: 1; overflow-y: auto; padding: 22px;
+  }
+
+  .invest-pane { display: none; }
+  .invest-pane.active { display: block; }
+
+  .invest-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500; margin-bottom: 14px;
+  }
+
+  /* ── Hero ── */
+  #hero { padding-top: 56px; }
+  .hero-case-id {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .hero-title {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 42px; line-height: 1.1; color: var(--text-1);
+    letter-spacing: -0.5px; margin-bottom: 6px;
+  }
+  .hero-subtitle {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 20px; color: var(--text-2); font-style: italic;
+    margin-bottom: 16px;
+  }
+  .hero-meta { font-size: 12px; color: var(--text-2); margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; font-size: 10px; letter-spacing: 0.5px;
+    border-radius: 10px; font-weight: 500; text-transform: uppercase;
+    background: var(--red-soft); color: var(--red); margin-bottom: 14px;
+  }
+  .pulse-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--red); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+  .tag-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+  .tag-pill { font-size: 9px; letter-spacing: 0.5px; padding: 3px 9px; border-radius: 3px; background: var(--board-bg); color: var(--text-2); }
+  .cred-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-soft); border: 1px solid rgba(154,122,46,0.15);
+    border-radius: 5px; padding: 8px 14px; margin-bottom: 14px;
+  }
+  .cred-score { font-size: 28px; font-weight: 600; color: var(--gold); line-height: 1; }
+  .cred-details { font-size: 10px; color: var(--text-2); }
+  .cred-tier { font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+
+  /* ── Summary ── */
+  .summary-text { font-size: 14px; color: var(--text-1); line-height: 1.75; }
+  .summary-text p { margin-bottom: 14px; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; padding: 0 0 0 28px; border-left: 2px solid rgba(154,122,46,0.15); margin-left: 8px; }
+  .tl-event { position: relative; padding: 0 0 24px 16px; }
+  .tl-event:last-child { padding-bottom: 0; }
+  .tl-event::before {
+    content: ''; position: absolute; left: -35px; top: 4px;
+    width: 9px; height: 9px; border-radius: 50%;
+    border: 2px solid rgba(154,122,46,0.2); background: var(--bg);
+  }
+  .tl-event.type-key::before { border-color: var(--gold); background: var(--gold); box-shadow: 0 0 6px rgba(154,122,46,0.3); }
+  .tl-event.type-anomaly::before { border-color: var(--red); background: var(--red); }
+  .tl-date { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; font-weight: 500; }
+  .tl-event.type-anomaly .tl-date { color: var(--red); }
+  .tl-title { font-size: 15px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+  .tl-detail { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+  .tl-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+  .tl-tag { font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 6px; border-radius: 2px; }
+  .tl-tag.military { background: var(--blue-soft); color: var(--blue); }
+  .tl-tag.sensor,.tl-tag.radar-confirmed { background: var(--purple-soft); color: var(--purple); }
+  .tl-tag.witness,.tl-tag.visual-confirmed,.tl-tag.multi-witness { background: var(--orange-soft); color: var(--orange); }
+  .tl-tag.anomaly,.tl-tag.data-confiscation { background: var(--red-soft); color: var(--red); }
+  .tl-tag.official,.tl-tag.infrared-confirmed { background: var(--gold-soft); color: var(--gold); }
+
+  /* ── Evidence cards ── */
+  .evidence-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 5px; margin-bottom: 20px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .evidence-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.05); border-color: var(--border-strong); }
+  .evidence-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(154,122,46,0.1); }
+  .evidence-card .accent-border { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 5px 0 0 5px; }
+  .evidence-card.type-evidence .accent-border,.evidence-card.type-sensor .accent-border { background: var(--gold); }
+  .evidence-card.type-media .accent-border { background: var(--green); }
+  .evidence-card.type-document .accent-border { background: var(--text-3); }
+  .evidence-card .card-inner { padding: 16px 22px 16px 24px; }
+  .evidence-card .card-type-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+  .card-type-label { font-size: 9px; letter-spacing: 0.5px; font-weight: 500; text-transform: uppercase; }
+  .type-evidence .card-type-label,.type-sensor .card-type-label { color: var(--gold); }
+  .card-badge { font-size: 8px; letter-spacing: 0.5px; font-weight: 500; padding: 3px 8px; border-radius: 3px; }
+  .badge-sensor { background: var(--purple-soft); color: var(--purple); }
+  .badge-official { background: var(--gold-soft); color: var(--gold); }
+  .badge-anomaly { background: var(--red-soft); color: var(--red); }
+  .badge-witness { background: var(--orange-soft); color: var(--orange); }
+  .evidence-card .card-title { font-size: 15px; font-weight: 600; color: var(--text-1); line-height: 1.3; margin-bottom: 5px; }
+  .evidence-card .card-summary { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+  .link-count {
+    font-size: 9px; color: var(--purple); margin-top: 8px;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* ── Witness cards ── */
+  .witness-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 5px; padding: 18px; margin-bottom: 18px;
+    border-left: 3px solid var(--orange);
+    cursor: pointer; transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .witness-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.05); }
+  .witness-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(154,122,46,0.1); }
+  .witness-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .witness-avatar {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--orange-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Oswald', sans-serif; font-size: 12px; color: var(--orange); font-weight: 500; flex-shrink: 0;
+  }
+  .witness-name { font-family: 'Instrument Serif', serif; font-size: 19px; font-weight: 400; color: var(--text-1); }
+  .witness-rank { font-size: 11px; color: var(--text-3); }
+  .witness-observed { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+  .witness-quote {
+    font-family: 'Caveat', cursive; font-size: 18px; line-height: 1.45; color: var(--orange);
+    border-left: 3px solid var(--orange); padding: 8px 0 8px 14px; margin: 12px 0;
+  }
+  .witness-quote .quote-source { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-3); margin-top: 4px; }
+
+  /* ── AI analysis cards ── */
+  .ai-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 5px; padding: 16px 18px; margin-bottom: 18px;
+    border-left: 3px solid var(--purple);
+    cursor: pointer; transition: box-shadow 0.2s;
+  }
+  .ai-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.05); }
+  .ai-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(154,122,46,0.1); }
+  .ai-card .ai-type { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  .ai-card .ai-title { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 5px; }
+  .ai-card .ai-finding { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+  .confidence-badge { display: inline-block; font-size: 9px; letter-spacing: 0.5px; font-weight: 500; padding: 3px 9px; border-radius: 3px; margin-top: 10px; }
+  .confidence-high { background: var(--green-soft); color: var(--green); }
+  .confidence-medium { background: var(--gold-soft); color: var(--gold); }
+
+  /* ── Open questions ── */
+  .question-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 5px; padding: 14px 18px; margin-bottom: 14px;
+    border-left: 3px solid var(--red);
+  }
+  .question-number { font-family: 'Oswald', sans-serif; font-size: 11px; color: var(--red); letter-spacing: 1px; font-weight: 500; margin-bottom: 4px; }
+  .question-text { font-size: 15px; font-weight: 600; color: var(--text-1); line-height: 1.35; margin-bottom: 6px; }
+  .question-context { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+
+  /* ═══════════════════════════════════════════════
+     HIGHLIGHT & ANNOTATION SYSTEM
+     ═══════════════════════════════════════════════ */
+  .hl-nemo {
+    background: var(--hl-nemo); border-radius: 2px;
+    cursor: pointer; position: relative;
+    transition: background 0.15s;
+    border-bottom: 2px solid rgba(184,106,46,0.35);
+  }
+  .hl-nemo:hover { background: var(--hl-nemo-strong); }
+  .hl-claude {
+    background: var(--hl-claude); border-radius: 2px;
+    cursor: pointer; position: relative;
+    transition: background 0.15s;
+    border-bottom: 2px solid rgba(123,93,154,0.3);
+  }
+  .hl-claude:hover { background: var(--hl-claude-strong); }
+
+  /* Annotation dot indicator */
+  .hl-nemo::after, .hl-claude::after {
+    content: attr(data-count);
+    position: absolute; top: -6px; right: -4px;
+    font-size: 7px; font-weight: 600; line-height: 12px;
+    width: 12px; height: 12px; text-align: center;
+    border-radius: 50%; color: white;
+  }
+  .hl-nemo::after { background: var(--orange); }
+  .hl-claude::after { background: var(--purple); }
+  .hl-nemo[data-count=""]::after, .hl-claude[data-count=""]::after { display: none; }
+
+  /* Right-click context menu */
+  .ctx-menu {
+    position: fixed; z-index: 1000;
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.08);
+    min-width: 200px;
+    padding: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    animation: ctxFadeIn 0.12s ease-out;
+  }
+  @keyframes ctxFadeIn {
+    from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .ctx-menu.visible { display: block; }
+  .ctx-menu-header {
+    font-size: 7px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); padding: 6px 10px 4px;
+    font-weight: 500;
+  }
+  .ctx-menu-divider { height: 1px; background: var(--border); margin: 4px 6px; }
+  .ctx-menu-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px;
+    font-size: 10px; color: var(--text-1);
+    cursor: pointer; border-radius: 5px;
+    transition: background 0.1s;
+    border: none; background: none; width: 100%;
+    text-align: left; font-family: inherit;
+  }
+  .ctx-menu-item:hover { background: var(--bg); }
+  .ctx-menu-item .ctx-icon {
+    width: 20px; height: 20px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .ctx-icon.hl-nemo-icon { background: var(--hl-nemo-strong); color: var(--orange); }
+  .ctx-icon.hl-claude-icon { background: var(--hl-claude-strong); color: var(--purple); }
+  .ctx-icon.note-icon { background: var(--gold-soft); color: var(--gold); }
+  .ctx-icon.url-icon { background: var(--blue-soft); color: var(--blue); }
+  .ctx-icon.link-icon { background: var(--green-soft); color: var(--green); }
+  .ctx-icon.search-icon { background: var(--purple-soft); color: var(--purple); }
+  .ctx-menu-item .ctx-shortcut {
+    margin-left: auto; font-size: 8px; color: var(--text-3); letter-spacing: 0.3px;
+  }
+  .ctx-menu-item.disabled { opacity: 0.35; pointer-events: none; }
+
+  /* Inline note input (appears under highlight after "Add Note") */
+  .inline-note-input {
+    position: fixed; z-index: 998;
+    width: 300px; display: none;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 10px;
+    animation: ctxFadeIn 0.12s ease-out;
+  }
+  .inline-note-input.visible { display: block; }
+  .inline-note-input label {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); display: block; margin-bottom: 6px;
+  }
+  .inline-note-input textarea {
+    width: 100%; border: 1px solid var(--border); border-radius: 4px;
+    padding: 8px 10px; font-family: 'Caveat', cursive; font-size: 15px;
+    background: var(--bg); color: var(--text-1); resize: none;
+    outline: none; min-height: 60px; line-height: 1.4;
+  }
+  .inline-note-input textarea:focus { border-color: var(--gold); }
+  .inline-note-input .inp-actions {
+    display: flex; justify-content: flex-end; gap: 6px; margin-top: 8px;
+  }
+  .inline-note-input .inp-btn {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    padding: 5px 12px; border-radius: 4px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text-2);
+  }
+  .inline-note-input .inp-btn:hover { border-color: var(--border-strong); }
+  .inline-note-input .inp-btn.primary {
+    background: var(--gold); border-color: var(--gold); color: white;
+  }
+
+  /* URL input variant */
+  .inline-note-input input[type="url"] {
+    width: 100%; border: 1px solid var(--border); border-radius: 4px;
+    padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    background: var(--bg); color: var(--text-1);
+    outline: none;
+  }
+  .inline-note-input input[type="url"]:focus { border-color: var(--gold); }
+  .inline-note-input input[type="text"] {
+    width: 100%; border: 1px solid var(--border); border-radius: 4px;
+    padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    background: var(--bg); color: var(--text-1); margin-bottom: 6px;
+    outline: none;
+  }
+  .inline-note-input input[type="text"]:focus { border-color: var(--gold); }
+
+  /* Annotation popover */
+  .annotation-popover {
+    position: fixed; z-index: 999;
+    width: 320px; max-height: 400px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    display: none; flex-direction: column;
+    overflow: hidden;
+  }
+  .annotation-popover.visible { display: flex; }
+  .annotation-popover-header {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .annotation-popover-header .ann-user {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .annotation-popover-close {
+    border: none; background: none; font-size: 14px; color: var(--text-3); cursor: pointer;
+  }
+  .annotation-popover-body {
+    padding: 12px 14px; overflow-y: auto; flex: 1;
+  }
+  .annotation-note {
+    font-family: 'Caveat', cursive; font-size: 15px; color: var(--text-1);
+    line-height: 1.4; margin-bottom: 10px;
+  }
+  .annotation-note.claude-note {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--purple); line-height: 1.5;
+  }
+  .annotation-attachments {
+    border-top: 1px solid var(--border); padding-top: 8px;
+  }
+  .annotation-attachment {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px; margin-bottom: 4px;
+    background: var(--bg); border-radius: 4px;
+    font-size: 9px; color: var(--text-2);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .annotation-attachment:hover { background: var(--board-bg); }
+  .att-icon { font-size: 12px; flex-shrink: 0; width: 20px; text-align: center; }
+  .att-title { flex: 1; font-weight: 500; color: var(--text-1); }
+  .att-type { font-size: 7px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-3); }
+  .annotation-input-area {
+    border-top: 1px solid var(--border); padding: 10px 14px;
+    display: flex; gap: 8px;
+  }
+  .annotation-input-area input {
+    flex: 1; border: 1px solid var(--border); border-radius: 4px;
+    padding: 6px 10px; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; background: var(--bg); color: var(--text-1);
+    outline: none;
+  }
+  .annotation-input-area input:focus { border-color: var(--gold); }
+  .annotation-input-area button {
+    background: var(--gold); color: white; border: none;
+    border-radius: 4px; padding: 6px 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    cursor: pointer; font-weight: 500;
+  }
+
+  /* ═══════════════════════════════════════════════
+     ACH MATRIX — INTERACTIVE
+     ═══════════════════════════════════════════════ */
+  .ach-matrix { width: 100%; border-collapse: collapse; font-size: 10px; }
+  .ach-matrix th {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    padding: 6px 5px; text-align: center;
+    border-bottom: 1px solid var(--border-strong);
+    position: sticky; top: 0; background: var(--surface);
+  }
+  .ach-matrix th:first-child { text-align: left; width: 140px; }
+  .ach-matrix td {
+    padding: 6px; text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-size: 9px; color: var(--text-2);
+  }
+  .ach-matrix td:first-child {
+    text-align: left; font-size: 10px; color: var(--text-1);
+    font-weight: 500;
+  }
+  /* Voteable cells */
+  .ach-cell {
+    cursor: pointer; border-radius: 3px;
+    transition: background 0.1s;
+    user-select: none; position: relative;
+    min-width: 28px;
+  }
+  .ach-cell:hover { background: var(--bg); }
+  .ach-c { color: var(--green); font-weight: 600; }
+  .ach-i { color: var(--red); font-weight: 600; }
+  .ach-n { color: var(--text-3); }
+  .ach-na { color: var(--text-3); opacity: 0.4; }
+  /* Human vote indicator */
+  .ach-cell .human-vote {
+    position: absolute; top: -2px; right: -2px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange); border: 1px solid var(--surface);
+  }
+  .ach-verdict {
+    margin-top: 12px; padding: 10px 12px;
+    background: var(--bg); border-radius: 4px;
+    font-size: 10px; color: var(--text-2); line-height: 1.5;
+  }
+  .ach-verdict strong { color: var(--text-1); display: block; margin-bottom: 4px; font-size: 9px; letter-spacing: 0.5px; }
+
+  /* ═══════════════════════════════════════════════
+     RESOLUTION CHECKLIST
+     ═══════════════════════════════════════════════ */
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-icon {
+    width: 16px; height: 16px; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; flex-shrink: 0; margin-top: 1px;
+  }
+  .check-icon.eliminated { background: var(--green-soft); color: var(--green); }
+  .check-icon.open { background: var(--red-soft); color: var(--red); }
+  .check-icon.partial { background: var(--gold-soft); color: var(--gold); }
+  .check-label { font-size: 11px; color: var(--text-1); font-weight: 500; }
+  .check-detail { font-size: 10px; color: var(--text-3); line-height: 1.45; margin-top: 2px; }
+
+  /* ═══════════════════════════════════════════════
+     OSINT & SEARCH
+     ═══════════════════════════════════════════════ */
+  .osint-item {
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+  }
+  .osint-item:last-child { border-bottom: none; }
+  .osint-field { font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-3); margin-bottom: 3px; }
+  .osint-value { font-size: 11px; color: var(--text-1); line-height: 1.45; }
+  .osint-source { font-size: 9px; color: var(--text-3); margin-top: 3px; }
+  .osint-status {
+    display: inline-block; font-size: 7px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 1px 5px; border-radius: 2px; font-weight: 500; margin-left: 6px;
+  }
+  .osint-verified { background: var(--green-soft); color: var(--green); }
+  .osint-unverified { background: var(--red-soft); color: var(--red); }
+  .osint-partial { background: var(--gold-soft); color: var(--gold); }
+
+  /* Search bar */
+  .search-box {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .search-box input {
+    flex: 1; border: 1px solid var(--border); border-radius: 5px;
+    padding: 8px 12px; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; background: var(--bg); color: var(--text-1);
+    outline: none;
+  }
+  .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-soft); }
+  .search-box input::placeholder { color: var(--text-3); }
+  .search-box button {
+    background: var(--gold); color: white; border: none;
+    border-radius: 5px; padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    cursor: pointer; font-weight: 500; letter-spacing: 0.5px;
+    transition: background 0.15s;
+  }
+  .search-box button:hover { background: #8A6A20; }
+
+  .search-result {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 5px; padding: 12px 14px; margin-bottom: 10px;
+    cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .search-result:hover { border-color: var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .search-result .sr-source {
+    font-size: 7px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 3px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sr-type-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .sr-type-dot.web { background: var(--blue); }
+  .sr-type-dot.reddit { background: var(--orange); }
+  .sr-type-dot.academic { background: var(--green); }
+  .sr-type-dot.foia { background: var(--gold); }
+  .sr-type-dot.video { background: var(--red); }
+  .search-result .sr-title { font-size: 12px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+  .search-result .sr-snippet { font-size: 10px; color: var(--text-2); line-height: 1.45; }
+  .search-result .sr-actions {
+    display: flex; gap: 6px; margin-top: 8px;
+  }
+  .sr-action {
+    font-size: 8px; letter-spacing: 0.3px; padding: 3px 8px;
+    border-radius: 3px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-2);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .sr-action:hover { border-color: var(--gold); color: var(--gold); }
+  .sr-action.primary { background: var(--gold-soft); border-color: rgba(154,122,46,0.2); color: var(--gold); }
+
+  /* ═══════════════════════════════════════════════
+     EVIDENCE CHAIN & LINKING
+     ═══════════════════════════════════════════════ */
+  .chain-item {
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px;
+  }
+  .chain-item:last-child { border-bottom: none; }
+  .chain-num {
+    font-family: 'Oswald', sans-serif; font-size: 9px;
+    color: var(--text-3); font-weight: 500; flex-shrink: 0; width: 18px; text-align: right;
+  }
+  .chain-content { flex: 1; }
+  .chain-source { font-size: 11px; color: var(--text-1); font-weight: 500; }
+  .chain-note { font-size: 10px; color: var(--text-3); line-height: 1.45; margin-top: 2px; }
+  .chain-corroboration {
+    font-size: 8px; margin-top: 3px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .corr-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .corr-dot.strong { background: var(--green); }
+  .corr-dot.moderate { background: var(--gold); }
+  .corr-dot.weak { background: var(--red); }
+
+  .link-graph-area {
+    margin-top: 16px; padding: 16px;
+    background: var(--bg); border-radius: 6px;
+    min-height: 200px; position: relative;
+  }
+  .link-graph-area .invest-title { margin-bottom: 8px; }
+  .link-node {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 4px;
+    font-size: 9px; color: var(--text-1); cursor: pointer;
+    margin: 4px; transition: border-color 0.15s;
+  }
+  .link-node:hover { border-color: var(--gold); }
+  .link-node.active { border-color: var(--gold); background: var(--gold-soft); }
+  .link-node .ln-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .link-node .ln-dot.sensor { background: var(--gold); }
+  .link-node .ln-dot.witness { background: var(--orange); }
+  .link-node .ln-dot.anomaly { background: var(--red); }
+  .link-node .ln-dot.document { background: var(--text-3); }
+
+  .link-connection {
+    font-size: 8px; color: var(--text-3); padding: 6px 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .link-connection .lc-line { height: 1px; width: 20px; background: var(--border-strong); }
+  .link-connection .lc-label { font-size: 8px; letter-spacing: 0.3px; color: var(--text-2); }
+
+  /* ═══════════════════════════════════════════════
+     SOLVABILITY
+     ═══════════════════════════════════════════════ */
+  .solv-meter {
+    height: 6px; background: var(--board-bg); border-radius: 3px;
+    overflow: hidden; margin: 8px 0 12px;
+  }
+  .solv-fill { height: 100%; border-radius: 3px; background: var(--gold); }
+  .solv-factor {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 0; border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .solv-factor:last-child { border-bottom: none; }
+  .solv-factor-name { color: var(--text-2); }
+  .solv-factor-score { font-weight: 600; }
+  .solv-factor-score.positive { color: var(--green); }
+  .solv-factor-score.negative { color: var(--red); }
+  .solv-factor-score.neutral { color: var(--gold); }
+
+  .next-steps { margin-top: 14px; }
+  .next-step {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 6px 0; font-size: 11px; color: var(--text-2); line-height: 1.45;
+  }
+  .step-priority {
+    font-size: 7px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 2px 5px; border-radius: 2px; font-weight: 500; flex-shrink: 0; margin-top: 2px;
+  }
+  .priority-high { background: var(--red-soft); color: var(--red); }
+  .priority-medium { background: var(--gold-soft); color: var(--gold); }
+  .priority-low { background: var(--blue-soft); color: var(--blue); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ═══════════ SIDEBAR ═══════════ -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">MERI<span>DIAN</span></div>
+
+    <div class="sidebar-section-label">Case File</div>
+    <ul class="toc-list" id="tocList">
+      <li><a href="#hero" class="active">Overview</a></li>
+      <li><a href="#summary">Executive Summary</a></li>
+      <li><a href="#encounter">The Encounter</a></li>
+      <li><a href="#evidence">The Evidence</a></li>
+      <li><a href="#witnesses">The Witnesses</a></li>
+      <li><a href="#analysis">AI Analysis</a></li>
+      <li><a href="#questions">Open Questions</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section-label">Investigation</div>
+    <ul class="toc-list">
+      <li><a href="#" onclick="switchInvestTab('ach'); return false;">ACH Matrix <span class="toc-badge tool">Tool</span></a></li>
+      <li><a href="#" onclick="switchInvestTab('resolution'); return false;">Resolution <span class="toc-badge tool">Tool</span></a></li>
+      <li><a href="#" onclick="switchInvestTab('osint'); return false;">OSINT Log <span class="toc-badge tool">Tool</span></a></li>
+      <li><a href="#" onclick="switchInvestTab('chain'); return false;">Evidence Chain <span class="toc-badge tool">Tool</span></a></li>
+      <li><a href="#" onclick="switchInvestTab('search'); return false;">Search & Import <span class="toc-badge human">Search</span></a></li>
+      <li><a href="#" onclick="switchInvestTab('solvability'); return false;">Solvability <span class="toc-badge tool">Tool</span></a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section-label">Annotations</div>
+    <ul class="toc-list">
+      <li><a href="#" onclick="jumpToNextHighlight(); return false;" id="hlJump">&#9998; Next Highlight <span class="toc-badge human" id="hlCount">7</span></a></li>
+    </ul>
+    <div style="padding:4px 16px 0; font-size:8px; color:var(--text-3);">Right-click selected text to annotate</div>
+
+    <div class="sidebar-footer">
+      <div class="inv-row"><div class="inv-dot human"></div><span>Nemo</span> <span style="margin-left:auto; font-size:8px; color:var(--orange);">&#9632;</span></div>
+      <div class="inv-row"><div class="inv-dot ai"></div><span>Claude</span> <span style="margin-left:auto; font-size:8px; color:var(--purple);">&#9632;</span></div>
+    </div>
+  </nav>
+
+  <!-- ═══════════ CASE CONTENT (left column) ═══════════ -->
+  <div class="main-content" id="mainContent">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="content-inner" id="caseContent">
+
+      <section id="hero">
+        <div class="hero-case-id">CASE-001</div>
+        <h1 class="hero-title">USS Nimitz Encounter</h1>
+        <div class="hero-subtitle">The Tic Tac Incident</div>
+        <div class="hero-meta">
+          <span>November 14, 2004</span>
+          <span>&middot;</span>
+          <span>Pacific Ocean, ~100mi SW of San Diego</span>
+          <span>&middot;</span>
+          <span>~5 min visual encounter</span>
+        </div>
+        <div class="status-pill"><span class="pulse-dot"></span>Investigating</div>
+        <br>
+        <div class="cred-badge">
+          <div class="cred-score">92</div>
+          <div class="cred-details"><div class="cred-tier">Tier 1</div><div>Credibility Score</div></div>
+        </div>
+        <div class="tag-pills">
+          <span class="tag-pill">military</span>
+          <span class="tag-pill">multi-sensor</span>
+          <span class="tag-pill">multi-witness</span>
+          <span class="tag-pill">radar-confirmed</span>
+          <span class="tag-pill">infrared-confirmed</span>
+          <span class="tag-pill">data-confiscation</span>
+          <span class="tag-pill">congressional-testimony</span>
+        </div>
+      </section>
+
+      <section id="summary">
+        <div class="section-label">Executive Summary</div>
+        <div class="summary-text">
+          <p>During routine pre-deployment training exercises in the Pacific Ocean off Southern California, the USS Nimitz Carrier Strike Group encountered <span class="hl-nemo" data-count="1" data-annotation-id="ann-4">multiple anomalous aerial vehicles over approximately five days</span>. The primary encounter on November 14, 2004 involved <span class="hl-claude" data-count="1" data-annotation-id="ann-1">visual contact by two F/A-18F Super Hornet crews, radar tracking by the AN/SPY-1B system aboard USS Princeton, and infrared video capture via the ATFLIR pod</span>.</p>
+          <p>The object — described as a <span class="hl-nemo" data-count="1" data-annotation-id="ann-2">white, featureless, elongated shape approximately 40 feet long resembling a Tic Tac candy</span> — demonstrated flight characteristics far beyond any known technology, including instantaneous acceleration, hypersonic speed without sonic boom, and apparent awareness of intercepting aircraft.</p>
+        </div>
+      </section>
+
+      <section id="encounter">
+        <div class="section-label">The Encounter</div>
+        <div class="timeline">
+          <div class="tl-event type-key">
+            <div class="tl-date">Late October 2004</div>
+            <div class="tl-title">Anomalous radar contacts begin</div>
+            <div class="tl-detail">USS Princeton's AN/SPY-1B radar detects objects at 80,000+ ft, descending to sea level in seconds — rates exceeding ballistic missile profiles. Senior Chief Kevin Day tracks returns over two weeks.</div>
+            <div class="tl-tags"><span class="tl-tag sensor">SPY-1</span><span class="tl-tag radar-confirmed">Radar</span></div>
+          </div>
+          <div class="tl-event type-key">
+            <div class="tl-date">November 14, 2004 · 1:00 PM</div>
+            <div class="tl-title">Fravor & Dietrich vectored to contact</div>
+            <div class="tl-detail">CDR David Fravor and LCDR Alex Dietrich, flying two F/A-18F Super Hornets from VFA-41 "Black Aces," are diverted to a live radar return ~100 miles SW of San Diego.</div>
+            <div class="tl-tags"><span class="tl-tag witness">Fravor</span><span class="tl-tag witness">Dietrich</span></div>
+          </div>
+          <div class="tl-event type-key">
+            <div class="tl-date">1:10 PM · The Intercept</div>
+            <div class="tl-title">Visual contact — Tic Tac above churning ocean</div>
+            <div class="tl-detail"><span class="hl-nemo" data-count="3" data-annotation-id="ann-3">Both crews spot a cross-shaped disturbance in the water — whitewater the size of a 737</span>. Hovering 50 ft above: a smooth, white, oblong object roughly 40 feet long. No wings, no exhaust. As Fravor descends, the object mirrors his movements — then accelerates away in under two seconds.</div>
+            <div class="tl-tags"><span class="tl-tag visual-confirmed">Visual</span><span class="tl-tag sensor">Multi-sensor</span></div>
+          </div>
+          <div class="tl-event type-key">
+            <div class="tl-date">1:12 PM · ~2 min later</div>
+            <div class="tl-title">Object vanishes — reappears 60 miles away</div>
+            <div class="tl-detail">The Tic Tac accelerates from near-hover to beyond visual range in under two seconds. Within moments, <span class="hl-nemo" data-count="1" data-annotation-id="ann-5">Princeton's SPY-1 picks it up again — at the fighters' CAP point, 60 miles away. No sonic boom. Implied speed: ~46,000 mph</span>.</div>
+            <div class="tl-tags"><span class="tl-tag sensor">SPY-1</span><span class="tl-tag anomaly">Anomaly</span></div>
+          </div>
+          <div class="tl-event type-key">
+            <div class="tl-date">2:00 PM · Second flight</div>
+            <div class="tl-title">FLIR1 infrared video captured</div>
+            <div class="tl-detail">WSO Chad Underwood records 76 seconds of IR video. The footage shows a featureless oblong with no exhaust plume, rotating on its longitudinal axis while maintaining flight.</div>
+            <div class="tl-tags"><span class="tl-tag infrared-confirmed">FLIR</span><span class="tl-tag sensor">Sensor</span></div>
+          </div>
+          <div class="tl-event type-anomaly">
+            <div class="tl-date">Late 2004 – Early 2005</div>
+            <div class="tl-title">Hard drives confiscated — data vanishes</div>
+            <div class="tl-detail">Unidentified individuals in plain clothes arrive aboard USS Princeton, <span class="hl-nemo" data-count="1" data-annotation-id="ann-6">collect radar data tapes and FLIR recordings, and depart. No receipts. No chain of custody</span>. The originals have never resurfaced.</div>
+            <div class="tl-tags"><span class="tl-tag data-confiscation">Data gap</span></div>
+          </div>
+          <div class="tl-event type-key">
+            <div class="tl-date">December 16, 2017</div>
+            <div class="tl-title">Pentagon confirms AATIP, releases FLIR1</div>
+            <div class="tl-detail">NYT publishes bombshell investigation. Pentagon ran a $22M secret UAP program. DoD releases FLIR1 after 13 years. Luis Elizondo resigns AATIP in protest over secrecy.</div>
+            <div class="tl-tags"><span class="tl-tag official">DoD</span><span class="tl-tag official">Official</span></div>
+          </div>
+          <div class="tl-event type-key">
+            <div class="tl-date">2019 – 2023</div>
+            <div class="tl-title">Congressional hearings & public testimony</div>
+            <div class="tl-detail">Fravor testifies under oath. Dietrich on 60 Minutes. Kevin Day speaks publicly. AARO is established. The Nimitz encounter becomes the most cited UAP case in legislative history.</div>
+            <div class="tl-tags"><span class="tl-tag official">Congress</span><span class="tl-tag multi-witness">Multiple</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="evidence">
+        <div class="section-label">The Evidence</div>
+
+        <div class="evidence-card type-sensor" onclick="selectCard(this, 'evidence', 0)">
+          <div class="accent-border"></div>
+          <div class="card-inner">
+            <div class="card-type-row">
+              <span class="card-type-label">Sensor Data</span>
+              <span class="card-badge badge-sensor">SPY-1</span>
+            </div>
+            <div class="card-title">AN/SPY-1B Radar Tracking</div>
+            <div class="card-summary">Princeton's AEGIS radar tracked multiple objects at 80,000+ ft descending to sea level in seconds. Radar operator Kevin Day tracked returns over ~2 weeks before the intercept.</div>
+            <div class="link-count">&#128279; Linked to: FLIR1 Video, Fravor Testimony, 60-Mile Relocation</div>
+          </div>
+        </div>
+
+        <div class="evidence-card type-sensor" onclick="selectCard(this, 'evidence', 1)">
+          <div class="accent-border"></div>
+          <div class="card-inner">
+            <div class="card-type-row">
+              <span class="card-type-label">Physical Evidence</span>
+              <span class="card-badge badge-official">Video</span>
+            </div>
+            <div class="card-title">FLIR1 Infrared Video</div>
+            <div class="card-summary">76 seconds recorded, 35 publicly released. Zero exhaust plume — thermodynamically impossible for any known propulsion. Object rotates on longitudinal axis while maintaining trajectory.</div>
+            <div class="link-count">&#128279; Linked to: SPY-1 Radar, Underwood Testimony, SCU Analysis</div>
+          </div>
+        </div>
+
+        <div class="evidence-card type-evidence" onclick="selectCard(this, 'evidence', 2)">
+          <div class="accent-border"></div>
+          <div class="card-inner">
+            <div class="card-type-row">
+              <span class="card-type-label">Anomaly</span>
+              <span class="card-badge badge-anomaly">Unresolved</span>
+            </div>
+            <div class="card-title">60-Mile Instant Relocation</div>
+            <div class="card-summary">Object reappears at the fighters' CAP point — a pre-assigned coordinate known only to Navy personnel. Implied speed ~46,000 mph. No sonic boom detected.</div>
+            <div class="link-count">&#128279; Linked to: SPY-1 Radar, CAP Point Awareness</div>
+          </div>
+        </div>
+
+        <div class="evidence-card type-evidence" onclick="selectCard(this, 'evidence', 3)">
+          <div class="accent-border"></div>
+          <div class="card-inner">
+            <div class="card-type-row">
+              <span class="card-type-label">Anomaly</span>
+              <span class="card-badge badge-anomaly">Unresolved</span>
+            </div>
+            <div class="card-title">Ocean Surface Disturbance</div>
+            <div class="card-summary">Cross-shaped area of churning whitewater the size of a 737. Calm surrounding seas. No submarine or surface vessel detected. Disturbance ceased with Tic Tac departure.</div>
+            <div class="link-count">&#128279; Linked to: Water Pattern (Shag Harbour), Subsurface Component</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="witnesses">
+        <div class="section-label">The Witnesses</div>
+
+        <div class="witness-card" onclick="selectCard(this, 'witness', 0)">
+          <div class="witness-header">
+            <div class="witness-avatar">DF</div>
+            <div><div class="witness-name">CDR David Fravor</div><div class="witness-rank">CO VFA-41 "Black Aces" · Ret.</div></div>
+          </div>
+          <div class="witness-observed">Observed the Tic Tac at close range. Attempted to intercept. Object mirrored his descent, then accelerated instantaneously. 18 years experience, 3,500+ flight hours, Top Gun graduate.</div>
+          <div class="witness-quote">&ldquo;It accelerated like nothing I've ever seen.&rdquo;<span class="quote-source">&mdash; JRE #1361, 2019</span></div>
+        </div>
+
+        <div class="witness-card" onclick="selectCard(this, 'witness', 1)">
+          <div class="witness-header">
+            <div class="witness-avatar">AD</div>
+            <div><div class="witness-name">LCDR Alex Dietrich</div><div class="witness-rank">Wingman · VFA-41</div></div>
+          </div>
+          <div class="witness-observed">Observed from higher altitude. Independently corroborated all details — ocean disturbance, mirroring behavior, instantaneous departure. First female fighter pilot to speak publicly.</div>
+          <div class="witness-quote">&ldquo;I don't identify it as any kind of aircraft that I know.&rdquo;<span class="quote-source">&mdash; 60 Minutes, May 2021</span></div>
+        </div>
+
+        <div class="witness-card" onclick="selectCard(this, 'witness', 2)">
+          <div class="witness-header">
+            <div class="witness-avatar">KD</div>
+            <div><div class="witness-name">Sr. Chief Kevin Day</div><div class="witness-rank">USS Princeton CIC · Radar Operator</div></div>
+          </div>
+          <div class="witness-observed">First to identify anomalous radar returns. Tracked objects over two weeks. Personally vectored Fravor's flight. Later reported cognitive effects post-encounter. 20+ years Navy, Top Secret clearance.</div>
+        </div>
+      </section>
+
+      <section id="analysis">
+        <div class="section-label">AI Analysis</div>
+
+        <div class="ai-card" onclick="selectCard(this, 'ai', 0)">
+          <div class="ai-type">Pattern Analysis</div>
+          <div class="ai-title">Cross-Corpus: Water Disturbance Pattern</div>
+          <div class="ai-finding">Water interaction observed in 3 other high-credibility cases: Shag Harbour 1967 (physical traces), Aguadilla 2013 (thermal video), Catalina Channel 1958 (military witnesses). P(coincidence) < 0.3%.</div>
+          <span class="confidence-badge confidence-high">High Confidence</span>
+        </div>
+
+        <div class="ai-card" onclick="selectCard(this, 'ai', 1)">
+          <div class="ai-type">Physics Review</div>
+          <div class="ai-title">Acceleration Analysis: 75g – 12,600g</div>
+          <div class="ai-finding">SCU estimates 75–5,000g based on FLIR1 tracking. Alternative radar calculation yields ~12,600g. Human tolerance: 9g. F-35 structural limit: 13.5g. Orders of magnitude beyond any known technology.</div>
+          <span class="confidence-badge confidence-medium">Medium — Dependent on sensor accuracy</span>
+        </div>
+
+        <div class="ai-card" onclick="selectCard(this, 'ai', 2)">
+          <div class="ai-type">Context Analysis</div>
+          <div class="ai-title">13-Year Disclosure Gap</div>
+          <div class="ai-finding">Belgian Wave: 20 years to acknowledgment. Tehran 1976: decades via FOIA. Nimitz: 13 years. Pattern suggests deliberate institutional delay, not routine bureaucratic process.</div>
+          <span class="confidence-badge confidence-high">High Confidence</span>
+        </div>
+      </section>
+
+      <section id="questions">
+        <div class="section-label">Open Questions</div>
+        <div class="question-item">
+          <div class="question-number">Q01</div>
+          <div class="question-text">What is in the classified annex of the AARO Historical Report Vol. 1?</div>
+          <div class="question-context">The public report calls Nimitz "among the most significant unresolved cases" but the annex remains sealed.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-number">Q02</div>
+          <div class="question-text">Where are the original high-resolution FLIR recordings?</div>
+          <div class="question-context">Only a downgraded copy survived. Multiple crew members describe confiscation by unidentified individuals.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-number">Q03</div>
+          <div class="question-text">Was the object aware of the fighters' CAP point?</div>
+          <div class="question-context">It reappeared at a pre-assigned coordinate known only to Navy personnel.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-number">Q04</div>
+          <div class="question-text">What caused the ocean surface disturbance?</div>
+          <div class="question-context">Cross-shaped churning whitewater the size of a 737. No submarine detected. Suggests a subsurface component.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-number">Q05</div>
+          <div class="question-text">What does USS Louisville's sonar data show?</div>
+          <div class="question-context">Los Angeles-class submarine was part of the strike group. Sonar data status unknown.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ═══════════ INVESTIGATION COLUMN (right) ═══════════ -->
+  <div class="invest-column" id="investColumn">
+    <div class="invest-tabs">
+      <button class="invest-tab active" data-tab="ach" onclick="switchInvestTab('ach')">ACH</button>
+      <button class="invest-tab" data-tab="resolution" onclick="switchInvestTab('resolution')">Resolution</button>
+      <button class="invest-tab" data-tab="osint" onclick="switchInvestTab('osint')">OSINT</button>
+      <button class="invest-tab" data-tab="chain" onclick="switchInvestTab('chain')">Links</button>
+      <button class="invest-tab" data-tab="search" onclick="switchInvestTab('search')">Search</button>
+      <button class="invest-tab" data-tab="solvability" onclick="switchInvestTab('solvability')">Score</button>
+    </div>
+    <div class="invest-body">
+
+      <!-- ═══ ACH MATRIX (interactive) ═══ -->
+      <div class="invest-pane active" id="pane-ach">
+        <div class="invest-title">Analysis of Competing Hypotheses</div>
+        <div style="font-size:9px; color:var(--orange); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;"></span>
+          Click any cell to cast your vote — cycle through C / I / N
+        </div>
+        <table class="ach-matrix" id="achTable">
+          <thead>
+            <tr>
+              <th>Evidence</th>
+              <th>Conven&shy;tional Aircraft</th>
+              <th>Drone / UAS</th>
+              <th>Atmo&shy;spheric</th>
+              <th>Sensor Error</th>
+              <th>Unknown Tech</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SPY-1 radar tracking (2 weeks)</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>Visual contact (4 pilots)</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>FLIR1 IR video (no exhaust)</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-n" data-ai="N" data-human="">N</td>
+              <td class="ach-cell ach-n" data-ai="N" data-human="">N</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>60-mile relocation (~46,000 mph)</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>No sonic boom</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-na" data-ai="-" data-human="">&mdash;</td>
+              <td class="ach-cell ach-n" data-ai="N" data-human="">N</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>Object mirrored pilot</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-n" data-ai="N" data-human="">N</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>Ocean disturbance</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-i" data-ai="I" data-human="">I</td>
+              <td class="ach-cell ach-n" data-ai="N" data-human="">N</td>
+              <td class="ach-cell ach-na" data-ai="-" data-human="">&mdash;</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+            <tr>
+              <td>Data confiscated</td>
+              <td class="ach-cell ach-na" data-ai="-" data-human="">&mdash;</td>
+              <td class="ach-cell ach-na" data-ai="-" data-human="">&mdash;</td>
+              <td class="ach-cell ach-na" data-ai="-" data-human="">&mdash;</td>
+              <td class="ach-cell ach-na" data-ai="-" data-human="">&mdash;</td>
+              <td class="ach-cell ach-c" data-ai="C" data-human="">C</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div id="achTally" style="margin-top:10px; display:flex; gap:4px; flex-wrap:wrap;"></div>
+
+        <div class="ach-verdict">
+          <strong>ACH Assessment</strong>
+          "Unknown Technology" is the only hypothesis with <strong>zero inconsistencies</strong>. "Sensor Error" has the fewest among conventional explanations (2), but is contradicted by multi-platform visual confirmation. <span class="hl-claude" data-count="1" data-annotation-id="ann-7">The ACH methodology identifies the least-disproven hypothesis — not the most supported.</span>
+        </div>
+      </div>
+
+      <!-- ═══ RESOLUTION CHECKLIST ═══ -->
+      <div class="invest-pane" id="pane-resolution">
+        <div class="invest-title">Resolution Checklist — Prosaic Explanations</div>
+
+        <div class="checklist-item"><div class="check-icon eliminated">&#10003;</div><div><div class="check-label">Weather balloon</div><div class="check-detail">Eliminated. Object tracked at hypersonic speeds. No balloon matches observed flight profile.</div></div></div>
+        <div class="checklist-item"><div class="check-icon eliminated">&#10003;</div><div><div class="check-label">Conventional aircraft</div><div class="check-detail">Eliminated. No wings, no exhaust, no IFF transponder. Flight profile exceeds any known airframe.</div></div></div>
+        <div class="checklist-item"><div class="check-icon eliminated">&#10003;</div><div><div class="check-label">Military drone / UAS</div><div class="check-detail">Eliminated. No known 2004-era drone matches observed performance.</div></div></div>
+        <div class="checklist-item"><div class="check-icon eliminated">&#10003;</div><div><div class="check-label">Astronomical object</div><div class="check-detail">Eliminated. Object at low altitude, hovering and maneuvering. Broad daylight.</div></div></div>
+        <div class="checklist-item"><div class="check-icon partial">~</div><div><div class="check-label">Sensor malfunction / radar clutter</div><div class="check-detail">Partially addressed. SPY-1 team ruled out clutter. Visual confirmation supports physical object.</div></div></div>
+        <div class="checklist-item"><div class="check-icon eliminated">&#10003;</div><div><div class="check-label">Hoax / fabrication</div><div class="check-detail">Eliminated. Multiple independent witnesses, government-released video, congressional testimony under oath.</div></div></div>
+        <div class="checklist-item"><div class="check-icon open">?</div><div><div class="check-label">Classified US program</div><div class="check-detail">Not fully eliminated. AARO found "no evidence" linking UAP to classified programs. Capabilities exceed known physics.</div></div></div>
+        <div class="checklist-item"><div class="check-icon open">?</div><div><div class="check-label">Foreign adversary technology</div><div class="check-detail">Not fully eliminated. 20 years later no nation has demonstrated remotely comparable capabilities.</div></div></div>
+      </div>
+
+      <!-- ═══ OSINT VERIFICATION ═══ -->
+      <div class="invest-pane" id="pane-osint">
+        <div class="invest-title">OSINT Verification Log</div>
+
+        <div class="osint-item"><div class="osint-field">Location <span class="osint-status osint-verified">Verified</span></div><div class="osint-value">SOCAL OPAREA, ~100mi SW of San Diego. 31.33°N, 117.17°W.</div><div class="osint-source">Confirmed via USS Nimitz deployment records, FOIA documents.</div></div>
+        <div class="osint-item"><div class="osint-field">Weather Conditions <span class="osint-status osint-verified">Verified</span></div><div class="osint-value">Clear skies, calm seas, excellent visibility. No clouds below 25,000 ft.</div><div class="osint-source">NOAA historical weather data, all witness accounts.</div></div>
+        <div class="osint-item"><div class="osint-field">Military Exercise <span class="osint-status osint-verified">Verified</span></div><div class="osint-value">CSG-11 pre-deployment COMPTUEX/JTFEX exercises confirmed.</div><div class="osint-source">Navy deployment schedule, USS Nimitz cruise book.</div></div>
+        <div class="osint-item"><div class="osint-field">Witness Credentials <span class="osint-status osint-verified">Verified</span></div><div class="osint-value">Fravor: CO VFA-41, Top Gun grad, 3,500+ hrs. Dietrich: VFA-41. Day: 20+ yrs Navy.</div><div class="osint-source">Navy records, congressional testimony, public interviews.</div></div>
+        <div class="osint-item"><div class="osint-field">FLIR1 Video Authenticity <span class="osint-status osint-verified">Verified</span></div><div class="osint-value">Officially released by DoD. Metadata consistent with AN/ASQ-228 ATFLIR.</div><div class="osint-source">DoD official release, FOIA confirmation, SCU analysis.</div></div>
+        <div class="osint-item"><div class="osint-field">Data Confiscation <span class="osint-status osint-partial">Partial</span></div><div class="osint-value">Two crew members describe men arriving by helicopter to collect data.</div><div class="osint-source">Documentary interviews. No official records or chain of custody found.</div></div>
+        <div class="osint-item"><div class="osint-field">Submarine Sonar Data <span class="osint-status osint-unverified">Unverified</span></div><div class="osint-value">USS Louisville (SSN-724) was part of CSG-11. Sonar data status unknown.</div><div class="osint-source">No public records. FOIA not yet filed.</div></div>
+      </div>
+
+      <!-- ═══ EVIDENCE CHAIN + LINKING ═══ -->
+      <div class="invest-pane" id="pane-chain">
+        <div class="invest-title">Evidence Chain — Provenance & Links</div>
+
+        <div class="chain-item"><div class="chain-num">1</div><div class="chain-content"><div class="chain-source">AN/SPY-1B Radar Data</div><div class="chain-note">Original tapes confiscated. Exists now only as verbal testimony.</div><div class="chain-corroboration"><div class="corr-dot moderate"></div> <span style="font-size:8px;color:var(--text-3);">Moderate — testimony only</span></div></div></div>
+        <div class="chain-item"><div class="chain-num">2</div><div class="chain-content"><div class="chain-source">FLIR1 Video (downgraded copy)</div><div class="chain-note">Original confiscated. Downgraded copy survived. Officially released by DoD Dec 2017.</div><div class="chain-corroboration"><div class="corr-dot strong"></div> <span style="font-size:8px;color:var(--text-3);">Strong — DoD authenticated</span></div></div></div>
+        <div class="chain-item"><div class="chain-num">3</div><div class="chain-content"><div class="chain-source">CDR Fravor Testimony</div><div class="chain-note">JRE #1361 (2019), Lex Fridman #122 (2020), Congress (July 2023).</div><div class="chain-corroboration"><div class="corr-dot strong"></div> <span style="font-size:8px;color:var(--text-3);">Strong — consistent across 19 years</span></div></div></div>
+        <div class="chain-item"><div class="chain-num">4</div><div class="chain-content"><div class="chain-source">LCDR Dietrich Testimony</div><div class="chain-note">Independent account. 60 Minutes (May 2021). Corroborates all key details.</div><div class="chain-corroboration"><div class="corr-dot strong"></div> <span style="font-size:8px;color:var(--text-3);">Strong — independent witness</span></div></div></div>
+        <div class="chain-item"><div class="chain-num">5</div><div class="chain-content"><div class="chain-source">Kevin Day Testimony</div><div class="chain-note">Radar operator. Public 2019. Describes 2 weeks of anomalous contacts.</div><div class="chain-corroboration"><div class="corr-dot strong"></div> <span style="font-size:8px;color:var(--text-3);">Strong — first-hand, corroborated</span></div></div></div>
+        <div class="chain-item"><div class="chain-num">6</div><div class="chain-content"><div class="chain-source">Data Confiscation Accounts</div><div class="chain-note">PO Hughes and PO Voorhis. Documentary interviews only.</div><div class="chain-corroboration"><div class="corr-dot weak"></div> <span style="font-size:8px;color:var(--text-3);">Weak — no physical evidence</span></div></div></div>
+
+        <!-- Evidence Linking Graph -->
+        <div class="link-graph-area">
+          <div class="invest-title">Evidence Link Map</div>
+          <div style="font-size:9px; color:var(--orange); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;"></span>
+            Click two nodes to create a link between them
+          </div>
+          <div id="linkNodes">
+            <div class="link-node" data-id="spy1" onclick="toggleLinkNode(this)"><span class="ln-dot sensor"></span>SPY-1 Radar</div>
+            <div class="link-node" data-id="flir1" onclick="toggleLinkNode(this)"><span class="ln-dot sensor"></span>FLIR1 Video</div>
+            <div class="link-node" data-id="reloc" onclick="toggleLinkNode(this)"><span class="ln-dot anomaly"></span>60-Mile Relocation</div>
+            <div class="link-node" data-id="ocean" onclick="toggleLinkNode(this)"><span class="ln-dot anomaly"></span>Ocean Disturbance</div>
+            <div class="link-node" data-id="fravor" onclick="toggleLinkNode(this)"><span class="ln-dot witness"></span>Fravor</div>
+            <div class="link-node" data-id="dietrich" onclick="toggleLinkNode(this)"><span class="ln-dot witness"></span>Dietrich</div>
+            <div class="link-node" data-id="day" onclick="toggleLinkNode(this)"><span class="ln-dot witness"></span>Kevin Day</div>
+            <div class="link-node" data-id="confiscation" onclick="toggleLinkNode(this)"><span class="ln-dot document"></span>Data Confiscation</div>
+          </div>
+          <div id="linkList" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <!-- ═══ SEARCH & IMPORT ═══ -->
+      <div class="invest-pane" id="pane-search">
+        <div class="invest-title">Search & Import Evidence</div>
+        <div style="font-size:9px; color:var(--text-2); margin-bottom:12px;">Find external sources and bring them into this case file. Search across OSINT databases, academic papers, news archives, Reddit threads, and FOIA documents.</div>
+
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="e.g. Nimitz FLIR analysis, Kevin Day interview..." onkeydown="if(event.key==='Enter') doSearch()">
+          <button onclick="doSearch()">Search</button>
+        </div>
+
+        <!-- Simulated search results -->
+        <div id="searchResults">
+          <div class="search-result">
+            <div class="sr-source"><span class="sr-type-dot reddit"></span>Reddit · r/UFOs</div>
+            <div class="sr-title">Frame-by-frame FLIR1 analysis reveals rotation axis anomaly</div>
+            <div class="sr-snippet">User /u/SkyWatcher2004 isolates 3 frames showing the object's rotation changes direction mid-flight — inconsistent with any ballistic trajectory or known propulsion...</div>
+            <div class="sr-actions">
+              <button class="sr-action primary" onclick="importResult(this)">+ Import to case</button>
+              <button class="sr-action" onclick="attachToHighlight(this)">Attach to highlight</button>
+              <button class="sr-action">Open source</button>
+            </div>
+          </div>
+
+          <div class="search-result">
+            <div class="sr-source"><span class="sr-type-dot academic"></span>SCU · Scientific Coalition for UAP Studies</div>
+            <div class="sr-title">2019 FLIR1 Reconstruction: Estimated acceleration 75g–5,400g</div>
+            <div class="sr-snippet">Detailed frame-by-frame reconstruction of the FLIR1 footage using calibrated lens parameters, atmospheric correction, and triangulation from known aircraft position...</div>
+            <div class="sr-actions">
+              <button class="sr-action primary" onclick="importResult(this)">+ Import to case</button>
+              <button class="sr-action" onclick="attachToHighlight(this)">Attach to highlight</button>
+              <button class="sr-action">Open source</button>
+            </div>
+          </div>
+
+          <div class="search-result">
+            <div class="sr-source"><span class="sr-type-dot video"></span>YouTube · Lex Fridman Podcast #122</div>
+            <div class="sr-title">David Fravor: Nimitz encounter full testimony (2h14m)</div>
+            <div class="sr-snippet">Commander Fravor's most detailed account. Timestamps: 0:14:22 first visual, 0:31:05 mirroring behavior, 0:45:18 departure speed, 1:12:00 hard drive confiscation...</div>
+            <div class="sr-actions">
+              <button class="sr-action primary" onclick="importResult(this)">+ Import to case</button>
+              <button class="sr-action" onclick="attachToHighlight(this)">Attach to highlight</button>
+              <button class="sr-action">Open source</button>
+            </div>
+          </div>
+
+          <div class="search-result">
+            <div class="sr-source"><span class="sr-type-dot foia"></span>FOIA · The Black Vault</div>
+            <div class="sr-title">AATIP Program Documents — Nimitz Case References</div>
+            <div class="sr-snippet">Collection of declassified documents from the Advanced Aerospace Threat Identification Program. Three memos reference the 2004 Nimitz encounter specifically...</div>
+            <div class="sr-actions">
+              <button class="sr-action primary" onclick="importResult(this)">+ Import to case</button>
+              <button class="sr-action" onclick="attachToHighlight(this)">Attach to highlight</button>
+              <button class="sr-action">Open source</button>
+            </div>
+          </div>
+
+          <div class="search-result">
+            <div class="sr-source"><span class="sr-type-dot web"></span>Web · The War Zone / The Drive</div>
+            <div class="sr-title">Navy Confirms USS Louisville Was Part of Nimitz Strike Group</div>
+            <div class="sr-snippet">FOIA response confirms SSN-724 Louisville was operating with CSG-11 during November 2004. Sonar data status: "responsive records not located" — which may indicate classified hold...</div>
+            <div class="sr-actions">
+              <button class="sr-action primary" onclick="importResult(this)">+ Import to case</button>
+              <button class="sr-action" onclick="attachToHighlight(this)">Attach to highlight</button>
+              <button class="sr-action">Open source</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; padding-top:12px; border-top: 1px solid var(--border);">
+          <div class="invest-title">Imported Evidence</div>
+          <div id="importedList" style="font-size:9px; color:var(--text-3);">No items imported yet. Search and import sources above.</div>
+        </div>
+      </div>
+
+      <!-- ═══ SOLVABILITY ═══ -->
+      <div class="invest-pane" id="pane-solvability">
+        <div class="invest-title">Solvability Assessment</div>
+
+        <div style="font-size:11px; color:var(--text-2); margin-bottom:8px;">Can this case be advanced with available tools?</div>
+        <div style="font-size:28px; font-weight:600; color:var(--gold);">72 <span style="font-size:11px; color:var(--text-3); font-weight:400;">/ 100</span></div>
+        <div class="solv-meter"><div class="solv-fill" style="width:72%;"></div></div>
+
+        <div class="solv-factor"><span class="solv-factor-name">Multiple independent witnesses</span><span class="solv-factor-score positive">+15</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">Official DoD video exists</span><span class="solv-factor-score positive">+12</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">Congressional testimony on record</span><span class="solv-factor-score positive">+10</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">Cross-case pattern matches</span><span class="solv-factor-score positive">+8</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">FOIA avenues unexplored</span><span class="solv-factor-score positive">+10</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">Original sensor data confiscated</span><span class="solv-factor-score negative">-8</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">Key witness silent (Slaight)</span><span class="solv-factor-score negative">-5</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">20-year evidence degradation</span><span class="solv-factor-score negative">-5</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">Submarine data unknown</span><span class="solv-factor-score neutral">+5</span></div>
+        <div class="solv-factor"><span class="solv-factor-name">AARO classified annex sealed</span><span class="solv-factor-score negative">-3</span></div>
+
+        <div class="next-steps">
+          <div class="invest-title" style="margin-top:8px;">Recommended Next Steps</div>
+          <div class="next-step"><span class="step-priority priority-high">High</span>File FOIA for USS Louisville sonar logs (Nov 2004)</div>
+          <div class="next-step"><span class="step-priority priority-high">High</span>File FOIA for AARO Historical Report classified annex</div>
+          <div class="next-step"><span class="step-priority priority-medium">Med</span>Cross-reference NUFORC database for Nov 2004 SOCAL sightings</div>
+          <div class="next-step"><span class="step-priority priority-medium">Med</span>Locate additional Princeton CIC crew</div>
+          <div class="next-step"><span class="step-priority priority-medium">Med</span>Analyze satellite imagery archives for ocean disturbance</div>
+          <div class="next-step"><span class="step-priority priority-low">Low</span>Contact Jim Slaight (WSO, no public statements)</div>
+          <div class="next-step"><span class="step-priority priority-low">Low</span>Review E-2C Hawkeye crew testimony (VAW-117)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Right-click context menu -->
+<div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-menu-header">Highlight</div>
+  <button class="ctx-menu-item" onclick="ctxAction('highlight-nemo')">
+    <span class="ctx-icon hl-nemo-icon">&#9632;</span> Highlight as Nemo
+    <span class="ctx-shortcut">orange</span>
+  </button>
+  <button class="ctx-menu-item" onclick="ctxAction('highlight-claude')">
+    <span class="ctx-icon hl-claude-icon">&#9632;</span> Highlight as Claude
+    <span class="ctx-shortcut">purple</span>
+  </button>
+  <div class="ctx-menu-divider"></div>
+  <div class="ctx-menu-header">Annotate</div>
+  <button class="ctx-menu-item" onclick="ctxAction('add-note')">
+    <span class="ctx-icon note-icon">&#9998;</span> Add Note
+    <span class="ctx-shortcut">N</span>
+  </button>
+  <button class="ctx-menu-item" onclick="ctxAction('add-url')">
+    <span class="ctx-icon url-icon">&#128279;</span> Attach URL
+    <span class="ctx-shortcut">U</span>
+  </button>
+  <div class="ctx-menu-divider"></div>
+  <button class="ctx-menu-item" onclick="ctxAction('link-evidence')">
+    <span class="ctx-icon link-icon">&#8596;</span> Link to Evidence
+  </button>
+  <button class="ctx-menu-item" onclick="ctxAction('search-selection')">
+    <span class="ctx-icon search-icon">&#128269;</span> Search for this
+  </button>
+</div>
+
+<!-- Inline note/URL input panel -->
+<div class="inline-note-input" id="inlineInput">
+  <label id="inlineInputLabel">Add Note</label>
+  <div id="inlineInputBody"></div>
+  <div class="inp-actions">
+    <button class="inp-btn" onclick="closeInlineInput()">Cancel</button>
+    <button class="inp-btn primary" onclick="submitInlineInput()">Save</button>
+  </div>
+</div>
+
+<!-- Annotation popover -->
+<div class="annotation-popover" id="annPopover">
+  <div class="annotation-popover-header">
+    <div class="ann-user" id="annUser"><span class="inv-dot human" style="width:8px;height:8px;"></span> Nemo</div>
+    <button class="annotation-popover-close" onclick="closeAnnotation()">&times;</button>
+  </div>
+  <div class="annotation-popover-body" id="annBody">
+    <!-- Filled dynamically -->
+  </div>
+  <div class="annotation-input-area">
+    <input type="text" id="annInput" placeholder="Add a note or paste a URL..." onkeydown="if(event.key==='Enter') addAnnotation()">
+    <button onclick="addAnnotation()">Add</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ═══════════════════════════════════════════════
+  // INVESTIGATION TAB SWITCHING
+  // ═══════════════════════════════════════════════
+  window.switchInvestTab = function(tab) {
+    document.querySelectorAll('.invest-tab').forEach(function(t) {
+      t.classList.toggle('active', t.dataset.tab === tab);
+    });
+    document.querySelectorAll('.invest-pane').forEach(function(p) {
+      p.classList.toggle('active', p.id === 'pane-' + tab);
+    });
+  };
+
+  // ═══════════════════════════════════════════════
+  // CARD SELECTION
+  // ═══════════════════════════════════════════════
+  window.selectCard = function(el, type, index) {
+    var wasSelected = el.classList.contains('selected');
+    document.querySelectorAll('.selected').forEach(function(c) { c.classList.remove('selected'); });
+    if (wasSelected) return;
+    el.classList.add('selected');
+    if (type === 'evidence') switchInvestTab('chain');
+    else if (type === 'witness') switchInvestTab('chain');
+    else if (type === 'ai') switchInvestTab('ach');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  // ═══════════════════════════════════════════════
+  // PROGRESS BAR + TOC
+  // ═══════════════════════════════════════════════
+  var mainContent = document.getElementById('mainContent');
+  var progressBar = document.getElementById('progressBar');
+
+  mainContent.addEventListener('scroll', function() {
+    var scrollTop = mainContent.scrollTop;
+    var docHeight = mainContent.scrollHeight - mainContent.clientHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = Math.min(pct, 100) + '%';
+  }, { passive: true });
+
+  var tocLinks = document.querySelectorAll('.toc-list a[href^="#"]');
+  var sectionEls = [];
+  tocLinks.forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var el = document.getElementById(href.substring(1));
+      if (el) sectionEls.push({ el: el, link: link });
+    }
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(function(l) { l.classList.remove('active'); });
+        sectionEls.forEach(function(s) {
+          if (s.el === entry.target) s.link.classList.add('active');
+        });
+      }
+    });
+  }, { root: mainContent, rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+  sectionEls.forEach(function(s) { observer.observe(s.el); });
+
+  tocLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        var target = document.getElementById(href.substring(1));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ═══════════════════════════════════════════════
+  // RIGHT-CLICK CONTEXT MENU + HIGHLIGHT SYSTEM
+  // ═══════════════════════════════════════════════
+  var ctxMenu = document.getElementById('ctxMenu');
+  var inlineInput = document.getElementById('inlineInput');
+  var currentSelection = null;
+  var pendingAction = null;
+  var lastCreatedHighlight = null;
+
+  // Intercept right-click on case content
+  document.getElementById('caseContent').addEventListener('contextmenu', function(e) {
+    var sel = window.getSelection();
+    var hasSelection = sel && !sel.isCollapsed && sel.toString().trim().length > 0;
+
+    // Check if right-clicking an existing highlight
+    var existingHl = e.target.closest('.hl-nemo, .hl-claude');
+
+    if (!hasSelection && !existingHl) return; // Let default context menu appear
+
+    e.preventDefault();
+
+    if (hasSelection) {
+      var range = sel.getRangeAt(0);
+      currentSelection = { text: sel.toString(), range: range.cloneRange() };
+    }
+
+    // Update context menu items based on state
+    var linkEvBtn = ctxMenu.querySelector('[onclick*="link-evidence"]');
+    var searchBtn = ctxMenu.querySelector('[onclick*="search-selection"]');
+    if (hasSelection) {
+      linkEvBtn.classList.remove('disabled');
+      searchBtn.classList.remove('disabled');
+    }
+
+    // If right-clicking existing highlight, show annotation options
+    if (existingHl && !hasSelection) {
+      lastCreatedHighlight = existingHl;
+    }
+
+    // Position menu at cursor
+    var x = e.clientX;
+    var y = e.clientY;
+    // Clamp to viewport
+    ctxMenu.style.left = '0px';
+    ctxMenu.style.top = '0px';
+    ctxMenu.classList.add('visible');
+    var menuRect = ctxMenu.getBoundingClientRect();
+    if (x + menuRect.width > window.innerWidth) x = window.innerWidth - menuRect.width - 8;
+    if (y + menuRect.height > window.innerHeight) y = window.innerHeight - menuRect.height - 8;
+    ctxMenu.style.left = x + 'px';
+    ctxMenu.style.top = y + 'px';
+  });
+
+  // Close context menu on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.ctx-menu')) {
+      ctxMenu.classList.remove('visible');
+    }
+    // Close annotation popover on outside click
+    var hl = e.target.closest('.hl-nemo, .hl-claude');
+    if (hl) {
+      e.preventDefault();
+      openAnnotationPopover(hl);
+      return;
+    }
+    if (!e.target.closest('.annotation-popover') && !e.target.closest('.hl-nemo') && !e.target.closest('.hl-claude') && !e.target.closest('.inline-note-input')) {
+      closeAnnotation();
+    }
+  });
+
+  // Context menu actions
+  window.ctxAction = function(action) {
+    ctxMenu.classList.remove('visible');
+
+    switch (action) {
+      case 'highlight-nemo':
+        applyHighlight('nemo');
+        break;
+      case 'highlight-claude':
+        applyHighlight('claude');
+        break;
+      case 'add-note':
+        applyHighlight('nemo');
+        if (lastCreatedHighlight) showInlineInput('note', lastCreatedHighlight);
+        break;
+      case 'add-url':
+        applyHighlight('nemo');
+        if (lastCreatedHighlight) showInlineInput('url', lastCreatedHighlight);
+        break;
+      case 'link-evidence':
+        applyHighlight('nemo');
+        switchInvestTab('chain');
+        break;
+      case 'search-selection':
+        if (currentSelection) {
+          switchInvestTab('search');
+          document.getElementById('searchInput').value = currentSelection.text.substring(0, 60);
+          doSearch();
+        }
+        break;
+    }
+  };
+
+  function applyHighlight(user) {
+    // If we already have an existing highlight under cursor, just use that
+    if (lastCreatedHighlight && !currentSelection) return;
+    if (!currentSelection) return;
+
+    var range = currentSelection.range;
+    var span = document.createElement('span');
+    var annId = 'ann-' + Date.now();
+    span.className = 'hl-' + user;
+    span.setAttribute('data-count', '');
+    span.setAttribute('data-annotation-id', annId);
+    span.setAttribute('data-user', user);
+
+    try {
+      range.surroundContents(span);
+    } catch(e) {
+      var fragment = range.extractContents();
+      span.appendChild(fragment);
+      range.insertNode(span);
+    }
+
+    window.getSelection().removeAllRanges();
+    currentSelection = null;
+    lastCreatedHighlight = span;
+
+    // Init annotation store
+    annotations[annId] = { user: user, notes: [], attachments: [] };
+    updateHighlightCount();
+  }
+
+  // ═══════════════════════════════════════════════
+  // INLINE NOTE / URL INPUT
+  // ═══════════════════════════════════════════════
+  function showInlineInput(type, hlEl) {
+    var label = document.getElementById('inlineInputLabel');
+    var body = document.getElementById('inlineInputBody');
+    pendingAction = { type: type, highlight: hlEl };
+
+    if (type === 'note') {
+      label.textContent = 'Add Note';
+      body.innerHTML = '<textarea id="inlineTextarea" placeholder="What do you notice about this?"></textarea>';
+      inlineInput.classList.add('visible');
+      var rect = hlEl.getBoundingClientRect();
+      inlineInput.style.left = Math.min(rect.left, window.innerWidth - 320) + 'px';
+      inlineInput.style.top = (rect.bottom + 8) + 'px';
+      setTimeout(function() { document.getElementById('inlineTextarea').focus(); }, 50);
+    } else if (type === 'url') {
+      label.textContent = 'Attach URL';
+      body.innerHTML = '<input type="text" id="inlineUrlTitle" placeholder="Title (e.g. Fravor JRE Interview)">' +
+                       '<input type="url" id="inlineUrlValue" placeholder="https://...">';
+      inlineInput.classList.add('visible');
+      var rect = hlEl.getBoundingClientRect();
+      inlineInput.style.left = Math.min(rect.left, window.innerWidth - 320) + 'px';
+      inlineInput.style.top = (rect.bottom + 8) + 'px';
+      setTimeout(function() { document.getElementById('inlineUrlTitle').focus(); }, 50);
+    }
+  }
+
+  window.closeInlineInput = function() {
+    inlineInput.classList.remove('visible');
+    pendingAction = null;
+  };
+
+  window.submitInlineInput = function() {
+    if (!pendingAction) return;
+    var hl = pendingAction.highlight;
+    var annId = hl.getAttribute('data-annotation-id');
+    var ann = annotations[annId];
+    if (!ann) {
+      ann = { user: hl.getAttribute('data-user') || 'nemo', notes: [], attachments: [] };
+      annotations[annId] = ann;
+    }
+
+    if (pendingAction.type === 'note') {
+      var textarea = document.getElementById('inlineTextarea');
+      var val = textarea.value.trim();
+      if (val) {
+        ann.notes.push(val);
+        var count = ann.notes.length + ann.attachments.length;
+        hl.setAttribute('data-count', count);
+      }
+    } else if (pendingAction.type === 'url') {
+      var title = document.getElementById('inlineUrlTitle').value.trim() || 'Untitled link';
+      var url = document.getElementById('inlineUrlValue').value.trim();
+      if (url) {
+        ann.attachments.push({ type: 'url', title: title, url: url });
+        var count = ann.notes.length + ann.attachments.length;
+        hl.setAttribute('data-count', count);
+      }
+    }
+
+    closeInlineInput();
+    updateHighlightCount();
+
+    // Flash the highlight to confirm
+    hl.style.transition = 'background 0.2s';
+    var orig = getComputedStyle(hl).background;
+    hl.style.background = hl.classList.contains('hl-nemo') ? 'var(--hl-nemo-strong)' : 'var(--hl-claude-strong)';
+    setTimeout(function() { hl.style.background = ''; }, 400);
+  };
+
+  // ═══════════════════════════════════════════════
+  // ANNOTATION POPOVER (click existing highlight)
+  // ═══════════════════════════════════════════════
+  var annPopover = document.getElementById('annPopover');
+  var activeHighlight = null;
+
+  var annotations = {
+    'ann-1': { user: 'claude', notes: ['Five-channel corroboration (visual, radar, IR, multiple witnesses, behavioral analysis) is exceptionally rare in the UAP literature. Only 3 other cases in the corpus achieve this level.'], attachments: [] },
+    'ann-2': { user: 'nemo', notes: ['Every single witness says the same thing about the shape. That consistency matters.'], attachments: [{ type: 'video', title: 'Fravor describes shape — JRE', url: '#' }] },
+    'ann-3': { user: 'nemo', notes: ['This is the moment. 4 trained pilots, broad daylight, clear skies. Whatever this was — it was real.', 'This detail haunts me', 'The water disturbance pattern matches Shag Harbour 1967'], attachments: [
+      { type: 'url', title: 'r/UFOs thread on ocean anomaly', url: '#' },
+      { type: 'video', title: 'Fravor on whitewater — Lex Fridman', url: '#' }
+    ] },
+    'ann-4': { user: 'nemo', notes: ['Five independent sensor channels confirmed this thing. That\'s not a misidentification.'], attachments: [] },
+    'ann-5': { user: 'nemo', notes: ['The 60-mile jump is the single most extraordinary claim. Backed by radar from a billion-dollar warship.'], attachments: [] },
+    'ann-6': { user: 'nemo', notes: ['If it was nothing, why take the hard drives? This is the biggest red flag.'], attachments: [] },
+    'ann-7': { user: 'claude', notes: ['"Unknown Technology" is a residual category. ACH does not confirm what the object is — only what it is least inconsistent with.'], attachments: [] }
+  };
+
+  function openAnnotationPopover(hlEl) {
+    activeHighlight = hlEl;
+    var annId = hlEl.getAttribute('data-annotation-id');
+    var user = hlEl.getAttribute('data-user') || (hlEl.classList.contains('hl-nemo') ? 'nemo' : 'claude');
+    var ann = annotations[annId] || { user: user, notes: [], attachments: [] };
+
+    var userLabel = document.getElementById('annUser');
+    userLabel.innerHTML = user === 'nemo'
+      ? '<span class="inv-dot human" style="width:8px;height:8px;"></span> Nemo'
+      : '<span class="inv-dot ai" style="width:8px;height:8px;"></span> Claude';
+
+    var body = document.getElementById('annBody');
+    var borderColor = user === 'nemo' ? 'var(--orange)' : 'var(--purple)';
+    var excerptText = hlEl.textContent.substring(0, 80) + (hlEl.textContent.length > 80 ? '...' : '');
+    var html = '<div style="font-size:10px;color:var(--text-2);margin-bottom:8px;padding:6px 8px;background:var(--bg);border-radius:4px;border-left:3px solid ' + borderColor + ';">"' + excerptText + '"</div>';
+
+    if (ann.notes.length) {
+      ann.notes.forEach(function(note) {
+        html += '<div class="annotation-note' + (user === 'claude' ? ' claude-note' : '') + '">' + note + '</div>';
+      });
+    }
+    if (ann.attachments.length) {
+      html += '<div class="annotation-attachments">';
+      html += '<div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;">Attachments</div>';
+      ann.attachments.forEach(function(att) {
+        var icon = att.type === 'video' ? '&#9654;' : att.type === 'url' ? '&#128279;' : '&#128196;';
+        html += '<div class="annotation-attachment"><span class="att-icon">' + icon + '</span><span class="att-title">' + att.title + '</span><span class="att-type">' + att.type + '</span></div>';
+      });
+      html += '</div>';
+    }
+
+    if (!ann.notes.length && !ann.attachments.length) {
+      html += '<div style="font-size:9px;color:var(--text-3);padding:8px 0;">No annotations yet. Right-click this highlight to add notes or URLs.</div>';
+    }
+
+    body.innerHTML = html;
+
+    var rect = hlEl.getBoundingClientRect();
+    annPopover.style.left = Math.min(rect.left, window.innerWidth - 340) + 'px';
+    annPopover.style.top = (rect.bottom + 8) + 'px';
+    annPopover.classList.add('visible');
+    if (!annotations[annId]) annotations[annId] = ann;
+  }
+
+  window.closeAnnotation = function() {
+    annPopover.classList.remove('visible');
+    activeHighlight = null;
+  };
+
+  window.addAnnotation = function() {
+    var input = document.getElementById('annInput');
+    var val = input.value.trim();
+    if (!val || !activeHighlight) return;
+    var annId = activeHighlight.getAttribute('data-annotation-id');
+    var ann = annotations[annId];
+    if (!ann) {
+      ann = { user: activeHighlight.getAttribute('data-user') || 'nemo', notes: [], attachments: [] };
+      annotations[annId] = ann;
+    }
+    if (val.match(/^https?:\/\//)) {
+      ann.attachments.push({ type: 'url', title: val.replace(/^https?:\/\/(www\.)?/, '').substring(0, 50), url: val });
+    } else {
+      ann.notes.push(val);
+    }
+    var count = ann.notes.length + ann.attachments.length;
+    activeHighlight.setAttribute('data-count', count);
+    input.value = '';
+    openAnnotationPopover(activeHighlight);
+    updateHighlightCount();
+  };
+
+  // Highlight count for sidebar
+  function updateHighlightCount() {
+    var highlights = document.querySelectorAll('.hl-nemo, .hl-claude');
+    var countEl = document.getElementById('hlCount');
+    if (countEl) countEl.textContent = highlights.length;
+  }
+
+  // Jump to next highlight
+  var hlIndex = -1;
+  window.jumpToNextHighlight = function() {
+    var highlights = document.querySelectorAll('.hl-nemo, .hl-claude');
+    if (!highlights.length) return;
+    hlIndex = (hlIndex + 1) % highlights.length;
+    highlights[hlIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    openAnnotationPopover(highlights[hlIndex]);
+  };
+
+  // ═══════════════════════════════════════════════
+  // ACH VOTING
+  // ═══════════════════════════════════════════════
+  var voteOrder = ['', 'C', 'I', 'N'];
+  document.querySelectorAll('.ach-cell').forEach(function(cell) {
+    cell.addEventListener('click', function() {
+      var current = cell.getAttribute('data-human') || '';
+      var idx = voteOrder.indexOf(current);
+      var next = voteOrder[(idx + 1) % voteOrder.length];
+      cell.setAttribute('data-human', next);
+
+      var ai = cell.getAttribute('data-ai');
+      if (next && next !== ai) {
+        var humanClass = next === 'C' ? 'ach-c' : next === 'I' ? 'ach-i' : 'ach-n';
+        cell.className = 'ach-cell';
+        cell.innerHTML = '<span style="font-size:7px;color:var(--text-3);">' + ai + '</span> <span class="' + humanClass + '" style="font-weight:700;">' + next + '</span><span class="human-vote"></span>';
+      } else if (next && next === ai) {
+        cell.className = 'ach-cell ' + (next === 'C' ? 'ach-c' : next === 'I' ? 'ach-i' : 'ach-n');
+        cell.innerHTML = next + '<span class="human-vote"></span>';
+      } else {
+        var c = ai === 'C' ? 'ach-c' : ai === 'I' ? 'ach-i' : ai === 'N' ? 'ach-n' : 'ach-na';
+        cell.className = 'ach-cell ' + c;
+        cell.innerHTML = ai === '-' ? '&mdash;' : ai;
+      }
+      updateACHTally();
+    });
+  });
+
+  function updateACHTally() {
+    var headers = ['Aircraft', 'Drone', 'Atmospheric', 'Sensor Err', 'Unknown'];
+    var counts = [0, 0, 0, 0, 0];
+    var rows = document.querySelectorAll('#achTable tbody tr');
+    rows.forEach(function(row) {
+      var cells = row.querySelectorAll('.ach-cell');
+      cells.forEach(function(cell, ci) {
+        var human = cell.getAttribute('data-human');
+        var val = human || cell.getAttribute('data-ai');
+        if (val === 'I') counts[ci]++;
+      });
+    });
+    var tally = document.getElementById('achTally');
+    var html = '';
+    counts.forEach(function(c, i) {
+      var color = c === 0 ? 'var(--green)' : c <= 2 ? 'var(--gold)' : 'var(--red)';
+      html += '<span style="font-size:8px;padding:3px 8px;border-radius:3px;background:var(--bg);border:1px solid var(--border);"><span style="font-weight:600;color:' + color + ';">' + c + 'I</span> ' + headers[i] + '</span>';
+    });
+    tally.innerHTML = html;
+  }
+  updateACHTally();
+
+  // ═══════════════════════════════════════════════
+  // EVIDENCE LINKING
+  // ═══════════════════════════════════════════════
+  var linkFirst = null;
+  var links = [
+    { a: 'spy1', b: 'flir1', label: 'corroborates' },
+    { a: 'spy1', b: 'reloc', label: 'recorded by' },
+    { a: 'fravor', b: 'dietrich', label: 'independent corroboration' },
+    { a: 'fravor', b: 'ocean', label: 'observed' },
+    { a: 'flir1', b: 'confiscation', label: 'original confiscated' },
+  ];
+
+  window.toggleLinkNode = function(el) {
+    if (!linkFirst) {
+      linkFirst = el;
+      el.classList.add('active');
+    } else {
+      if (linkFirst === el) {
+        linkFirst.classList.remove('active');
+        linkFirst = null;
+        return;
+      }
+      var a = linkFirst.getAttribute('data-id');
+      var b = el.getAttribute('data-id');
+      var label = prompt('Describe the connection (e.g. "corroborates", "contradicts", "recorded by"):');
+      if (label) {
+        links.push({ a: a, b: b, label: label });
+        renderLinks();
+      }
+      linkFirst.classList.remove('active');
+      linkFirst = null;
+    }
+  };
+
+  function renderLinks() {
+    var list = document.getElementById('linkList');
+    var html = '';
+    links.forEach(function(link) {
+      html += '<div class="link-connection">' +
+        '<span style="font-size:9px;font-weight:500;color:var(--text-1);">' + link.a + '</span>' +
+        '<span class="lc-line"></span>' +
+        '<span class="lc-label">' + link.label + '</span>' +
+        '<span class="lc-line"></span>' +
+        '<span style="font-size:9px;font-weight:500;color:var(--text-1);">' + link.b + '</span>' +
+        '</div>';
+    });
+    list.innerHTML = html;
+  }
+  renderLinks();
+
+  // ═══════════════════════════════════════════════
+  // SEARCH & IMPORT
+  // ═══════════════════════════════════════════════
+  var importedItems = [];
+
+  window.doSearch = function() {
+    var input = document.getElementById('searchInput');
+    var query = input.value.trim();
+    if (!query) return;
+    var results = document.getElementById('searchResults');
+    results.style.opacity = '0.4';
+    setTimeout(function() { results.style.opacity = '1'; }, 400);
+  };
+
+  window.importResult = function(btn) {
+    var result = btn.closest('.search-result');
+    var title = result.querySelector('.sr-title').textContent;
+    var source = result.querySelector('.sr-source').textContent;
+    importedItems.push({ title: title, source: source });
+    btn.textContent = '\u2713 Imported';
+    btn.style.background = 'var(--green-soft)';
+    btn.style.borderColor = 'var(--green)';
+    btn.style.color = 'var(--green)';
+    btn.disabled = true;
+    updateImportedList();
+  };
+
+  window.attachToHighlight = function(btn) {
+    var result = btn.closest('.search-result');
+    var title = result.querySelector('.sr-title').textContent;
+    alert('Click on any highlighted passage in the case file to attach:\n\n"' + title + '"');
+  };
+
+  function updateImportedList() {
+    var list = document.getElementById('importedList');
+    if (!importedItems.length) { list.innerHTML = 'No items imported yet.'; return; }
+    var html = '';
+    importedItems.forEach(function(item) {
+      html += '<div style="padding:6px 8px;background:var(--bg);border-radius:4px;margin-bottom:4px;font-size:9px;display:flex;align-items:center;gap:6px;">' +
+        '<span style="color:var(--green);font-weight:600;">\u2713</span>' +
+        '<span style="color:var(--text-1);font-weight:500;">' + item.title.substring(0, 50) + '</span>' +
+        '<span style="color:var(--text-3);margin-left:auto;">' + item.source + '</span></div>';
+    });
+    list.innerHTML = html;
+  }
+
+  // ═══════════════════════════════════════════════
+  // KEYBOARD SHORTCUTS
+  // ═══════════════════════════════════════════════
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      ctxMenu.classList.remove('visible');
+      closeAnnotation();
+      closeInlineInput();
+    }
+    // Shortcuts when context menu is open
+    if (ctxMenu.classList.contains('visible')) {
+      if (e.key === 'n' || e.key === 'N') { e.preventDefault(); ctxAction('add-note'); }
+      if (e.key === 'u' || e.key === 'U') { e.preventDefault(); ctxAction('add-url'); }
+    }
+    // Submit inline input on Cmd/Ctrl+Enter
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && inlineInput.classList.contains('visible')) {
+      e.preventDefault();
+      submitInlineInput();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Evidence Index Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --signal: #C4A35A;
+    --confirm: #4A7C59;
+    --caution: #B85C38;
+    --null: #7A8A8C;
+    --data-1: #2D4A6B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px; border-bottom: 1px solid var(--rule);
+  }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--graphite); text-decoration: none; }
+  nav ul li a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+  .page-header {
+    max-width: 1400px; margin: 0 auto; padding: 60px 60px 0;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 36px; margin-bottom: 8px;
+  }
+  .page-header p {
+    color: var(--graphite); font-size: 15px; margin-bottom: 40px;
+  }
+
+  /* --- FILTERS BAR --- */
+  .filters-bar {
+    max-width: 1400px; margin: 0 auto; padding: 0 60px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding-bottom: 24px; border-bottom: 1px solid var(--rule);
+  }
+
+  .filter-group {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .filter-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite);
+  }
+
+  .filter-select {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    padding: 8px 12px; border: 1px solid var(--rule); background: #FDFBF7;
+    color: var(--ink); cursor: pointer; appearance: none;
+    padding-right: 28px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234A4640'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+
+  .search-input {
+    margin-left: auto;
+    font-family: 'Source Serif 4', serif; font-size: 14px;
+    padding: 8px 16px; border: 1px solid var(--rule); background: #FDFBF7;
+    color: var(--ink); width: 260px;
+  }
+  .search-input::placeholder { color: var(--null); }
+
+  .view-toggle {
+    display: flex; gap: 0;
+  }
+  .view-toggle button {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 8px 14px;
+    border: 1px solid var(--rule); background: #FDFBF7; color: var(--graphite);
+    cursor: pointer;
+  }
+  .view-toggle button:first-child { border-right: none; }
+  .view-toggle button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* --- RESULTS INFO --- */
+  .results-info {
+    max-width: 1400px; margin: 0 auto; padding: 16px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .results-info span {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--graphite); letter-spacing: 0.5px;
+  }
+  .sort-select {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    padding: 6px 10px; border: 1px solid var(--rule); background: #FDFBF7; color: var(--ink);
+  }
+
+  /* --- CASE CARDS GRID --- */
+  .cases-grid {
+    max-width: 1400px; margin: 0 auto; padding: 0 60px 80px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  .case-card {
+    border: 1px solid var(--rule); background: #FDFBF7; padding: 28px; position: relative;
+  }
+
+  .case-card-header {
+    display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;
+  }
+
+  .case-card .tier-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 3px 8px;
+  }
+  .tier-1 { background: rgba(196, 163, 90, 0.12); color: var(--signal); }
+  .tier-2 { background: rgba(74, 124, 89, 0.12); color: var(--confirm); }
+  .tier-3 { background: rgba(74, 70, 64, 0.08); color: var(--graphite); }
+  .tier-4 { background: rgba(184, 92, 56, 0.10); color: var(--caution); }
+
+  .case-card .score-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 2px solid var(--signal); display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--signal);
+  }
+
+  .case-card h3 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 18px;
+    line-height: 1.3; margin-bottom: 12px;
+  }
+
+  .case-card-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+    letter-spacing: 0.5px; line-height: 1.8;
+  }
+
+  .case-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .case-tag {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 8px;
+    background: rgba(45, 74, 107, 0.06); color: var(--data-1);
+  }
+
+  .evidence-indicators {
+    display: flex; gap: 12px; margin-top: 12px;
+  }
+
+  .evidence-dot {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--confirm);
+  }
+  .evidence-dot.absent { color: var(--rule); }
+
+  /* --- PAGINATION --- */
+  .pagination {
+    max-width: 1400px; margin: 0 auto; padding: 0 60px 80px;
+    display: flex; justify-content: center; align-items: center; gap: 4px;
+  }
+  .pagination button {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    width: 36px; height: 36px; border: 1px solid var(--rule);
+    background: #FDFBF7; color: var(--graphite); cursor: pointer;
+  }
+  .pagination button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  footer {
+    border-top: 1px solid var(--rule); padding: 40px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Evidence Index</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#" class="active">Evidence Index</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">Query</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <h1>Evidence Index</h1>
+  <p>174,832 cases aggregated from 12 source archives, scored and tiered by evidentiary strength.</p>
+</div>
+
+<div class="filters-bar">
+  <div class="filter-group">
+    <span class="filter-label">Tier</span>
+    <select class="filter-select">
+      <option>All Tiers</option>
+      <option>Tier 1</option>
+      <option>Tier 2</option>
+      <option>Tier 3</option>
+      <option>Tier 4</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Source</span>
+    <select class="filter-select">
+      <option>All Sources</option>
+      <option>NUFORC</option>
+      <option>Blue Book</option>
+      <option>MUFON</option>
+      <option>Black Vault</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Date</span>
+    <select class="filter-select">
+      <option>All Time</option>
+      <option>2020–Present</option>
+      <option>2000–2019</option>
+      <option>1980–1999</option>
+      <option>Pre-1980</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Evidence</span>
+    <select class="filter-select">
+      <option>Any</option>
+      <option>Radar</option>
+      <option>Video</option>
+      <option>Photo</option>
+      <option>Physical Trace</option>
+    </select>
+  </div>
+  <input type="text" class="search-input" placeholder="Search cases...">
+  <div class="view-toggle">
+    <button class="active">Grid</button>
+    <button>List</button>
+  </div>
+</div>
+
+<div class="results-info">
+  <span>Showing 1–12 of 174,832 cases</span>
+  <select class="sort-select">
+    <option>Sort: Credibility (High → Low)</option>
+    <option>Sort: Date (Recent)</option>
+    <option>Sort: Date (Oldest)</option>
+    <option>Sort: Witness Count</option>
+  </select>
+</div>
+
+<div class="cases-grid">
+  <div class="case-card">
+    <div class="case-card-header">
+      <span class="tier-badge tier-1">Tier 1</span>
+      <div class="score-circle">94</div>
+    </div>
+    <h3>USS Nimitz Encounter (Tic Tac)</h3>
+    <div class="case-card-meta">
+      Nov 14, 2004 · Off San Diego, CA<br>
+      Multiple military witnesses · FLIR video
+    </div>
+    <div class="evidence-indicators">
+      <span class="evidence-dot">Radar</span>
+      <span class="evidence-dot">Video</span>
+      <span class="evidence-dot absent">Photo</span>
+      <span class="evidence-dot">Official</span>
+    </div>
+    <div class="case-tags">
+      <span class="case-tag">Tic-Tac</span>
+      <span class="case-tag">Trans-Medium</span>
+      <span class="case-tag">Rapid Acceleration</span>
+    </div>
+  </div>
+
+  <div class="case-card">
+    <div class="case-card-header">
+      <span class="tier-badge tier-1">Tier 1</span>
+      <div class="score-circle">91</div>
+    </div>
+    <h3>JAL Flight 1628 over Alaska</h3>
+    <div class="case-card-meta">
+      Nov 17, 1986 · Anchorage, AK<br>
+      Airline crew · FAA investigation
+    </div>
+    <div class="evidence-indicators">
+      <span class="evidence-dot">Radar</span>
+      <span class="evidence-dot absent">Video</span>
+      <span class="evidence-dot absent">Photo</span>
+      <span class="evidence-dot">Official</span>
+    </div>
+    <div class="case-tags">
+      <span class="case-tag">Walnut-Shaped</span>
+      <span class="case-tag">Massive Scale</span>
+      <span class="case-tag">Pacing Aircraft</span>
+    </div>
+  </div>
+
+  <div class="case-card">
+    <div class="case-card-header">
+      <span class="tier-badge tier-1">Tier 1</span>
+      <div class="score-circle">89</div>
+    </div>
+    <h3>Rendlesham Forest Incident</h3>
+    <div class="case-card-meta">
+      Dec 26, 1980 · Suffolk, England<br>
+      Military personnel · Physical trace
+    </div>
+    <div class="evidence-indicators">
+      <span class="evidence-dot absent">Radar</span>
+      <span class="evidence-dot absent">Video</span>
+      <span class="evidence-dot absent">Photo</span>
+      <span class="evidence-dot">Trace</span>
+    </div>
+    <div class="case-tags">
+      <span class="case-tag">Triangular</span>
+      <span class="case-tag">Landing</span>
+      <span class="case-tag">Radiation</span>
+    </div>
+  </div>
+
+  <div class="case-card">
+    <div class="case-card-header">
+      <span class="tier-badge tier-1">Tier 1</span>
+      <div class="score-circle">86</div>
+    </div>
+    <h3>Phoenix Lights Mass Sighting</h3>
+    <div class="case-card-meta">
+      Mar 13, 1997 · Phoenix, AZ<br>
+      Thousands of witnesses · Governor testimony
+    </div>
+    <div class="evidence-indicators">
+      <span class="evidence-dot absent">Radar</span>
+      <span class="evidence-dot">Video</span>
+      <span class="evidence-dot">Photo</span>
+      <span class="evidence-dot">Official</span>
+    </div>
+    <div class="case-tags">
+      <span class="case-tag">V-Formation</span>
+      <span class="case-tag">Silent</span>
+      <span class="case-tag">Mass Sighting</span>
+    </div>
+  </div>
+
+  <div class="case-card">
+    <div class="case-card-header">
+      <span class="tier-badge tier-2">Tier 2</span>
+      <div class="score-circle" style="border-color: var(--confirm); color: var(--confirm);">72</div>
+    </div>
+    <h3>Stephenville Radar-Confirmed Sighting</h3>
+    <div class="case-card-meta">
+      Jan 8, 2008 · Stephenville, TX<br>
+      Civilian witnesses · FAA radar data
+    </div>
+    <div class="evidence-indicators">
+      <span class="evidence-dot">Radar</span>
+      <span class="evidence-dot absent">Video</span>
+      <span class="evidence-dot absent">Photo</span>
+      <span class="evidence-dot absent">Official</span>
+    </div>
+    <div class="case-tags">
+      <span class="case-tag">Large Craft</span>
+      <span class="case-tag">Silent</span>
+      <span class="case-tag">Lights</span>
+    </div>
+  </div>
+
+  <div class="case-card">
+    <div class="case-card-header">
+      <span class="tier-badge tier-2">Tier 2</span>
+      <div class="score-circle" style="border-color: var(--confirm); color: var(--confirm);">68</div>
+    </div>
+    <h3>O'Hare Airport Disc Sighting</h3>
+    <div class="case-card-meta">
+      Nov 7, 2006 · Chicago, IL<br>
+      Airport personnel · No official investigation
+    </div>
+    <div class="evidence-indicators">
+      <span class="evidence-dot absent">Radar</span>
+      <span class="evidence-dot absent">Video</span>
+      <span class="evidence-dot absent">Photo</span>
+      <span class="evidence-dot absent">Official</span>
+    </div>
+    <div class="case-tags">
+      <span class="case-tag">Disc</span>
+      <span class="case-tag">Hovering</span>
+      <span class="case-tag">Hole in Clouds</span>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button class="active">1</button>
+  <button>2</button>
+  <button>3</button>
+  <button>4</button>
+  <button>5</button>
+  <button>…</button>
+  <button>14,570</button>
+</div>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Direction 2 Homepage</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --signal: #C4A35A;
+    --confirm: #4A7C59;
+    --caution: #B85C38;
+    --null: #7A8A8C;
+    --data-1: #2D4A6B;
+    --data-2: #C4A35A;
+    --data-3: #4A7C59;
+    --data-4: #8B6B8A;
+    --warm-white: #FDFBF7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* ============================================ */
+  /* SCROLL REVEAL ANIMATIONS                     */
+  /* ============================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: rgba(245, 242, 236, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .logo span { color: var(--signal); }
+
+  nav ul { list-style: none; display: flex; gap: 32px; }
+
+  nav ul li a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--graphite);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav ul li a:hover { color: var(--ink); }
+
+  /* ============================================ */
+  /* HERO — leads with a question                 */
+  /* ============================================ */
+  .hero {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 120px 80px 100px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Meridian line motif */
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: 46%;
+    top: 40px;
+    bottom: 40px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--rule), transparent);
+  }
+
+  .hero-text h1 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1.12;
+    margin-bottom: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-text h1 em {
+    font-style: italic;
+    color: var(--signal);
+  }
+
+  .hero-text .lead {
+    font-size: 19px;
+    color: var(--graphite);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 520px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--graphite); }
+
+  .btn-secondary {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  /* --- Hero right: live snapshot --- */
+  .hero-snapshot {
+    position: relative;
+  }
+
+  .snapshot-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    padding: 36px;
+    position: relative;
+  }
+
+  .snapshot-card::before {
+    content: 'LIVE FROM THE CORPUS';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--signal);
+    background: var(--paper);
+    padding: 0 8px;
+  }
+
+  .snapshot-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .snapshot-stat {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .snapshot-stat .number {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .snapshot-stat .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--null);
+  }
+
+  .snapshot-latest {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--graphite);
+    line-height: 1.7;
+  }
+
+  .snapshot-latest strong {
+    color: var(--ink);
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .snapshot-confidence {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: rgba(74, 124, 89, 0.1);
+    color: var(--confirm);
+    margin-top: 8px;
+  }
+
+  /* ============================================ */
+  /* WHAT IS MERIDIAN — plain language explainer   */
+  /* ============================================ */
+  .explainer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px 100px;
+  }
+
+  .explainer-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 60px;
+    align-items: start;
+    padding-top: 80px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .explainer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--signal);
+    padding-top: 6px;
+  }
+
+  .explainer-content h2 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.35;
+    margin-bottom: 20px;
+  }
+
+  .explainer-content p {
+    font-size: 17px;
+    color: var(--graphite);
+    line-height: 1.75;
+    margin-bottom: 16px;
+    max-width: 680px;
+  }
+
+  .explainer-content p:last-child { margin-bottom: 0; }
+
+  .trust-markers {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .trust-marker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--graphite);
+  }
+
+  .trust-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--confirm);
+  }
+
+  /* ============================================ */
+  /* THREE PATHS — guided entry                   */
+  /* ============================================ */
+  .paths {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px 100px;
+  }
+
+  .paths-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .paths-header h2 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 34px;
+    margin-bottom: 10px;
+  }
+
+  .paths-header p {
+    color: var(--graphite);
+    font-size: 16px;
+  }
+
+  .paths-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .path-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    padding: 44px 36px;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+
+  .path-card:hover {
+    border-color: var(--graphite);
+    transform: translateY(-4px);
+  }
+
+  .path-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 48px;
+    font-weight: 500;
+    color: rgba(196, 163, 90, 0.2);
+    position: absolute;
+    top: 20px;
+    right: 28px;
+    line-height: 1;
+  }
+
+  .path-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 20px;
+  }
+
+  .path-card h3 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .path-card p {
+    font-size: 15px;
+    color: var(--graphite);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .path-examples {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--null);
+    letter-spacing: 0.3px;
+    line-height: 1.8;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .path-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    margin-top: 20px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--ink);
+    transition: color 0.2s;
+  }
+
+  /* ============================================ */
+  /* FEATURED FINDING — story-driven              */
+  /* ============================================ */
+  .featured {
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(245, 242, 236, 0.06);
+  }
+
+  .featured-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .featured-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 24px;
+  }
+
+  .featured h2 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--paper);
+  }
+
+  .featured .excerpt {
+    font-size: 16px;
+    color: rgba(245, 242, 236, 0.65);
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+
+  .featured .read-more {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--signal);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(196, 163, 90, 0.3);
+    padding-bottom: 2px;
+  }
+
+  /* Featured right — visual data teaser */
+  .featured-viz {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .convergence-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .convergence-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: rgba(245, 242, 236, 0.5);
+    width: 180px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .convergence-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(245, 242, 236, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .convergence-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--signal);
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .convergence-sigma {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--signal);
+    width: 44px;
+    flex-shrink: 0;
+  }
+
+  /* ============================================ */
+  /* ASK ANYTHING — prominent query CTA           */
+  /* ============================================ */
+  .ask-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 80px;
+    text-align: center;
+    position: relative;
+  }
+
+  .ask-section::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 60px;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .ask-section h2 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .ask-section .subtitle {
+    color: var(--graphite);
+    font-size: 16px;
+    margin-bottom: 44px;
+  }
+
+  .ask-box {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid var(--rule);
+    background: var(--warm-white);
+    transition: border-color 0.2s;
+  }
+
+  .ask-box:focus-within { border-color: var(--graphite); }
+
+  .ask-box input {
+    flex: 1;
+    padding: 20px 28px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .ask-box input::placeholder { color: var(--null); }
+
+  .ask-box button {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 20px 32px;
+    border: none;
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .ask-box button:hover { background: var(--graphite); }
+
+  .ask-examples {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .ask-example {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+    border: 1px solid var(--rule);
+    color: var(--graphite);
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+  }
+
+  .ask-example:hover {
+    border-color: var(--graphite);
+    color: var(--ink);
+  }
+
+  /* ============================================ */
+  /* TOP CASES — accessible card format           */
+  /* ============================================ */
+  .top-cases {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px 100px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-header h2 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 28px;
+  }
+
+  .section-header a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--graphite);
+    text-decoration: none;
+  }
+
+  .cases-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .case-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    padding: 28px;
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .case-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--graphite);
+  }
+
+  .case-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .tier-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+  }
+
+  .tier-1 { background: rgba(196, 163, 90, 0.12); color: var(--signal); }
+  .tier-2 { background: rgba(74, 124, 89, 0.12); color: var(--confirm); }
+
+  .case-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--signal);
+  }
+
+  .case-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .case-card .meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--graphite);
+    letter-spacing: 0.3px;
+    line-height: 1.7;
+  }
+
+  .case-card .one-liner {
+    font-size: 13px;
+    color: var(--graphite);
+    line-height: 1.55;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============================================ */
+  /* CONTRIBUTE CTA                               */
+  /* ============================================ */
+  .contribute {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px 100px;
+  }
+
+  .contribute-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--rule);
+    background: var(--warm-white);
+  }
+
+  .contribute-text {
+    padding: 56px 48px;
+  }
+
+  .contribute-text .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 16px;
+  }
+
+  .contribute-text h3 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .contribute-text p {
+    font-size: 15px;
+    color: var(--graphite);
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  .contribute-details {
+    padding: 56px 48px;
+    border-left: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .contribute-step {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+  }
+
+  .contribute-step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--signal);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .step-text {
+    font-size: 14px;
+    color: var(--graphite);
+    line-height: 1.5;
+  }
+
+  .step-text strong {
+    color: var(--ink);
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  /* ============================================ */
+  /* METHODOLOGY TEASER — builds trust            */
+  /* ============================================ */
+  .methodology {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px 100px;
+  }
+
+  .methodology-inner {
+    border-top: 1px solid var(--rule);
+    padding-top: 60px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 60px;
+  }
+
+  .methodology h2 {
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.35;
+  }
+
+  .methodology-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .methodology-point h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .methodology-point p {
+    font-size: 14px;
+    color: var(--graphite);
+    line-height: 1.6;
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .logo { font-size: 12px; }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--null);
+    letter-spacing: 1px;
+  }
+
+  /* ============================================ */
+  /* WIREFRAME LABEL                              */
+  /* ============================================ */
+  .wireframe-label {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--null);
+    background: rgba(245, 242, 236, 0.9);
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Direction 2 · Homepage</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Evidence</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">Ask</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">How It Works</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== -->
+<!-- HERO                     -->
+<!-- ======================== -->
+<section class="hero">
+  <div class="hero-text">
+    <h1 class="reveal">What does the<br>evidence <em>actually</em><br>say?</h1>
+    <p class="lead reveal reveal-delay-1">Meridian is the first AI-powered platform to analyze the full historical record of anomalous aerial phenomena — 174,000+ cases across 12 independent archives — and surface what the data shows.</p>
+    <div class="hero-cta-group reveal reveal-delay-2">
+      <a href="#" class="btn-primary">Start Exploring</a>
+      <a href="#" class="btn-secondary">How It Works</a>
+    </div>
+  </div>
+  <div class="hero-snapshot reveal reveal-delay-3">
+    <div class="snapshot-card">
+      <div class="snapshot-stat-row">
+        <div class="snapshot-stat">
+          <div class="number">174,832</div>
+          <div class="label">Cases Analyzed</div>
+        </div>
+        <div class="snapshot-stat">
+          <div class="number">2,847</div>
+          <div class="label">High-Credibility</div>
+        </div>
+        <div class="snapshot-stat">
+          <div class="number">12</div>
+          <div class="label">Source Archives</div>
+        </div>
+        <div class="snapshot-stat">
+          <div class="number">38</div>
+          <div class="label">Findings Published</div>
+        </div>
+      </div>
+      <div class="snapshot-latest">
+        <strong>Latest Finding</strong>
+        Six physical descriptors converge across 12,000 independent accounts with no shared origin
+        <div class="snapshot-confidence">High Confidence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- WHAT IS MERIDIAN          -->
+<!-- ======================== -->
+<section class="explainer">
+  <div class="explainer-inner">
+    <div class="explainer-label reveal">What is Meridian?</div>
+    <div class="explainer-content">
+      <h2 class="reveal">Think of it as a search engine for the world's most comprehensive UAP evidence record — powered by AI that finds patterns no human researcher could.</h2>
+      <p class="reveal reveal-delay-1">We've aggregated every major public source: government archives, congressional testimony, declassified documents, and 150,000+ civilian reports. Our AI analyzes them for patterns, scores every case for credibility, and publishes findings — including when the evidence doesn't support a conclusion.</p>
+      <p class="reveal reveal-delay-2">No conspiracy theories. No sensationalism. Just the evidence, rigorously analyzed, with full methodology transparency on everything we publish.</p>
+      <div class="trust-markers reveal reveal-delay-3">
+        <div class="trust-marker">
+          <div class="trust-icon">✓</div>
+          All sources cited
+        </div>
+        <div class="trust-marker">
+          <div class="trust-icon">✓</div>
+          Methodology published
+        </div>
+        <div class="trust-marker">
+          <div class="trust-icon">✓</div>
+          Null findings included
+        </div>
+        <div class="trust-marker">
+          <div class="trust-icon">✓</div>
+          No ads, ever
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THREE PATHS               -->
+<!-- ======================== -->
+<section class="paths">
+  <div class="paths-header">
+    <h2 class="reveal">Where would you like to start?</h2>
+    <p class="reveal reveal-delay-1">Three ways into the evidence, depending on what you're looking for.</p>
+  </div>
+  <div class="paths-grid">
+    <div class="path-card reveal reveal-delay-1">
+      <div class="path-number">1</div>
+      <div class="path-icon">Explore</div>
+      <h3>See the strongest cases</h3>
+      <p>Browse the highest-rated cases in the evidence index — each one scored, sourced, and ranked by evidentiary strength.</p>
+      <div class="path-examples">
+        Popular: USS Nimitz (Score: 94) · Phoenix Lights (86) · Rendlesham Forest (89)
+      </div>
+      <a href="#" class="path-link">Open Evidence Index →</a>
+    </div>
+    <div class="path-card reveal reveal-delay-2">
+      <div class="path-number">2</div>
+      <div class="path-icon">Discover</div>
+      <h3>Read what the data shows</h3>
+      <p>AI-generated pattern reports that surface connections across thousands of independent sources. The findings no one person could produce.</p>
+      <div class="path-examples">
+        Latest: Descriptor convergence across 12,000 accounts · Four Corners geographic cluster
+      </div>
+      <a href="#" class="path-link">Browse Findings →</a>
+    </div>
+    <div class="path-card reveal reveal-delay-3">
+      <div class="path-number">3</div>
+      <div class="path-icon">Ask</div>
+      <h3>Ask a question</h3>
+      <p>Query the entire corpus in plain English. Get answers grounded in specific cases with confidence levels and full citations.</p>
+      <div class="path-examples">
+        Try: "Which cases describe silent triangular craft?" · "What physical effects appear most often?"
+      </div>
+      <a href="#" class="path-link">Ask the Corpus →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- FEATURED FINDING          -->
+<!-- ======================== -->
+<section class="featured">
+  <div class="featured-inner">
+    <div class="reveal">
+      <div class="featured-label">Featured Finding · High Confidence</div>
+      <h2>Six physical descriptors appear across 12,000 accounts that share no common origin</h2>
+      <p class="excerpt">Cross-corpus analysis reveals that descriptions like "silent propulsion," "instantaneous acceleration," and "featureless exterior" appear at rates far exceeding random chance — even in pre-internet accounts where online contamination is impossible.</p>
+      <a href="#" class="read-more">Read the Full Report →</a>
+    </div>
+    <div class="featured-viz reveal reveal-delay-2">
+      <div class="convergence-row">
+        <span class="convergence-label">Silent propulsion</span>
+        <div class="convergence-bar-track">
+          <div class="convergence-bar" style="width: 92%;"></div>
+        </div>
+        <span class="convergence-sigma">8.4σ</span>
+      </div>
+      <div class="convergence-row">
+        <span class="convergence-label">Instant acceleration</span>
+        <div class="convergence-bar-track">
+          <div class="convergence-bar" style="width: 82%;"></div>
+        </div>
+        <span class="convergence-sigma">7.1σ</span>
+      </div>
+      <div class="convergence-row">
+        <span class="convergence-label">Self-illuminating</span>
+        <div class="convergence-bar-track">
+          <div class="convergence-bar" style="width: 76%;"></div>
+        </div>
+        <span class="convergence-sigma">6.8σ</span>
+      </div>
+      <div class="convergence-row">
+        <span class="convergence-label">No visible propulsion</span>
+        <div class="convergence-bar-track">
+          <div class="convergence-bar" style="width: 70%;"></div>
+        </div>
+        <span class="convergence-sigma">6.2σ</span>
+      </div>
+      <div class="convergence-row">
+        <span class="convergence-label">Hovering / stationary</span>
+        <div class="convergence-bar-track">
+          <div class="convergence-bar" style="width: 66%;"></div>
+        </div>
+        <span class="convergence-sigma">5.9σ</span>
+      </div>
+      <div class="convergence-row">
+        <span class="convergence-label">Featureless exterior</span>
+        <div class="convergence-bar-track">
+          <div class="convergence-bar" style="width: 54%;"></div>
+        </div>
+        <span class="convergence-sigma">4.7σ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- ASK ANYTHING              -->
+<!-- ======================== -->
+<section class="ask-section">
+  <h2 class="reveal">Ask anything about the evidence</h2>
+  <p class="subtitle reveal reveal-delay-1">Every answer cites specific cases. Every answer includes a confidence level.</p>
+  <div class="ask-box reveal reveal-delay-2">
+    <input type="text" placeholder="What patterns appear in military pilot sightings after 2000?">
+    <button>Ask</button>
+  </div>
+  <div class="ask-examples reveal reveal-delay-3">
+    <button class="ask-example">Triangular craft sightings</button>
+    <button class="ask-example">Witness physical effects</button>
+    <button class="ask-example">Radar-confirmed cases</button>
+    <button class="ask-example">Environmental silence reports</button>
+    <button class="ask-example">Most credible cases overall</button>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- TOP CASES                 -->
+<!-- ======================== -->
+<section class="top-cases">
+  <div class="section-header">
+    <h2 class="reveal">Highest-rated cases</h2>
+    <a href="#" class="reveal">View All 174,832 Cases →</a>
+  </div>
+  <div class="cases-scroll">
+    <div class="case-card reveal reveal-delay-1">
+      <div class="case-card-top">
+        <span class="tier-badge tier-1">Tier 1</span>
+        <span class="case-score">94</span>
+      </div>
+      <h4>USS Nimitz Encounter</h4>
+      <div class="meta">Nov 14, 2004 · Off San Diego, CA</div>
+      <div class="one-liner">Multiple military witnesses tracked a "tic-tac" shaped object on radar and visual — later confirmed by the Pentagon.</div>
+    </div>
+    <div class="case-card reveal reveal-delay-2">
+      <div class="case-card-top">
+        <span class="tier-badge tier-1">Tier 1</span>
+        <span class="case-score">91</span>
+      </div>
+      <h4>JAL Flight 1628</h4>
+      <div class="meta">Nov 17, 1986 · Anchorage, AK</div>
+      <div class="one-liner">Japanese airline crew reported a massive object pacing their aircraft for 50 minutes. FAA confirmed on radar.</div>
+    </div>
+    <div class="case-card reveal reveal-delay-3">
+      <div class="case-card-top">
+        <span class="tier-badge tier-1">Tier 1</span>
+        <span class="case-score">89</span>
+      </div>
+      <h4>Rendlesham Forest</h4>
+      <div class="meta">Dec 26, 1980 · Suffolk, England</div>
+      <div class="one-liner">US Air Force personnel at RAF Woodbridge reported a triangular craft landing. Physical trace evidence and radiation readings recorded.</div>
+    </div>
+    <div class="case-card reveal reveal-delay-4">
+      <div class="case-card-top">
+        <span class="tier-badge tier-1">Tier 1</span>
+        <span class="case-score">86</span>
+      </div>
+      <h4>Phoenix Lights</h4>
+      <div class="meta">Mar 13, 1997 · Phoenix, AZ</div>
+      <div class="one-liner">Thousands of witnesses including the state governor reported a massive V-shaped craft passing silently overhead.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- CONTRIBUTE                -->
+<!-- ======================== -->
+<section class="contribute">
+  <div class="contribute-inner">
+    <div class="contribute-text reveal">
+      <div class="label">Contribute to the Record</div>
+      <h3>Have you witnessed something you can't explain?</h3>
+      <p>Your account may contribute to our research. Every submission is structured, AI-screened for consistency, and tiered for credibility. You control your anonymity.</p>
+      <a href="#" class="btn-primary">Submit Your Account</a>
+    </div>
+    <div class="contribute-details reveal reveal-delay-2">
+      <div class="contribute-step">
+        <span class="step-num">01</span>
+        <div class="step-text">
+          <strong>Structured Submission</strong>
+          Guided form captures date, location, duration, and details — not a free text box
+        </div>
+      </div>
+      <div class="contribute-step">
+        <span class="step-num">02</span>
+        <div class="step-text">
+          <strong>AI Screening</strong>
+          Every submission is checked for internal consistency and cross-referenced against the corpus
+        </div>
+      </div>
+      <div class="contribute-step">
+        <span class="step-num">03</span>
+        <div class="step-text">
+          <strong>Credibility Tiering</strong>
+          Your account is scored transparently — you'll see exactly what factors determine your tier
+        </div>
+      </div>
+      <div class="contribute-step">
+        <span class="step-num">04</span>
+        <div class="step-text">
+          <strong>Corpus Integration</strong>
+          Qualifying submissions enter the living corpus, enriching pattern analysis for everyone
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- METHODOLOGY TEASER        -->
+<!-- ======================== -->
+<section class="methodology">
+  <div class="methodology-inner">
+    <h2 class="reveal">Why you can<br>take this seriously</h2>
+    <div class="methodology-points">
+      <div class="methodology-point reveal reveal-delay-1">
+        <h4>Every source is traceable</h4>
+        <p>Every finding links to specific cases, every case links to its original source. No assertions without a full evidence chain.</p>
+      </div>
+      <div class="methodology-point reveal reveal-delay-2">
+        <h4>Null findings are published</h4>
+        <p>When the data doesn't support a conclusion, we say so — with the same rigor and prominence as positive findings.</p>
+      </div>
+      <div class="methodology-point reveal reveal-delay-3">
+        <h4>No black box scoring</h4>
+        <p>Every credibility score shows its factor breakdown. Every AI-generated finding shows its methodology. You see the work.</p>
+      </div>
+      <div class="methodology-point reveal reveal-delay-4">
+        <h4>No advocacy, no agenda</h4>
+        <p>Meridian doesn't start with a conclusion. No conspiracy theories, no sensationalism, no entertainment. Just the evidence record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project · Methodology · Privacy · Contact</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.15,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

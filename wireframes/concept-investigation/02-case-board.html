@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case 001: USS Nimitz Encounter</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E0E0E;
+    --surface: #161616;
+    --surface-hover: #1C1C1C;
+    --surface-active: #222;
+    --border: rgba(196, 163, 90, 0.06);
+    --border-hover: rgba(196, 163, 90, 0.14);
+    --text-1: #C8C4B8;
+    --text-2: rgba(200, 196, 188, 0.5);
+    --text-3: rgba(200, 196, 188, 0.25);
+    --gold: #C4A35A;
+    --gold-dim: rgba(196, 163, 90, 0.45);
+    --gold-faint: rgba(196, 163, 90, 0.06);
+    --orange: #C4783A;
+    --orange-faint: rgba(196, 120, 58, 0.06);
+    --purple: #9A7D99;
+    --purple-faint: rgba(154, 125, 153, 0.06);
+    --red: #B85C5C;
+    --red-faint: rgba(184, 92, 92, 0.06);
+    --red-dim: rgba(184, 92, 92, 0.35);
+    --green: #7A9A6A;
+    --green-faint: rgba(122, 154, 106, 0.06);
+    --paper: #F0EDE6;
+    --paper-dark: #E2DDD4;
+    --ink: #1A1814;
+    --graphite: #6A665E;
+    --board-bg: #1A1916;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.08s; }
+  .reveal-d2 { transition-delay: 0.16s; }
+  .reveal-d3 { transition-delay: 0.24s; }
+  .reveal-d4 { transition-delay: 0.32s; }
+
+  .wireframe-label {
+    position: fixed; top: 10px; right: 10px;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); background: rgba(14,14,14,0.95);
+    padding: 5px 10px; border: 1px solid var(--border); z-index: 200;
+  }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
+  }
+  .logo span { color: var(--gold); }
+  .nav-back {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-2); display: flex; align-items: center; gap: 8px;
+    transition: color 0.3s;
+  }
+  .nav-back:hover { color: var(--gold); }
+  nav ul { list-style: none; display: flex; gap: 24px; }
+  nav ul li a {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); transition: color 0.3s;
+    padding: 4px 0;
+  }
+  nav ul li a:hover, nav ul li a.active { color: var(--gold); }
+
+  /* ============================================ */
+  /* CASE HEADER                                  */
+  /* ============================================ */
+  .case-header {
+    padding: 40px 32px 32px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-header-left { max-width: 600px; }
+
+  .case-id {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .status-badge {
+    padding: 2px 8px; font-size: 7px; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .status-badge.active {
+    background: var(--red-faint); color: var(--red);
+  }
+  .status-badge.active::before {
+    content: ''; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .case-header h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 36px; line-height: 1.12; color: var(--text-1);
+    margin-bottom: 8px; letter-spacing: -0.3px;
+  }
+  .case-meta {
+    font-size: 10px; color: var(--text-2); letter-spacing: 0.3px;
+  }
+
+  .case-header-right {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .score-block {
+    text-align: center; padding: 16px 24px;
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .score-val {
+    font-size: 36px; font-weight: 600; color: var(--gold); line-height: 1;
+  }
+  .score-label {
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); margin-top: 4px;
+  }
+
+  .inv-status {
+    padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 9px;
+  }
+  .inv-status-title {
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 8px;
+  }
+  .inv-step-mini {
+    display: flex; align-items: center; gap: 6px;
+    padding: 3px 0; font-size: 9px;
+  }
+  .inv-step-mini.done { color: var(--gold-dim); }
+  .inv-step-mini.current { color: var(--text-1); }
+  .inv-step-mini.pending { color: var(--text-3); }
+
+  /* ============================================ */
+  /* TAB BAR                                      */
+  /* ============================================ */
+  .tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    position: sticky; top: 52px; z-index: 99;
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(8px);
+  }
+  .tab {
+    padding: 14px 20px;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .tab:hover { color: var(--text-2); }
+  .tab.active {
+    color: var(--gold); border-bottom-color: var(--gold);
+  }
+
+  /* ============================================ */
+  /* EVIDENCE BOARD                               */
+  /* ============================================ */
+  .board-section {
+    padding: 32px;
+  }
+
+  .board-container {
+    background: var(--board-bg);
+    border: 1px solid var(--border);
+    position: relative;
+    min-height: 620px;
+    overflow: hidden;
+    /* Cork/felt texture via noise */
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(196,163,90,0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(154,125,153,0.02) 0%, transparent 50%);
+  }
+
+  /* Thread lines */
+  .threads {
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  }
+  .threads line {
+    stroke: var(--red); stroke-width: 1; opacity: 0.3;
+  }
+  .threads line.gold-thread {
+    stroke: var(--gold); opacity: 0.2;
+  }
+  .threads line.purple-thread {
+    stroke: var(--purple); opacity: 0.25;
+  }
+
+  /* Pins / Cards on the board */
+  .pin {
+    position: absolute; z-index: 2;
+    background: var(--paper);
+    box-shadow: 2px 3px 12px rgba(0,0,0,0.5), 0 0 1px rgba(0,0,0,0.3);
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s, z-index 0s;
+    cursor: pointer;
+  }
+  .pin:hover {
+    transform: scale(1.03) rotate(0deg) !important;
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.6);
+    z-index: 10;
+  }
+
+  /* Push pin dot */
+  .pin::before {
+    content: '';
+    position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 8px; border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    z-index: 3;
+  }
+  .pin.red-pin::before { background: var(--red); }
+  .pin.gold-pin::before { background: var(--gold); }
+  .pin.purple-pin::before { background: var(--purple); }
+
+  /* Pin inner content */
+  .pin-header {
+    padding: 8px 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--graphite);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .pin-header .pin-category {
+    padding: 1px 4px;
+    font-size: 5px; letter-spacing: 1px;
+  }
+  .pin-header .pin-category.witness { background: rgba(196,120,58,0.1); color: var(--orange); }
+  .pin-header .pin-category.sensor { background: rgba(154,125,153,0.1); color: #7A5D79; }
+  .pin-header .pin-category.official { background: rgba(196,163,90,0.1); color: #8A7540; }
+  .pin-header .pin-category.question { background: rgba(184,92,92,0.1); color: var(--red); }
+  .pin-header .pin-category.ai { background: rgba(154,125,153,0.1); color: var(--purple); }
+  .pin-header .pin-category.media { background: rgba(122,154,106,0.1); color: var(--green); }
+
+  .pin-body {
+    padding: 6px 10px 10px;
+  }
+  .pin-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; font-weight: 600; color: var(--ink);
+    line-height: 1.35; margin-bottom: 3px;
+  }
+  .pin-detail {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5px; color: var(--graphite); line-height: 1.4;
+  }
+
+  /* Handwritten annotation */
+  .pin-note {
+    font-family: 'Caveat', cursive;
+    font-size: 11px; color: var(--red);
+    line-height: 1.2; padding: 0 10px 8px;
+    transform: rotate(-1deg);
+  }
+  .pin-note.gold-note { color: #8A7540; }
+  .pin-note.purple-note { color: #7A5D79; }
+
+  /* Photo pin */
+  .pin.photo-pin {
+    padding: 0;
+  }
+  .pin-photo {
+    width: 100%; aspect-ratio: 4/3;
+    background: var(--paper-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; color: var(--graphite); letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(74,70,64,0.1);
+  }
+  .pin-caption {
+    padding: 6px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; color: var(--graphite); letter-spacing: 0.3px;
+    line-height: 1.4;
+  }
+
+  /* Document pin */
+  .pin.doc-pin .doc-lines {
+    padding: 4px 10px;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .doc-line {
+    height: 2px; border-radius: 1px;
+    background: rgba(74,70,64,0.12);
+  }
+  .doc-line.title { background: rgba(196,163,90,0.2); width: 60%; height: 3px; }
+  .doc-line.redacted {
+    background: rgba(0,0,0,0.7); height: 3px;
+  }
+
+  /* Sticky note */
+  .sticky {
+    position: absolute; z-index: 3;
+    width: 110px; padding: 10px 12px;
+    font-family: 'Caveat', cursive;
+    font-size: 13px; line-height: 1.3;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .sticky:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }
+  .sticky.yellow {
+    background: #F5E6A3; color: #5A5030;
+  }
+  .sticky.pink {
+    background: #F0C4C4; color: #6A3A3A;
+  }
+  .sticky.blue {
+    background: #C4D8E8; color: #3A4A5A;
+  }
+  .sticky.green {
+    background: #C8DEC0; color: #3A5A30;
+  }
+
+  /* Board legend */
+  .board-legend {
+    position: absolute; bottom: 12px; right: 12px; z-index: 5;
+    display: flex; gap: 12px;
+    font-size: 7px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .legend-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+
+  /* ============================================ */
+  /* TIMELINE                                     */
+  /* ============================================ */
+  .timeline-section {
+    padding: 0 32px 40px;
+  }
+  .section-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  .timeline {
+    position: relative;
+    padding: 20px 0 20px 40px;
+    border-left: 2px solid rgba(196,163,90,0.08);
+    margin-left: 20px;
+  }
+
+  .tl-event {
+    position: relative;
+    padding: 0 0 32px 24px;
+  }
+  .tl-event:last-child { padding-bottom: 0; }
+
+  /* Dot on the timeline */
+  .tl-event::before {
+    content: '';
+    position: absolute; left: -47px; top: 4px;
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid rgba(196,163,90,0.2);
+    background: var(--bg);
+  }
+  .tl-event.key::before {
+    border-color: var(--gold);
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-dim);
+  }
+  .tl-event.ai-event::before {
+    border-color: var(--purple);
+    background: var(--purple);
+  }
+  .tl-event.question-event::before {
+    border-color: var(--red);
+    background: var(--red);
+  }
+
+  .tl-date {
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 4px;
+  }
+  .tl-event.ai-event .tl-date { color: var(--purple); }
+  .tl-event.question-event .tl-date { color: var(--red); }
+
+  .tl-title {
+    font-size: 13px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+
+  .tl-detail {
+    font-size: 11px; color: var(--text-2); line-height: 1.6;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    font-size: 7px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 6px; margin-top: 6px;
+  }
+  .tl-tag.witness { background: var(--orange-faint); color: var(--orange); }
+  .tl-tag.sensor { background: var(--purple-faint); color: var(--purple); }
+  .tl-tag.official { background: var(--gold-faint); color: var(--gold-dim); }
+  .tl-tag.ai { background: var(--purple-faint); color: var(--purple); }
+  .tl-tag.question { background: var(--red-faint); color: var(--red); }
+
+  /* Human note styling */
+  .human-note {
+    margin-top: 8px; padding: 8px 12px;
+    background: rgba(196,120,58,0.04);
+    border-left: 2px solid var(--orange);
+    font-family: 'Caveat', cursive;
+    font-size: 14px; line-height: 1.35;
+    color: var(--orange);
+  }
+
+  /* AI note styling */
+  .ai-note {
+    margin-top: 8px; padding: 8px 12px;
+    background: var(--purple-faint);
+    border-left: 2px solid var(--purple);
+    font-size: 10px; line-height: 1.55;
+    color: var(--purple);
+  }
+  .ai-note .ai-label {
+    font-size: 7px; letter-spacing: 1.5px; text-transform: uppercase;
+    opacity: 0.7; margin-bottom: 3px; display: block;
+  }
+
+  /* ============================================ */
+  /* WITNESSES                                    */
+  /* ============================================ */
+  .witnesses-section {
+    padding: 0 32px 40px;
+  }
+
+  .witness-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+
+  .witness-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 24px;
+  }
+
+  .witness-role {
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 6px;
+  }
+
+  .witness-card h4 {
+    font-size: 13px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .witness-card .witness-title {
+    font-size: 9px; color: var(--text-3); margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+  .witness-card p {
+    font-size: 10px; color: var(--text-2); line-height: 1.6;
+  }
+  .witness-quote {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 13px; color: var(--text-1); line-height: 1.5;
+    padding: 10px 0 10px 12px; margin-top: 10px;
+    border-left: 2px solid var(--gold-dim);
+  }
+
+  /* ============================================ */
+  /* AI ANALYSIS PANEL                            */
+  /* ============================================ */
+  .analysis-section {
+    padding: 0 32px 40px;
+  }
+
+  .analysis-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+
+  .analysis-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 24px;
+  }
+  .analysis-card.full { grid-column: 1 / -1; }
+
+  .analysis-label {
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--purple); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .analysis-label .ai-badge {
+    padding: 1px 6px; background: var(--purple-faint);
+    font-size: 7px; letter-spacing: 1px; color: var(--purple);
+  }
+
+  .analysis-card h4 {
+    font-size: 12px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 8px;
+  }
+  .analysis-card p {
+    font-size: 10px; color: var(--text-2); line-height: 1.6;
+  }
+
+  .descriptor-list {
+    display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px;
+  }
+  .descriptor {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 8px; border: 1px solid var(--border);
+    color: var(--text-2);
+  }
+  .descriptor.strong {
+    border-color: var(--gold-dim); color: var(--gold);
+    background: var(--gold-faint);
+  }
+  .descriptor.match {
+    border-color: rgba(154,125,153,0.3); color: var(--purple);
+    background: var(--purple-faint);
+  }
+
+  .pattern-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    font-size: 10px;
+  }
+  .pattern-row:last-child { border: none; }
+  .pattern-name { color: var(--text-2); }
+  .pattern-count { color: var(--gold-dim); font-weight: 500; }
+
+  /* ============================================ */
+  /* OPEN QUESTIONS                               */
+  /* ============================================ */
+  .questions-section {
+    padding: 0 32px 40px;
+  }
+
+  .question-list {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  .question-item {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: grid; grid-template-columns: 24px 1fr auto; gap: 16px;
+    align-items: start;
+  }
+
+  .q-icon {
+    font-size: 14px; color: var(--red); line-height: 1.4;
+  }
+
+  .question-item h4 {
+    font-size: 12px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .question-item p {
+    font-size: 10px; color: var(--text-2); line-height: 1.55;
+  }
+
+  .q-status {
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 8px;
+  }
+  .q-status.open { background: var(--red-faint); color: var(--red); }
+  .q-status.investigating { background: var(--orange-faint); color: var(--orange); }
+
+  /* ============================================ */
+  /* SOURCE DOCUMENTS                             */
+  /* ============================================ */
+  .sources-section {
+    padding: 0 32px 64px;
+  }
+
+  .source-list {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+  }
+  .source-item {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+  .source-item:hover { background: var(--surface-hover); }
+
+  .source-icon {
+    width: 32px; height: 40px;
+    background: var(--gold-faint); border: 1px solid rgba(196,163,90,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--gold-dim); flex-shrink: 0;
+  }
+
+  .source-info h4 {
+    font-size: 10px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 2px;
+  }
+  .source-info p {
+    font-size: 8px; color: var(--text-3); letter-spacing: 0.3px;
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .logo { font-size: 11px; letter-spacing: 4px; }
+  footer p { font-size: 9px; color: var(--text-3); }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Concept · Case Board</div>
+
+<!-- ======================== -->
+<!-- NAV                      -->
+<!-- ======================== -->
+<nav>
+  <a class="nav-back" href="01-homepage.html">← Back to Investigation</a>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#board" class="active">Board</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#witnesses">Witnesses</a></li>
+    <li><a href="#analysis">AI Analysis</a></li>
+    <li><a href="#questions">Open Questions</a></li>
+    <li><a href="#sources">Sources</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== -->
+<!-- CASE HEADER              -->
+<!-- ======================== -->
+<div class="case-header reveal">
+  <div class="case-header-left">
+    <div class="case-id">
+      Case 001 · MRD-2004-NIMITZ-001
+      <span class="status-badge active">Under Investigation</span>
+    </div>
+    <h1>The USS Nimitz Encounter</h1>
+    <div class="case-meta">14 November 2004 · Pacific Ocean, ~100 mi SW San Diego · Duration: ~5 min · 6+ USN personnel</div>
+  </div>
+  <div class="case-header-right">
+    <div class="score-block">
+      <div class="score-val">89</div>
+      <div class="score-label">Credibility</div>
+    </div>
+    <div class="inv-status">
+      <div class="inv-status-title">Progress</div>
+      <div class="inv-step-mini done">✓ Source docs (14)</div>
+      <div class="inv-step-mini done">✓ AI extraction</div>
+      <div class="inv-step-mini current">◉ Case board</div>
+      <div class="inv-step-mini pending">○ Investigation</div>
+      <div class="inv-step-mini pending">○ Publish</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- TAB BAR                  -->
+<!-- ======================== -->
+<div class="tabs" id="board">
+  <div class="tab active">Evidence Board</div>
+  <div class="tab">Timeline</div>
+  <div class="tab">Witnesses</div>
+  <div class="tab">AI Analysis</div>
+  <div class="tab">Open Questions</div>
+  <div class="tab">Sources (14)</div>
+</div>
+
+<!-- ======================== -->
+<!-- EVIDENCE BOARD           -->
+<!-- ======================== -->
+<section class="board-section">
+  <div class="board-container reveal">
+
+    <!-- Thread connections -->
+    <svg class="threads" viewBox="0 0 1200 600">
+      <!-- Red threads: witness → witness -->
+      <line x1="100" y1="70" x2="320" y2="85"/>
+      <line x1="320" y1="85" x2="180" y2="260"/>
+      <!-- Red threads: event connections -->
+      <line x1="520" y1="60" x2="520" y2="220"/>
+      <line x1="520" y1="60" x2="800" y2="55"/>
+      <line x1="800" y1="55" x2="750" y2="240"/>
+      <!-- Gold threads: evidence chain -->
+      <line class="gold-thread" x1="520" y1="220" x2="750" y2="240"/>
+      <line class="gold-thread" x1="750" y1="240" x2="970" y2="180"/>
+      <line class="gold-thread" x1="520" y1="220" x2="350" y2="360"/>
+      <!-- Purple threads: AI connections -->
+      <line class="purple-thread" x1="350" y1="360" x2="650" y2="380"/>
+      <line class="purple-thread" x1="650" y1="380" x2="920" y2="400"/>
+      <line class="purple-thread" x1="970" y1="180" x2="920" y2="400"/>
+    </svg>
+
+    <!-- ====== WITNESS CLUSTER (top-left) ====== -->
+    <div class="pin red-pin" style="left: 3%; top: 4%; width: 150px; transform: rotate(-1.5deg);">
+      <div class="pin-header">
+        <span>Witness 01</span>
+        <span class="pin-category witness">Primary</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">CDR David Fravor</div>
+        <div class="pin-detail">CO VFA-41. 18 yrs flight experience. Observed object directly. Attempted intercept. "Tic Tac" descriptor originates here.</div>
+      </div>
+      <div class="pin-note">This is our most credible witness — career Navy, nothing to gain</div>
+    </div>
+
+    <div class="pin red-pin" style="left: 22%; top: 6%; width: 140px; transform: rotate(0.8deg);">
+      <div class="pin-header">
+        <span>Witness 02</span>
+        <span class="pin-category witness">Primary</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">LCDR Alex Dietrich</div>
+        <div class="pin-detail">Wingman to Fravor. Corroborates account independently. Observed object from different angle. Came forward publicly in 2021.</div>
+      </div>
+    </div>
+
+    <div class="pin red-pin" style="left: 8%; top: 38%; width: 140px; transform: rotate(1deg);">
+      <div class="pin-header">
+        <span>Witness 03</span>
+        <span class="pin-category witness">Corroborating</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">USS Princeton Radar Operators</div>
+        <div class="pin-detail">Multiple operators tracked objects for 2 weeks on SPY-1 radar. Senior Chief Kevin Day primary operator. Objects appeared at 80k ft.</div>
+      </div>
+      <div class="pin-note">Two weeks of radar data before the intercept — why wasn't this investigated sooner?</div>
+    </div>
+
+    <!-- ====== KEY EVENT (center-top) ====== -->
+    <div class="pin gold-pin" style="left: 36%; top: 3%; width: 160px; transform: rotate(-0.5deg);">
+      <div class="pin-header">
+        <span>Key Event</span>
+        <span class="pin-category sensor">Radar + Visual</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">The Intercept — 14 Nov 2004</div>
+        <div class="pin-detail">Fravor & Dietrich vectored to anomalous radar contact. Object at ~20k ft above churning ocean. White, oblong, ~40ft. "Ping pong ball" erratic movement. Mirrored Fravor's descent. Vanished — reappeared 60 mi away on radar.</div>
+      </div>
+    </div>
+
+    <!-- ====== SENSOR DATA (center) ====== -->
+    <div class="pin photo-pin gold-pin" style="left: 36%; top: 33%; width: 140px; transform: rotate(0.5deg);">
+      <div class="pin-photo">FLIR1 · IR Video Frame</div>
+      <div class="pin-caption">Second flight captured IR footage. Object: no exhaust, no wings, no visible propulsion. Officially released by DoD 2017.</div>
+    </div>
+
+    <!-- ====== RADAR DATA (right) ====== -->
+    <div class="pin gold-pin" style="left: 58%; top: 5%; width: 150px; transform: rotate(0.3deg);">
+      <div class="pin-header">
+        <span>Sensor Data</span>
+        <span class="pin-category sensor">SPY-1 Radar</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">USS Princeton SPY-1 Track Data</div>
+        <div class="pin-detail">Objects descending from 80,000→20,000 ft in seconds. No deceleration curve. Multiple tracks over 2-week period. Object reappears at CAP point 60 mi away after vanishing.</div>
+      </div>
+      <div class="pin-note gold-note">The 60-mile jump is the hardest part to explain. That's near-instantaneous.</div>
+    </div>
+
+    <div class="pin gold-pin" style="left: 56%; top: 35%; width: 135px; transform: rotate(-1deg);">
+      <div class="pin-header">
+        <span>Physical</span>
+        <span class="pin-category question">Anomaly</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">Ocean Disturbance</div>
+        <div class="pin-detail">Cross-shaped area of churning whitewater below object. Size of a 737. No submarine or known vessel in area. Disturbance ceased when object departed.</div>
+      </div>
+      <div class="pin-note">What caused the water disturbance? Prop wash from object? Something below the surface?</div>
+    </div>
+
+    <!-- ====== OFFICIAL DOCS (right) ====== -->
+    <div class="pin doc-pin gold-pin" style="left: 76%; top: 8%; width: 140px; transform: rotate(-0.8deg);">
+      <div class="pin-header">
+        <span>Official Doc</span>
+        <span class="pin-category official">DoD</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">Pentagon AATIP Acknowledgment</div>
+        <div class="pin-detail">Dec 2017 — DoD confirms Advanced Aerospace Threat Identification Program investigated encounter. FLIR1 video officially released.</div>
+      </div>
+      <div class="doc-lines">
+        <div class="doc-line title"></div>
+        <div class="doc-line" style="width:90%"></div>
+        <div class="doc-line" style="width:85%"></div>
+        <div class="doc-line redacted" style="width:70%"></div>
+        <div class="doc-line" style="width:75%"></div>
+      </div>
+    </div>
+
+    <div class="pin red-pin" style="left: 76%; top: 42%; width: 130px; transform: rotate(0.5deg);">
+      <div class="pin-header">
+        <span>Context</span>
+        <span class="pin-category official">AARO</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">AARO Historical Report Vol. 1</div>
+        <div class="pin-detail">2024 — All-domain Anomaly Resolution Office references Nimitz as significant case. Classified annex may contain additional data.</div>
+      </div>
+      <div class="pin-note">What's in the classified annex? FOIA request pending.</div>
+    </div>
+
+    <!-- ====== AI FINDINGS (bottom) ====== -->
+    <div class="pin purple-pin" style="left: 23%; top: 56%; width: 160px; transform: rotate(-0.3deg);">
+      <div class="pin-header">
+        <span>AI Finding</span>
+        <span class="pin-category ai">Pattern Match</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">Cross-Corpus Pattern: Ocean Disturbance</div>
+        <div class="pin-detail">3 other verified cases describe similar water disturbance associated with aerial anomaly: Shag Harbour 1967, Aguadilla 2013, and a Blue Book case from 1958 off Catalina Island. Probability of coincidence: &lt;0.3%.</div>
+      </div>
+      <div class="pin-note purple-note">This could be significant — 4 independent water events across 56 years. Need to pull the Catalina case next.</div>
+    </div>
+
+    <div class="pin purple-pin" style="left: 48%; top: 60%; width: 150px; transform: rotate(0.8deg);">
+      <div class="pin-header">
+        <span>AI Finding</span>
+        <span class="pin-category ai">Descriptor Extraction</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">Extracted Descriptors (9)</div>
+        <div class="pin-detail">Silent · Oblong/featureless · White · ~40ft · Instantaneous acceleration · Hovering · Apparent mirroring · No sonic boom · Trans-medium association</div>
+      </div>
+    </div>
+
+    <div class="pin purple-pin" style="left: 72%; top: 62%; width: 145px; transform: rotate(-0.5deg);">
+      <div class="pin-header">
+        <span>AI Finding</span>
+        <span class="pin-category ai">Anomaly Flag</span>
+      </div>
+      <div class="pin-body">
+        <div class="pin-title">Acceleration Estimate: ~12,600g</div>
+        <div class="pin-detail">Based on Princeton radar data: object moved ~60 miles in &lt;2 seconds. Estimated acceleration far exceeds any known aircraft. SCU analysis corroborates.</div>
+      </div>
+      <div class="pin-note purple-note">Cross-reference with Belgian Wave F-16 radar data — similar impossible acceleration signature?</div>
+    </div>
+
+    <!-- ====== STICKY NOTES ====== -->
+    <div class="sticky yellow" style="left: 88%; top: 2%; transform: rotate(2deg);">
+      Next: pull Shag Harbour case file and compare water disturbance descriptions
+    </div>
+
+    <div class="sticky pink" style="left: 2%; top: 78%; transform: rotate(-1.5deg);">
+      WHY were the radar contacts tracked for 2 weeks before anyone scrambled jets?
+    </div>
+
+    <div class="sticky green" style="left: 40%; top: 80%; transform: rotate(1deg);">
+      Credibility check: all witnesses are career military with no financial motive ✓
+    </div>
+
+    <!-- Legend -->
+    <div class="board-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Witness / Event</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Evidence</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> AI Finding</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- TIMELINE                 -->
+<!-- ======================== -->
+<section class="timeline-section" id="timeline">
+  <div class="section-label reveal">Timeline · Reconstructed</div>
+
+  <div class="timeline">
+    <div class="tl-event reveal">
+      <div class="tl-date">Late October 2004</div>
+      <div class="tl-title">Anomalous radar contacts begin</div>
+      <div class="tl-detail">USS Princeton's SPY-1 radar system begins detecting objects appearing at 80,000+ feet, then descending rapidly to 20,000 feet. Tracks persist for 2 weeks.</div>
+      <span class="tl-tag sensor">SPY-1 Radar</span>
+      <div class="human-note">Two weeks of daily radar contacts and nobody called it in? This feels like it was being monitored quietly.</div>
+    </div>
+
+    <div class="tl-event key reveal">
+      <div class="tl-date">14 November 2004 · ~1:00 PM PST</div>
+      <div class="tl-title">Fravor & Dietrich vectored to contact</div>
+      <div class="tl-detail">Two F/A-18F Super Hornets from VFA-41 diverted from training exercise. Princeton vectors them toward latest anomalous radar return approximately 100 miles SW of San Diego.</div>
+      <span class="tl-tag witness">Fravor</span> <span class="tl-tag witness">Dietrich</span>
+    </div>
+
+    <div class="tl-event key reveal">
+      <div class="tl-date">14 November 2004 · ~1:10 PM PST</div>
+      <div class="tl-title">Visual contact with object and ocean disturbance</div>
+      <div class="tl-detail">Pilots observe churning, cross-shaped whitewater on ocean surface (size of a 737). White, oblong object ~40ft long above it, moving erratically. Object appears aware of aircraft — mirrors Fravor's descent.</div>
+      <span class="tl-tag witness">Visual</span> <span class="tl-tag sensor">Radar</span>
+      <div class="ai-note">
+        <span class="ai-label">Claude · Pattern Match</span>
+        "Apparent mirroring" behavior appears in 2 other Tier 1 cases: Tehran 1976 (object matched F-4 maneuvers) and Belgian Wave (object responded to F-16 radar lock). Suggests possible reactive intelligence.
+      </div>
+    </div>
+
+    <div class="tl-event key reveal">
+      <div class="tl-date">14 November 2004 · ~1:12 PM PST</div>
+      <div class="tl-title">Object accelerates and vanishes</div>
+      <div class="tl-detail">As Fravor closes distance, object accelerates away in under 2 seconds. Reappears on Princeton's radar at the CAP point — 60 miles away. No sonic boom observed despite hypersonic implied speed.</div>
+      <span class="tl-tag sensor">Radar</span>
+      <div class="human-note">The 60-mile jump is the single most extraordinary claim. And it's backed by radar data from a billion-dollar warship. Hard to dismiss.</div>
+    </div>
+
+    <div class="tl-event reveal">
+      <div class="tl-date">14 November 2004 · ~2:00 PM PST</div>
+      <div class="tl-title">Second flight — FLIR1 video captured</div>
+      <div class="tl-detail">A second pair of jets launched. Weapons Systems Officer captures infrared video (FLIR1) of the object. Video shows an object with no visible wings, exhaust, or flight surfaces.</div>
+      <span class="tl-tag sensor">IR Video</span> <span class="tl-tag witness">WSO</span>
+    </div>
+
+    <div class="tl-event question-event reveal">
+      <div class="tl-date">Late 2004 — Early 2005</div>
+      <div class="tl-title">Hard drives reportedly collected, data disappeared</div>
+      <div class="tl-detail">Multiple crew members report that unidentified individuals collected radar data and FLIR recordings from the Princeton and Nimitz. Chain of custody unclear. Some data may have been classified or destroyed.</div>
+      <span class="tl-tag question">Data gap</span>
+      <div class="human-note">This is the part that makes me most suspicious. If this was nothing, why confiscate the data?</div>
+    </div>
+
+    <div class="tl-event ai-event reveal">
+      <div class="tl-date">December 2017</div>
+      <div class="tl-title">Pentagon confirms AATIP program, releases FLIR1</div>
+      <div class="tl-detail">New York Times breaks story. DoD acknowledges the Advanced Aerospace Threat Identification Program. FLIR1 video officially released. 13-year gap between event and public disclosure.</div>
+      <span class="tl-tag official">DoD</span>
+      <div class="ai-note">
+        <span class="ai-label">Claude · Context</span>
+        The 13-year disclosure gap is consistent with other high-profile cases. Belgian Wave: 20 years to full military acknowledgment. Tehran: declassified only via FOIA decades later. Pattern suggests institutional delay rather than cover-up.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- WITNESSES                -->
+<!-- ======================== -->
+<section class="witnesses-section" id="witnesses">
+  <div class="section-label reveal">Witnesses · 6 Identified</div>
+
+  <div class="witness-grid">
+    <div class="witness-card reveal">
+      <div class="witness-role">Primary Witness</div>
+      <h4>CDR David Fravor, USN (Ret.)</h4>
+      <div class="witness-title">Commanding Officer, VFA-41 "Black Aces" · 18 yrs flight exp.</div>
+      <p>Observed object directly during intercept attempt. Describes white, oblong craft ~40ft performing erratic maneuvers with no visible propulsion. Object appeared to mirror his descent.</p>
+      <div class="witness-quote">"It accelerated like nothing I've ever seen. I was a pilot for eighteen years. This was beyond anything."</div>
+    </div>
+
+    <div class="witness-card reveal reveal-d1">
+      <div class="witness-role">Primary Witness</div>
+      <h4>LCDR Alex Dietrich, USN (Ret.)</h4>
+      <div class="witness-title">Wingman, VFA-41 · Corroborating observer</div>
+      <p>Observed same object from different angle in formation with Fravor. Corroborates account independently. Came forward publicly in 2021 interview, adding new details about the ocean disturbance.</p>
+    </div>
+
+    <div class="witness-card reveal reveal-d2">
+      <div class="witness-role">Radar Operator</div>
+      <h4>Senior Chief Kevin Day, USN (Ret.)</h4>
+      <div class="witness-title">Operations Specialist, USS Princeton</div>
+      <p>Monitored anomalous radar contacts for approximately 2 weeks before the intercept. First to identify the objects descending from 80,000+ feet. Vectored Fravor's flight to the contact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- AI ANALYSIS              -->
+<!-- ======================== -->
+<section class="analysis-section" id="analysis">
+  <div class="section-label reveal">
+    AI Analysis
+    <span style="padding:2px 8px; background:var(--purple-faint); color:var(--purple); font-size:7px; letter-spacing:1.5px;">AI-Generated · Claude</span>
+  </div>
+
+  <div class="analysis-grid">
+    <div class="analysis-card reveal">
+      <div class="analysis-label">
+        Extracted Descriptors
+        <span class="ai-badge">9 Found</span>
+      </div>
+      <h4>Physical & Behavioral Signatures</h4>
+      <div class="descriptor-list">
+        <span class="descriptor strong">Silent propulsion</span>
+        <span class="descriptor strong">Instantaneous accel.</span>
+        <span class="descriptor strong">Hovering</span>
+        <span class="descriptor">Oblong / featureless</span>
+        <span class="descriptor">White surface</span>
+        <span class="descriptor">~40 ft length</span>
+        <span class="descriptor match">Apparent mirroring</span>
+        <span class="descriptor match">Trans-medium assoc.</span>
+        <span class="descriptor">No sonic boom</span>
+      </div>
+    </div>
+
+    <div class="analysis-card reveal reveal-d1">
+      <div class="analysis-label">
+        Cross-Corpus Matches
+        <span class="ai-badge">3 Cases</span>
+      </div>
+      <h4>Cases Sharing 3+ Descriptors</h4>
+      <div class="pattern-row">
+        <span class="pattern-name">Belgian Wave (1990)</span>
+        <span class="pattern-count">5 shared</span>
+      </div>
+      <div class="pattern-row">
+        <span class="pattern-name">Tehran F-4 (1976)</span>
+        <span class="pattern-count">4 shared</span>
+      </div>
+      <div class="pattern-row">
+        <span class="pattern-name">USS Roosevelt (2014–15)</span>
+        <span class="pattern-count">4 shared</span>
+      </div>
+      <p style="margin-top: 10px; font-size: 10px; color: var(--purple); line-height: 1.5;">
+        All three involve military pilots, radar confirmation, and objects displaying impossible acceleration. The "mirroring" behavior in Tehran is particularly notable — same reactive pattern as Nimitz.
+      </p>
+    </div>
+
+    <div class="analysis-card full reveal reveal-d2">
+      <div class="analysis-label">
+        Key AI Assessment
+      </div>
+      <h4>What Makes This Case Unusual</h4>
+      <p>The Nimitz encounter is rare in having <strong style="color:var(--text-1)">five independent sensor/witness channels</strong> all corroborating the same event: (1) SPY-1 radar tracking over multiple weeks, (2) visual observation by two career Navy pilots in separate aircraft, (3) infrared video capture (FLIR1), (4) additional radar confirmation at the CAP point 60 miles away, and (5) corroborating accounts from Princeton radar operators. Most UAP cases rely on 1–2 channels. Five-channel corroboration is exceptional in this corpus.</p>
+      <p style="margin-top: 8px;">The ocean disturbance element adds a potential trans-medium dimension that connects to a small but intriguing cluster of water-associated cases (Shag Harbour, Aguadilla, Catalina 1958). This thread warrants deeper investigation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- OPEN QUESTIONS           -->
+<!-- ======================== -->
+<section class="questions-section" id="questions">
+  <div class="section-label reveal">Open Questions · 5 Active</div>
+
+  <div class="question-list">
+    <div class="question-item reveal">
+      <div class="q-icon">?</div>
+      <div>
+        <h4>What happened to the radar data?</h4>
+        <p>Multiple crew members report unidentified individuals confiscating hard drives from the Princeton. Full SPY-1 track data has never been publicly released. FOIA requests pending.</p>
+      </div>
+      <div class="q-status open">Open</div>
+    </div>
+
+    <div class="question-item reveal reveal-d1">
+      <div class="q-icon">?</div>
+      <div>
+        <h4>Why were radar contacts monitored for 2 weeks without action?</h4>
+        <p>Objects appeared daily on radar for ~14 days before Fravor's flight was vectored. Was this a deliberate decision? Was someone else already investigating?</p>
+      </div>
+      <div class="q-status investigating">Investigating</div>
+    </div>
+
+    <div class="question-item reveal reveal-d2">
+      <div class="q-icon">?</div>
+      <div>
+        <h4>What caused the ocean disturbance?</h4>
+        <p>The cross-shaped churning whitewater — was this caused by the object above, something below the surface, or an unrelated phenomenon? No submarine was reported in the area.</p>
+      </div>
+      <div class="q-status open">Open</div>
+    </div>
+
+    <div class="question-item reveal reveal-d3">
+      <div class="q-icon">?</div>
+      <div>
+        <h4>Does the classified AARO annex contain additional Nimitz data?</h4>
+        <p>AARO's Historical Report Vol. 1 references a classified annex. It's unclear if this contains additional sensor data, witness interviews, or analysis of the Nimitz encounter specifically.</p>
+      </div>
+      <div class="q-status open">Open</div>
+    </div>
+
+    <div class="question-item reveal reveal-d4">
+      <div class="q-icon">?</div>
+      <div>
+        <h4>Is "apparent mirroring" a pattern across cases?</h4>
+        <p>Both Nimitz and Tehran describe the object seeming to respond to pilot actions. Is this a real behavioral pattern, observer bias, or coincidence? Need to check Belgian Wave and Roosevelt encounters.</p>
+      </div>
+      <div class="q-status investigating">Investigating</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- SOURCE DOCUMENTS         -->
+<!-- ======================== -->
+<section class="sources-section" id="sources">
+  <div class="section-label reveal">Source Documents · 14 Files</div>
+
+  <div class="source-list">
+    <div class="source-item reveal">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>FLIR1 Video Release — DoD (2017)</h4>
+        <p>Official Pentagon release · Infrared footage · 1:16 duration</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d1">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>CDR Fravor Interview Transcript — NYT</h4>
+        <p>December 2017 · Full debrief · Primary witness account</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d1">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>LCDR Dietrich Interview — 60 Minutes</h4>
+        <p>May 2021 · Corroborating account · Additional details on ocean event</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d2">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>Kevin Day Account — Compiled</h4>
+        <p>Multiple interviews compiled · Radar operator perspective · 2-week tracking</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d2">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>SCU Analysis — Nimitz Encounter</h4>
+        <p>Scientific Coalition for UAP Studies · Acceleration estimates · Sensor analysis</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d3">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>AARO Historical Report Vol. 1 (Unclass.)</h4>
+        <p>February 2024 · References Nimitz · Classified annex unknown</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d3">
+      <div class="source-icon">PDF</div>
+      <div class="source-info">
+        <h4>USS Princeton Deck Logs — FOIA</h4>
+        <p>Nov 2004 · Partially redacted · Confirms flight operations on date</p>
+      </div>
+    </div>
+    <div class="source-item reveal reveal-d4">
+      <div class="source-icon">TXT</div>
+      <div class="source-info">
+        <h4>+ 7 Additional Sources</h4>
+        <p>Congressional testimony, media interviews, AATIP references, Navy guidelines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- FOOTER                   -->
+<!-- ======================== -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>Case 001 · Under Investigation · Last Updated: 22 Mar 2026</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

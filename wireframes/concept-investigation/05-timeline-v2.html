@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case 001: USS Nimitz Encounter</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wdth,wght@0,8..144,50..150,100..900;1,8..144,50..150,100..900&family=Roboto+Mono:wght@300;400;500;600&family=Roboto:wdth,wght@75..100,100..400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════ */
+:root {
+  --bg: #EDECE8;
+  --surface: #FFFFFF;
+  --dark: #272727;
+  --text-primary: #272727;
+  --text-light: #F7F4F4;
+  --text-secondary: rgba(39,39,39,0.5);
+  --text-tertiary: rgba(39,39,39,0.45);
+  --text-body: rgba(39,39,39,0.75);
+  --text-light-secondary: rgba(247,244,244,0.5);
+  --text-light-body: rgba(255,255,255,0.75);
+  --text-light-tertiary: rgba(255,255,255,0.45);
+  --red-accent: #C53F3F;
+  --red-soft: rgba(234,76,76,0.1);
+  --purple-soft: rgba(117,117,224,0.1);
+  --gold: #9A7A2E;
+  --gold-soft: rgba(154,122,46,0.12);
+  --blue: #4A6A9A;
+  --blue-soft: rgba(74,106,154,0.12);
+  --purple: #7B5D9A;
+  --purple-bg: rgba(123,93,154,0.08);
+  --border-dark: #DCDBD7;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Roboto Serif', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════ */
+.header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 48px;
+  background: var(--dark);
+}
+.header-brand {
+  font-family: 'Roboto Serif', serif;
+  font-weight: 300; font-stretch: 150%;
+  font-size: 12px; letter-spacing: 1.08px;
+  color: var(--text-light); text-transform: uppercase;
+}
+.header-center {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 24px;
+}
+.header-case-num {
+  font-family: 'Roboto Serif', serif;
+  font-weight: 400; font-size: 12px;
+  color: var(--text-light-secondary);
+}
+.header-title {
+  font-family: 'Roboto Serif', serif;
+  font-weight: 300; font-stretch: 150%;
+  font-size: 18px; letter-spacing: 1.62px;
+  color: var(--text-light); text-transform: uppercase;
+}
+.header-status {
+  padding: 8px; border-radius: 8px;
+  background: var(--red-soft);
+  font-family: 'Roboto Serif', serif;
+  font-weight: 400; font-size: 12px;
+  color: var(--text-light-secondary);
+}
+.header-link {
+  font-family: 'Roboto Serif', serif;
+  font-weight: 300; font-stretch: 150%;
+  font-size: 12px; letter-spacing: 1.08px;
+  color: var(--text-light); text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════
+   FOCUSED MODE — full viewport centered layout
+   ═══════════════════════════════════════════════ */
+.focused-view {
+  position: fixed; top: 48px; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
+  padding: 16px 16px 24px;
+  overflow: hidden;
+  z-index: 50;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.focused-view.hidden {
+  opacity: 0; pointer-events: none;
+  transform: scale(0.92);
+}
+
+/* Canvas texture & vignette */
+.canvas-texture {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='143' height='143' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='143' height='143' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 143 0 L 0 0 0 143' fill='none' stroke='rgba(0,0,0,0.06)' stroke-width='0.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply; opacity: 0.10;
+}
+.canvas-vignette {
+  position: fixed; inset: 0; pointer-events: none; z-index: 190;
+  background: radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,0.18) 100%);
+}
+
+/* Filter bar */
+.filter-bar {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; gap: 24px;
+  background: var(--surface);
+  padding: 7px 23px 8px 9px;
+  border-radius: 16px; flex-shrink: 0;
+}
+.filter-btn {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500; font-size: 11px;
+  letter-spacing: 0.99px; text-transform: uppercase;
+  color: var(--text-secondary);
+  background: none; border: none; cursor: pointer;
+  padding: 0; transition: color 0.2s, background 0.2s, padding 0.2s;
+  border-radius: 8px;
+}
+.filter-btn:hover { color: var(--text-primary); }
+.filter-btn.active {
+  color: var(--text-primary);
+  background: rgba(39,39,39,0.2);
+  padding: 11px 16px;
+}
+
+/* Year marker */
+.year-marker {
+  position: relative; z-index: 10;
+  font-family: 'Roboto Serif', serif;
+  font-weight: 251; font-stretch: 50%;
+  font-size: 48px; line-height: 1;
+  color: var(--text-primary);
+  text-align: center; flex-shrink: 0;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.year-marker.visible { opacity: 1; transform: translateY(0); }
+
+/* Timeline river */
+.timeline-river {
+  position: relative; z-index: 10;
+  width: 100%; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.river-line {
+  position: absolute; left: 0; right: 0; top: 50%;
+  border-top: 2px dashed rgba(0,0,0,0.15);
+}
+.river-dot {
+  position: relative; z-index: 2;
+  width: 12px; height: 12px;
+  background: var(--dark); border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* Vertical dashed connector */
+.connector {
+  position: relative; z-index: 10;
+  width: 0; height: 50px;
+  border-left: 2px dashed rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+/* Card stage */
+.card-stage {
+  position: relative; z-index: 10;
+  flex: 1; min-height: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════
+   INTRO CARD (dark portrait)
+   ═══════════════════════════════════════════════ */
+.intro-card, .end-card {
+  background: var(--dark);
+  width: 522px; max-height: 100%;
+  padding: 48px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  opacity: 0; transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: absolute;
+}
+.intro-card.active, .end-card.active { opacity: 1; transform: scale(1); }
+
+.intro-card .card-year, .end-card .card-year {
+  font-family: 'Roboto Serif', serif; font-weight: 400; font-stretch: 150%;
+  font-size: 18px; color: var(--red-accent); margin-bottom: 4px;
+}
+.intro-card .card-title, .end-card .card-title {
+  font-family: 'Roboto Serif', serif; font-weight: 300; font-stretch: 100%;
+  font-size: 48px; line-height: 1; color: white; margin-bottom: 12px;
+}
+.intro-card .card-subtitle, .end-card .card-subtitle {
+  font-family: 'Roboto Serif', serif; font-weight: 400; font-style: italic;
+  font-size: 15.5px; line-height: 1.6;
+  color: rgba(255,255,255,0.5); margin-bottom: 24px;
+}
+.intro-card .card-divider, .end-card .card-divider {
+  width: 53px; height: 3px; background: var(--red-accent); margin-bottom: 24px;
+}
+.intro-card .card-body, .end-card .card-body {
+  font-family: 'Roboto', sans-serif; font-weight: 300;
+  font-size: 14.3px; line-height: 1.77; letter-spacing: 0.43px;
+  color: var(--text-light-body); margin-bottom: 24px;
+}
+.intro-card .card-meta, .end-card .card-meta {
+  font-family: 'Roboto Mono', monospace; font-weight: 400;
+  font-size: 10.7px; letter-spacing: 0.75px;
+  color: var(--text-light-tertiary); text-transform: uppercase; margin-bottom: 12px;
+}
+.card-tag {
+  display: inline-flex; align-items: center; padding: 6px 12px;
+  border-radius: 5px; background: var(--purple-soft);
+  font-family: 'Roboto Mono', monospace; font-weight: 400;
+  font-size: 10.7px; letter-spacing: 0.75px; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.intro-card .card-tag, .end-card .card-tag {
+  color: var(--text-light-tertiary);
+}
+
+/* ═══════════════════════════════════════════════
+   EVENT CARD (horizontal)
+   ═══════════════════════════════════════════════ */
+.event-card {
+  background: var(--surface);
+  width: 1000px; max-width: 90vw;
+  height: 562px; max-height: 58vh;
+  display: flex; align-items: stretch;
+  opacity: 0; transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: absolute; overflow: hidden;
+}
+.event-card.active { opacity: 1; transform: scale(1); }
+
+.event-card .card-image {
+  width: 42%; flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+.event-card .card-image .image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(39,39,39,0.3) 0%, transparent 60%);
+}
+.event-card .card-content {
+  flex: 1; padding: 40px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.event-card .card-eyebrow {
+  font-family: 'Roboto Mono', monospace; font-weight: 400;
+  font-size: 14px; color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.event-card .card-headline {
+  font-family: 'Roboto Serif', serif; font-weight: 400; font-stretch: 80%;
+  font-size: 32.6px; line-height: 1.4;
+  color: var(--text-primary); margin-top: 12px;
+}
+.event-card .card-time {
+  font-family: 'Roboto Serif', serif; font-weight: 400; font-style: italic;
+  font-size: 15.5px; line-height: 1.6;
+  color: var(--text-secondary); margin-top: 4px;
+}
+.event-card .card-body {
+  font-family: 'Roboto', sans-serif; font-weight: 300;
+  font-size: 16.3px; line-height: 1.77; letter-spacing: 0.49px;
+  color: var(--text-body); overflow-y: auto;
+}
+.event-card .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Image placeholder backgrounds */
+.img-radar { background: linear-gradient(135deg, #0a1628, #0f2847 40%, #1a4a7a 70%, #0a1628); }
+.img-ocean { background: linear-gradient(180deg, #1a3a5c, #0d2137 50%, #061420); }
+.img-cockpit { background: linear-gradient(135deg, #1a1a2e, #16213e 50%, #0f3460); }
+.img-flir { background: linear-gradient(135deg, #0a0a0a, #1a1a1a 40%, #2d2d2d); }
+.img-classified { background: linear-gradient(135deg, #2d1810, #1a1008 50%, #0d0a04); }
+.img-pentagon { background: linear-gradient(135deg, #1a1816, #2d2a26 50%, #3d3834); }
+.img-congress { background: linear-gradient(135deg, #1a1a1a, #2a2520 50%, #3d3530); }
+
+/* Image decorative elements */
+.card-image .img-deco {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.img-deco::after {
+  content: ''; position: absolute;
+  width: 180px; height: 180px;
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════
+   EVIDENCE DRAWER PILL
+   ═══════════════════════════════════════════════ */
+.evidence-pill {
+  position: relative; z-index: 12;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--dark);
+  border: 2px solid var(--border-dark);
+  padding: 12px 14px 12px 20px;
+  border-radius: 1000px;
+  cursor: pointer; flex-shrink: 0;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s, background 0.2s;
+}
+.evidence-pill.visible { opacity: 1; transform: translateY(0); }
+.evidence-pill:hover { background: #333; }
+.evidence-pill span {
+  font-family: 'Roboto Mono', monospace; font-weight: 400;
+  font-size: 12px; color: var(--text-light-secondary); text-transform: uppercase;
+}
+.evidence-pill .pill-icon {
+  color: var(--text-light-secondary); font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════
+   BOTTOM NAV BAR
+   ═══════════════════════════════════════════════ */
+.bottom-bar {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; flex-shrink: 0;
+}
+.util-btn {
+  background: var(--surface); border: none; cursor: pointer;
+  padding: 7px 9px 8px; border-radius: 9px;
+  color: var(--text-primary); font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.util-btn:hover { background: #f0efeb; }
+.nav-pill {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--dark);
+  padding: 7px 12px 8px; border-radius: 9px;
+}
+.nav-arrow {
+  background: none; border: none; cursor: pointer;
+  color: white; font-size: 16px; padding: 0 4px;
+  display: flex; align-items: center;
+  opacity: 0.7; transition: opacity 0.2s;
+}
+.nav-arrow:hover { opacity: 1; }
+.nav-arrow:disabled { opacity: 0.2; cursor: default; }
+.nav-divider { width: 0; height: 20px; border-left: 1px solid rgba(255,255,255,0.12); }
+.nav-dots { display: flex; align-items: center; gap: 6px; }
+.nav-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  background: transparent; cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.nav-dot.visited { background: rgba(255,255,255,0.3); }
+.nav-dot.active { background: white; border-color: white; transform: scale(1.25); }
+.nav-dot.alert { border-color: var(--red-accent); }
+.nav-dot.alert.visited { background: var(--red-accent); border-color: var(--red-accent); }
+.nav-dot.alert.active { background: var(--red-accent); border-color: var(--red-accent); transform: scale(1.25); }
+.nav-event-title {
+  font-family: 'Roboto Mono', monospace; font-weight: 400;
+  font-size: 12px; color: var(--text-light-secondary);
+  text-transform: uppercase; white-space: nowrap;
+  max-width: 340px; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ═══════════════════════════════════════════════
+   CANVAS MODE — infinite pan/zoom
+   ═══════════════════════════════════════════════ */
+.canvas-view {
+  position: fixed; top: 48px; left: 0; right: 0; bottom: 0;
+  overflow: hidden; z-index: 40;
+  cursor: grab; user-select: none;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.canvas-view.active { opacity: 1; pointer-events: all; }
+.canvas-view.panning { cursor: grabbing; }
+
+.canvas-world {
+  position: absolute; left: 0; top: 0;
+  width: 6000px; height: 3200px;
+  transform-origin: 0 0;
+}
+
+/* Canvas grid */
+.canvas-grid {
+  position: absolute; width: 8000px; height: 4000px;
+  left: -1000px; top: -500px; pointer-events: none;
+  background:
+    linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.canvas-grid-major {
+  position: absolute; width: 8000px; height: 4000px;
+  left: -1000px; top: -500px; pointer-events: none;
+  background:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 128px 128px;
+}
+
+/* Back to timeline button */
+.back-btn {
+  position: fixed; top: 64px; left: 24px; z-index: 100;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--dark); color: white;
+  border: 2px solid var(--border-dark);
+  padding: 10px 18px 10px 14px;
+  border-radius: 1000px; cursor: pointer;
+  font-family: 'Roboto Mono', monospace; font-weight: 500;
+  font-size: 11px; letter-spacing: 0.99px; text-transform: uppercase;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s, background 0.2s;
+}
+.back-btn.visible { opacity: 1; pointer-events: all; }
+.back-btn:hover { background: #333; }
+
+/* ═══════════════════════════════════════════════
+   CANVAS CARDS — the event card pinned at top
+   ═══════════════════════════════════════════════ */
+.cv-event-card {
+  position: absolute;
+  background: var(--surface);
+  width: 560px; min-height: 280px;
+  display: flex; overflow: hidden;
+}
+.cv-event-card .cv-img {
+  width: 200px; flex-shrink: 0; position: relative; overflow: hidden;
+}
+.cv-event-card .cv-img .image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(39,39,39,0.3) 0%, transparent 60%);
+}
+.cv-event-card .cv-content {
+  flex: 1; padding: 24px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.cv-event-card .cv-eyebrow {
+  font-family: 'Roboto Mono', monospace; font-weight: 400;
+  font-size: 10px; color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.cv-event-card .cv-headline {
+  font-family: 'Roboto Serif', serif; font-weight: 400; font-stretch: 80%;
+  font-size: 20px; line-height: 1.35; color: var(--text-primary); margin-top: 8px;
+}
+.cv-event-card .cv-body {
+  font-family: 'Roboto', sans-serif; font-weight: 300;
+  font-size: 13px; line-height: 1.7; letter-spacing: 0.3px;
+  color: var(--text-body); margin-top: 12px;
+  display: -webkit-box; -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.cv-event-card .cv-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.cv-event-card .cv-tags .card-tag { font-size: 9px; padding: 4px 8px; }
+
+/* ═══════════════════════════════════════════════
+   CANVAS EVIDENCE CARDS (children)
+   ═══════════════════════════════════════════════ */
+.cv-evidence {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid rgba(0,0,0,0.08);
+  width: 224px; padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cv-evidence:hover {
+  border-color: rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.cv-evidence.selected {
+  box-shadow: 0 0 0 0.5px var(--dark), 0 4px 16px rgba(0,0,0,0.1);
+}
+.cv-evidence .ev-type {
+  font-family: 'Roboto Mono', monospace; font-weight: 500;
+  font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ev-badge {
+  display: inline-block; padding: 2px 6px;
+  border-radius: 3px; font-size: 8px;
+}
+.ev-badge-witness { background: var(--gold-soft); color: var(--gold); }
+.ev-badge-evidence { background: var(--blue-soft); color: var(--blue); }
+.ev-badge-anomaly { background: var(--red-soft); color: var(--red-accent); }
+.ev-badge-document { background: var(--purple-bg); color: var(--purple); }
+.ev-badge-ai { background: var(--purple-soft); color: rgba(117,117,224,0.8); }
+.ev-badge-note { background: rgba(39,39,39,0.06); color: var(--text-secondary); }
+
+.cv-evidence .ev-title {
+  font-family: 'Roboto Serif', serif; font-weight: 400; font-stretch: 80%;
+  font-size: 15px; line-height: 1.35; color: var(--text-primary); margin-bottom: 8px;
+}
+.cv-evidence .ev-body {
+  font-family: 'Roboto', sans-serif; font-weight: 300;
+  font-size: 12.5px; line-height: 1.65; letter-spacing: 0.3px;
+  color: var(--text-body);
+  display: -webkit-box; -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* Note card variant */
+.cv-evidence.note-card {
+  background: #FAFAF7;
+  border-color: rgba(0,0,0,0.06);
+  border-left: 3px solid rgba(39,39,39,0.15);
+}
+.cv-evidence.ai-card {
+  background: #FAFAFF;
+  border-left: 3px solid rgba(117,117,224,0.3);
+}
+
+/* SVG connectors */
+.cv-connectors {
+  position: absolute; left: 0; top: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+}
+.cv-connectors polyline, .cv-connectors line {
+  fill: none; stroke: var(--dark); stroke-width: 1.5;
+}
+.cv-connectors .conn-trunk { stroke-dasharray: 6 4; }
+.cv-connectors .conn-branch { stroke-dasharray: none; }
+.cv-connectors circle { fill: var(--dark); opacity: 0.32; }
+
+/* Trunk arrow buttons */
+.trunk-arrow {
+  position: absolute; z-index: 8; pointer-events: all;
+  width: 20px; height: 20px;
+  background: var(--surface);
+  border: 1px solid rgba(39,39,39,0.22);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0;
+  color: rgba(39,39,39,0.45);
+  transform: translate(-50%, -50%);
+  opacity: 0.55;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+}
+.trunk-arrow:hover {
+  opacity: 1; background: var(--dark); color: white;
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════ */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <span class="header-brand">Meridian</span>
+  <div class="header-center">
+    <span class="header-case-num">001</span>
+    <span class="header-title">USS Nimitz Encounter</span>
+    <span class="header-status">Investigating</span>
+  </div>
+  <a class="header-link">Case File</a>
+</header>
+
+<!-- VIGNETTE (always visible) -->
+<div class="canvas-vignette"></div>
+
+<!-- ═══════════════════════════════════════════════
+     FOCUSED MODE
+     ═══════════════════════════════════════════════ -->
+<div class="focused-view" id="focusedView">
+  <div class="canvas-texture"></div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Witnesses</button>
+    <button class="filter-btn">Evidence</button>
+    <button class="filter-btn">AI Analysis</button>
+    <button class="filter-btn">Documents</button>
+  </div>
+
+  <div class="year-marker" id="yearMarker">2004</div>
+
+  <div class="timeline-river">
+    <div class="river-line"></div>
+    <div class="river-dot" id="riverDot"></div>
+  </div>
+
+  <div class="connector" id="connectorTop"></div>
+
+  <div class="card-stage" id="cardStage">
+    <!-- INTRO (event 0) -->
+    <div class="intro-card active" data-event="0" id="card-0">
+      <div>
+        <div class="card-year">2004</div>
+        <div class="card-title">The Tic Tac Incident</div>
+        <div class="card-subtitle">USS Nimitz Carrier Strike Group, Pacific Ocean, November 2004</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-body">During pre-deployment exercises off San Diego, the USS Nimitz CSG encountered multiple anomalous aerial vehicles over five days. The primary encounter involved visual contact by two F/A-18F crews, AN/SPY-1B radar tracking, and infrared video capture. The object — white, featureless, approximately 40 feet long — demonstrated flight characteristics far beyond any known technology.</div>
+      <div>
+        <div class="card-meta">Case 1 · Tier 1 · 5 Channel Corroboration</div>
+        <span class="card-tag">Multi-Sensor</span>
+      </div>
+    </div>
+
+    <!-- EVENT 1 -->
+    <div class="event-card" data-event="1" id="card-1">
+      <div class="card-image img-radar"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">Late October 2004</div>
+          <div class="card-headline">Anomalous radar contacts begin</div>
+          <div class="card-time">~2 weeks before intercept</div>
+        </div>
+        <div class="card-body">USS Princeton's AN/SPY-1B radar detects objects at 80,000+ ft, descending to sea level in seconds — rates exceeding ballistic missile profiles. Senior Chief Kevin Day tracks multiple returns over two weeks. Objects appear in clusters, linger, then vanish.</div>
+        <div class="card-tags"><span class="card-tag">SPY-1</span><span class="card-tag">Radar</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 2 -->
+    <div class="event-card" data-event="2" id="card-2">
+      <div class="card-image img-cockpit"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">November 14, 2004</div>
+          <div class="card-headline">Fravor &amp; Dietrich vectored to contact</div>
+          <div class="card-time">1:00 PM Pacific Standard Time</div>
+        </div>
+        <div class="card-body">CDR David Fravor and LCDR Alex Dietrich, flying two F/A-18F Super Hornets from VFA-41 "Black Aces," are diverted from a training exercise. USS Princeton's combat information center vectors them to a live radar return approximately 100 miles southwest of San Diego.</div>
+        <div class="card-tags"><span class="card-tag">Fravor</span><span class="card-tag">Dietrich</span><span class="card-tag">Witness</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 3 -->
+    <div class="event-card" data-event="3" id="card-3">
+      <div class="card-image img-ocean"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">November 14, 2004</div>
+          <div class="card-headline">Visual contact — the Tic Tac above churning ocean</div>
+          <div class="card-time">1:10 PM · The Intercept</div>
+        </div>
+        <div class="card-body">At altitude, both crews spot a cross-shaped disturbance in the water — whitewater the size of a 737. Hovering 50 ft above it: a smooth, white, oblong object roughly 40 feet long. No wings, no exhaust, no visible propulsion. As Fravor descends, the object mirrors his movements.</div>
+        <div class="card-tags"><span class="card-tag">Fravor</span><span class="card-tag">Dietrich</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 4 -->
+    <div class="event-card" data-event="4" id="card-4">
+      <div class="card-image img-radar"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">November 14, 2004</div>
+          <div class="card-headline">Object vanishes — reappears 60 miles away</div>
+          <div class="card-time">1:12 PM · ~2 min later</div>
+        </div>
+        <div class="card-body">The Tic Tac accelerates from a near-hover to beyond visual range in less than two seconds. Within moments, Princeton's SPY-1 picks it up again — at the fighters' CAP point, 60 miles away. No sonic boom. The transit implies speeds exceeding 46,000 mph.</div>
+        <div class="card-tags"><span class="card-tag">SPY-1</span><span class="card-tag">Sensor</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 5 -->
+    <div class="event-card" data-event="5" id="card-5">
+      <div class="card-image img-flir"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">November 14, 2004</div>
+          <div class="card-headline">FLIR1 infrared video captured</div>
+          <div class="card-time">2:00 PM · Second flight</div>
+        </div>
+        <div class="card-body">WSO Chad Underwood acquires the object on the F/A-18's ATFLIR pod and records 76 seconds of infrared video. The footage shows a featureless oblong with no exhaust plume, no control surfaces — rotating on its longitudinal axis while maintaining flight.</div>
+        <div class="card-tags"><span class="card-tag">FLIR</span><span class="card-tag">Sensor</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 6 -->
+    <div class="event-card" data-event="6" id="card-6">
+      <div class="card-image img-classified"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">Late 2004 – Early 2005</div>
+          <div class="card-headline">Hard drives confiscated — data vanishes</div>
+          <div class="card-time" style="color:var(--red-accent)">Date unrecorded</div>
+        </div>
+        <div class="card-body">Unidentified individuals in plain clothes arrive aboard USS Princeton, collect the radar data tapes and FLIR recordings, and depart. Multiple crew members corroborate this independently. No receipts. No chain of custody. The originals have never resurfaced.</div>
+        <div class="card-tags"><span class="card-tag" style="background:var(--red-soft);color:var(--red-accent)">Data Gap</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 7 -->
+    <div class="event-card" data-event="7" id="card-7">
+      <div class="card-image img-pentagon"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">December 16, 2017</div>
+          <div class="card-headline">Pentagon confirms AATIP, releases FLIR1</div>
+          <div class="card-time">NYT breaks story</div>
+        </div>
+        <div class="card-body">The New York Times reveals a $22 million secret Pentagon program studying UAPs. The DoD officially releases the FLIR1 video after 13 years. Luis Elizondo, who ran AATIP, resigns in protest over secrecy.</div>
+        <div class="card-tags"><span class="card-tag">DoD</span><span class="card-tag">Official</span></div>
+      </div>
+    </div>
+
+    <!-- EVENT 8 -->
+    <div class="event-card" data-event="8" id="card-8">
+      <div class="card-image img-congress"><div class="img-deco"></div><div class="image-overlay"></div></div>
+      <div class="card-content">
+        <div>
+          <div class="card-eyebrow">2019 – 2023</div>
+          <div class="card-headline">Congressional hearings &amp; public testimony</div>
+          <div class="card-time">Witnesses come forward</div>
+        </div>
+        <div class="card-body">Fravor testifies before Congress under oath. Dietrich appears on 60 Minutes. Kevin Day speaks publicly. AARO is established. The Nimitz encounter becomes the single most cited UAP case in legislative history.</div>
+        <div class="card-tags"><span class="card-tag">Congress</span><span class="card-tag">Multiple</span></div>
+      </div>
+    </div>
+
+    <!-- END (event 9) -->
+    <div class="end-card" data-event="9" id="card-9">
+      <div>
+        <div class="card-year">2024</div>
+        <div class="card-title">Investigation Open</div>
+        <div class="card-subtitle">USS Nimitz Carrier Strike Group · Status as of 2024</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-body">After 20 years, the encounter remains unexplained. Five-channel sensor corroboration, confiscated data, and flight characteristics exceeding known technology by orders of magnitude. No conventional explanation has survived scrutiny.</div>
+      <div class="card-meta">Case Status: Unresolved</div>
+    </div>
+  </div>
+
+  <div class="connector" id="connectorBottom"></div>
+
+  <div class="evidence-pill" id="evidencePill">
+    <span id="pillCount">01</span>
+    <span>Available Evidence</span>
+    <i class="fa-sharp fa-light fa-chevron-down pill-icon"></i>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="util-btn" title="Key witnesses"><i class="fa-sharp fa-solid fa-key"></i></button>
+    <div class="nav-pill">
+      <button class="nav-arrow" id="navPrev"><i class="fa-sharp fa-light fa-angle-left"></i></button>
+      <div class="nav-divider"></div>
+      <div class="nav-dots" id="navDots"></div>
+      <div class="nav-divider"></div>
+      <span class="nav-event-title" id="navTitle">The Tic Tac Incident</span>
+      <div class="nav-divider"></div>
+      <button class="nav-arrow" id="navNext"><i class="fa-sharp fa-light fa-angle-right"></i></button>
+    </div>
+    <button class="util-btn" title="Map view"><i class="fa-sharp fa-solid fa-map"></i></button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     CANVAS MODE
+     ═══════════════════════════════════════════════ -->
+<div class="canvas-view" id="canvasView">
+  <div class="canvas-world" id="canvasWorld">
+    <div class="canvas-grid"></div>
+    <div class="canvas-grid-major"></div>
+    <!-- SVG connectors layer -->
+    <svg class="cv-connectors" id="cvConnectors"></svg>
+    <!-- Cards dynamically placed here by JS -->
+  </div>
+</div>
+
+<!-- Back button -->
+<button class="back-btn" id="backBtn">
+  <i class="fa-sharp fa-light fa-arrow-left"></i>
+  Timeline
+</button>
+
+<script>
+(function() {
+  // ═══════════════════════════════════════════════
+  // DATA
+  // ═══════════════════════════════════════════════
+  var events = [
+    { year:'2004', title:'The Tic Tac Incident', sub:'Intro', alert:false },
+    { year:'2004', title:'Anomalous Radar Contacts', sub:'Oct 2004', alert:false },
+    { year:'2004', title:'Fravor & Dietrich Vectored', sub:'Nov 14 · 1:00 PM', alert:false },
+    { year:'2004', title:'Visual Contact — The Intercept', sub:'Nov 14 · 1:10 PM', alert:false },
+    { year:'2004', title:'Object Vanishes — 60mi Relocation', sub:'Nov 14 · 1:12 PM', alert:false },
+    { year:'2004', title:'FLIR1 Video Captured', sub:'Nov 14 · 2:00 PM', alert:false },
+    { year:'2005', title:'Data Confiscated', sub:'Late 2004', alert:true },
+    { year:'2017', title:'AATIP Revealed — NYT', sub:'Dec 16, 2017', alert:false },
+    { year:'2019', title:'Congressional Hearings', sub:'2019 – 2023', alert:false },
+    { year:'2024', title:'Investigation Open', sub:'Status', alert:true }
+  ];
+
+  var evidenceMap = {
+    0: [],
+    1: [
+      { type:'witness', badge:'Key Witness', title:'Sr. Chief Kevin Day', body:'USS Princeton CIC. First to identify anomalous radar returns over two weeks. Personally vectored Fravor\'s flight to the intercept.' }
+    ],
+    2: [
+      { type:'witness', badge:'Key', title:'CDR David Fravor', body:'CO VFA-41 "Black Aces." 18 years experience, 3,500+ flight hours. Top Gun graduate. Described the object as exhibiting "no known flight characteristics."' },
+      { type:'witness', badge:'Corroborating', title:'LCDR Alex Dietrich', body:'Fravor\'s wingman. Observed from higher altitude and independently corroborated all details — the ocean disturbance, mirroring, instantaneous departure.' }
+    ],
+    3: [
+      { type:'witness', badge:'Key', title:'CDR David Fravor', body:'"It accelerated like nothing I\'ve ever seen." Visual intercept at close range, broad daylight, clear skies.' },
+      { type:'witness', badge:'Corroborating', title:'LCDR Alex Dietrich', body:'"I don\'t identify it as any kind of aircraft that I know." Independent corroboration from higher altitude.' },
+      { type:'witness', title:'Jim Slaight', body:'Back-seat WSO in Fravor\'s F/A-18F. Present during the entire intercept. No public statements as of 2024.' },
+      { type:'anomaly', badge:'Unresolved', title:'Ocean disturbance', body:'Cross-shaped roiling whitewater roughly the size of a Boeing 737. No submarine detected. Ceased with Tic Tac departure.' },
+      { type:'ai', badge:'Pattern', title:'Cross-corpus: water disturbance', body:'Water interaction observed in 3 other high-credibility cases: Shag Harbour 1967, Aguadilla 2013, Catalina Channel 1958.' },
+      { type:'note', title:'Nemo', body:'This is the moment. 4 trained pilots, broad daylight, clear skies. Whatever this was — it was real.' }
+    ],
+    4: [
+      { type:'evidence', badge:'SPY-1', title:'60-mile instant relocation', body:'Object reappears at the fighters\' CAP point — a coordinate known only to Navy. Implied speed: ~46,000 mph / Mach 60.' },
+      { type:'ai', badge:'Anomaly', title:'Acceleration: 75g – 12,600g', body:'SCU estimates 75–5,000g. Alternative radar calculation yields ~12,600g. Human tolerance: 9g. F-35 structural limit: 13.5g.' },
+      { type:'note', title:'Nemo', body:'The 60-mile jump is the single most extraordinary claim. Backed by radar from a billion-dollar warship.' }
+    ],
+    5: [
+      { type:'evidence', badge:'Video', title:'FLIR1 footage analysis', body:'76 seconds recorded, 35 publicly released. Zero exhaust plume — thermodynamically impossible for known propulsion.' },
+      { type:'ai', badge:'Context', title:'5-channel corroboration', body:'Visual, radar, IR, 3+ witnesses, behavior. Extremely rare in UAP literature.' }
+    ],
+    6: [
+      { type:'witness', badge:'Crew', title:'PO Hughes & PO Voorhis', body:'Two Princeton crew members who independently describe unidentified men confiscating data.' },
+      { type:'document', badge:'Missing', title:'Confiscated recordings', body:'Original SPY-1 tapes, full FLIR recordings, and radar logs. Chain of custody entirely unknown.' },
+      { type:'note', title:'Nemo', body:'If it was nothing, why take the hard drives? Data confiscation is the biggest red flag.' }
+    ],
+    7: [
+      { type:'document', badge:'DoD', title:'AATIP documents', body:'FLIR1 officially declassified. DoD confirms $22M AATIP budget (2007–2012). 38 research papers on exotic propulsion.' },
+      { type:'document', badge:'AARO', title:'AARO Report Vol. 1', body:'Published March 2024. Nimitz cited as among the most significant unresolved cases.' },
+      { type:'ai', badge:'Context', title:'13-year disclosure gap', body:'Belgian Wave: 20 years. Tehran 1976: decades. Nimitz: 13 years. Pattern suggests deliberate institutional delay.' },
+      { type:'note', title:'Nemo', body:'What\'s in the classified annex? FOIA pending. This is the thread to pull.' }
+    ],
+    8: [
+      { type:'witness', title:'Fravor · Lex Fridman', body:'Podcast #122, Oct 2020. Over 3 hours — the most detailed public account of the encounter.' },
+      { type:'witness', title:'Dietrich · 60 Minutes', body:'May 2021. First national TV appearance. New details on ocean disturbance and the object\'s acceleration.' }
+    ],
+    9: []
+  };
+
+  // ═══════════════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════════════
+  var currentEvent = 0;
+  var visited = new Set([0]);
+  var mode = 'focused'; // 'focused' or 'canvas'
+
+  // Canvas pan/zoom state
+  var panX = 0, panY = 0, scale = 1;
+  var isPanning = false, panStartX = 0, panStartY = 0;
+
+  // ═══════════════════════════════════════════════
+  // ELEMENTS
+  // ═══════════════════════════════════════════════
+  var focusedView = document.getElementById('focusedView');
+  var canvasView = document.getElementById('canvasView');
+  var canvasWorld = document.getElementById('canvasWorld');
+  var cvConnectors = document.getElementById('cvConnectors');
+  var backBtn = document.getElementById('backBtn');
+  var yearMarker = document.getElementById('yearMarker');
+  var connectorTop = document.getElementById('connectorTop');
+  var connectorBottom = document.getElementById('connectorBottom');
+  var evidencePill = document.getElementById('evidencePill');
+  var pillCount = document.getElementById('pillCount');
+  var navPrev = document.getElementById('navPrev');
+  var navNext = document.getElementById('navNext');
+  var navDots = document.getElementById('navDots');
+  var navTitle = document.getElementById('navTitle');
+
+  // Build nav dots
+  events.forEach(function(ev, i) {
+    var dot = document.createElement('div');
+    dot.className = 'nav-dot' + (ev.alert ? ' alert' : '');
+    dot.addEventListener('click', function() { goToEvent(i); });
+    navDots.appendChild(dot);
+  });
+
+  // Filter bar
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+
+  // ═══════════════════════════════════════════════
+  // FOCUSED MODE NAVIGATION
+  // ═══════════════════════════════════════════════
+  function goToEvent(idx) {
+    if (idx < 0 || idx >= events.length || mode !== 'focused') return;
+
+    // Hide current
+    var cur = document.getElementById('card-' + currentEvent);
+    if (cur) cur.classList.remove('active');
+
+    currentEvent = idx;
+    visited.add(idx);
+    var ev = events[idx];
+
+    // Year
+    yearMarker.textContent = ev.year;
+    yearMarker.classList.add('visible');
+
+    // Connectors
+    var isBookend = (idx === 0 || idx === events.length - 1);
+    connectorTop.style.display = isBookend ? 'none' : 'block';
+
+    // Show card
+    setTimeout(function() {
+      var card = document.getElementById('card-' + idx);
+      if (card) card.classList.add('active');
+    }, 80);
+
+    // Evidence pill
+    var evCount = evidenceMap[idx] ? evidenceMap[idx].length : 0;
+    if (evCount > 0) {
+      pillCount.textContent = evCount < 10 ? '0' + evCount : '' + evCount;
+      evidencePill.classList.add('visible');
+      connectorBottom.style.display = 'block';
+    } else {
+      evidencePill.classList.remove('visible');
+      connectorBottom.style.display = 'none';
+    }
+
+    updateNav();
+  }
+
+  function updateNav() {
+    navTitle.textContent = events[currentEvent].title;
+    navPrev.disabled = (currentEvent === 0);
+    navNext.disabled = (currentEvent === events.length - 1);
+    var dots = navDots.children;
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.remove('active', 'visited');
+      if (i === currentEvent) dots[i].classList.add('active');
+      else if (visited.has(i)) dots[i].classList.add('visited');
+    }
+  }
+
+  navPrev.addEventListener('click', function() { goToEvent(currentEvent - 1); });
+  navNext.addEventListener('click', function() { goToEvent(currentEvent + 1); });
+
+  // ═══════════════════════════════════════════════
+  // TRANSITION: FOCUSED → CANVAS
+  // ═══════════════════════════════════════════════
+  evidencePill.addEventListener('click', function() {
+    if (mode !== 'focused') return;
+    enterCanvasMode();
+  });
+
+  function enterCanvasMode() {
+    mode = 'canvas';
+
+    // Build canvas content for current event
+    buildCanvasForEvent(currentEvent);
+
+    // Transition
+    focusedView.classList.add('hidden');
+    canvasView.classList.add('active');
+    backBtn.classList.add('visible');
+
+    // Initial zoom to show the tree
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+    scale = 0.65;
+    panX = vw / 2 - 280 * scale;
+    panY = 60;
+    applyTransform();
+  }
+
+  function exitCanvasMode() {
+    mode = 'focused';
+
+    canvasView.classList.remove('active');
+    backBtn.classList.remove('visible');
+    focusedView.classList.remove('hidden');
+
+    // Clean up canvas
+    clearCanvas();
+  }
+
+  backBtn.addEventListener('click', exitCanvasMode);
+
+  // ═══════════════════════════════════════════════
+  // CANVAS: BUILD DIRECTORY TREE
+  // ═══════════════════════════════════════════════
+  function buildCanvasForEvent(idx) {
+    clearCanvas();
+
+    var ev = events[idx];
+    var items = evidenceMap[idx] || [];
+    if (items.length === 0) return;
+
+    var imgClasses = ['img-radar','img-cockpit','img-ocean','img-radar','img-flir','img-classified','img-pentagon','img-congress'];
+    var eyebrows = ['Late October 2004','November 14, 2004','November 14, 2004','November 14, 2004','November 14, 2004','Late 2004 – Early 2005','December 16, 2017','2019 – 2023'];
+    var headlines = ['Anomalous radar contacts begin','Fravor & Dietrich vectored to contact','Visual contact — the Tic Tac','Object vanishes — 60mi relocation','FLIR1 infrared video captured','Hard drives confiscated','Pentagon confirms AATIP','Congressional hearings'];
+
+    // Place parent event card at top
+    var parentCard = document.createElement('div');
+    parentCard.className = 'cv-event-card';
+    parentCard.style.cssText = 'left:0px; top:0px;';
+
+    var imgIdx = idx - 1;
+    var imgClass = imgIdx >= 0 && imgIdx < imgClasses.length ? imgClasses[imgIdx] : 'img-radar';
+    var eyebrow = imgIdx >= 0 && imgIdx < eyebrows.length ? eyebrows[imgIdx] : '';
+    var headline = imgIdx >= 0 && imgIdx < headlines.length ? headlines[imgIdx] : ev.title;
+
+    if (idx === 0 || idx === 9) {
+      // bookend style
+      parentCard.style.cssText = 'left:0px; top:0px; background:#272727; width:400px;';
+      parentCard.innerHTML =
+        '<div style="padding:32px;display:flex;flex-direction:column;gap:16px;">' +
+          '<div style="color:#C53F3F;font-family:Roboto Serif,serif;font-size:16px;font-weight:400;font-stretch:150%">' + ev.year + '</div>' +
+          '<div style="color:white;font-family:Roboto Serif,serif;font-size:32px;font-weight:300;line-height:1;">' + ev.title + '</div>' +
+        '</div>';
+    } else {
+      parentCard.innerHTML =
+        '<div class="cv-img ' + imgClass + '"><div class="img-deco"></div><div class="image-overlay"></div></div>' +
+        '<div class="cv-content">' +
+          '<div class="cv-eyebrow">' + eyebrow + '</div>' +
+          '<div class="cv-headline">' + headline + '</div>' +
+        '</div>';
+    }
+
+    canvasWorld.appendChild(parentCard);
+
+    // Layout evidence cards as directory tree
+    var parentCx = 280; // center of parent card
+    var trunkX = parentCx;
+    var startY = (idx === 0 || idx === 9) ? 260 : 300;
+    var cardW = 224;
+    var cardH = 200;
+    var vGap = 40;
+    var hOffset = 40; // branch offset from trunk
+
+    var svgLines = '';
+    var junctionDots = '';
+
+    // Trunk line starts below parent card
+    var trunkStartY = startY - 20;
+    var lastBranchY = startY;
+
+    items.forEach(function(item, i) {
+      var cardY = startY + i * (cardH + vGap);
+      var cardX = trunkX + hOffset;
+      lastBranchY = cardY + 20; // junction point at top of card area
+
+      // Create evidence card
+      var card = document.createElement('div');
+      var extraClass = item.type === 'note' ? ' note-card' : (item.type === 'ai' ? ' ai-card' : '');
+      card.className = 'cv-evidence' + extraClass;
+      card.style.cssText = 'left:' + cardX + 'px; top:' + cardY + 'px;';
+
+      var badgeClass = 'ev-badge-' + item.type;
+      var badgeHtml = item.badge ? '<span class="ev-badge ' + badgeClass + '">' + item.badge + '</span>' : '';
+      var typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
+      if (item.type === 'ai') typeLabel = 'AI Analysis';
+
+      card.innerHTML =
+        '<div class="ev-type">' + typeLabel + ' ' + badgeHtml + '</div>' +
+        '<div class="ev-title">' + item.title + '</div>' +
+        '<div class="ev-body">' + item.body + '</div>';
+
+      canvasWorld.appendChild(card);
+
+      // Branch connector: horizontal from trunk to card
+      svgLines += '<line class="conn-branch" x1="' + trunkX + '" y1="' + lastBranchY + '" x2="' + cardX + '" y2="' + lastBranchY + '"/>';
+      // Junction dot
+      junctionDots += '<circle cx="' + trunkX + '" cy="' + lastBranchY + '" r="2.5"/>';
+    });
+
+    // Trunk: vertical dashed line from parent to last branch
+    if (items.length > 0) {
+      svgLines = '<line class="conn-trunk" x1="' + trunkX + '" y1="' + trunkStartY + '" x2="' + trunkX + '" y2="' + lastBranchY + '"/>' + svgLines;
+
+      // Trunk arrow button
+      var arrowBtn = document.createElement('button');
+      arrowBtn.className = 'trunk-arrow';
+      arrowBtn.style.cssText = 'left:' + trunkX + 'px; top:' + (trunkStartY + 40) + 'px;';
+      arrowBtn.innerHTML = '<svg width="8" height="8" viewBox="0 0 7 7" fill="none"><path d="M3.5 1v5M1 4l2.5 2.5L6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      arrowBtn.addEventListener('click', function() {
+        // Animate to first evidence card
+        animateToCanvas(trunkX + hOffset + cardW / 2, startY + cardH / 2, 0.9);
+      });
+      canvasWorld.appendChild(arrowBtn);
+    }
+
+    cvConnectors.innerHTML = svgLines + junctionDots;
+  }
+
+  function clearCanvas() {
+    // Remove all dynamically added canvas children (keep grid + svg)
+    var world = canvasWorld;
+    var toRemove = world.querySelectorAll('.cv-event-card, .cv-evidence, .trunk-arrow');
+    toRemove.forEach(function(el) { el.remove(); });
+    cvConnectors.innerHTML = '';
+  }
+
+  // ═══════════════════════════════════════════════
+  // CANVAS PAN/ZOOM
+  // ═══════════════════════════════════════════════
+  function applyTransform() {
+    canvasWorld.style.transform = 'translate(' + panX + 'px,' + panY + 'px) scale(' + scale + ')';
+  }
+
+  function animateToCanvas(cx, cy, targetScale) {
+    var vw = window.innerWidth;
+    var vh = window.innerHeight - 48;
+    var startScale = scale, startPanX = panX, startPanY = panY;
+    var endPanX = vw / 2 - cx * targetScale;
+    var endPanY = vh / 2 - cy * targetScale + 24;
+    var duration = 500, startTime = performance.now();
+    function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+    function animate(now) {
+      var t = ease(Math.min(1, (now - startTime) / duration));
+      scale = startScale + (targetScale - startScale) * t;
+      panX = startPanX + (endPanX - startPanX) * t;
+      panY = startPanY + (endPanY - startPanY) * t;
+      applyTransform();
+      if (t < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // Pan
+  canvasView.addEventListener('mousedown', function(e) {
+    if (e.target.closest('.cv-evidence, .cv-event-card, .trunk-arrow')) return;
+    isPanning = true;
+    panStartX = e.clientX - panX;
+    panStartY = e.clientY - panY;
+    canvasView.classList.add('panning');
+  });
+  window.addEventListener('mousemove', function(e) {
+    if (!isPanning) return;
+    panX = e.clientX - panStartX;
+    panY = e.clientY - panStartY;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', function() {
+    isPanning = false;
+    canvasView.classList.remove('panning');
+  });
+
+  // Zoom
+  canvasView.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var rect = canvasView.getBoundingClientRect();
+    var mx = e.clientX - rect.left;
+    var my = e.clientY - rect.top;
+
+    var oldScale = scale;
+    var delta = e.deltaY > 0 ? 0.92 : 1.08;
+    scale = Math.max(0.15, Math.min(3, scale * delta));
+
+    panX = mx - (mx - panX) * (scale / oldScale);
+    panY = my - (my - panY) * (scale / oldScale);
+    applyTransform();
+  }, { passive: false });
+
+  // ═══════════════════════════════════════════════
+  // KEYBOARD
+  // ═══════════════════════════════════════════════
+  window.addEventListener('keydown', function(e) {
+    if (mode === 'focused') {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goToEvent(currentEvent + 1); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goToEvent(currentEvent - 1); }
+    }
+    if (e.key === 'Escape') {
+      if (mode === 'canvas') exitCanvasMode();
+    }
+  });
+
+  // ═══════════════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════════════
+  goToEvent(0);
+
+})();
+</script>
+</body>
+</html>

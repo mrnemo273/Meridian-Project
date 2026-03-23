@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Direction 3 Homepage</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --signal: #C4A35A;
+    --confirm: #4A7C59;
+    --caution: #B85C38;
+    --null: #7A8A8C;
+    --data-1: #2D4A6B;
+    --data-2: #C4A35A;
+    --data-3: #4A7C59;
+    --data-4: #8B6B8A;
+    --warm-white: #FDFBF7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9999; opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat; background-size: 256px 256px;
+  }
+
+  /* --- SCROLL REVEALS --- */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+  .reveal-d5 { transition-delay: 0.5s; }
+  .reveal-d6 { transition-delay: 0.6s; }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px; border-bottom: 1px solid var(--rule);
+    position: sticky; top: 0; background: rgba(245, 242, 236, 0.95);
+    backdrop-filter: blur(8px); z-index: 100;
+  }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a {
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite); text-decoration: none; transition: color 0.2s;
+  }
+  nav ul li a:hover { color: var(--ink); }
+
+  /* ============================================ */
+  /* HERO — the headline finding                  */
+  /* ============================================ */
+  .hero {
+    max-width: 1400px; margin: 0 auto;
+    padding: 100px 80px 80px;
+    position: relative;
+  }
+
+  .hero::before {
+    content: ''; position: absolute; left: 50%; top: 20px; bottom: 20px;
+    width: 1px; background: linear-gradient(to bottom, transparent, var(--rule), transparent);
+  }
+
+  .hero-upper {
+    text-align: center; max-width: 900px; margin: 0 auto 60px; position: relative;
+  }
+
+  .hero-badge {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 28px; display: block;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 52px; line-height: 1.12; margin-bottom: 24px; letter-spacing: -0.5px;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--signal); }
+
+  .hero .lead {
+    font-size: 18px; color: var(--graphite); line-height: 1.7;
+    max-width: 640px; margin: 0 auto;
+  }
+
+  /* --- HERO STATS STRIP --- */
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--rule); background: var(--warm-white);
+  }
+
+  .hero-stat {
+    padding: 28px 32px; text-align: center;
+    border-right: 1px solid var(--rule);
+  }
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat .num {
+    font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; color: var(--ink);
+    line-height: 1;
+  }
+  .hero-stat .unit {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null); margin-top: 6px;
+  }
+
+  /* ============================================ */
+  /* THE PATTERNS — what connects them            */
+  /* ============================================ */
+  .patterns {
+    background: var(--ink); color: var(--paper); position: relative; overflow: hidden;
+  }
+
+  .patterns::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px; background: rgba(245, 242, 236, 0.04);
+  }
+
+  .patterns-inner {
+    max-width: 1400px; margin: 0 auto; padding: 100px 80px;
+  }
+
+  .patterns-header {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 72px;
+  }
+
+  .patterns-header h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 40px; line-height: 1.15; color: var(--paper);
+  }
+
+  .patterns-header p {
+    font-size: 16px; color: rgba(245, 242, 236, 0.6); line-height: 1.7;
+    padding-top: 8px;
+  }
+
+  /* --- DESCRIPTOR CONVERGENCE --- */
+  .convergence-section { margin-bottom: 72px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 28px;
+  }
+
+  .convergence-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .convergence-card {
+    border: 1px solid rgba(245, 242, 236, 0.08); padding: 24px 28px;
+    display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+    transition: border-color 0.3s;
+  }
+  .convergence-card:hover { border-color: rgba(196, 163, 90, 0.3); }
+
+  .conv-descriptor {
+    font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--paper);
+    margin-bottom: 4px;
+  }
+
+  .conv-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(245, 242, 236, 0.4);
+    letter-spacing: 0.3px;
+  }
+
+  .conv-sigma {
+    font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500;
+    color: var(--signal); text-align: right;
+  }
+
+  .conv-sigma-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    color: rgba(245, 242, 236, 0.3); text-align: right;
+  }
+
+  /* --- BAR VIZ --- */
+  .bar-row {
+    display: flex; align-items: center; gap: 12px; margin-top: 10px;
+  }
+  .bar-track {
+    flex: 1; height: 4px; background: rgba(245, 242, 236, 0.06); border-radius: 2px;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 2px; background: var(--signal);
+    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* --- GEOGRAPHIC CLUSTERS --- */
+  .geo-section { margin-bottom: 72px; }
+
+  .geo-grid {
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px;
+  }
+
+  .geo-map {
+    position: relative; background: rgba(245, 242, 236, 0.04);
+    border: 1px solid rgba(245, 242, 236, 0.08);
+    min-height: 360px; overflow: hidden;
+  }
+
+  /* Stylized grid lines */
+  .geo-map::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(245, 242, 236, 0.03) 1px, transparent 1px),
+      linear-gradient(rgba(245, 242, 236, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .cluster-dot {
+    position: absolute; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500;
+    color: var(--ink); cursor: pointer;
+    animation: pulse-subtle 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(196, 163, 90, 0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(196, 163, 90, 0); }
+  }
+
+  .geo-list { display: flex; flex-direction: column; gap: 0; }
+
+  .geo-item {
+    padding: 20px 0; border-bottom: 1px solid rgba(245, 242, 236, 0.08);
+  }
+
+  .geo-item-name {
+    font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--paper);
+    margin-bottom: 4px;
+  }
+
+  .geo-item-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: rgba(245, 242, 236, 0.4); letter-spacing: 0.3px;
+  }
+
+  .geo-item-bar { margin-top: 8px; }
+
+  /* --- TEMPORAL --- */
+  .temporal-section {}
+
+  .temporal-chart {
+    display: flex; align-items: flex-end; gap: 3px; height: 140px;
+    padding-top: 20px; border-bottom: 1px solid rgba(245, 242, 236, 0.08);
+    margin-bottom: 24px;
+  }
+
+  .t-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .t-bar {
+    width: 100%; max-width: 28px; border-radius: 2px 2px 0 0;
+    background: rgba(245, 242, 236, 0.08); transition: background 0.3s;
+  }
+  .t-bar.active { background: var(--signal); }
+  .t-bar-label {
+    font-family: 'DM Mono', monospace; font-size: 8px; color: rgba(245, 242, 236, 0.25);
+    margin-top: 8px;
+  }
+
+  .temporal-callouts {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+  }
+
+  .temporal-callout {
+    border: 1px solid rgba(245, 242, 236, 0.08); padding: 20px;
+  }
+
+  .temporal-callout .year {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--signal);
+    letter-spacing: 1px; margin-bottom: 4px;
+  }
+
+  .temporal-callout h4 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 15px;
+    color: var(--paper); margin-bottom: 6px;
+  }
+
+  .temporal-callout p {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: rgba(245, 242, 236, 0.4); line-height: 1.6;
+  }
+
+  /* ============================================ */
+  /* FEATURED CASE — one story to draw you in     */
+  /* ============================================ */
+  .featured-case {
+    max-width: 1400px; margin: 0 auto; padding: 100px 80px;
+    display: grid; grid-template-columns: 0.4fr 0.6fr; gap: 80px; align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .featured-case-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 20px;
+  }
+
+  .featured-case-sidebar {}
+
+  .fc-score-block {
+    border: 1px solid var(--rule); background: var(--warm-white);
+    padding: 32px; text-align: center; margin-bottom: 24px;
+  }
+
+  .fc-score {
+    font-family: 'DM Mono', monospace; font-size: 56px; font-weight: 500;
+    color: var(--signal); line-height: 1;
+  }
+
+  .fc-score-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null); margin-top: 8px;
+  }
+
+  .fc-tier {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 16px; display: inline-block;
+    background: rgba(196, 163, 90, 0.12); color: var(--signal); margin-top: 12px;
+  }
+
+  .fc-evidence {
+    border: 1px solid var(--rule); background: var(--warm-white); padding: 24px;
+  }
+
+  .fc-evidence-title {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 12px;
+  }
+
+  .fc-ev-row {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+  }
+  .fc-ev-row:last-child { border-bottom: none; }
+  .fc-ev-label { color: var(--graphite); }
+  .fc-ev-val { font-weight: 500; }
+  .fc-ev-yes { color: var(--confirm); }
+  .fc-ev-no { color: var(--null); }
+
+  .featured-case-content {}
+
+  .featured-case-content h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 36px; line-height: 1.2; margin-bottom: 12px;
+  }
+
+  .fc-meta {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--graphite);
+    letter-spacing: 0.3px; margin-bottom: 28px;
+  }
+
+  .fc-narrative {
+    font-size: 17px; line-height: 1.8; margin-bottom: 28px;
+  }
+
+  .fc-narrative p { margin-bottom: 16px; }
+
+  .fc-connections {
+    border-top: 1px solid var(--rule); padding-top: 24px;
+  }
+
+  .fc-conn-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 12px;
+  }
+
+  .fc-conn-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
+  }
+
+  .fc-conn-tag {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 4px 10px;
+    background: rgba(45, 74, 107, 0.06); color: var(--data-1);
+  }
+
+  .fc-conn-tag.pattern {
+    background: rgba(196, 163, 90, 0.08); color: var(--signal);
+  }
+
+  .fc-read-more {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+  }
+
+  /* ============================================ */
+  /* THE COLLECTION — curated cases teaser        */
+  /* ============================================ */
+  .collection {
+    max-width: 1400px; margin: 0 auto; padding: 100px 80px 60px;
+  }
+
+  .collection-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid var(--rule);
+  }
+
+  .collection-header h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px;
+  }
+
+  .collection-header a {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite); text-decoration: none;
+  }
+
+  .collection-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  .case-card {
+    border: 1px solid var(--rule); background: var(--warm-white);
+    padding: 28px; transition: transform 0.3s, border-color 0.3s; cursor: pointer;
+  }
+  .case-card:hover { transform: translateY(-3px); border-color: var(--graphite); }
+
+  .cc-top {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+  }
+
+  .cc-score {
+    font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--signal);
+  }
+
+  .cc-source {
+    font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 2px 6px;
+    background: rgba(45, 74, 107, 0.06); color: var(--data-1);
+  }
+
+  .case-card h4 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 18px;
+    line-height: 1.3; margin-bottom: 8px;
+  }
+
+  .cc-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+    letter-spacing: 0.3px; margin-bottom: 14px;
+  }
+
+  .cc-story {
+    font-size: 13px; color: var(--graphite); line-height: 1.55;
+    padding-top: 14px; border-top: 1px solid var(--rule);
+  }
+
+  .cc-patterns {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px;
+  }
+
+  .cc-pattern-tag {
+    font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.5px;
+    text-transform: uppercase; padding: 2px 6px;
+    background: rgba(196, 163, 90, 0.08); color: var(--signal);
+  }
+
+  /* ============================================ */
+  /* ASK ANYTHING                                 */
+  /* ============================================ */
+  .ask {
+    max-width: 1400px; margin: 0 auto; padding: 40px 80px 100px;
+    text-align: center; position: relative;
+  }
+
+  .ask::before {
+    content: ''; position: absolute; left: 50%; top: 0; height: 60px;
+    width: 1px; background: var(--rule);
+  }
+
+  .ask h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 32px; margin-bottom: 8px; padding-top: 80px;
+  }
+
+  .ask .sub {
+    color: var(--graphite); font-size: 15px; margin-bottom: 36px;
+  }
+
+  .ask-box {
+    max-width: 720px; margin: 0 auto; display: flex;
+    border: 1px solid var(--rule); background: var(--warm-white);
+    transition: border-color 0.2s;
+  }
+  .ask-box:focus-within { border-color: var(--graphite); }
+
+  .ask-box input {
+    flex: 1; padding: 18px 24px; border: none; background: transparent;
+    font-family: 'Source Serif 4', serif; font-size: 15px; color: var(--ink); outline: none;
+  }
+  .ask-box input::placeholder { color: var(--null); }
+
+  .ask-box button {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 18px 28px; border: none;
+    background: var(--ink); color: var(--paper); cursor: pointer;
+  }
+
+  .ask-examples {
+    display: flex; justify-content: center; gap: 6px; margin-top: 16px; flex-wrap: wrap;
+  }
+
+  .ask-ex {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.5px;
+    padding: 5px 12px; border: 1px solid var(--rule); color: var(--graphite);
+    cursor: pointer; background: transparent; transition: all 0.2s;
+  }
+  .ask-ex:hover { border-color: var(--graphite); color: var(--ink); }
+
+  /* ============================================ */
+  /* TRUST / METHODOLOGY                          */
+  /* ============================================ */
+  .trust {
+    max-width: 1400px; margin: 0 auto; padding: 0 80px 100px;
+  }
+
+  .trust-inner {
+    border-top: 1px solid var(--rule); padding-top: 60px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 40px;
+  }
+
+  .trust-item h4 {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--ink); margin-bottom: 8px;
+  }
+  .trust-item p {
+    font-size: 13px; color: var(--graphite); line-height: 1.55;
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid var(--rule); padding: 40px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Direction 3 · Homepage</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Cases</a></li>
+    <li><a href="#">Patterns</a></li>
+    <li><a href="#">Ask</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== -->
+<!-- HERO                     -->
+<!-- ======================== -->
+<section class="hero">
+  <div class="hero-upper">
+    <span class="hero-badge reveal">821 Verified-Unidentified Cases · 12 Source Archives · AI-Analyzed</span>
+    <h1 class="reveal reveal-d1">What the verified<br>evidence <em>actually</em> shows</h1>
+    <p class="lead reveal reveal-d2">Meridian curates the most credible officially-unidentified cases of anomalous aerial phenomena — and uses AI to surface the patterns that connect them across decades, geographies, and independent sources.</p>
+  </div>
+  <div class="hero-stats reveal reveal-d3">
+    <div class="hero-stat">
+      <div class="num">821</div>
+      <div class="unit">Verified Cases</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">701</div>
+      <div class="unit">Blue Book Unidentified</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">21</div>
+      <div class="unit">AARO Anomalous</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">6</div>
+      <div class="unit">Convergent Descriptors</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THE PATTERNS (dark)      -->
+<!-- ======================== -->
+<section class="patterns">
+  <div class="patterns-inner">
+
+    <div class="patterns-header">
+      <h2 class="reveal">What 821 cases<br>have in common</h2>
+      <p class="reveal reveal-d1">AI analysis across the full corpus surfaces recurring physical descriptors, geographic concentrations, and temporal patterns. These are not individual anecdotes — they are signals emerging from the aggregate evidence.</p>
+    </div>
+
+    <!-- DESCRIPTOR CONVERGENCE -->
+    <div class="convergence-section">
+      <div class="section-label reveal">Descriptor Convergence · What keeps appearing</div>
+      <div class="convergence-grid">
+        <div class="convergence-card reveal reveal-d1">
+          <div>
+            <div class="conv-descriptor">Silent propulsion</div>
+            <div class="conv-meta">Appears in 23% of cases · 7 independent archives</div>
+            <div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width: 92%;"></div></div></div>
+          </div>
+          <div>
+            <div class="conv-sigma">8.4σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+        </div>
+        <div class="convergence-card reveal reveal-d2">
+          <div>
+            <div class="conv-descriptor">Instantaneous acceleration</div>
+            <div class="conv-meta">Appears in 18% of cases · 6 independent archives</div>
+            <div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width: 82%;"></div></div></div>
+          </div>
+          <div>
+            <div class="conv-sigma">7.1σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+        </div>
+        <div class="convergence-card reveal reveal-d3">
+          <div>
+            <div class="conv-descriptor">Self-illuminating</div>
+            <div class="conv-meta">Appears in 31% of cases · 8 independent archives</div>
+            <div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width: 76%;"></div></div></div>
+          </div>
+          <div>
+            <div class="conv-sigma">6.8σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+        </div>
+        <div class="convergence-card reveal reveal-d4">
+          <div>
+            <div class="conv-descriptor">No visible propulsion</div>
+            <div class="conv-meta">Appears in 26% of cases · 7 independent archives</div>
+            <div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width: 70%;"></div></div></div>
+          </div>
+          <div>
+            <div class="conv-sigma">6.2σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+        </div>
+        <div class="convergence-card reveal reveal-d5">
+          <div>
+            <div class="conv-descriptor">Hovering / stationary flight</div>
+            <div class="conv-meta">Appears in 34% of cases · 8 independent archives</div>
+            <div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width: 66%;"></div></div></div>
+          </div>
+          <div>
+            <div class="conv-sigma">5.9σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+        </div>
+        <div class="convergence-card reveal reveal-d6">
+          <div>
+            <div class="conv-descriptor">Featureless exterior</div>
+            <div class="conv-meta">Appears in 14% of cases · 5 independent archives</div>
+            <div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width: 54%;"></div></div></div>
+          </div>
+          <div>
+            <div class="conv-sigma">4.7σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GEOGRAPHIC CLUSTERS -->
+    <div class="geo-section">
+      <div class="section-label reveal">Geographic Clustering · Where they concentrate</div>
+      <div class="geo-grid">
+        <div class="geo-map reveal">
+          <div class="cluster-dot" style="top: 32%; left: 22%; width: 44px; height: 44px; background: rgba(196, 163, 90, 0.7);">47</div>
+          <div class="cluster-dot" style="top: 45%; left: 35%; width: 52px; height: 52px; background: rgba(196, 163, 90, 0.8);">89</div>
+          <div class="cluster-dot" style="top: 25%; left: 50%; width: 36px; height: 36px; background: rgba(196, 163, 90, 0.6);">31</div>
+          <div class="cluster-dot" style="top: 38%; left: 65%; width: 32px; height: 32px; background: rgba(196, 163, 90, 0.5);">23</div>
+          <div class="cluster-dot" style="top: 55%; left: 55%; width: 28px; height: 28px; background: rgba(196, 163, 90, 0.45);">18</div>
+        </div>
+        <div class="geo-list reveal reveal-d1">
+          <div class="geo-item">
+            <div class="geo-item-name">Four Corners Region</div>
+            <div class="geo-item-meta">89 verified cases · 340% above baseline · 1957–2024</div>
+            <div class="geo-item-bar bar-row"><div class="bar-track"><div class="bar-fill" style="width: 85%;"></div></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-item-name">Southern California Coast</div>
+            <div class="geo-item-meta">47 verified cases · Including USS Nimitz · 1952–2019</div>
+            <div class="geo-item-bar bar-row"><div class="bar-track"><div class="bar-fill" style="width: 62%;"></div></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-item-name">Great Lakes Corridor</div>
+            <div class="geo-item-meta">31 verified cases · Blue Book concentration · 1952–1969</div>
+            <div class="geo-item-bar bar-row"><div class="bar-track"><div class="bar-fill" style="width: 45%;"></div></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-item-name">East Coast Military Zones</div>
+            <div class="geo-item-meta">23 verified cases · Gimbal, GoFast, Roosevelt · 2014–2020</div>
+            <div class="geo-item-bar bar-row"><div class="bar-track"><div class="bar-fill" style="width: 38%;"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMPORAL PATTERNS -->
+    <div class="temporal-section">
+      <div class="section-label reveal">Temporal Patterns · When they spike</div>
+      <div class="temporal-chart reveal reveal-d1">
+        <div class="t-bar-group"><div class="t-bar" style="height: 25px;"></div><span class="t-bar-label">'47</span></div>
+        <div class="t-bar-group"><div class="t-bar active" style="height: 65px;"></div><span class="t-bar-label">'52</span></div>
+        <div class="t-bar-group"><div class="t-bar active" style="height: 80px;"></div><span class="t-bar-label">'57</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 40px;"></div><span class="t-bar-label">'62</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 55px;"></div><span class="t-bar-label">'67</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 35px;"></div><span class="t-bar-label">'72</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 30px;"></div><span class="t-bar-label">'77</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 50px;"></div><span class="t-bar-label">'82</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 45px;"></div><span class="t-bar-label">'87</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 60px;"></div><span class="t-bar-label">'92</span></div>
+        <div class="t-bar-group"><div class="t-bar active" style="height: 95px;"></div><span class="t-bar-label">'97</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 70px;"></div><span class="t-bar-label">'02</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 55px;"></div><span class="t-bar-label">'07</span></div>
+        <div class="t-bar-group"><div class="t-bar" style="height: 45px;"></div><span class="t-bar-label">'12</span></div>
+        <div class="t-bar-group"><div class="t-bar active" style="height: 110px;"></div><span class="t-bar-label">'17</span></div>
+        <div class="t-bar-group"><div class="t-bar active" style="height: 130px;"></div><span class="t-bar-label">'22</span></div>
+      </div>
+      <div class="temporal-callouts reveal reveal-d2">
+        <div class="temporal-callout">
+          <div class="year">1952</div>
+          <h4>Washington D.C. Flap</h4>
+          <p>14 verified cases in 2 weeks. Fighter jets scrambled. Pentagon press conference held.</p>
+        </div>
+        <div class="temporal-callout">
+          <div class="year">1997</div>
+          <h4>Phoenix Lights Wave</h4>
+          <p>Mass sighting anchors a broader Southwest wave. Governor testimony. Multiple video recordings.</p>
+        </div>
+        <div class="temporal-callout">
+          <div class="year">2017–Present</div>
+          <h4>Post-Disclosure Surge</h4>
+          <p>AATIP revelation triggers reporting surge. Pentagon confirms 3 Navy videos. Congressional hearings begin.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- FEATURED CASE            -->
+<!-- ======================== -->
+<section class="featured-case">
+  <div class="featured-case-sidebar">
+    <div class="featured-case-label reveal">Featured Case</div>
+    <div class="fc-score-block reveal reveal-d1">
+      <div class="fc-score">94</div>
+      <div class="fc-score-label">Credibility Score</div>
+      <div class="fc-tier">Tier 1 · Verified Unidentified</div>
+    </div>
+    <div class="fc-evidence reveal reveal-d2">
+      <div class="fc-evidence-title">Evidence Summary</div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Radar</span><span class="fc-ev-val fc-ev-yes">AN/SPY-1B confirmed</span></div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Video</span><span class="fc-ev-val fc-ev-yes">FLIR1 (declassified)</span></div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Photo</span><span class="fc-ev-val fc-ev-no">None</span></div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Physical Trace</span><span class="fc-ev-val fc-ev-no">None</span></div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Official Investigation</span><span class="fc-ev-val fc-ev-yes">AATIP</span></div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Official Acknowledgment</span><span class="fc-ev-val fc-ev-yes">DoD 2020</span></div>
+      <div class="fc-ev-row"><span class="fc-ev-label">Congressional Testimony</span><span class="fc-ev-val fc-ev-yes">2023 Hearing</span></div>
+    </div>
+  </div>
+  <div class="featured-case-content">
+    <h2 class="reveal">USS Nimitz Encounter</h2>
+    <div class="fc-meta reveal reveal-d1">November 14, 2004 · Off San Diego, CA · 31.5°N, 117.5°W · 6+ military witnesses</div>
+    <div class="fc-narrative reveal reveal-d2">
+      <p>For two weeks in November 2004, the USS Princeton — part of the Nimitz Carrier Strike Group — tracked anomalous objects on its AN/SPY-1B radar. The objects appeared at altitudes above 80,000 feet before dropping to near sea level in seconds.</p>
+      <p>Commander David Fravor and Lt. Commander Alex Dietrich were vectored to investigate. Fravor observed a white, oblong object — roughly 40 feet long, shaped like a Tic Tac — hovering and making erratic movements over a disturbance in the ocean. When he descended to engage, the object accelerated beyond visual range in less than two seconds. A second aircraft subsequently captured it on FLIR.</p>
+      <p>The Pentagon acknowledged the video's authenticity in 2020. Commander Fravor testified under oath before Congress in 2023.</p>
+    </div>
+    <div class="fc-connections reveal reveal-d3">
+      <div class="fc-conn-label">AI-Extracted Descriptors</div>
+      <div class="fc-conn-tags">
+        <span class="fc-conn-tag">Oblong / Tic-Tac</span>
+        <span class="fc-conn-tag">White</span>
+        <span class="fc-conn-tag">~40ft</span>
+        <span class="fc-conn-tag">Erratic Movement</span>
+        <span class="fc-conn-tag">Ocean Disturbance</span>
+      </div>
+      <div class="fc-conn-label">Matching Patterns</div>
+      <div class="fc-conn-tags">
+        <span class="fc-conn-tag pattern">Silent Propulsion (8.4σ)</span>
+        <span class="fc-conn-tag pattern">Instant Acceleration (7.1σ)</span>
+        <span class="fc-conn-tag pattern">No Visible Propulsion (6.2σ)</span>
+        <span class="fc-conn-tag pattern">Hovering (5.9σ)</span>
+      </div>
+      <a href="#" class="fc-read-more">Read Full Case →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THE COLLECTION           -->
+<!-- ======================== -->
+<section class="collection">
+  <div class="collection-header">
+    <h2 class="reveal">The Collection</h2>
+    <a href="#" class="reveal">Browse All 821 Cases →</a>
+  </div>
+  <div class="collection-grid">
+    <div class="case-card reveal reveal-d1">
+      <div class="cc-top">
+        <span class="cc-score">91</span>
+        <span class="cc-source">Blue Book · Unidentified</span>
+      </div>
+      <h4>JAL Flight 1628 over Alaska</h4>
+      <div class="cc-meta">Nov 17, 1986 · Anchorage, AK · Airline crew + FAA radar</div>
+      <div class="cc-story">Japanese airline captain reported a massive walnut-shaped object pacing his 747 for 50 minutes. FAA confirmed on radar. FAA Division Chief went public with the case.</div>
+      <div class="cc-patterns">
+        <span class="cc-pattern-tag">Silent Propulsion</span>
+        <span class="cc-pattern-tag">Massive Scale</span>
+        <span class="cc-pattern-tag">Pacing Aircraft</span>
+      </div>
+    </div>
+    <div class="case-card reveal reveal-d2">
+      <div class="cc-top">
+        <span class="cc-score">89</span>
+        <span class="cc-source">Blue Book · Unidentified</span>
+      </div>
+      <h4>Rendlesham Forest Incident</h4>
+      <div class="cc-meta">Dec 26, 1980 · Suffolk, England · USAF personnel · Physical trace</div>
+      <div class="cc-story">US Air Force personnel at RAF Woodbridge reported a triangular craft landing in the forest. Radiation readings, broken branches, and ground indentations were documented.</div>
+      <div class="cc-patterns">
+        <span class="cc-pattern-tag">Triangular</span>
+        <span class="cc-pattern-tag">Landing / Trace</span>
+        <span class="cc-pattern-tag">Self-Illuminating</span>
+      </div>
+    </div>
+    <div class="case-card reveal reveal-d3">
+      <div class="cc-top">
+        <span class="cc-score">86</span>
+        <span class="cc-source">AARO · Anomalous</span>
+      </div>
+      <h4>Phoenix Lights Mass Sighting</h4>
+      <div class="cc-meta">Mar 13, 1997 · Phoenix, AZ · Thousands of witnesses · Governor</div>
+      <div class="cc-story">Thousands of witnesses including Arizona's governor reported a massive V-shaped craft passing silently over the city. Multiple independent video recordings later geometrically corroborated.</div>
+      <div class="cc-patterns">
+        <span class="cc-pattern-tag">Silent Propulsion</span>
+        <span class="cc-pattern-tag">Massive Scale</span>
+        <span class="cc-pattern-tag">V-Formation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- ASK ANYTHING             -->
+<!-- ======================== -->
+<section class="ask">
+  <h2 class="reveal">Ask anything about the evidence</h2>
+  <p class="sub reveal reveal-d1">Search across 821 verified cases and 147,000+ supporting records. Every answer cites specific cases.</p>
+  <div class="ask-box reveal reveal-d2">
+    <input type="text" placeholder="Which cases describe objects exhibiting trans-medium travel?">
+    <button>Ask</button>
+  </div>
+  <div class="ask-examples reveal reveal-d3">
+    <button class="ask-ex">Silent triangular craft</button>
+    <button class="ask-ex">Witness physical effects</button>
+    <button class="ask-ex">Radar-confirmed cases</button>
+    <button class="ask-ex">Cases with physical trace evidence</button>
+    <button class="ask-ex">Post-2000 military encounters</button>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- TRUST                    -->
+<!-- ======================== -->
+<section class="trust">
+  <div class="trust-inner">
+    <div class="trust-item reveal reveal-d1">
+      <h4>Verified only</h4>
+      <p>Every case is officially classified as unidentified by a government investigation or corroborated by multiple independent credible sources. Explained sightings are excluded.</p>
+    </div>
+    <div class="trust-item reveal reveal-d2">
+      <h4>Every source traceable</h4>
+      <p>Every finding links to specific cases. Every case links to its original source document. No assertions without a full evidence chain.</p>
+    </div>
+    <div class="trust-item reveal reveal-d3">
+      <h4>AI analysis labeled</h4>
+      <p>Every descriptor extracted by AI is clearly labeled as AI-extracted. Every pattern finding includes its full methodology and confidence level.</p>
+    </div>
+    <div class="trust-item reveal reveal-d4">
+      <h4>Null findings published</h4>
+      <p>When the data doesn't support a conclusion, we say so — with the same rigor and design weight as positive findings. No advocacy. No agenda.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project · Methodology · Privacy · Contact</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

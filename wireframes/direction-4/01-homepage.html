@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — What the Verified Evidence Shows</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* --- WARM DARK FIELD (primary) --- */
+    --void: #1C1C1C;
+    --field: #232323;
+    --field-raised: #2C2C2C;
+    --field-line: rgba(196, 163, 90, 0.05);
+    --field-text: rgba(200, 196, 188, 0.55);
+    --field-text-bright: #D4D0C8;
+
+    /* --- ACCENT (muted gold) --- */
+    --accent: #9E8E6C;
+    --accent-dim: rgba(158, 142, 108, 0.35);
+    --accent-glow: rgba(158, 142, 108, 0.1);
+
+    /* --- PAPER (reading sections) --- */
+    --paper: #F0EDE6;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --warm-white: #FAF8F3;
+
+    /* --- SIGNAL (gold + orange) --- */
+    --signal: #C4A35A;
+    --signal-glow: rgba(196, 163, 90, 0.15);
+    --signal-dim: rgba(196, 163, 90, 0.5);
+    --confirm: #C4A35A;
+    --caution: #C4783A;
+    --null: #7A7670;
+    --data-1: #D4AD5A;
+    --data-2: #C4A35A;
+    --data-3: #C4783A;
+    --data-4: #9A7D99;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--field-text-bright);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* --- MINIMAL GRID --- */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      linear-gradient(90deg, rgba(196, 163, 90, 0.04) 1px, transparent 1px),
+      linear-gradient(rgba(196, 163, 90, 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 75%);
+  }
+
+  /* --- SCROLL REVEALS --- */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.12s; }
+  .reveal-d2 { transition-delay: 0.24s; }
+  .reveal-d3 { transition-delay: 0.36s; }
+  .reveal-d4 { transition-delay: 0.48s; }
+  .reveal-d5 { transition-delay: 0.6s; }
+  .reveal-d6 { transition-delay: 0.72s; }
+
+  /* ============================================ */
+  /* CLASSIFICATION BAR                           */
+  /* ============================================ */
+  .class-bar {
+    background: var(--field);
+    border-bottom: 1px solid var(--field-line);
+    padding: 8px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent-dim);
+    position: relative; z-index: 101;
+  }
+  .class-bar .class-status { color: var(--confirm); letter-spacing: 2px; }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px; border-bottom: 1px solid rgba(196, 163, 90, 0.08);
+    position: sticky; top: 0; background: rgba(28, 28, 28, 0.92);
+    backdrop-filter: blur(12px); z-index: 100;
+  }
+  .logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 15px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--field-text-bright);
+  }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--field-text); text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav ul li a:hover { color: var(--signal); }
+
+  /* ============================================ */
+  /* HERO — THE CONSTELLATION                    */
+  /* ============================================ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    overflow: hidden;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+
+  /* --- CONSTELLATION SVG --- */
+  .constellation {
+    position: absolute; inset: -20px; z-index: 1;
+  }
+
+  .constellation line {
+    stroke: var(--accent); stroke-width: 0.5; opacity: 0.15;
+    animation: line-shimmer 8s ease-in-out infinite;
+  }
+  .constellation line:nth-child(odd) { animation-delay: -3s; }
+  .constellation line:nth-child(3n) { animation-delay: -5.5s; }
+
+  @keyframes line-shimmer {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.22; }
+  }
+
+  .constellation .node {
+    fill: var(--signal); opacity: 0.7;
+  }
+  .constellation .node-glow {
+    fill: none; stroke: var(--signal); opacity: 0.18;
+    animation: node-pulse 4s ease-in-out infinite;
+  }
+  .constellation .node-center {
+    fill: var(--signal); opacity: 0.85;
+  }
+  .constellation .node-center-glow {
+    fill: none; stroke: var(--signal); opacity: 0.2;
+    animation: node-pulse 4s ease-in-out infinite;
+  }
+
+  /* Floating animation for node groups */
+  .node-group {
+    animation: node-float 12s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .node-group:nth-child(odd) { animation-duration: 14s; animation-delay: -2s; }
+  .node-group:nth-child(3n) { animation-duration: 10s; animation-delay: -5s; }
+  .node-group:nth-child(4n) { animation-duration: 16s; animation-delay: -8s; }
+  .node-group:nth-child(5n) { animation-duration: 11s; animation-delay: -3s; }
+
+  @keyframes node-float {
+    0%, 100% { transform: translate(0px, 0px); }
+    25% { transform: translate(3px, -4px); }
+    50% { transform: translate(-2px, 3px); }
+    75% { transform: translate(4px, 2px); }
+  }
+  .constellation .node-label {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 8px; letter-spacing: 1.5px;
+    fill: var(--signal-dim);
+  }
+  .constellation .node-label-center {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 8px; letter-spacing: 1.5px;
+    fill: var(--signal-dim);
+  }
+
+  @keyframes node-pulse {
+    0%, 100% { stroke-width: 1; opacity: 0.18; }
+    50% { stroke-width: 3; opacity: 0.06; }
+  }
+
+  .constellation .node-glow:nth-child(3n) { animation-delay: -1.3s; }
+  .constellation .node-glow:nth-child(5n) { animation-delay: -2.6s; }
+
+  /* --- MARGIN COORDINATES --- */
+  .margin-coords {
+    position: absolute; z-index: 2; pointer-events: none;
+    font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 1px;
+    color: rgba(196, 163, 90, 0.1);
+  }
+  .margin-coords.left {
+    left: 24px; top: 50%; transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center; white-space: nowrap;
+  }
+  .margin-coords.right {
+    right: 24px; top: 50%; transform: translateY(-50%) rotate(90deg);
+    transform-origin: center; white-space: nowrap;
+  }
+  .margin-coords.bottom {
+    bottom: 20px; left: 50%; transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  /* --- HERO CONTENT --- */
+  .hero-content {
+    position: relative; z-index: 10;
+    text-align: center; max-width: 820px; padding: 0 40px;
+  }
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%; height: 160%;
+    background: radial-gradient(ellipse at center, var(--void) 0%, rgba(28, 28, 28, 0.85) 35%, transparent 70%);
+    z-index: -1; pointer-events: none;
+  }
+
+  .hero-badge {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--signal); margin-bottom: 32px; display: block;
+  }
+
+  .hero h1 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 64px; line-height: 1.05; margin-bottom: 28px;
+    color: var(--field-text-bright); letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  /* em rule removed — headline uses uniform styling */
+
+  .hero .lead {
+    font-size: 17px; color: var(--field-text); line-height: 1.75;
+    max-width: 580px; margin: 0 auto 48px;
+  }
+
+  /* --- HERO STATS --- */
+  .hero-stats {
+    display: flex; gap: 0;
+    border: 1px solid rgba(196, 163, 90, 0.08);
+    background: rgba(35, 35, 35, 0.8); backdrop-filter: blur(8px);
+  }
+
+  .hero-stat {
+    padding: 24px 40px; text-align: center;
+    border-right: 1px solid rgba(196, 163, 90, 0.06);
+  }
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat .num {
+    font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500;
+    color: var(--signal); line-height: 1;
+  }
+  .hero-stat .unit {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 9px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--field-text); margin-top: 6px;
+  }
+
+  /* --- SCROLL CUE --- */
+  .scroll-cue {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .scroll-cue span {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--field-text);
+  }
+  .scroll-line {
+    width: 1px; height: 32px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scroll-drift 2s ease-in-out infinite;
+  }
+  @keyframes scroll-drift {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(1.3); }
+  }
+
+  /* ============================================ */
+  /* THE SIGNAL — descriptor convergence          */
+  /* ============================================ */
+  .signal-section {
+    position: relative; z-index: 5;
+  }
+
+  .signal-inner {
+    max-width: 1400px; margin: 0 auto; padding: 100px 80px;
+    position: relative;
+  }
+
+  /* --- MARGIN DATA DECORATION --- */
+  .margin-data {
+    position: absolute; left: 16px; top: 100px; bottom: 100px;
+    width: 40px; display: flex; flex-direction: column; justify-content: space-between;
+    pointer-events: none;
+  }
+  .margin-data .tick {
+    font-family: 'DM Mono', monospace; font-size: 7px;
+    color: rgba(196, 163, 90, 0.08); writing-mode: vertical-rl;
+    transform: rotate(180deg); letter-spacing: 1px;
+  }
+
+  .signal-header {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    margin-bottom: 64px;
+  }
+
+  .signal-header h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 42px; line-height: 1.1; color: var(--field-text-bright);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  .signal-header p {
+    font-size: 15px; color: var(--field-text); line-height: 1.75;
+    padding-top: 8px;
+  }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, rgba(196, 163, 90, 0.15), transparent);
+  }
+
+  /* --- CONVERGENCE INSTRUMENT --- */
+  .convergence-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px;
+    background: rgba(196, 163, 90, 0.03);
+  }
+
+  .conv-card {
+    background: var(--field);
+    padding: 28px 24px;
+    border: 1px solid transparent;
+    transition: border-color 0.4s, background 0.4s;
+    position: relative; overflow: hidden;
+  }
+  .conv-card:hover {
+    border-color: rgba(196, 163, 90, 0.12);
+    background: var(--field-raised);
+  }
+
+  .conv-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--data-1), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .conv-card:hover::before { opacity: 0.4; }
+
+  .conv-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .conv-sigma {
+    font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500;
+    color: var(--signal); line-height: 1;
+  }
+  .conv-sigma-label {
+    font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 1px;
+    color: var(--field-text); margin-top: 2px;
+  }
+
+  .conv-count {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 8px;
+    background: var(--accent-glow); color: var(--signal);
+  }
+
+  .conv-descriptor {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 19px; letter-spacing: 0.5px;
+    color: var(--field-text-bright); margin-bottom: 6px; line-height: 1.3;
+  }
+
+  .conv-meta {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--field-text); letter-spacing: 0.3px; margin-bottom: 14px;
+  }
+
+  .conv-bar-track {
+    height: 3px; background: rgba(196, 163, 90, 0.06); border-radius: 1px;
+  }
+  .conv-bar-fill {
+    height: 100%; border-radius: 1px; background: var(--signal);
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ============================================ */
+  /* GEOGRAPHIC & TEMPORAL                        */
+  /* ============================================ */
+  .patterns-section {
+    max-width: 1400px; margin: 0 auto; padding: 0 80px 100px;
+  }
+
+  .patterns-dual {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2px;
+  }
+
+  .pattern-panel {
+    background: var(--field);
+    padding: 40px 36px;
+  }
+
+  .pattern-panel-label {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--signal); margin-bottom: 20px;
+  }
+
+  /* --- GEO MAP --- */
+  .geo-map {
+    position: relative; height: 320px;
+    border: 1px solid rgba(196, 163, 90, 0.06);
+    background: var(--void); overflow: hidden;
+  }
+
+  .geo-map::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(196, 163, 90, 0.03) 1px, transparent 1px),
+      linear-gradient(rgba(196, 163, 90, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .cluster-dot {
+    position: absolute; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 500;
+    color: var(--void);
+  }
+  .cluster-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid var(--data-1);
+    animation: ring-pulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes ring-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .geo-coords {
+    position: absolute; bottom: 8px; left: 12px;
+    font-family: 'DM Mono', monospace; font-size: 7px;
+    color: rgba(196, 163, 90, 0.12); letter-spacing: 1px;
+  }
+  .geo-coords-right {
+    position: absolute; bottom: 8px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 7px;
+    color: rgba(196, 163, 90, 0.12); letter-spacing: 1px;
+  }
+
+  .cluster-list { margin-top: 20px; }
+  .cluster-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid rgba(196, 163, 90, 0.06);
+  }
+  .cluster-dot-sm {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--data-1);
+  }
+  .cluster-name {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 13px; letter-spacing: 0.5px; color: var(--field-text-bright);
+  }
+  .cluster-count {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-dim);
+  }
+
+  /* --- TEMPORAL BARS --- */
+  .temporal-chart {
+    display: flex; align-items: flex-end; gap: 2px; height: 180px;
+    margin-bottom: 20px;
+  }
+
+  .t-bar-col {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; height: 100%; justify-content: flex-end;
+  }
+  .t-bar {
+    width: 100%; border-radius: 1px 1px 0 0;
+    background: rgba(196, 163, 90, 0.08);
+    transition: background 0.3s;
+  }
+  .t-bar.peak { background: var(--signal); }
+  .t-bar.hot { background: rgba(196, 163, 90, 0.4); }
+
+  .t-label {
+    font-family: 'DM Mono', monospace; font-size: 7px;
+    color: var(--field-text); margin-top: 6px; letter-spacing: 0.5px;
+  }
+
+  .temporal-callouts {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+
+  .t-callout {
+    padding: 14px 16px; border: 1px solid rgba(196, 163, 90, 0.06);
+  }
+  .t-callout .year {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--signal); letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .t-callout h4 {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 13px; color: var(--field-text-bright); letter-spacing: 0.3px;
+  }
+
+  /* ============================================ */
+  /* CASES — CHAPTER-STYLE LIST                   */
+  /* ============================================ */
+  .cases-section {
+    position: relative; z-index: 5;
+    border-top: 2px solid var(--signal);
+  }
+
+  .cases-strip {
+    background: var(--field); padding: 10px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent-dim);
+  }
+
+  .cases-inner {
+    max-width: 1400px; margin: 0 auto; padding: 80px 80px;
+  }
+
+  .cases-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 48px;
+  }
+  .cases-header h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 42px; color: var(--field-text-bright);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .cases-header a {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--signal); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .cases-header a:hover { color: var(--field-text-bright); }
+
+  /* --- FEATURED CASE (Case #1) --- */
+  .featured-case {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    margin-bottom: 2px; cursor: pointer;
+    background: var(--field);
+    border: 1px solid transparent;
+    transition: border-color 0.4s;
+    position: relative;
+  }
+  .featured-case:hover {
+    border-color: rgba(196, 163, 90, 0.12);
+  }
+  .featured-case::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--signal); opacity: 0.5;
+  }
+
+  .featured-img {
+    aspect-ratio: 16/10; background: var(--void);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .featured-img::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(196, 163, 90, 0.03) 1px, transparent 1px),
+      linear-gradient(rgba(196, 163, 90, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .featured-img-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    color: var(--field-text); position: relative;
+  }
+
+  .featured-body {
+    padding: 48px 44px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .featured-chapter-num {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--signal); letter-spacing: 2px; margin-bottom: 12px;
+  }
+
+  .featured-body h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 36px; line-height: 1.1; color: var(--field-text-bright);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+  }
+
+  .featured-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--field-text); letter-spacing: 0.3px; margin-bottom: 20px;
+    padding-bottom: 20px; border-bottom: 1px solid rgba(196, 163, 90, 0.06);
+  }
+
+  .featured-excerpt {
+    font-size: 15px; line-height: 1.75; color: var(--field-text);
+    margin-bottom: 24px;
+  }
+
+  .featured-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px;
+  }
+  .featured-tag {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px;
+  }
+  .featured-tag.gold { background: rgba(196, 163, 90, 0.08); color: var(--signal); }
+  .featured-tag.purple { background: rgba(154, 125, 153, 0.08); color: var(--data-4); }
+  .featured-tag.orange { background: rgba(196, 120, 58, 0.08); color: var(--caution); }
+
+  .featured-cta {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--signal); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: gap 0.3s;
+  }
+  .featured-case:hover .featured-cta { gap: 14px; }
+  .featured-cta span {
+    display: inline-block; transition: transform 0.3s;
+  }
+
+  /* --- CHAPTER LIST (remaining cases) --- */
+  .chapter-list {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  .chapter-row {
+    display: grid; grid-template-columns: 64px 1fr 200px 100px 40px;
+    align-items: center; gap: 24px;
+    padding: 24px 28px;
+    background: var(--field);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.3s, border-color 0.3s;
+    text-decoration: none;
+  }
+  .chapter-row:hover {
+    background: var(--field-raised);
+    border-color: rgba(196, 163, 90, 0.08);
+  }
+
+  .chapter-num {
+    font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500;
+    color: var(--signal); line-height: 1;
+  }
+
+  .chapter-info { min-width: 0; }
+
+  .chapter-title {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 20px; color: var(--field-text-bright);
+    text-transform: uppercase; letter-spacing: 0.3px;
+    margin-bottom: 4px; line-height: 1.2;
+  }
+
+  .chapter-meta {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--field-text); letter-spacing: 0.3px;
+  }
+
+  .chapter-tags {
+    display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end;
+  }
+  .chapter-tag {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 7px;
+    background: rgba(196, 163, 90, 0.06); color: var(--accent-dim);
+  }
+  .chapter-tag.purple {
+    background: rgba(154, 125, 153, 0.06); color: var(--data-4);
+  }
+
+  .chapter-score {
+    font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500;
+    color: var(--signal); text-align: right;
+  }
+
+  .chapter-arrow {
+    font-family: 'Oswald', sans-serif; font-size: 16px;
+    color: var(--accent-dim);
+    transition: color 0.3s, transform 0.3s;
+    text-align: right;
+  }
+  .chapter-row:hover .chapter-arrow {
+    color: var(--signal);
+    transform: translateX(4px);
+  }
+
+  .cases-footer {
+    text-align: center; margin-top: 40px;
+  }
+  .cases-footer a {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--signal); text-decoration: none;
+    padding: 14px 36px; border: 1px solid rgba(196, 163, 90, 0.15);
+    transition: background 0.3s, border-color 0.3s;
+    display: inline-block;
+  }
+  .cases-footer a:hover {
+    background: rgba(196, 163, 90, 0.06);
+    border-color: rgba(196, 163, 90, 0.3);
+  }
+
+  /* ============================================ */
+  /* QUERY CTA                                    */
+  /* ============================================ */
+  .query-cta {
+    max-width: 1400px; margin: 0 auto; padding: 40px 80px 100px;
+    text-align: center; position: relative;
+  }
+
+  .query-cta::before {
+    content: ''; position: absolute; left: 50%; top: 0; height: 48px;
+    width: 1px; background: linear-gradient(to bottom, transparent, rgba(196, 163, 90, 0.12));
+  }
+
+  .query-cta h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 36px; margin-bottom: 8px; color: var(--field-text-bright);
+    text-transform: uppercase; letter-spacing: 1px; padding-top: 60px;
+  }
+
+  .query-cta .sub {
+    font-size: 14px; color: var(--field-text); margin-bottom: 32px;
+  }
+
+  .query-box {
+    max-width: 680px; margin: 0 auto;
+    display: flex; border: 1px solid rgba(196, 163, 90, 0.1);
+    background: var(--field);
+    transition: border-color 0.3s;
+  }
+  .query-box:focus-within { border-color: rgba(196, 163, 90, 0.4); }
+
+  .query-box input {
+    flex: 1; padding: 18px 24px; border: none; background: transparent;
+    font-family: 'Source Serif 4', serif; font-size: 14px;
+    color: var(--field-text-bright); outline: none;
+  }
+  .query-box input::placeholder { color: var(--field-text); }
+
+  .query-box button {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; padding: 18px 28px; border: none;
+    background: var(--signal); color: var(--void); cursor: pointer;
+    transition: background 0.2s;
+  }
+  .query-box button:hover { background: #D4B36A; }
+
+  .query-examples {
+    display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap;
+  }
+  .query-ex {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.3px;
+    padding: 5px 12px; border: 1px solid rgba(196, 163, 90, 0.08);
+    color: var(--field-text); cursor: pointer; background: transparent;
+    transition: all 0.2s;
+  }
+  .query-ex:hover { border-color: rgba(196, 163, 90, 0.18); color: var(--signal); }
+
+  /* ============================================ */
+  /* TRUST / METHODOLOGY                          */
+  /* ============================================ */
+  .trust-section {
+    max-width: 1400px; margin: 0 auto; padding: 0 80px 80px;
+  }
+
+  .trust-inner {
+    border-top: 1px solid rgba(196, 163, 90, 0.06); padding-top: 48px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 40px;
+  }
+
+  .trust-item h4 {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--signal); margin-bottom: 8px;
+  }
+  .trust-item p {
+    font-size: 13px; color: var(--field-text); line-height: 1.6;
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid rgba(196, 163, 90, 0.06); padding: 36px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .logo { font-size: 12px; }
+  footer p {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--field-text);
+    letter-spacing: 1px;
+  }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--field-text);
+    background: rgba(35, 35, 35, 0.92); padding: 6px 12px;
+    border: 1px solid rgba(196, 163, 90, 0.1); z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Direction 4c · Homepage</div>
+
+<!-- ======================== -->
+<!-- CLASSIFICATION BAR       -->
+<!-- ======================== -->
+<div class="class-bar">
+  <span>Meridian Project · Open Source Intelligence Platform</span>
+  <span class="class-status">Public Release · v1.0</span>
+</div>
+
+<!-- ======================== -->
+<!-- NAV                      -->
+<!-- ======================== -->
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="03-case-index.html">Cases</a></li>
+    <li><a href="#">Patterns</a></li>
+    <li><a href="04-query-interface.html">Query</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== -->
+<!-- HERO — THE CONSTELLATION -->
+<!-- ======================== -->
+<section class="hero">
+
+  <!-- MARGIN COORDINATES -->
+  <div class="margin-coords left">38.8977°N 77.0365°W — 31.3547°N 117.8916°W — 51.0504°N 1.4426°E — 35.6895°N 51.3890°E</div>
+  <div class="margin-coords right">NUFORC:147K — BLUEBOOK:12618 — AARO:1652 — VERIFIED:821 — UNRESOLVED:701</div>
+  <div class="margin-coords bottom">MERIDIAN EVIDENCE NETWORK · NODE COUNT: 821 · CONNECTION DENSITY: 0.34 · LAST UPDATED: 2026-03-22T00:00:00Z</div>
+
+  <!-- CONSTELLATION SVG -->
+  <svg class="constellation" viewBox="0 0 1920 1000" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <clipPath id="thumb-clip"><rect width="48" height="36" rx="2" /></clipPath>
+      <clipPath id="thumb-clip-lg"><rect width="64" height="48" rx="2" /></clipPath>
+      <filter id="thumb-shadow"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.4"/></filter>
+    </defs>
+
+    <!-- Connection lines -->
+    <line x1="960" y1="420" x2="520" y2="290" />
+    <line x1="960" y1="420" x2="1360" y2="320" />
+    <line x1="960" y1="420" x2="680" y2="580" />
+    <line x1="960" y1="420" x2="1200" y2="600" />
+    <line x1="960" y1="420" x2="580" y2="140" />
+    <line x1="960" y1="420" x2="1300" y2="160" />
+    <line x1="960" y1="420" x2="300" y2="480" />
+    <line x1="960" y1="420" x2="1620" y2="470" />
+    <line x1="520" y1="290" x2="580" y2="140" />
+    <line x1="520" y1="290" x2="300" y2="480" />
+    <line x1="1360" y1="320" x2="1300" y2="160" />
+    <line x1="1360" y1="320" x2="1620" y2="470" />
+    <line x1="680" y1="580" x2="300" y2="480" />
+    <line x1="680" y1="580" x2="1200" y2="600" />
+    <line x1="1200" y1="600" x2="1620" y2="470" />
+    <line x1="580" y1="140" x2="1300" y2="160" />
+    <line x1="580" y1="140" x2="240" y2="200" />
+    <line x1="1300" y1="160" x2="1700" y2="220" />
+    <line x1="300" y1="480" x2="120" y2="360" />
+    <line x1="300" y1="480" x2="180" y2="700" />
+    <line x1="1620" y1="470" x2="1800" y2="360" />
+    <line x1="1620" y1="470" x2="1740" y2="680" />
+    <line x1="680" y1="580" x2="500" y2="760" />
+    <line x1="1200" y1="600" x2="1380" y2="780" />
+    <line x1="240" y1="200" x2="120" y2="360" />
+    <line x1="1700" y1="220" x2="1800" y2="360" />
+    <line x1="960" y1="420" x2="960" y2="780" />
+    <line x1="960" y1="420" x2="160" y2="140" />
+    <line x1="960" y1="420" x2="1780" y2="120" />
+    <line x1="580" y1="140" x2="160" y2="140" />
+    <line x1="1300" y1="160" x2="1780" y2="120" />
+    <line x1="500" y1="760" x2="180" y2="700" />
+    <line x1="1380" y1="780" x2="1740" y2="680" />
+    <line x1="500" y1="760" x2="960" y2="780" />
+    <line x1="1380" y1="780" x2="960" y2="780" />
+
+    <!-- === CENTRAL NODE — Nimitz === -->
+    <g class="node-group">
+      <circle class="node-center-glow" cx="960" cy="420" r="22" />
+      <circle class="node-center" cx="960" cy="420" r="6" />
+      <text class="node-label-center" x="960" y="402" text-anchor="middle">NIMITZ 2004</text>
+      <!-- Folder icon -->
+      <g transform="translate(976, 430)" opacity="0.5">
+        <path d="M0,4 L0,22 Q0,24 2,24 L26,24 Q28,24 28,22 L28,8 Q28,6 26,6 L14,6 L12,3 Q11,2 10,2 L2,2 Q0,2 0,4Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.25)" stroke-width="0.5"/>
+        <rect x="3" y="10" width="10" height="1.2" rx="0.5" fill="rgba(196,163,90,0.2)"/>
+        <rect x="3" y="13" width="16" height="1" rx="0.5" fill="rgba(200,196,188,0.12)"/>
+        <rect x="3" y="16" width="12" height="1" rx="0.5" fill="rgba(200,196,188,0.08)"/>
+        <text x="14" y="22" font-family="DM Mono" font-size="3.5" fill="rgba(196,163,90,0.2)" letter-spacing="0.3" text-anchor="middle">14 FILES</text>
+      </g>
+    </g>
+
+    <!-- === MAJOR NODES === -->
+    <!-- Rendlesham -->
+    <g class="node-group">
+      <circle class="node-glow" cx="520" cy="290" r="16" />
+      <circle class="node" cx="520" cy="290" r="4.5" />
+      <text class="node-label" x="520" y="274" text-anchor="middle">RENDLESHAM</text>
+      <g transform="translate(536, 280)" opacity="0.4">
+        <path d="M0,3.5 L0,19 Q0,20.5 1.5,20.5 L22.5,20.5 Q24,20.5 24,19 L24,7 Q24,5.5 22.5,5.5 L12,5.5 L10.5,3 Q10,2 9,2 L1.5,2 Q0,2 0,3.5Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.2)" stroke-width="0.5"/>
+        <rect x="3" y="9" width="8" height="1" rx="0.5" fill="rgba(196,163,90,0.18)"/>
+        <rect x="3" y="11.5" width="14" height="0.8" rx="0.4" fill="rgba(200,196,188,0.1)"/>
+        <rect x="3" y="14" width="10" height="0.8" rx="0.4" fill="rgba(200,196,188,0.07)"/>
+        <text x="12" y="19" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.18)" letter-spacing="0.3" text-anchor="middle">8 FILES</text>
+      </g>
+    </g>
+
+    <!-- Roosevelt -->
+    <g class="node-group">
+      <circle class="node-glow" cx="1360" cy="320" r="15" />
+      <circle class="node" cx="1360" cy="320" r="4.5" />
+      <text class="node-label" x="1360" y="306" text-anchor="middle">ROOSEVELT</text>
+      <g transform="translate(1330, 333)" opacity="0.4">
+        <path d="M0,3.5 L0,19 Q0,20.5 1.5,20.5 L22.5,20.5 Q24,20.5 24,19 L24,7 Q24,5.5 22.5,5.5 L12,5.5 L10.5,3 Q10,2 9,2 L1.5,2 Q0,2 0,3.5Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.2)" stroke-width="0.5"/>
+        <rect x="3" y="9" width="8" height="1" rx="0.5" fill="rgba(196,163,90,0.18)"/>
+        <rect x="3" y="11.5" width="14" height="0.8" rx="0.4" fill="rgba(200,196,188,0.1)"/>
+        <text x="12" y="19" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.18)" letter-spacing="0.3" text-anchor="middle">11 FILES</text>
+      </g>
+    </g>
+
+    <!-- Tehran -->
+    <g class="node-group">
+      <circle class="node-glow" cx="580" cy="140" r="13" />
+      <circle class="node" cx="580" cy="140" r="4" />
+      <text class="node-label" x="580" y="126" text-anchor="middle">TEHRAN 1976</text>
+      <g transform="translate(594, 132)" opacity="0.35">
+        <path d="M0,3 L0,16 Q0,17.5 1.5,17.5 L19,17.5 Q20.5,17.5 20.5,16 L20.5,6 Q20.5,4.5 19,4.5 L10,4.5 L9,2.5 Q8.5,1.5 7.5,1.5 L1.5,1.5 Q0,1.5 0,3Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.15)" stroke-width="0.5"/>
+        <text x="10" y="15" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.15)" letter-spacing="0.3" text-anchor="middle">6 FILES</text>
+      </g>
+    </g>
+
+    <!-- JAL 1628 -->
+    <g class="node-group">
+      <circle class="node-glow" cx="1300" cy="160" r="13" />
+      <circle class="node" cx="1300" cy="160" r="4" />
+      <text class="node-label" x="1300" y="146" text-anchor="middle">JAL 1628</text>
+      <g transform="translate(1268, 148)" opacity="0.35">
+        <path d="M0,3 L0,16 Q0,17.5 1.5,17.5 L19,17.5 Q20.5,17.5 20.5,16 L20.5,6 Q20.5,4.5 19,4.5 L10,4.5 L9,2.5 Q8.5,1.5 7.5,1.5 L1.5,1.5 Q0,1.5 0,3Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.15)" stroke-width="0.5"/>
+        <text x="10" y="15" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.15)" letter-spacing="0.3" text-anchor="middle">9 FILES</text>
+      </g>
+    </g>
+
+    <!-- Belgian Wave -->
+    <g class="node-group">
+      <circle class="node-glow" cx="680" cy="580" r="14" />
+      <circle class="node" cx="680" cy="580" r="4" />
+      <text class="node-label" x="680" y="600" text-anchor="middle">BELGIAN WAVE</text>
+      <g transform="translate(696, 570)" opacity="0.35">
+        <path d="M0,3 L0,16 Q0,17.5 1.5,17.5 L19,17.5 Q20.5,17.5 20.5,16 L20.5,6 Q20.5,4.5 19,4.5 L10,4.5 L9,2.5 Q8.5,1.5 7.5,1.5 L1.5,1.5 Q0,1.5 0,3Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.15)" stroke-width="0.5"/>
+        <text x="10" y="15" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.15)" letter-spacing="0.3" text-anchor="middle">12 FILES</text>
+      </g>
+    </g>
+
+    <!-- Aguadilla -->
+    <g class="node-group">
+      <circle class="node-glow" cx="1200" cy="600" r="12" />
+      <circle class="node" cx="1200" cy="600" r="3.5" />
+      <text class="node-label" x="1200" y="620" text-anchor="middle">AGUADILLA</text>
+      <g transform="translate(1212, 590)" opacity="0.35">
+        <path d="M0,3 L0,16 Q0,17.5 1.5,17.5 L19,17.5 Q20.5,17.5 20.5,16 L20.5,6 Q20.5,4.5 19,4.5 L10,4.5 L9,2.5 Q8.5,1.5 7.5,1.5 L1.5,1.5 Q0,1.5 0,3Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.15)" stroke-width="0.5"/>
+        <text x="10" y="15" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.15)" letter-spacing="0.3" text-anchor="middle">7 FILES</text>
+      </g>
+    </g>
+
+    <!-- RB-47 -->
+    <g class="node-group">
+      <circle class="node-glow" cx="300" cy="480" r="12" />
+      <circle class="node" cx="300" cy="480" r="3.5" />
+      <text class="node-label" x="300" y="500" text-anchor="middle">RB-47 1957</text>
+      <g transform="translate(312, 472)" opacity="0.3">
+        <path d="M0,3 L0,16 Q0,17.5 1.5,17.5 L19,17.5 Q20.5,17.5 20.5,16 L20.5,6 Q20.5,4.5 19,4.5 L10,4.5 L9,2.5 Q8.5,1.5 7.5,1.5 L1.5,1.5 Q0,1.5 0,3Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.12)" stroke-width="0.5"/>
+        <text x="10" y="15" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.12)" letter-spacing="0.3" text-anchor="middle">5 FILES</text>
+      </g>
+    </g>
+
+    <!-- Washington DC -->
+    <g class="node-group">
+      <circle class="node-glow" cx="1620" cy="470" r="12" />
+      <circle class="node" cx="1620" cy="470" r="3.5" />
+      <text class="node-label" x="1620" y="490" text-anchor="middle">WASH DC 1952</text>
+      <g transform="translate(1632, 458)" opacity="0.3">
+        <path d="M0,3 L0,16 Q0,17.5 1.5,17.5 L19,17.5 Q20.5,17.5 20.5,16 L20.5,6 Q20.5,4.5 19,4.5 L10,4.5 L9,2.5 Q8.5,1.5 7.5,1.5 L1.5,1.5 Q0,1.5 0,3Z" fill="#2C2C2C" stroke="rgba(196,163,90,0.12)" stroke-width="0.5"/>
+        <text x="10" y="15" font-family="DM Mono" font-size="3" fill="rgba(196,163,90,0.12)" letter-spacing="0.3" text-anchor="middle">10 FILES</text>
+      </g>
+    </g>
+
+    <!-- === MINOR / EDGE NODES === -->
+    <g class="node-group">
+      <circle class="node-glow" cx="240" cy="200" r="9" />
+      <circle class="node" cx="240" cy="200" r="2.5" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="1700" cy="220" r="9" />
+      <circle class="node" cx="1700" cy="220" r="2.5" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="120" cy="360" r="8" />
+      <circle class="node" cx="120" cy="360" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="1800" cy="360" r="8" />
+      <circle class="node" cx="1800" cy="360" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="180" cy="700" r="8" />
+      <circle class="node" cx="180" cy="700" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="1740" cy="680" r="8" />
+      <circle class="node" cx="1740" cy="680" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="500" cy="760" r="8" />
+      <circle class="node" cx="500" cy="760" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="1380" cy="780" r="8" />
+      <circle class="node" cx="1380" cy="780" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="960" cy="780" r="9" />
+      <circle class="node" cx="960" cy="780" r="2.5" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="160" cy="140" r="7" />
+      <circle class="node" cx="160" cy="140" r="2" />
+    </g>
+    <g class="node-group">
+      <circle class="node-glow" cx="1780" cy="120" r="7" />
+      <circle class="node" cx="1780" cy="120" r="2" />
+    </g>
+  </svg>
+
+  <!-- HERO CONTENT -->
+  <div class="hero-content">
+    <span class="hero-badge reveal">821 Verified-Unidentified Cases · AI-Analyzed · Source-Traced</span>
+    <h1 class="reveal reveal-d1">What the verified<br>evidence actually shows</h1>
+    <p class="lead reveal reveal-d2">Meridian curates the most credible officially-unidentified cases of anomalous aerial phenomena — and maps the patterns that connect them across decades and independent sources.</p>
+
+    <div class="hero-stats reveal reveal-d3">
+      <div class="hero-stat">
+        <div class="num">821</div>
+        <div class="unit">Verified Cases</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">701</div>
+        <div class="unit">Blue Book Unidentified</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">21</div>
+        <div class="unit">AARO Anomalous</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">6</div>
+        <div class="unit">Convergent Descriptors</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Explore the evidence</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THE SIGNAL               -->
+<!-- ======================== -->
+<section class="signal-section">
+  <div class="signal-inner">
+
+    <div class="margin-data">
+      <span class="tick">σ = 8.4</span>
+      <span class="tick">n = 821</span>
+      <span class="tick">p < 0.001</span>
+      <span class="tick">r = 0.73</span>
+      <span class="tick">CI = 95%</span>
+    </div>
+
+    <div class="signal-header">
+      <div>
+        <div class="section-label reveal">Descriptor Convergence</div>
+        <h2 class="reveal reveal-d1">What 821 cases<br>have in common</h2>
+      </div>
+      <p class="reveal reveal-d2">AI analysis across the full corpus surfaces recurring physical descriptors that appear far more frequently than random chance would predict. These are signals emerging from the aggregate evidence.</p>
+    </div>
+
+    <div class="convergence-grid">
+      <div class="conv-card reveal reveal-d1">
+        <div class="conv-top">
+          <div>
+            <div class="conv-sigma">8.4σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+          <span class="conv-count">189 Cases</span>
+        </div>
+        <div class="conv-descriptor">Silent propulsion</div>
+        <div class="conv-meta">23% of corpus · 7 independent archives</div>
+        <div class="conv-bar-track"><div class="conv-bar-fill" style="width: 92%;"></div></div>
+      </div>
+
+      <div class="conv-card reveal reveal-d2">
+        <div class="conv-top">
+          <div>
+            <div class="conv-sigma">7.1σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+          <span class="conv-count">148 Cases</span>
+        </div>
+        <div class="conv-descriptor">Instantaneous acceleration</div>
+        <div class="conv-meta">18% of corpus · 6 independent archives</div>
+        <div class="conv-bar-track"><div class="conv-bar-fill" style="width: 82%;"></div></div>
+      </div>
+
+      <div class="conv-card reveal reveal-d3">
+        <div class="conv-top">
+          <div>
+            <div class="conv-sigma">5.9σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+          <span class="conv-count">107 Cases</span>
+        </div>
+        <div class="conv-descriptor">Luminous with no heat signature</div>
+        <div class="conv-meta">13% of corpus · 5 independent archives</div>
+        <div class="conv-bar-track"><div class="conv-bar-fill" style="width: 68%;"></div></div>
+      </div>
+
+      <div class="conv-card reveal reveal-d4">
+        <div class="conv-top">
+          <div>
+            <div class="conv-sigma">5.2σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+          <span class="conv-count">91 Cases</span>
+        </div>
+        <div class="conv-descriptor">Hovering / station-keeping</div>
+        <div class="conv-meta">11% of corpus · 8 independent archives</div>
+        <div class="conv-bar-track"><div class="conv-bar-fill" style="width: 60%;"></div></div>
+      </div>
+
+      <div class="conv-card reveal reveal-d5">
+        <div class="conv-top">
+          <div>
+            <div class="conv-sigma">4.8σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+          <span class="conv-count">74 Cases</span>
+        </div>
+        <div class="conv-descriptor">Electromagnetic interference</div>
+        <div class="conv-meta">9% of corpus · 4 independent archives</div>
+        <div class="conv-bar-track"><div class="conv-bar-fill" style="width: 55%;"></div></div>
+      </div>
+
+      <div class="conv-card reveal reveal-d6">
+        <div class="conv-top">
+          <div>
+            <div class="conv-sigma">4.1σ</div>
+            <div class="conv-sigma-label">above random</div>
+          </div>
+          <span class="conv-count">58 Cases</span>
+        </div>
+        <div class="conv-descriptor">Right-angle course changes</div>
+        <div class="conv-meta">7% of corpus · 5 independent archives</div>
+        <div class="conv-bar-track"><div class="conv-bar-fill" style="width: 47%;"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- GEOGRAPHIC & TEMPORAL    -->
+<!-- ======================== -->
+<section class="patterns-section">
+  <div class="patterns-dual">
+    <div class="pattern-panel">
+      <div class="pattern-panel-label reveal">Geographic Clustering</div>
+      <div class="geo-map reveal">
+        <div class="cluster-dot" style="left: 22%; top: 38%; width: 32px; height: 32px; background: var(--data-1);">41</div>
+        <div class="cluster-ring" style="left: calc(22% - 4px); top: calc(38% - 4px); width: 40px; height: 40px;"></div>
+
+        <div class="cluster-dot" style="left: 65%; top: 45%; width: 24px; height: 24px; background: rgba(196, 163, 90, 0.7);">28</div>
+        <div class="cluster-ring" style="left: calc(65% - 2px); top: calc(45% - 2px); width: 28px; height: 28px;"></div>
+
+        <div class="cluster-dot" style="left: 42%; top: 28%; width: 20px; height: 20px; background: rgba(196, 163, 90, 0.5);">19</div>
+        <div class="cluster-dot" style="left: 78%; top: 32%; width: 18px; height: 18px; background: rgba(196, 163, 90, 0.4);">14</div>
+        <div class="cluster-dot" style="left: 15%; top: 58%; width: 14px; height: 14px; background: rgba(196, 163, 90, 0.3);">9</div>
+
+        <div class="geo-coords">24.396°N — 48.856°N</div>
+        <div class="geo-coords-right">67.009°W — 124.731°W</div>
+      </div>
+
+      <div class="cluster-list reveal">
+        <div class="cluster-item">
+          <div class="cluster-dot-sm"></div>
+          <span class="cluster-name">Eastern Seaboard Corridor</span>
+          <span class="cluster-count">41 cases</span>
+        </div>
+        <div class="cluster-item">
+          <div class="cluster-dot-sm"></div>
+          <span class="cluster-name">Great Lakes / Midwest</span>
+          <span class="cluster-count">28 cases</span>
+        </div>
+        <div class="cluster-item">
+          <div class="cluster-dot-sm"></div>
+          <span class="cluster-name">Pacific Southwest</span>
+          <span class="cluster-count">19 cases</span>
+        </div>
+        <div class="cluster-item">
+          <div class="cluster-dot-sm"></div>
+          <span class="cluster-name">Western Europe</span>
+          <span class="cluster-count">14 cases</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-panel">
+      <div class="pattern-panel-label reveal">Temporal Distribution · 1947–2024</div>
+      <div class="temporal-chart reveal">
+        <div class="t-bar-col"><div class="t-bar" style="height: 15%;"></div><span class="t-label">47</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 22%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 28%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 65%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar peak" style="height: 95%;"></div><span class="t-label">52</span></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 72%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 48%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 35%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 25%;"></div><span class="t-label">60</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 18%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 12%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 8%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 14%;"></div><span class="t-label">70</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 18%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 15%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 20%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 16%;"></div><span class="t-label">80</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 22%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 32%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 55%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 62%;"></div><span class="t-label">90</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 40%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 25%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 50%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 20%;"></div><span class="t-label">00</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 18%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 25%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 30%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 22%;"></div><span class="t-label">10</span></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 35%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 58%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar peak" style="height: 78%;"></div><span class="t-label">17</span></div>
+        <div class="t-bar-col"><div class="t-bar hot" style="height: 60%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 42%;"></div></div>
+        <div class="t-bar-col"><div class="t-bar" style="height: 30%;"></div><span class="t-label">24</span></div>
+      </div>
+
+      <div class="temporal-callouts reveal">
+        <div class="t-callout">
+          <div class="year">1952</div>
+          <h4>Blue Book Surge</h4>
+        </div>
+        <div class="t-callout">
+          <div class="year">1989–93</div>
+          <h4>Belgian Wave Era</h4>
+        </div>
+        <div class="t-callout">
+          <div class="year">2004</div>
+          <h4>Nimitz Encounter</h4>
+        </div>
+        <div class="t-callout">
+          <div class="year">2017</div>
+          <h4>Congressional Disclosure</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THE CASES — CHAPTERS     -->
+<!-- ======================== -->
+<section class="cases-section">
+  <div class="cases-strip">
+    <span>The Cases · 821 Verified-Unidentified · Ranked by Credibility</span>
+    <span>Tier 1 · 2 · 3</span>
+  </div>
+
+  <div class="cases-inner">
+    <div class="cases-header reveal">
+      <h2>The Cases</h2>
+      <a href="03-case-index.html">Browse All 821 →</a>
+    </div>
+
+    <!-- FEATURED — Case #1 -->
+    <a class="featured-case reveal" href="02-case-detail.html" style="text-decoration:none;">
+      <div class="featured-img">
+        <span class="featured-img-label">FLIR1 · Infrared Frame · Nov 2004</span>
+      </div>
+      <div class="featured-body">
+        <div class="featured-chapter-num">CASE 001 · SCORE 89</div>
+        <h3>The USS Nimitz Encounter</h3>
+        <div class="featured-meta">14 Nov 2004 · Pacific Ocean, SW San Diego · 6+ USN witnesses</div>
+        <p class="featured-excerpt">Two F/A-18 pilots intercepting anomalous radar contacts encounter a featureless white craft performing maneuvers far beyond known aerospace capability — captured on infrared video, confirmed by the Pentagon in 2017.</p>
+        <div class="featured-tags">
+          <span class="featured-tag gold">Silent propulsion</span>
+          <span class="featured-tag gold">Instant accel.</span>
+          <span class="featured-tag purple">Radar + IR confirmed</span>
+          <span class="featured-tag orange">Ocean disturbance</span>
+        </div>
+        <div class="featured-cta">Read the full case <span>→</span></div>
+      </div>
+    </a>
+
+    <!-- CHAPTER LIST -->
+    <div class="chapter-list">
+      <a class="chapter-row reveal reveal-d1" href="02-case-detail.html" style="text-decoration:none;">
+        <div class="chapter-num">002</div>
+        <div class="chapter-info">
+          <div class="chapter-title">The Rendlesham Forest Incident</div>
+          <div class="chapter-meta">26 Dec 1980 · Suffolk, England · Physical trace + radiation at landing site</div>
+        </div>
+        <div class="chapter-tags">
+          <span class="chapter-tag">Physical trace</span>
+          <span class="chapter-tag">Radiation</span>
+          <span class="chapter-tag purple">Multi-witness</span>
+        </div>
+        <div class="chapter-score">84</div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a class="chapter-row reveal reveal-d2" href="02-case-detail.html" style="text-decoration:none;">
+        <div class="chapter-num">003</div>
+        <div class="chapter-info">
+          <div class="chapter-title">Tehran 1976 — F-4 Intercept</div>
+          <div class="chapter-meta">19 Sep 1976 · Tehran, Iran · Jet systems disabled during approach</div>
+        </div>
+        <div class="chapter-tags">
+          <span class="chapter-tag">System failure</span>
+          <span class="chapter-tag">Radar</span>
+        </div>
+        <div class="chapter-score">81</div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a class="chapter-row reveal reveal-d3" href="02-case-detail.html" style="text-decoration:none;">
+        <div class="chapter-num">004</div>
+        <div class="chapter-info">
+          <div class="chapter-title">Belgian Wave — F-16 Intercepts</div>
+          <div class="chapter-meta">30 Mar 1990 · Belgium · Radar lock, 280→1100 knots in seconds</div>
+        </div>
+        <div class="chapter-tags">
+          <span class="chapter-tag">Radar lock</span>
+          <span class="chapter-tag">Triangular</span>
+        </div>
+        <div class="chapter-score">72</div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a class="chapter-row reveal reveal-d4" href="02-case-detail.html" style="text-decoration:none;">
+        <div class="chapter-num">005</div>
+        <div class="chapter-info">
+          <div class="chapter-title">Washington, D.C. Radar-Visual</div>
+          <div class="chapter-meta">19 Jul 1952 · Washington, D.C. · Objects over the capital, two weekends</div>
+        </div>
+        <div class="chapter-tags">
+          <span class="chapter-tag">Mass obs.</span>
+          <span class="chapter-tag purple">Military intercept</span>
+        </div>
+        <div class="chapter-score">71</div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a class="chapter-row reveal reveal-d5" href="02-case-detail.html" style="text-decoration:none;">
+        <div class="chapter-num">006</div>
+        <div class="chapter-info">
+          <div class="chapter-title">JAL Flight 1628 — Alaska</div>
+          <div class="chapter-meta">17 Nov 1986 · Alaska · Crew of 3, FAA radar, walnut-shaped craft</div>
+        </div>
+        <div class="chapter-tags">
+          <span class="chapter-tag">Radar</span>
+          <span class="chapter-tag">Pilot report</span>
+        </div>
+        <div class="chapter-score">69</div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a class="chapter-row reveal reveal-d6" href="02-case-detail.html" style="text-decoration:none;">
+        <div class="chapter-num">007</div>
+        <div class="chapter-info">
+          <div class="chapter-title">RB-47 Electromagnetic Case</div>
+          <div class="chapter-meta">17 Jul 1957 · Gulf Coast, USA · Object tracked on airborne ELINT for 700 mi</div>
+        </div>
+        <div class="chapter-tags">
+          <span class="chapter-tag">ELINT</span>
+          <span class="chapter-tag">700 mi track</span>
+        </div>
+        <div class="chapter-score">68</div>
+        <div class="chapter-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="cases-footer reveal">
+      <a href="03-case-index.html">View All 821 Cases</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- QUERY CTA                -->
+<!-- ======================== -->
+<section class="query-cta">
+  <h2 class="reveal">Query the Evidence</h2>
+  <p class="sub reveal reveal-d1">Ask any question about the evidence record. Every response cites its sources.</p>
+
+  <div class="query-box reveal reveal-d2">
+    <input type="text" placeholder="What does the evidence show about…">
+    <button>Query</button>
+  </div>
+
+  <div class="query-examples reveal reveal-d3">
+    <button class="query-ex">Silent propulsion cases</button>
+    <button class="query-ex">Tier 1 commonalities</button>
+    <button class="query-ex">Triangular craft</button>
+    <button class="query-ex">Near nuclear facilities</button>
+    <button class="query-ex">Physiological effects</button>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- TRUST / METHODOLOGY      -->
+<!-- ======================== -->
+<section class="trust-section">
+  <div class="trust-inner reveal">
+    <div class="trust-item">
+      <h4>Curated Corpus</h4>
+      <p>Only verified-unidentified cases from official archives. No unvetted submissions in Phase 1.</p>
+    </div>
+    <div class="trust-item">
+      <h4>Transparent Scoring</h4>
+      <p>Every credibility score is a visible sum of weighted factors. No black box.</p>
+    </div>
+    <div class="trust-item">
+      <h4>AI-Labeled</h4>
+      <p>Every AI-extracted descriptor and AI-generated analysis is explicitly labeled as such.</p>
+    </div>
+    <div class="trust-item">
+      <h4>Source-Traced</h4>
+      <p>Every claim links to a specific source document. No claim exists without a citation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- FOOTER                   -->
+<!-- ======================== -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>Data current as of March 2026 · Methodology published · All AI analysis labeled</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Mouse parallax removed — CSS node-float animation handles movement
+
+  // Animate convergence bars on scroll
+  const bars = document.querySelectorAll('.conv-bar-fill');
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const width = entry.target.style.width;
+        entry.target.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            entry.target.style.width = width;
+          });
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+  bars.forEach(bar => barObserver.observe(bar));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Concept: The Investigation · Sitemap</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E0E0E;
+    --surface: #161616;
+    --border: rgba(196, 163, 90, 0.08);
+    --text-1: #C8C4B8;
+    --text-2: rgba(200, 196, 188, 0.5);
+    --text-3: rgba(200, 196, 188, 0.25);
+    --gold: #C4A35A;
+    --gold-dim: rgba(196, 163, 90, 0.45);
+    --gold-faint: rgba(196, 163, 90, 0.06);
+    --orange: #C4783A;
+    --purple: #9A7D99;
+    --red: #C45A5A;
+    --green: #7A9A6A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    padding: 60px 40px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-label {
+    position: fixed; top: 10px; right: 10px;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); background: var(--surface);
+    padding: 5px 10px; border: 1px solid var(--border); z-index: 200;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 36px; margin-bottom: 8px; color: var(--text-1);
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .subtitle {
+    font-size: 12px; color: var(--text-2); max-width: 700px;
+    margin-bottom: 56px; line-height: 1.7;
+  }
+
+  /* --- CONCEPT OVERVIEW --- */
+  .concept-block {
+    margin-bottom: 64px; max-width: 800px;
+  }
+  .concept-block h2 {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .concept-block h2::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+  .concept-block p {
+    font-size: 12px; color: var(--text-2); line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .concept-block strong { color: var(--text-1); font-weight: 500; }
+
+  /* --- SITEMAP --- */
+  .sitemap { margin-bottom: 64px; }
+
+  .sitemap h2 {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sitemap h2::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .map-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .map-node:hover { border-color: rgba(196, 163, 90, 0.15); }
+
+  .map-node.primary {
+    grid-column: 1 / -1;
+    border-left: 3px solid var(--gold);
+  }
+  .map-node.wide {
+    grid-column: span 2;
+  }
+  .map-node.highlight {
+    border-left: 3px solid var(--orange);
+  }
+
+  .node-type {
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 8px;
+  }
+  .node-type.page { color: var(--gold-dim); }
+  .node-type.section { color: var(--purple); }
+  .node-type.feature { color: var(--orange); }
+  .node-type.future { color: var(--text-3); }
+
+  .map-node h3 {
+    font-size: 14px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 6px;
+  }
+  .map-node p {
+    font-size: 10px; color: var(--text-2); line-height: 1.6;
+  }
+
+  .node-children {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .node-child {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 8px; border: 1px solid var(--border);
+    color: var(--text-3);
+  }
+  .node-child.active { border-color: var(--gold-dim); color: var(--gold-dim); }
+
+  /* --- FLOW DIAGRAM --- */
+  .flow-section { margin-bottom: 64px; }
+  .flow-section h2 {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .flow-section h2::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  .flow-steps {
+    display: flex; gap: 2px; align-items: stretch;
+  }
+  .flow-step {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    padding: 24px 20px; position: relative;
+    display: flex; flex-direction: column;
+  }
+  .flow-step::after {
+    content: '→'; position: absolute; right: -12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-dim); font-size: 14px; z-index: 1;
+  }
+  .flow-step:last-child::after { display: none; }
+
+  .flow-num {
+    font-size: 24px; font-weight: 600; color: var(--gold);
+    line-height: 1; margin-bottom: 10px;
+  }
+  .flow-step h4 {
+    font-size: 11px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 6px; letter-spacing: 0.3px;
+  }
+  .flow-step p {
+    font-size: 9px; color: var(--text-2); line-height: 1.5;
+    flex: 1;
+  }
+  .flow-who {
+    margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .flow-who .human { color: var(--orange); }
+  .flow-who .ai { color: var(--purple); }
+  .flow-who .both { color: var(--gold-dim); }
+
+  /* --- STATUS LEGEND --- */
+  .legend {
+    display: flex; gap: 24px; margin-bottom: 48px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .legend-dot.gold { background: var(--gold); }
+  .legend-dot.orange { background: var(--orange); }
+  .legend-dot.purple { background: var(--purple); }
+  .legend-dot.dim { background: var(--text-3); }
+
+  /* --- CASE STATES --- */
+  .states-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    margin-bottom: 64px;
+  }
+  .state-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 20px; text-align: center;
+  }
+  .state-icon {
+    font-size: 24px; margin-bottom: 8px;
+    filter: grayscale(0.3);
+  }
+  .state-card h4 {
+    font-size: 10px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-1); margin-bottom: 4px;
+  }
+  .state-card p {
+    font-size: 9px; color: var(--text-3); line-height: 1.5;
+  }
+  .state-card .count {
+    font-size: 18px; font-weight: 600; color: var(--gold);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-label">Concept · Sitemap & Structure</div>
+
+<h1>Meridian: <em>The Investigation</em></h1>
+<p class="subtitle">A human + AI cold case investigation. We reopen the 821 most credible UFO/UAP case files — reviewing evidence, building case boards, constructing timelines, and publishing our findings. Think X-Files meets Serial meets an FBI evidence wall.</p>
+
+<!-- ======================== -->
+<!-- THE CONCEPT              -->
+<!-- ======================== -->
+<div class="concept-block">
+  <h2>The Concept</h2>
+  <p><strong>The old idea:</strong> A database of 821 cases you can browse. The problem: who cares? There are already repos and wikis. Reading raw case files isn't interesting.</p>
+  <p><strong>The new idea:</strong> An ongoing investigation. Nemo (human researcher) and Claude (AI analyst) reopen each case together, building visual case boards, timelines, and evidence maps — then publishing findings. Each case is an "episode" with a narrative arc: what we know, what doesn't add up, what the AI found that nobody's connected before.</p>
+  <p><strong>What makes it different:</strong> You're not browsing data — you're following a live investigation. The case boards, connection maps, and AI analysis are the product. The process IS the content.</p>
+</div>
+
+<!-- ======================== -->
+<!-- CASE INVESTIGATION FLOW  -->
+<!-- ======================== -->
+<div class="flow-section">
+  <h2>How a Case Gets Investigated</h2>
+
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-num">01</div>
+      <h4>Select & Brief</h4>
+      <p>Pick the next case from the queue. Pull all source documents, witness statements, official reports.</p>
+      <div class="flow-who"><span class="human">Human</span></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">02</div>
+      <h4>AI Analysis</h4>
+      <p>Claude processes all documents. Extracts entities, timelines, descriptors, contradictions, and cross-references against the full corpus.</p>
+      <div class="flow-who"><span class="ai">AI</span></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">03</div>
+      <h4>Build Case Board</h4>
+      <p>Construct the visual evidence wall: timeline, witness map, sensor data, document connections, open questions.</p>
+      <div class="flow-who"><span class="both">Both</span></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">04</div>
+      <h4>Investigate</h4>
+      <p>Work the case. Follow threads. Challenge assumptions. Look for what others missed. Run AI queries against patterns.</p>
+      <div class="flow-who"><span class="both">Both</span></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">05</div>
+      <h4>Publish Findings</h4>
+      <p>Write up the investigation. Assign a credibility score. Publish the case board, timeline, and assessment.</p>
+      <div class="flow-who"><span class="both">Both</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- CASE STATES              -->
+<!-- ======================== -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot gold"></div>Active — Under Investigation</div>
+  <div class="legend-item"><div class="legend-dot orange"></div>Published — Findings Released</div>
+  <div class="legend-item"><div class="legend-dot purple"></div>Connected — Links to Other Cases</div>
+  <div class="legend-item"><div class="legend-dot dim"></div>Queued — Awaiting Review</div>
+</div>
+
+<div class="states-grid">
+  <div class="state-card">
+    <div class="state-icon">🔍</div>
+    <h4>Under Investigation</h4>
+    <p>Currently being worked. Case board in progress.</p>
+    <div class="count">1</div>
+  </div>
+  <div class="state-card">
+    <div class="state-icon">📋</div>
+    <h4>Findings Published</h4>
+    <p>Investigation complete. Full case board + findings live.</p>
+    <div class="count">0</div>
+  </div>
+  <div class="state-card">
+    <div class="state-icon">🔗</div>
+    <h4>Cross-Referenced</h4>
+    <p>Connected to other investigated cases via shared patterns.</p>
+    <div class="count">0</div>
+  </div>
+  <div class="state-card">
+    <div class="state-icon">📁</div>
+    <h4>Queued</h4>
+    <p>Source material collected. Waiting in the queue.</p>
+    <div class="count">820</div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- SITEMAP                  -->
+<!-- ======================== -->
+<div class="sitemap">
+  <h2>Sitemap · Page Structure</h2>
+
+  <div class="map-grid">
+    <!-- HOME -->
+    <div class="map-node primary">
+      <div class="node-type page">Page · Homepage</div>
+      <h3>The Investigation — Home</h3>
+      <p>Sets the tone. Introduces the concept (human + AI reopening cold cases). Shows the current active investigation prominently, recent findings, and the queue. Not a database — a living investigation.</p>
+      <div class="node-children">
+        <span class="node-child active">Active case hero</span>
+        <span class="node-child active">Investigation progress</span>
+        <span class="node-child">Recent findings</span>
+        <span class="node-child">The queue (upcoming)</span>
+        <span class="node-child">About the investigators</span>
+        <span class="node-child">Query tool</span>
+      </div>
+    </div>
+
+    <!-- CASE BOARD -->
+    <div class="map-node wide highlight">
+      <div class="node-type page">Page · Core Experience</div>
+      <h3>Case Board — The Investigation Room</h3>
+      <p>THE key page. Visual evidence wall for a single case. Think detective show corkboard: photos, documents, timeline, witness statements, sensor data — all pinned up with threads connecting them. This is where the investigation happens and where findings are presented.</p>
+      <div class="node-children">
+        <span class="node-child active">Evidence wall / corkboard</span>
+        <span class="node-child active">Interactive timeline</span>
+        <span class="node-child active">Witness map</span>
+        <span class="node-child">Source documents</span>
+        <span class="node-child">AI analysis panel</span>
+        <span class="node-child">Human notes / annotations</span>
+        <span class="node-child">Open questions</span>
+        <span class="node-child">Credibility assessment</span>
+        <span class="node-child">Cross-case connections</span>
+      </div>
+    </div>
+
+    <!-- CASE FILE -->
+    <div class="map-node">
+      <div class="node-type page">Page</div>
+      <h3>Case File — Narrative Write-up</h3>
+      <p>The published "episode." Long-form investigation write-up with embedded evidence, AI findings callouts, and the final assessment. Reading experience for people who want the story.</p>
+      <div class="node-children">
+        <span class="node-child">Narrative write-up</span>
+        <span class="node-child">Key evidence inline</span>
+        <span class="node-child">AI insights callouts</span>
+        <span class="node-child">Final assessment</span>
+        <span class="node-child">Link to case board</span>
+      </div>
+    </div>
+
+    <!-- CASE INDEX -->
+    <div class="map-node">
+      <div class="node-type page">Page</div>
+      <h3>The Queue — All Cases</h3>
+      <p>Master list of all 821 cases organized by status: active, published, queued. Filter and sort. Shows investigation progress across the whole corpus.</p>
+      <div class="node-children">
+        <span class="node-child">Status filters</span>
+        <span class="node-child">Progress tracker</span>
+        <span class="node-child">Sort by score / date / status</span>
+        <span class="node-child">Queue position</span>
+      </div>
+    </div>
+
+    <!-- CONNECTIONS -->
+    <div class="map-node">
+      <div class="node-type page">Page</div>
+      <h3>The Web — Cross-Case Connections</h3>
+      <p>Network visualization showing how investigated cases connect: shared descriptors, overlapping witnesses, geographic clusters, temporal patterns. Grows as more cases are investigated.</p>
+      <div class="node-children">
+        <span class="node-child">Network graph</span>
+        <span class="node-child">Pattern clusters</span>
+        <span class="node-child">Shared descriptors</span>
+        <span class="node-child">Geographic overlap</span>
+      </div>
+    </div>
+
+    <!-- QUERY -->
+    <div class="map-node">
+      <div class="node-type page">Page</div>
+      <h3>Query — Ask the Evidence</h3>
+      <p>Natural language interface to query across all investigated cases. Only returns findings from cases we've actually worked — not raw data. Every answer cites specific investigation findings.</p>
+      <div class="node-children">
+        <span class="node-child">NL query input</span>
+        <span class="node-child">Cited responses</span>
+        <span class="node-child">Confidence levels</span>
+        <span class="node-child">Source case links</span>
+      </div>
+    </div>
+
+    <!-- METHODOLOGY -->
+    <div class="map-node">
+      <div class="node-type page">Page</div>
+      <h3>Methodology — How We Work</h3>
+      <p>Transparent documentation of the investigation process: how cases are selected, how AI analysis works, how credibility scores are calculated, what "verified-unidentified" means.</p>
+      <div class="node-children">
+        <span class="node-child">Selection criteria</span>
+        <span class="node-child">AI analysis process</span>
+        <span class="node-child">Scoring rubric</span>
+        <span class="node-child">Limitations / bias</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="map-node">
+      <div class="node-type page">Page</div>
+      <h3>The Investigators</h3>
+      <p>Who we are. Human researcher background + AI capabilities. Why we're doing this. What we believe and don't believe. Sets the credibility tone — not believers or debunkers, just investigators.</p>
+      <div class="node-children">
+        <span class="node-child">Human bio</span>
+        <span class="node-child">AI capabilities</span>
+        <span class="node-child">Editorial stance</span>
+        <span class="node-child">Contact</span>
+      </div>
+    </div>
+
+    <!-- FUTURE: COMMUNITY -->
+    <div class="map-node">
+      <div class="node-type future">Future · Phase 2</div>
+      <h3>Community Tips / Submissions</h3>
+      <p>Allow the public to submit new cases or additional evidence for cases in the queue. Moderated. Could also allow voting on which case gets investigated next.</p>
+      <div class="node-children">
+        <span class="node-child">Submit evidence</span>
+        <span class="node-child">Vote on next case</span>
+        <span class="node-child">Discussion threads</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- KEY DESIGN ELEMENTS      -->
+<!-- ======================== -->
+<div class="concept-block">
+  <h2>Key Visual / UX Concepts</h2>
+  <p><strong>The Case Board</strong> — The hero element. A visual evidence wall that looks like what you see in detective shows: documents pinned to a board, red string connecting related items, timeline running along the bottom, photos, maps, sticky notes with questions. Interactive — click any element to zoom in.</p>
+  <p><strong>Investigation Status</strong> — Every case has a clear state: queued → under investigation → findings published. The homepage shows progress like a mission tracker. Creates momentum and a reason to come back.</p>
+  <p><strong>Dual Voice</strong> — Human annotations appear differently from AI analysis. Maybe handwritten-style notes for human observations, clean monospace for AI findings. Creates a visible dialogue between the two investigators.</p>
+  <p><strong>The "What We Found" Moment</strong> — Each published case has a clear payoff: "Here's what nobody noticed before." This is the hook that makes people share and come back. It's not just presenting evidence — it's uncovering something.</p>
+  <p><strong>Living Progress</strong> — The site should feel alive. A counter showing "3 of 821 cases investigated." The current active case with a progress indicator. A queue of what's next. People should feel like they're watching an ongoing operation.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Homepage Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --signal: #C4A35A;
+    --confirm: #4A7C59;
+    --caution: #B85C38;
+    --null: #7A8A8C;
+    --data-1: #2D4A6B;
+    --data-2: #C4A35A;
+    --data-3: #4A7C59;
+    --data-4: #8B6B8A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* --- NAV --- */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .logo span {
+    color: var(--signal);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+
+  nav ul li a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--graphite);
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    color: var(--ink);
+  }
+
+  /* --- HERO --- */
+  .hero {
+    text-align: center;
+    padding: 100px 60px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .hero > * { position: relative; z-index: 1; }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--graphite);
+    max-width: 640px;
+    margin: 0 auto 40px;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .hero-cta:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* --- STATS BAR --- */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding: 40px 60px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--graphite);
+    margin-top: 6px;
+  }
+
+  /* --- SECTIONS --- */
+  .section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 60px;
+}
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 16px;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 28px;
+  }
+
+  .section-header a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--graphite);
+    text-decoration: none;
+  }
+
+  /* --- FEATURED FINDINGS --- */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .finding-card {
+    border: 1px solid var(--rule);
+    padding: 32px;
+    background: #FDFBF7;
+  }
+
+  .finding-card .confidence {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .confidence.high { background: rgba(74, 124, 89, 0.12); color: var(--confirm); }
+  .confidence.medium { background: rgba(196, 163, 90, 0.12); color: var(--signal); }
+  .confidence.low { background: rgba(184, 92, 56, 0.12); color: var(--caution); }
+
+  .finding-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+
+  .finding-card p {
+    font-size: 14px;
+    color: var(--graphite);
+    line-height: 1.6;
+  }
+
+  .finding-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--null);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* --- TOP CASES --- */
+  .cases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .case-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 140px 120px 80px;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .case-row:first-child {
+    border-top: 1px solid var(--rule);
+  }
+
+  .case-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--signal);
+  }
+
+  .case-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+  }
+
+  .case-location, .case-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--graphite);
+    letter-spacing: 0.5px;
+  }
+
+  .tier-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    text-align: center;
+  }
+
+  .tier-1 { background: rgba(196, 163, 90, 0.12); color: var(--signal); }
+  .tier-2 { background: rgba(74, 124, 89, 0.12); color: var(--confirm); }
+  .tier-3 { background: rgba(74, 70, 64, 0.08); color: var(--graphite); }
+
+  /* --- QUERY PREVIEW --- */
+  .query-preview {
+    text-align: center;
+    padding: 80px 60px;
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .query-preview::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+    opacity: 0.4;
+  }
+
+  .query-preview > * { position: relative; }
+
+  .query-preview h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .query-preview p {
+    color: var(--graphite);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+
+  .query-input-mock {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid var(--rule);
+    background: #FDFBF7;
+  }
+
+  .query-input-mock input {
+    flex: 1;
+    padding: 16px 24px;
+    border: none;
+    font-family: 'Source Serif 4', serif;
+    font-size: 15px;
+    color: var(--graphite);
+    background: transparent;
+    outline: none;
+  }
+
+  .query-input-mock button {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border: none;
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+  }
+
+  /* --- CONTRIBUTE CTA --- */
+  .contribute-cta {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--rule);
+    background: #FDFBF7;
+    margin-bottom: 80px;
+  }
+
+  .contribute-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .contribute-cta p {
+    color: var(--graphite);
+    font-size: 14px;
+  }
+
+  .contribute-cta a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .logo {
+    font-size: 12px;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--null);
+    letter-spacing: 1px;
+  }
+
+  /* --- WIREFRAME LABEL --- */
+  .wireframe-label {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--null);
+    background: rgba(245, 242, 236, 0.9);
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Homepage</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Evidence Index</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">Query</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">AI-Powered Evidence Research Platform</div>
+  <h1>Mapping the evidence for<br>non-human intelligence</h1>
+  <p>Meridian aggregates, analyzes, and surfaces patterns across the full historical record of anomalous aerial phenomena — producing findings no individual researcher could reach alone.</p>
+  <a href="#" class="hero-cta">Explore the Evidence</a>
+</section>
+
+<!-- STATS -->
+<section class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">174,832</div>
+    <div class="stat-label">Cases in Corpus</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">12</div>
+    <div class="stat-label">Source Archives</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">2,847</div>
+    <div class="stat-label">Tier 1 &amp; 2 Cases</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">38</div>
+    <div class="stat-label">Findings Published</div>
+  </div>
+</section>
+
+<!-- FEATURED FINDINGS -->
+<section class="section">
+  <div class="section-header">
+    <h2>Latest Findings</h2>
+    <a href="#">View All Reports →</a>
+  </div>
+  <div class="findings-grid">
+    <div class="finding-card">
+      <span class="confidence high">High Confidence</span>
+      <h3>Six physical descriptors converge across 12,000 independent accounts with no shared origin</h3>
+      <p>Cross-corpus analysis reveals statistically significant descriptor convergence in craft morphology, luminosity behavior, and flight characteristics across geographically isolated sources.</p>
+      <div class="finding-meta">Descriptor Convergence · v3.2 · Updated Mar 2026 · 847 cases cited</div>
+    </div>
+    <div class="finding-card">
+      <span class="confidence medium">Medium Confidence</span>
+      <h3>Geographic clustering in the Four Corners region exceeds baseline by 340% across three decades</h3>
+      <p>Analysis of NUFORC, MUFON, and military records surfaces a persistent concentration of Tier 1–2 cases in the Four Corners area from 1990 to present.</p>
+      <div class="finding-meta">Geographic Clustering · v2.1 · Updated Feb 2026 · 312 cases cited</div>
+    </div>
+    <div class="finding-card">
+      <span class="confidence high">High Confidence</span>
+      <h3>Sudden onset of environmental silence reported in 23% of Tier 1 close-encounter cases</h3>
+      <p>Linguistic fingerprint analysis identifies a recurring phenomenological pattern — "sudden silence" or "everything went quiet" — across unconnected witness accounts.</p>
+      <div class="finding-meta">Linguistic Fingerprint · v1.8 · Updated Mar 2026 · 1,203 cases cited</div>
+    </div>
+    <div class="finding-card">
+      <span class="confidence low">Inconclusive</span>
+      <h3>No statistically significant correlation found between solar activity cycles and case frequency</h3>
+      <p>Temporal analysis of case frequency against solar maximum/minimum cycles does not produce results meeting the significance threshold at this time.</p>
+      <div class="finding-meta">Null Finding · Temporal Pattern · v1.0 · Published Jan 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP CASES -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-header">
+    <h2>Highest-Rated Cases</h2>
+    <a href="#">Browse Full Index →</a>
+  </div>
+  <div class="cases-list">
+    <div class="case-row">
+      <div class="case-score">94</div>
+      <div class="case-title">USS Nimitz Encounter (Tic Tac)</div>
+      <div class="case-location">Off San Diego, CA</div>
+      <div class="case-date">Nov 14, 2004</div>
+      <div><span class="tier-badge tier-1">Tier 1</span></div>
+    </div>
+    <div class="case-row">
+      <div class="case-score">91</div>
+      <div class="case-title">JAL Flight 1628 over Alaska</div>
+      <div class="case-location">Anchorage, AK</div>
+      <div class="case-date">Nov 17, 1986</div>
+      <div><span class="tier-badge tier-1">Tier 1</span></div>
+    </div>
+    <div class="case-row">
+      <div class="case-score">89</div>
+      <div class="case-title">Rendlesham Forest Incident</div>
+      <div class="case-location">Suffolk, England</div>
+      <div class="case-date">Dec 26, 1980</div>
+      <div><span class="tier-badge tier-1">Tier 1</span></div>
+    </div>
+    <div class="case-row">
+      <div class="case-score">86</div>
+      <div class="case-title">Phoenix Lights Mass Sighting</div>
+      <div class="case-location">Phoenix, AZ</div>
+      <div class="case-date">Mar 13, 1997</div>
+      <div><span class="tier-badge tier-1">Tier 1</span></div>
+    </div>
+    <div class="case-row">
+      <div class="case-score">72</div>
+      <div class="case-title">Stephenville Radar-Confirmed Sighting</div>
+      <div class="case-location">Stephenville, TX</div>
+      <div class="case-date">Jan 8, 2008</div>
+      <div><span class="tier-badge tier-2">Tier 2</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUERY PREVIEW -->
+<section class="query-preview">
+  <h2>Ask the Corpus</h2>
+  <p>Natural language queries grounded in the full evidence record</p>
+  <div class="query-input-mock">
+    <input type="text" placeholder="Which Tier 1 cases describe triangular craft with silent propulsion?" disabled>
+    <button>Query</button>
+  </div>
+</section>
+
+<!-- CONTRIBUTE CTA -->
+<section style="padding: 80px 60px;">
+  <div class="contribute-cta">
+    <div>
+      <h3>Contribute to the Record</h3>
+      <p>Your account may contribute to our research. Submissions are structured, screened, and tiered for credibility.</p>
+    </div>
+    <a href="#">Submit Evidence</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project · Methodology · Privacy · Contact</p>
+</footer>
+
+</body>
+</html>

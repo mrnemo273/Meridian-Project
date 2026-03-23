@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Query the Evidence</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC;
+    --ink: #1A1814;
+    --graphite: #4A4640;
+    --rule: #D4CFC7;
+    --signal: #C4A35A;
+    --confirm: #4A7C59;
+    --caution: #B85C38;
+    --null: #7A8A8C;
+    --data-1: #2D4A6B;
+    --data-2: #C4A35A;
+    --data-3: #4A7C59;
+    --data-4: #8B6B8A;
+    --warm-white: #FDFBF7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9999; opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat; background-size: 256px 256px;
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px; border-bottom: 1px solid var(--rule);
+    position: sticky; top: 0; background: rgba(245, 242, 236, 0.95);
+    backdrop-filter: blur(8px); z-index: 100;
+  }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a {
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite); text-decoration: none; transition: color 0.2s;
+  }
+  nav ul li a:hover { color: var(--ink); }
+  nav ul li a.active { color: var(--ink); }
+
+  /* ============================================ */
+  /* QUERY HERO                                   */
+  /* ============================================ */
+  .query-hero {
+    max-width: 1400px; margin: 0 auto;
+    padding: 80px 80px 20px;
+    text-align: center; position: relative;
+  }
+
+  .query-hero::before {
+    content: ''; position: absolute; left: 50%; top: 20px; height: 40px;
+    width: 1px; background: linear-gradient(to bottom, transparent, var(--rule));
+  }
+
+  .query-badge {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 20px; display: block;
+  }
+
+  .query-hero h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 44px; line-height: 1.15; margin-bottom: 12px;
+  }
+
+  .query-hero .lead {
+    font-size: 17px; color: var(--graphite); line-height: 1.7;
+    max-width: 640px; margin: 0 auto 8px;
+  }
+
+  .query-scope {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.5px;
+    color: var(--null); margin-bottom: 40px;
+  }
+
+  /* ============================================ */
+  /* QUERY INPUT                                  */
+  /* ============================================ */
+  .query-input-section {
+    max-width: 1400px; margin: 0 auto; padding: 0 80px;
+  }
+
+  .query-box {
+    max-width: 860px; margin: 0 auto;
+    border: 2px solid var(--rule); background: var(--warm-white);
+    transition: border-color 0.3s;
+  }
+  .query-box:focus-within { border-color: var(--ink); }
+
+  .query-input-row {
+    display: flex; align-items: center;
+  }
+
+  .query-input {
+    flex: 1; padding: 22px 28px; border: none; background: transparent;
+    font-family: 'Source Serif 4', serif; font-size: 17px; color: var(--ink);
+    outline: none;
+  }
+  .query-input::placeholder { color: var(--null); }
+
+  .query-submit {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 22px 32px; border: none;
+    background: var(--ink); color: var(--paper); cursor: pointer;
+    transition: background 0.2s;
+  }
+  .query-submit:hover { background: var(--graphite); }
+
+  .query-hint {
+    padding: 12px 28px; border-top: 1px solid rgba(212, 207, 199, 0.4);
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    letter-spacing: 0.3px;
+  }
+
+  /* --- EXAMPLE QUERIES --- */
+  .example-queries {
+    max-width: 860px; margin: 20px auto 0;
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;
+  }
+
+  .example-query {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.3px;
+    padding: 8px 16px; border: 1px solid var(--rule); color: var(--graphite);
+    cursor: pointer; background: transparent; transition: all 0.2s;
+  }
+  .example-query:hover { border-color: var(--graphite); color: var(--ink); background: var(--warm-white); }
+
+  /* ============================================ */
+  /* RESPONSE AREA                                */
+  /* ============================================ */
+  .response-area {
+    max-width: 1400px; margin: 0 auto;
+    padding: 60px 80px;
+  }
+
+  .response-container {
+    max-width: 860px; margin: 0 auto;
+  }
+
+  /* --- QUERY RESTATED --- */
+  .query-restated {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.3px;
+    color: var(--graphite); margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+  .query-restated strong { color: var(--ink); font-weight: 500; }
+
+  /* --- CONFIDENCE STRIP --- */
+  .confidence-strip {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 32px;
+    padding: 16px 20px; border: 1px solid var(--rule); background: var(--warm-white);
+  }
+
+  .confidence-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 12px;
+  }
+  .confidence-badge.high { background: rgba(74, 124, 89, 0.1); color: var(--confirm); }
+  .confidence-badge.medium { background: rgba(196, 163, 90, 0.1); color: var(--signal); }
+  .confidence-badge.low { background: rgba(184, 92, 56, 0.1); color: var(--caution); }
+  .confidence-badge.insufficient { background: rgba(122, 138, 140, 0.1); color: var(--null); }
+
+  .confidence-text {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+    letter-spacing: 0.3px;
+  }
+
+  .corpus-searched {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--null);
+    letter-spacing: 0.5px;
+  }
+
+  /* --- RESPONSE BODY --- */
+  .response-body {
+    margin-bottom: 40px;
+  }
+
+  .response-body p {
+    font-size: 16px; line-height: 1.8; margin-bottom: 16px;
+  }
+
+  .inline-citation {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--data-1); cursor: pointer; text-decoration: none;
+    border-bottom: 1px dotted var(--data-1);
+    transition: color 0.2s;
+  }
+  .inline-citation:hover { color: var(--ink); }
+
+  .response-highlight {
+    background: rgba(196, 163, 90, 0.08); padding: 20px 24px;
+    border-left: 3px solid var(--signal); margin: 24px 0;
+  }
+
+  .response-highlight p {
+    font-size: 15px; margin-bottom: 0;
+  }
+
+  .response-highlight .hl-note {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+    margin-top: 8px; letter-spacing: 0.3px;
+  }
+
+  /* --- CITED CASES --- */
+  .cited-cases {
+    border-top: 1px solid var(--rule); padding-top: 32px; margin-bottom: 40px;
+  }
+
+  .cited-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--signal); margin-bottom: 16px;
+  }
+
+  .cited-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .cited-card {
+    display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start;
+    border: 1px solid var(--rule); padding: 18px 20px; background: var(--warm-white);
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .cited-card:hover { border-color: var(--graphite); }
+
+  .cited-score {
+    font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500;
+    color: var(--signal); text-align: center; padding-top: 2px;
+  }
+
+  .cited-info h4 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 16px;
+    margin-bottom: 2px; line-height: 1.3;
+  }
+
+  .cited-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+    letter-spacing: 0.3px; margin-bottom: 6px;
+  }
+
+  .cited-relevance {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.5px;
+    color: var(--confirm);
+  }
+
+  /* --- INSUFFICIENT DATA STATE --- */
+  .insufficient-state {
+    border: 1px solid var(--rule); padding: 40px; text-align: center;
+    margin-top: 32px;
+  }
+
+  .insufficient-state h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .insufficient-state p {
+    font-size: 14px; color: var(--graphite); max-width: 500px; margin: 0 auto 20px;
+  }
+
+  .insufficient-note {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    letter-spacing: 0.3px; padding-top: 16px; border-top: 1px solid var(--rule);
+    max-width: 500px; margin: 0 auto;
+  }
+
+  /* --- METHODOLOGY NOTE --- */
+  .methodology-note {
+    border-top: 1px solid var(--rule); padding-top: 24px;
+    margin-top: 8px;
+  }
+
+  .methodology-note-title {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null); margin-bottom: 10px;
+  }
+
+  .methodology-note p {
+    font-size: 13px; color: var(--graphite); line-height: 1.6;
+  }
+
+  /* --- RELATED QUERIES --- */
+  .related-queries {
+    max-width: 860px; margin: 0 auto; padding: 0 0 40px;
+  }
+
+  .related-queries-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 14px;
+  }
+
+  .related-query-list {
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .related-query-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+    cursor: pointer; transition: color 0.2s;
+    font-size: 15px; color: var(--graphite);
+  }
+  .related-query-item:hover { color: var(--ink); }
+
+  .rq-arrow {
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--signal);
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid var(--rule); padding: 40px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1400px; margin: 60px auto 0;
+  }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Direction 3 · Query Interface</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="03-case-index.html">Cases</a></li>
+    <li><a href="#">Patterns</a></li>
+    <li><a href="#" class="active">Ask</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== -->
+<!-- QUERY HERO               -->
+<!-- ======================== -->
+<section class="query-hero">
+  <span class="query-badge reveal">Research Instrument</span>
+  <h1 class="reveal reveal-d1">Query the Evidence</h1>
+  <p class="lead reveal reveal-d2">Ask any question about the evidence record. Responses are grounded strictly in the corpus — every claim cites a specific case.</p>
+  <div class="query-scope reveal reveal-d3">Searches across 821 curated cases + 147,000 NUFORC narratives · All responses cite sources</div>
+</section>
+
+<!-- ======================== -->
+<!-- QUERY INPUT              -->
+<!-- ======================== -->
+<section class="query-input-section">
+  <div class="query-box reveal">
+    <div class="query-input-row">
+      <input class="query-input" type="text" placeholder="What does the evidence show about…" value="What cases describe triangular craft with silent propulsion?">
+      <button class="query-submit">Query</button>
+    </div>
+    <div class="query-hint">Searches curated cases and the full NUFORC narrative corpus · Responses grounded in source documents</div>
+  </div>
+
+  <div class="example-queries reveal reveal-d1">
+    <button class="example-query">Triangular craft with silent propulsion</button>
+    <button class="example-query">Sudden environmental silence</button>
+    <button class="example-query">Multiple radar system tracking</button>
+    <button class="example-query">What do Tier 1 cases have in common?</button>
+    <button class="example-query">Cases near nuclear facilities</button>
+    <button class="example-query">Physiological effects on witnesses</button>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- RESPONSE                 -->
+<!-- ======================== -->
+<section class="response-area">
+  <div class="response-container">
+
+    <!-- QUERY RESTATED -->
+    <div class="query-restated reveal">
+      <strong>Query:</strong> What cases describe triangular craft with silent propulsion?
+    </div>
+
+    <!-- CONFIDENCE -->
+    <div class="confidence-strip reveal reveal-d1">
+      <span class="confidence-badge high">High Confidence</span>
+      <span class="confidence-text">Sufficient evidence across multiple independent sources</span>
+      <span class="corpus-searched">Searched: 821 cases + 147K narratives</span>
+    </div>
+
+    <!-- RESPONSE BODY -->
+    <div class="response-body reveal reveal-d2">
+      <p>Triangular craft with silent or near-silent propulsion appear in <strong>37 curated cases</strong> across the Meridian corpus, spanning from 1965 to 2021. An additional <strong>~2,400 NUFORC narratives</strong> describe triangular objects, though most lack sufficient corroboration for curated case status.</p>
+
+      <p>The most concentrated period for triangular craft reports is 1989–1993, driven primarily by the Belgian Wave <a class="inline-citation" href="#">[Belgian Wave, 1989–1990]</a>, which produced the largest cluster of credentialed, radar-corroborated triangular observations in the record. Belgian Air Force F-16 interceptors obtained radar locks on a triangular object that accelerated from 280 to 1,100 knots while dropping from 7,000 to 5,000 feet in approximately one second <a class="inline-citation" href="#">[Belgian Wave — F-16 Intercepts, 30 Mar 1990]</a>.</p>
+
+      <div class="response-highlight">
+        <p>Of the 37 curated triangular-craft cases, <strong>32 (86%)</strong> describe silent propulsion — a rate significantly higher than the corpus-wide average of 23% for silent propulsion across all craft types. This suggests a particularly strong association between triangular geometry and the absence of audible propulsion.</p>
+        <div class="hl-note">Note: This correlation does not imply causation. The descriptor co-occurrence may reflect observer expectation effects or a genuine physical characteristic.</div>
+      </div>
+
+      <p>Notable curated cases describing triangular silent craft include the Belgian Wave <a class="inline-citation" href="#">[1989–1990, Tier 1]</a>, the Illinois Triangle <a class="inline-citation" href="#">[5 Jan 2000, Tier 2]</a> observed by five police officers across multiple municipalities, the Cosford RAF Incident <a class="inline-citation" href="#">[30 Mar 1993, Tier 2]</a> where multiple RAF stations reported a silent triangular object, and the Hudson Valley Wave <a class="inline-citation" href="#">[1982–1986, Tier 2]</a> involving thousands of witnesses across New York and Connecticut.</p>
+
+      <p>Geographically, triangular-craft cases show concentrations in Western Europe (particularly the Low Countries), the U.S. Midwest, and the eastern seaboard. There is no statistically significant correlation with military installations, though several cases occur near air force bases <a class="inline-citation" href="#">[geographic analysis, v2]</a>.</p>
+    </div>
+
+    <!-- CITED CASES -->
+    <div class="cited-cases reveal">
+      <div class="cited-label">Cases Cited in This Response</div>
+      <div class="cited-grid">
+        <div class="cited-card">
+          <div class="cited-score">72</div>
+          <div class="cited-info">
+            <h4>Belgian Wave — F-16 Intercepts</h4>
+            <div class="cited-meta">30 Mar 1990 · Belgium · Tier 1</div>
+            <div class="cited-relevance">Primary match · Triangular + silent + radar</div>
+          </div>
+        </div>
+        <div class="cited-card">
+          <div class="cited-score">62</div>
+          <div class="cited-info">
+            <h4>Illinois Triangle — Police Multi-Station</h4>
+            <div class="cited-meta">5 Jan 2000 · Illinois, USA · Tier 2</div>
+            <div class="cited-relevance">Strong match · Triangular + silent + 5 officers</div>
+          </div>
+        </div>
+        <div class="cited-card">
+          <div class="cited-score">58</div>
+          <div class="cited-info">
+            <h4>Cosford RAF Incident</h4>
+            <div class="cited-meta">30 Mar 1993 · Shropshire, England · Tier 2</div>
+            <div class="cited-relevance">Strong match · Triangular + silent + RAF stations</div>
+          </div>
+        </div>
+        <div class="cited-card">
+          <div class="cited-score">55</div>
+          <div class="cited-info">
+            <h4>Hudson Valley Wave</h4>
+            <div class="cited-meta">1982–1986 · New York / Connecticut · Tier 2</div>
+            <div class="cited-relevance">Match · Triangular + silent + mass observation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- METHODOLOGY NOTE -->
+    <div class="methodology-note reveal">
+      <div class="methodology-note-title">How This Response Was Generated</div>
+      <p>This response was generated by searching the full Meridian corpus (821 curated cases + 147,000 NUFORC narratives) using hybrid semantic and keyword retrieval. The AI response is grounded strictly in retrieved documents — no claims are made beyond what the source material supports. Descriptor statistics are computed from AI-extracted fields across the curated corpus. All cited case IDs link to their full case pages with complete evidence trails.</p>
+    </div>
+  </div>
+
+  <!-- RELATED QUERIES -->
+  <div class="related-queries reveal">
+    <div class="related-queries-title">Related Questions</div>
+    <div class="related-query-list">
+      <div class="related-query-item">
+        <span class="rq-arrow">→</span>
+        What flight behaviors are most commonly reported alongside triangular craft?
+      </div>
+      <div class="related-query-item">
+        <span class="rq-arrow">→</span>
+        Are triangular sightings concentrated near military installations?
+      </div>
+      <div class="related-query-item">
+        <span class="rq-arrow">→</span>
+        How does the Belgian Wave compare to other mass-observation events?
+      </div>
+      <div class="related-query-item">
+        <span class="rq-arrow">→</span>
+        What witness effects are reported in triangular craft encounters?
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- INSUFFICIENT DATA EXAMPLE -->
+<!-- (hidden — shows the null state) -->
+<!-- ======================== -->
+<section class="response-area" style="border-top: 2px dashed var(--rule); margin-top: 20px;">
+  <div class="response-container">
+    <div style="font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--caution); margin-bottom: 24px; padding-top: 24px;">
+      ↓ Alternate State: Insufficient Data Response
+    </div>
+
+    <div class="query-restated">
+      <strong>Query:</strong> Is there evidence of underwater UAP bases in the Pacific Ocean?
+    </div>
+
+    <div class="confidence-strip">
+      <span class="confidence-badge insufficient">Insufficient Data</span>
+      <span class="confidence-text">The corpus does not contain sufficient evidence to support a substantive response</span>
+      <span class="corpus-searched">Searched: 821 cases + 147K narratives</span>
+    </div>
+
+    <div class="insufficient-state">
+      <h3>Insufficient data to answer this question</h3>
+      <p>The Meridian corpus does not contain evidence that directly addresses this query. This is a first-class finding — the absence of supporting data in the current record is itself meaningful information.</p>
+      <div class="insufficient-note">
+        While 14 curated cases involve objects observed entering or exiting water (transmedium observations), none contain evidence regarding permanent underwater structures or installations. The corpus is limited to observed events and their supporting documentation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- FOOTER                   -->
+<!-- ======================== -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>Data current as of March 2026 · Methodology published · All AI analysis labeled</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Example query click behavior
+  document.querySelectorAll('.example-query').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.query-input').value = btn.textContent;
+    });
+  });
+</script>
+
+</body>
+</html>

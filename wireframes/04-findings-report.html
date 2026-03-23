@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Findings Report Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC; --ink: #1A1814; --graphite: #4A4640;
+    --rule: #D4CFC7; --signal: #C4A35A; --confirm: #4A7C59;
+    --caution: #B85C38; --null: #7A8A8C; --data-1: #2D4A6B;
+    --data-2: #C4A35A; --data-3: #4A7C59; --data-4: #8B6B8A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; line-height: 1.7; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; border-bottom: 1px solid var(--rule); }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--graphite); text-decoration: none; }
+  nav ul li a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+  /* --- REPORT LAYOUT --- */
+  .report {
+    max-width: 900px; margin: 0 auto; padding: 60px 40px 80px;
+  }
+
+  .report-meta-bar {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 32px;
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite);
+  }
+
+  .report-type-badge {
+    padding: 4px 12px; background: rgba(45, 74, 107, 0.08); color: var(--data-1);
+  }
+
+  .confidence-pill {
+    padding: 4px 12px; font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .confidence-pill.high { background: rgba(74, 124, 89, 0.12); color: var(--confirm); }
+  .confidence-pill.medium { background: rgba(196, 163, 90, 0.12); color: var(--signal); }
+
+  .report h1 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 38px;
+    line-height: 1.2; margin-bottom: 20px;
+  }
+
+  .report-subtitle {
+    font-size: 18px; color: var(--graphite); margin-bottom: 32px;
+    padding-bottom: 32px; border-bottom: 1px solid var(--rule);
+  }
+
+  .report-info {
+    display: flex; gap: 40px; margin-bottom: 40px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    letter-spacing: 0.5px;
+  }
+
+  /* --- METHODOLOGY NOTE --- */
+  .methodology-note {
+    background: #FDFBF7; border: 1px solid var(--rule); padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .methodology-note .label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 8px;
+  }
+
+  .methodology-note p {
+    font-size: 14px; color: var(--graphite); line-height: 1.6;
+  }
+
+  /* --- BODY --- */
+  .report-body h2 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 24px;
+    margin: 40px 0 16px; padding-top: 32px; border-top: 1px solid var(--rule);
+  }
+
+  .report-body h2:first-child { border-top: none; padding-top: 0; }
+
+  .report-body p { font-size: 16px; margin-bottom: 16px; }
+
+  /* --- INLINE CITATION --- */
+  .citation {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--data-1); cursor: pointer; text-decoration: none;
+    border-bottom: 1px dotted var(--data-1);
+  }
+
+  /* --- DATA VIZ PLACEHOLDER --- */
+  .data-viz {
+    border: 1px solid var(--rule); background: #FDFBF7; padding: 32px;
+    margin: 32px 0; text-align: center;
+  }
+
+  .data-viz-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null); margin-bottom: 20px;
+  }
+
+  .chart-placeholder {
+    display: flex; align-items: flex-end; justify-content: center; gap: 12px;
+    height: 160px; padding: 0 20px;
+  }
+
+  .chart-bar {
+    width: 48px; border-radius: 2px 2px 0 0;
+  }
+
+  .chart-bar-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--graphite);
+    text-align: center; margin-top: 8px;
+  }
+
+  /* --- DESCRIPTOR TABLE --- */
+  .descriptor-table {
+    width: 100%; border-collapse: collapse; margin: 24px 0;
+  }
+
+  .descriptor-table th {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite); text-align: left;
+    padding: 10px 12px; border-bottom: 2px solid var(--rule);
+  }
+
+  .descriptor-table td {
+    font-family: 'DM Mono', monospace; font-size: 12px; padding: 10px 12px;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.5);
+  }
+
+  .descriptor-table td:nth-child(3) { color: var(--confirm); }
+  .descriptor-table td:nth-child(4) { color: var(--signal); font-weight: 500; }
+
+  /* --- PULL QUOTE --- */
+  .pull-quote {
+    border-left: 3px solid var(--signal); padding: 20px 28px; margin: 32px 0;
+    font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic;
+    line-height: 1.5; color: var(--graphite);
+  }
+
+  /* --- VERSION HISTORY --- */
+  .version-history {
+    margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--rule);
+  }
+
+  .version-row {
+    display: flex; gap: 16px; padding: 8px 0;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.3);
+  }
+
+  .version-num { color: var(--ink); font-weight: 500; width: 40px; }
+  .version-date { color: var(--null); width: 100px; }
+  .version-note { color: var(--graphite); flex: 1; }
+
+  .section-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 16px;
+  }
+
+  footer { border-top: 1px solid var(--rule); padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Findings Report</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Evidence Index</a></li>
+    <li><a href="#" class="active">Findings</a></li>
+    <li><a href="#">Query</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<article class="report">
+
+  <div class="report-meta-bar">
+    <span class="report-type-badge">Descriptor Convergence</span>
+    <span class="confidence-pill high">High Confidence</span>
+    <span>Living Report · Auto-Updated</span>
+  </div>
+
+  <h1>Six physical descriptors converge across 12,000 independent accounts with no shared origin</h1>
+
+  <p class="report-subtitle">Cross-corpus analysis reveals statistically significant descriptor convergence in craft morphology, luminosity behavior, and flight characteristics across geographically and temporally isolated sources.</p>
+
+  <div class="report-info">
+    <span>Version 3.2 · Updated March 14, 2026</span>
+    <span>847 cases cited</span>
+    <span>First published: October 2025</span>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="methodology-note">
+    <div class="label">Methodology</div>
+    <p>This analysis examines descriptor frequency across the full Meridian corpus (174,832 cases). For each physical descriptor extracted via NLP, we compute the expected frequency assuming random distribution across independent sources. Descriptors appearing at rates exceeding 3σ above expected frequency across 3+ independent source archives with no shared provenance are flagged as convergent. Confidence level reflects both statistical significance and the independence verification of source chains.</p>
+  </div>
+
+  <!-- BODY -->
+  <div class="report-body">
+    <h2>Summary of Findings</h2>
+    <p>Of 847 descriptors extracted from the corpus, six exhibit statistically anomalous convergence across sources that share no documented origin, no common media exposure, and no geographic or temporal clustering. These six descriptors appear independently in accounts from NUFORC (<a class="citation">12,847 cases</a>), Project Blue Book (<a class="citation">1,203 cases</a>), MUFON public reports (<a class="citation">8,421 cases</a>), and congressional testimony transcripts (<a class="citation">14 sessions</a>).</p>
+
+    <h2>The Six Convergent Descriptors</h2>
+
+    <table class="descriptor-table">
+      <thead>
+        <tr>
+          <th>Descriptor</th>
+          <th>Category</th>
+          <th>Sources (Independent)</th>
+          <th>Sigma</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Silent propulsion / no sound</td>
+          <td>Behavioral</td>
+          <td>7 archives</td>
+          <td>8.4σ</td>
+        </tr>
+        <tr>
+          <td>Instantaneous acceleration</td>
+          <td>Flight characteristic</td>
+          <td>6 archives</td>
+          <td>7.1σ</td>
+        </tr>
+        <tr>
+          <td>Luminous / self-illuminating</td>
+          <td>Morphology</td>
+          <td>8 archives</td>
+          <td>6.8σ</td>
+        </tr>
+        <tr>
+          <td>No visible propulsion system</td>
+          <td>Morphology</td>
+          <td>7 archives</td>
+          <td>6.2σ</td>
+        </tr>
+        <tr>
+          <td>Hovering / stationary flight</td>
+          <td>Flight characteristic</td>
+          <td>8 archives</td>
+          <td>5.9σ</td>
+        </tr>
+        <tr>
+          <td>Smooth / featureless exterior</td>
+          <td>Morphology</td>
+          <td>5 archives</td>
+          <td>4.7σ</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CHART -->
+    <div class="data-viz">
+      <div class="data-viz-label">Descriptor Frequency by Source Archive</div>
+      <div class="chart-placeholder">
+        <div>
+          <div class="chart-bar" style="height: 140px; background: var(--data-1);"></div>
+          <div class="chart-bar-label">NUFORC</div>
+        </div>
+        <div>
+          <div class="chart-bar" style="height: 90px; background: var(--data-2);"></div>
+          <div class="chart-bar-label">MUFON</div>
+        </div>
+        <div>
+          <div class="chart-bar" style="height: 60px; background: var(--data-3);"></div>
+          <div class="chart-bar-label">Blue Book</div>
+        </div>
+        <div>
+          <div class="chart-bar" style="height: 45px; background: var(--data-4);"></div>
+          <div class="chart-bar-label">Black Vault</div>
+        </div>
+        <div>
+          <div class="chart-bar" style="height: 30px; background: var(--data-1); opacity: 0.6;"></div>
+          <div class="chart-bar-label">NICAP</div>
+        </div>
+        <div>
+          <div class="chart-bar" style="height: 20px; background: var(--data-2); opacity: 0.6;"></div>
+          <div class="chart-bar-label">Congress</div>
+        </div>
+        <div>
+          <div class="chart-bar" style="height: 35px; background: var(--data-3); opacity: 0.6;"></div>
+          <div class="chart-bar-label">CIA/FBI</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Analysis: Silent Propulsion</h2>
+    <p>The descriptor "silent" or "no sound" appears in 23.4% of all Tier 1 and Tier 2 cases in the corpus. When controlling for observation distance (accounts within 500 meters of the reported object), this rate rises to 41.2%. The expected rate, assuming random distribution against a baseline of conventional aircraft misidentification, is 3.1%.</p>
+
+    <div class="pull-quote">
+      "Across 47,000 accounts spanning seven decades and twelve independent archives, the same six physical descriptors appear with a frequency that cannot be explained by cultural contamination, media influence, or random chance alone."
+    </div>
+
+    <p>Notably, the convergence holds even when restricting analysis to pre-internet accounts (before 1995), eliminating the possibility of online cross-contamination. In the pre-1995 subset (<a class="citation">34,812 cases</a>), five of the six descriptors still exceed the 3σ threshold.</p>
+
+    <h2>Limitations and Caveats</h2>
+    <p>This analysis cannot rule out cultural transmission through non-digital media (books, television, film). The "flying saucer" archetype established by media coverage in the late 1940s may have influenced witness descriptions independent of actual observation. However, the persistence of descriptors like "instantaneous acceleration" and "featureless exterior" — which are not prominent in popular culture depictions — argues against a purely cultural explanation.</p>
+    <p>Additionally, NLP-based descriptor extraction carries an inherent error rate. Our current model achieves 94.2% precision on the manually validated subset. We publish this rate for transparency and note that extraction errors would be expected to reduce, not increase, convergence signals.</p>
+
+  </div>
+
+  <!-- VERSION HISTORY -->
+  <div class="version-history">
+    <div class="section-title">Version History</div>
+    <div class="version-row">
+      <span class="version-num">v3.2</span>
+      <span class="version-date">Mar 14, 2026</span>
+      <span class="version-note">Added 312 new cases from MUFON Q1 2026 data; sigma values updated</span>
+    </div>
+    <div class="version-row">
+      <span class="version-num">v3.1</span>
+      <span class="version-date">Feb 1, 2026</span>
+      <span class="version-note">Incorporated Black Vault FOIA batch #47; added limitations section</span>
+    </div>
+    <div class="version-row">
+      <span class="version-num">v3.0</span>
+      <span class="version-date">Jan 10, 2026</span>
+      <span class="version-note">Major revision: expanded from 4 to 6 convergent descriptors</span>
+    </div>
+    <div class="version-row">
+      <span class="version-num">v2.0</span>
+      <span class="version-date">Dec 2, 2025</span>
+      <span class="version-note">Pre-1995 subset analysis added; confidence upgraded from Medium to High</span>
+    </div>
+    <div class="version-row">
+      <span class="version-num">v1.0</span>
+      <span class="version-date">Oct 15, 2025</span>
+      <span class="version-note">Initial publication — 4 convergent descriptors identified</span>
+    </div>
+  </div>
+
+</article>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Map & Timeline Views Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC; --ink: #1A1814; --graphite: #4A4640;
+    --rule: #D4CFC7; --signal: #C4A35A; --confirm: #4A7C59;
+    --caution: #B85C38; --null: #7A8A8C; --data-1: #2D4A6B;
+    --data-2: #C4A35A; --data-3: #4A7C59; --data-4: #8B6B8A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; line-height: 1.6; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; border-bottom: 1px solid var(--rule); }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--graphite); text-decoration: none; }
+  nav ul li a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+  /* --- VIEW TABS --- */
+  .view-tabs {
+    max-width: 1400px; margin: 0 auto; padding: 20px 40px;
+    display: flex; gap: 0; border-bottom: 1px solid var(--rule);
+  }
+
+  .view-tab {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 10px 24px;
+    border: 1px solid var(--rule); border-bottom: none;
+    background: #FDFBF7; color: var(--graphite); cursor: pointer; margin-bottom: -1px;
+  }
+
+  .view-tab.active { background: var(--paper); color: var(--ink); border-bottom: 1px solid var(--paper); }
+
+  /* ============================================ */
+  /* MAP VIEW                                     */
+  /* ============================================ */
+  .map-section { padding: 0; max-width: 1400px; margin: 0 auto; }
+
+  .map-layout {
+    display: grid; grid-template-columns: 1fr 340px; min-height: 600px;
+  }
+
+  /* --- MAP AREA --- */
+  .map-area {
+    position: relative; background: #E8E4DD; overflow: hidden;
+  }
+
+  /* Muted cartographic base */
+  .map-base {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(212, 207, 199, 0.3) 1px, transparent 1px),
+      linear-gradient(rgba(212, 207, 199, 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 207, 199, 0.15) 1px, transparent 1px),
+      linear-gradient(rgba(212, 207, 199, 0.15) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  }
+
+  /* Landmass shapes (stylized US) */
+  .landmass {
+    position: absolute; border-radius: 4px;
+    background: rgba(212, 207, 199, 0.5);
+  }
+
+  .landmass-1 { top: 15%; left: 10%; width: 60%; height: 45%; border-radius: 20px 40px 30px 10px; }
+  .landmass-2 { top: 50%; left: 55%; width: 15%; height: 20%; border-radius: 0 0 20px 0; }
+
+  /* Cluster dots */
+  .cluster {
+    position: absolute; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    color: white; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .cluster-tier1 { background: var(--signal); }
+  .cluster-tier2 { background: var(--confirm); }
+  .cluster-mixed { background: var(--data-1); }
+
+  /* Coordinate labels */
+  .coord-label {
+    position: absolute; font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--null); letter-spacing: 1px;
+  }
+
+  /* Map controls */
+  .map-controls {
+    position: absolute; top: 16px; left: 16px;
+    display: flex; flex-direction: column; gap: 1px;
+  }
+
+  .map-controls button {
+    width: 32px; height: 32px; border: 1px solid var(--rule);
+    background: #FDFBF7; font-family: 'DM Mono', monospace; font-size: 16px;
+    color: var(--graphite); cursor: pointer;
+  }
+
+  .map-legend {
+    position: absolute; bottom: 16px; left: 16px;
+    background: rgba(253, 251, 247, 0.95); border: 1px solid var(--rule);
+    padding: 12px 16px;
+  }
+
+  .legend-title {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 8px;
+  }
+
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+
+  /* --- MAP SIDEBAR --- */
+  .map-sidebar {
+    border-left: 1px solid var(--rule); background: #FDFBF7;
+    overflow-y: auto; padding: 20px;
+  }
+
+  .sidebar-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+
+  .cluster-detail {
+    margin-bottom: 24px;
+  }
+
+  .cluster-detail h3 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .cluster-meta {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    margin-bottom: 12px;
+  }
+
+  .cluster-case {
+    padding: 10px 0; border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+  }
+
+  .cluster-case-title {
+    font-family: 'Playfair Display', serif; font-size: 13px; margin-bottom: 2px;
+  }
+
+  .cluster-case-meta {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--graphite);
+  }
+
+  .cluster-case-score {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--signal); font-weight: 500;
+  }
+
+  /* --- MAP FILTERS --- */
+  .map-filters {
+    padding: 12px 20px; border-bottom: 1px solid var(--rule);
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+
+  .map-filter-chip {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid var(--rule); background: #FDFBF7; color: var(--graphite);
+    cursor: pointer;
+  }
+
+  .map-filter-chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ============================================ */
+  /* TIMELINE VIEW                                */
+  /* ============================================ */
+  .timeline-section {
+    max-width: 1400px; margin: 0 auto; padding: 40px;
+  }
+
+  .timeline-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .timeline-header h2 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 24px;
+  }
+
+  .timeline-range {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--graphite);
+  }
+
+  /* --- FREQUENCY CHART --- */
+  .frequency-chart {
+    border: 1px solid var(--rule); background: #FDFBF7; padding: 32px;
+    margin-bottom: 32px;
+  }
+
+  .chart-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 20px;
+  }
+
+  .bar-chart {
+    display: flex; align-items: flex-end; gap: 3px; height: 180px; padding-top: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .bar-group {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+  }
+
+  .bar {
+    width: 100%; max-width: 32px; border-radius: 2px 2px 0 0;
+    background: var(--data-1); position: relative;
+  }
+
+  .bar.highlight { background: var(--signal); }
+
+  .bar-year {
+    font-family: 'DM Mono', monospace; font-size: 8px; color: var(--null);
+    margin-top: 6px; transform: rotate(-45deg); white-space: nowrap;
+  }
+
+  /* --- TIMELINE EVENTS --- */
+  .timeline-events {
+    position: relative; padding-left: 40px;
+  }
+
+  .timeline-line {
+    position: absolute; left: 15px; top: 0; bottom: 0;
+    width: 1px; background: var(--rule);
+  }
+
+  .timeline-event {
+    position: relative; padding: 24px 0; border-bottom: 1px solid rgba(212, 207, 199, 0.3);
+  }
+
+  .timeline-dot {
+    position: absolute; left: -33px; top: 28px;
+    width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--signal);
+    background: #FDFBF7;
+  }
+
+  .timeline-dot.spike { background: var(--signal); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--signal);
+    letter-spacing: 1px; margin-bottom: 4px;
+  }
+
+  .timeline-event h4 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 17px;
+    margin-bottom: 6px;
+  }
+
+  .timeline-event p {
+    font-size: 14px; color: var(--graphite); line-height: 1.5;
+  }
+
+  .timeline-case-count {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--data-1);
+    margin-top: 6px;
+  }
+
+  .event-correlation {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 8px; display: inline-block;
+    margin-top: 8px;
+  }
+
+  .event-correlation.confirmed { background: rgba(74, 124, 89, 0.1); color: var(--confirm); }
+  .event-correlation.investigating { background: rgba(196, 163, 90, 0.1); color: var(--signal); }
+
+  footer { border-top: 1px solid var(--rule); padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Map & Timeline</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#" class="active">Evidence Index</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">Query</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- VIEW TABS -->
+<div class="view-tabs">
+  <div class="view-tab">List</div>
+  <div class="view-tab active">Map</div>
+  <div class="view-tab">Timeline</div>
+</div>
+
+<!-- ======================== -->
+<!-- MAP VIEW                 -->
+<!-- ======================== -->
+<div class="map-section">
+  <div class="map-filters">
+    <span class="map-filter-chip active">All Tiers</span>
+    <span class="map-filter-chip">Tier 1 Only</span>
+    <span class="map-filter-chip">Tier 1 & 2</span>
+    <span class="map-filter-chip">Radar Cases</span>
+    <span class="map-filter-chip">Post-2000</span>
+    <span class="map-filter-chip">Pre-1980</span>
+  </div>
+
+  <div class="map-layout">
+    <div class="map-area">
+      <div class="map-base"></div>
+      <div class="landmass landmass-1"></div>
+      <div class="landmass landmass-2"></div>
+
+      <!-- Clusters -->
+      <div class="cluster cluster-tier1" style="top: 28%; left: 22%; width: 48px; height: 48px;">47</div>
+      <div class="cluster cluster-mixed" style="top: 35%; left: 65%; width: 36px; height: 36px;">23</div>
+      <div class="cluster cluster-tier1" style="top: 22%; left: 48%; width: 42px; height: 42px;">31</div>
+      <div class="cluster cluster-tier2" style="top: 45%; left: 35%; width: 56px; height: 56px;">89</div>
+      <div class="cluster cluster-mixed" style="top: 30%; left: 38%; width: 28px; height: 28px;">12</div>
+      <div class="cluster cluster-tier2" style="top: 52%; left: 55%; width: 32px; height: 32px;">18</div>
+      <div class="cluster cluster-tier1" style="top: 40%; left: 18%; width: 38px; height: 38px;">26</div>
+      <div class="cluster cluster-mixed" style="top: 20%; left: 58%; width: 24px; height: 24px;">8</div>
+
+      <!-- Coordinate labels -->
+      <div class="coord-label" style="top: 8px; left: 50%; transform: translateX(-50%);">40°N</div>
+      <div class="coord-label" style="bottom: 8px; left: 50%; transform: translateX(-50%);">25°N</div>
+      <div class="coord-label" style="top: 50%; left: 8px; transform: translateY(-50%);">125°W</div>
+      <div class="coord-label" style="top: 50%; right: 360px; transform: translateY(-50%);">70°W</div>
+
+      <!-- Controls -->
+      <div class="map-controls">
+        <button>+</button>
+        <button>−</button>
+      </div>
+
+      <!-- Legend -->
+      <div class="map-legend">
+        <div class="legend-title">Cluster Color</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--signal);"></div> Avg. Tier 1</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--confirm);"></div> Avg. Tier 2</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--data-1);"></div> Mixed Tiers</div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="map-sidebar">
+      <div class="sidebar-title">Selected Cluster · Four Corners Region</div>
+
+      <div class="cluster-detail">
+        <h3>Four Corners Cluster</h3>
+        <div class="cluster-meta">89 cases · 37.0°N, 109.0°W · Avg. Score: 52</div>
+
+        <div class="cluster-case">
+          <div style="display: flex; justify-content: space-between;">
+            <span class="cluster-case-title">Skinwalker Ranch Proximity Event</span>
+            <span class="cluster-case-score">74</span>
+          </div>
+          <div class="cluster-case-meta">Mar 2004 · Uintah County, UT · Tier 2</div>
+        </div>
+        <div class="cluster-case">
+          <div style="display: flex; justify-content: space-between;">
+            <span class="cluster-case-title">Dulce Area Multi-Witness Sighting</span>
+            <span class="cluster-case-score">62</span>
+          </div>
+          <div class="cluster-case-meta">Jul 1998 · Rio Arriba County, NM · Tier 2</div>
+        </div>
+        <div class="cluster-case">
+          <div style="display: flex; justify-content: space-between;">
+            <span class="cluster-case-title">Mesa Verde Night Lights</span>
+            <span class="cluster-case-score">48</span>
+          </div>
+          <div class="cluster-case-meta">Sep 2011 · Montezuma County, CO · Tier 3</div>
+        </div>
+        <div class="cluster-case">
+          <div style="display: flex; justify-content: space-between;">
+            <span class="cluster-case-title">Navajo Nation Formation Report</span>
+            <span class="cluster-case-score">44</span>
+          </div>
+          <div class="cluster-case-meta">Nov 2007 · Apache County, AZ · Tier 3</div>
+        </div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--data-1); padding-top: 12px; cursor: pointer;">
+          View all 89 cases in cluster →
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- TIMELINE VIEW            -->
+<!-- ======================== -->
+<div class="timeline-section">
+  <div class="timeline-header">
+    <h2>Temporal Analysis</h2>
+    <span class="timeline-range">1947 – 2026 · Tier 1 & 2 cases only</span>
+  </div>
+
+  <!-- Frequency Chart -->
+  <div class="frequency-chart">
+    <div class="chart-title">Case Frequency by Decade (Tier 1 & 2)</div>
+    <div class="bar-chart">
+      <div class="bar-group">
+        <div class="bar" style="height: 30px;"></div>
+        <span class="bar-year">1947</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 55px;"></div>
+        <span class="bar-year">1952</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar highlight" style="height: 80px;"></div>
+        <span class="bar-year">1957</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 50px;"></div>
+        <span class="bar-year">1962</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 65px;"></div>
+        <span class="bar-year">1967</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 45px;"></div>
+        <span class="bar-year">1972</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 55px;"></div>
+        <span class="bar-year">1977</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 70px;"></div>
+        <span class="bar-year">1982</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 60px;"></div>
+        <span class="bar-year">1987</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 85px;"></div>
+        <span class="bar-year">1992</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar highlight" style="height: 120px;"></div>
+        <span class="bar-year">1997</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 95px;"></div>
+        <span class="bar-year">2002</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 85px;"></div>
+        <span class="bar-year">2007</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar" style="height: 75px;"></div>
+        <span class="bar-year">2012</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar highlight" style="height: 150px;"></div>
+        <span class="bar-year">2017</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar highlight" style="height: 170px;"></div>
+        <span class="bar-year">2022</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline Events -->
+  <div class="timeline-events">
+    <div class="timeline-line"></div>
+
+    <div class="timeline-event">
+      <div class="timeline-dot spike"></div>
+      <div class="timeline-date">2017 — Frequency Spike (+340%)</div>
+      <h4>Post-NYT AATIP Disclosure Surge</h4>
+      <p>Following the December 2017 New York Times article revealing the Pentagon's Advanced Aerospace Threat Identification Program, reported cases spike dramatically. Tier 1 and 2 cases also increase, suggesting the spike is not purely driven by heightened public attention.</p>
+      <div class="timeline-case-count">+847 Tier 1–2 cases over baseline</div>
+      <span class="event-correlation confirmed">Correlated with external event</span>
+    </div>
+
+    <div class="timeline-event">
+      <div class="timeline-dot spike"></div>
+      <div class="timeline-date">1997 — Frequency Spike (+280%)</div>
+      <h4>Phoenix Lights and Late-90s Wave</h4>
+      <p>The Phoenix Lights mass sighting (March 1997) anchors a broader wave of triangular craft reports across the American Southwest. The wave persists through 1998 and includes multiple Tier 1 cases with independent corroboration.</p>
+      <div class="timeline-case-count">+312 Tier 1–2 cases over baseline</div>
+      <span class="event-correlation investigating">Under investigation</span>
+    </div>
+
+    <div class="timeline-event">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">1952 — Notable Period</div>
+      <h4>1952 Washington D.C. Flap</h4>
+      <p>Multiple radar-visual events over Washington D.C. in July 1952 prompted fighter jet scrambles and a rare Pentagon press conference. These remain among the highest-scoring pre-1970 cases in the corpus.</p>
+      <div class="timeline-case-count">14 Tier 1 cases in a 2-week window</div>
+      <span class="event-correlation confirmed">Correlated with external event</span>
+    </div>
+
+    <div class="timeline-event">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2004 — Key Event</div>
+      <h4>USS Nimitz Encounter Period</h4>
+      <p>The Nimitz carrier group tracked anomalous objects for two weeks in November 2004. This period also coincides with elevated civilian reporting along the Southern California coast.</p>
+      <div class="timeline-case-count">Score: 94 — Highest in corpus</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project</p>
+</footer>
+
+</body>
+</html>

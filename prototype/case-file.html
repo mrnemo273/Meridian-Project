@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case File</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --surface-hover: #FAFAF8;
+    --board-bg: #EDECE8;
+    --border: rgba(0,0,0,0.07);
+    --border-strong: rgba(0,0,0,0.12);
+    --text-1: #1A1816;
+    --text-2: #6B6560;
+    --text-3: #A09A92;
+    --gold: #9A7A2E;
+    --gold-soft: rgba(154,122,46,0.12);
+    --orange: #B86A2E;
+    --orange-soft: rgba(184,106,46,0.1);
+    --purple: #7B5D9A;
+    --purple-soft: rgba(123,93,154,0.08);
+    --red: #B04A4A;
+    --red-soft: rgba(176,74,74,0.08);
+    --green: #5A8A4A;
+    --green-soft: rgba(90,138,74,0.08);
+    --blue: #4A6A9A;
+    --blue-soft: rgba(74,106,154,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ============================================ */
+  /* PROGRESS BAR                                 */
+  /* ============================================ */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; z-index: 200;
+    height: 3px; width: 0%;
+    background: var(--gold);
+    transition: width 0.1s linear;
+  }
+
+  /* ============================================ */
+  /* SIDEBAR TOC                                  */
+  /* ============================================ */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 220px; z-index: 100;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+  .sidebar-logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--text-3); padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo span { color: var(--gold); }
+  .toc-list { list-style: none; }
+  .toc-list li { margin: 0; }
+  .toc-list li a {
+    display: block;
+    padding: 7px 20px 7px 24px;
+    font-size: 10px; letter-spacing: 0.5px;
+    color: var(--text-3);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .toc-list li a:hover {
+    color: var(--text-2);
+    background: var(--bg);
+  }
+  .toc-list li a.active {
+    color: var(--gold);
+    border-left-color: var(--gold);
+    background: var(--gold-soft);
+    font-weight: 500;
+  }
+
+  /* Hamburger for narrow screens */
+  .hamburger {
+    display: none;
+    position: fixed; top: 12px; left: 12px; z-index: 201;
+    width: 36px; height: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 4px;
+  }
+  .hamburger span {
+    display: block; width: 16px; height: 1.5px;
+    background: var(--text-2); border-radius: 1px;
+    transition: all 0.2s;
+  }
+
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+    .hamburger { display: flex; }
+    .main-content { margin-left: 0 !important; }
+  }
+
+  /* ============================================ */
+  /* MAIN CONTENT                                 */
+  /* ============================================ */
+  .main-content {
+    margin-left: 240px;
+    max-width: 720px;
+    margin-right: auto;
+    padding: 0 24px 120px;
+  }
+
+  section {
+    padding-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border-strong), transparent);
+  }
+
+  /* ============================================ */
+  /* DUAL VOICE                                   */
+  /* ============================================ */
+  .voice-nemo {
+    font-family: 'Caveat', cursive;
+    font-size: 16px;
+    color: var(--orange);
+    border-left: 3px solid var(--orange);
+    padding-left: 12px;
+    margin: 12px 0;
+    line-height: 1.4;
+  }
+  .voice-nemo .voice-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    opacity: 0.7; display: block; margin-bottom: 2px;
+  }
+
+  .voice-claude {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--purple);
+    border-left: 3px solid var(--purple);
+    padding-left: 12px;
+    margin: 12px 0;
+    line-height: 1.6;
+  }
+  .voice-claude .voice-label {
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    opacity: 0.7; display: block; margin-bottom: 2px;
+  }
+
+  /* ============================================ */
+  /* HERO                                         */
+  /* ============================================ */
+  #hero { padding-top: 60px; }
+  .hero-case-id {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 42px;
+    line-height: 1.1; color: var(--text-1);
+    letter-spacing: -0.5px; margin-bottom: 6px;
+  }
+  .hero-subtitle {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 20px;
+    color: var(--text-2); font-style: italic;
+    margin-bottom: 16px;
+  }
+  .hero-meta {
+    font-size: 11px; color: var(--text-2);
+    display: flex; flex-wrap: wrap; gap: 6px 16px;
+    margin-bottom: 20px;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 4px; }
+  .meta-sep { color: var(--text-3); }
+
+  .credibility-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold-soft);
+    border: 1px solid rgba(154,122,46,0.15);
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+  }
+  .cred-score {
+    font-size: 28px; font-weight: 600; color: var(--gold); line-height: 1;
+  }
+  .cred-details { font-size: 10px; color: var(--text-2); }
+  .cred-tier {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; font-size: 10px; letter-spacing: 0.5px;
+    border-radius: 12px;
+    background: var(--red-soft); color: var(--red);
+    font-weight: 500; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .status-pill .pulse-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .tag-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tag-pill {
+    font-size: 9px; letter-spacing: 0.5px;
+    padding: 3px 8px; border-radius: 3px;
+    background: var(--board-bg);
+    color: var(--text-2);
+  }
+
+  .canvas-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--gold);
+    padding: 8px 16px;
+    border: 1px solid rgba(154,122,46,0.2);
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .canvas-link:hover {
+    background: var(--gold-soft);
+    border-color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* ============================================ */
+  /* EXECUTIVE SUMMARY                            */
+  /* ============================================ */
+  .summary-text {
+    font-size: 13px; color: var(--text-1); line-height: 1.7;
+  }
+  .summary-text p { margin-bottom: 14px; }
+
+  .info-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-top: 20px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .info-item label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 4px;
+  }
+  .info-item p {
+    font-size: 12px; color: var(--text-2); line-height: 1.5;
+  }
+
+  /* ============================================ */
+  /* TIMELINE                                     */
+  /* ============================================ */
+  .timeline {
+    position: relative;
+    padding: 0 0 0 32px;
+    border-left: 2px solid rgba(154,122,46,0.15);
+    margin-left: 8px;
+  }
+  .tl-event {
+    position: relative;
+    padding: 0 0 32px 20px;
+  }
+  .tl-event:last-child { padding-bottom: 0; }
+  .tl-event::before {
+    content: '';
+    position: absolute; left: -39px; top: 5px;
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid rgba(154,122,46,0.2);
+    background: var(--bg);
+  }
+  .tl-event.type-key::before {
+    border-color: var(--gold); background: var(--gold);
+    box-shadow: 0 0 8px rgba(154,122,46,0.3);
+  }
+  .tl-event.type-anomaly::before {
+    border-color: var(--red); background: var(--red);
+  }
+  .tl-event.type-normal::before {
+    border-color: rgba(154,122,46,0.2); background: var(--bg);
+  }
+  .tl-date {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px; font-weight: 500;
+  }
+  .tl-event.type-anomaly .tl-date { color: var(--red); }
+  .tl-title {
+    font-size: 14px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .tl-detail {
+    font-size: 12px; color: var(--text-2); line-height: 1.6;
+  }
+  .tl-tags { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+  .tl-tag {
+    font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 2px;
+  }
+  .tl-tag.military { background: var(--blue-soft); color: var(--blue); }
+  .tl-tag.radar-confirmed,
+  .tl-tag.sensor { background: var(--purple-soft); color: var(--purple); }
+  .tl-tag.witness,
+  .tl-tag.visual-confirmed,
+  .tl-tag.multi-witness { background: var(--orange-soft); color: var(--orange); }
+  .tl-tag.anomaly,
+  .tl-tag.data-confiscation { background: var(--red-soft); color: var(--red); }
+  .tl-tag.official,
+  .tl-tag.infrared-confirmed { background: var(--gold-soft); color: var(--gold); }
+  .tl-tag.context { background: var(--board-bg); color: var(--text-3); }
+
+  /* Horizontal mini timeline */
+  .h-timeline {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  .h-timeline-track {
+    display: flex; align-items: flex-start; gap: 0;
+    position: relative;
+    min-width: max-content;
+  }
+  .h-timeline-track::before {
+    content: '';
+    position: absolute; top: 18px; left: 0; right: 0;
+    height: 2px; background: var(--border);
+  }
+  .h-tl-item {
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 90px; padding: 0 4px;
+    position: relative;
+  }
+  .h-tl-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--border-strong);
+    background: var(--bg);
+    z-index: 1; margin-bottom: 8px;
+  }
+  .h-tl-item.type-key .h-tl-dot { border-color: var(--gold); background: var(--gold); }
+  .h-tl-item.type-anomaly .h-tl-dot { border-color: var(--red); background: var(--red); }
+  .h-tl-date {
+    font-size: 7px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: var(--text-3); text-align: center; margin-bottom: 2px;
+  }
+  .h-tl-title {
+    font-size: 8px; color: var(--text-2); text-align: center;
+    line-height: 1.3; max-width: 80px;
+  }
+
+  /* ============================================ */
+  /* EVIDENCE CARDS                               */
+  /* ============================================ */
+  .evidence-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .evidence-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .evidence-card .accent-border {
+    height: 100%; width: 3px; border-radius: 6px 0 0 6px;
+    position: absolute; left: 0; top: 0; bottom: 0;
+  }
+  .evidence-card { position: relative; }
+  .evidence-card.type-evidence .accent-border,
+  .evidence-card.type-sensor .accent-border { background: var(--gold); }
+  .evidence-card.type-media .accent-border { background: var(--green); }
+  .evidence-card.type-document .accent-border { background: var(--text-3); }
+
+  .evidence-card .card-visual {
+    aspect-ratio: 16/10;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .evidence-card .card-inner {
+    padding: 16px 20px 16px 22px;
+  }
+  .evidence-card .card-type-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .evidence-card .card-type-label {
+    font-size: 9px; letter-spacing: 0.5px; font-weight: 500;
+    text-transform: uppercase;
+  }
+  .type-evidence .card-type-label,
+  .type-sensor .card-type-label { color: var(--gold); }
+  .type-media .card-type-label { color: var(--green); }
+  .type-document .card-type-label { color: var(--text-3); }
+
+  .card-badge {
+    font-size: 8px; letter-spacing: 0.5px; font-weight: 500;
+    padding: 2px 7px; border-radius: 3px;
+  }
+  .badge-sensor { background: var(--purple-soft); color: var(--purple); }
+  .badge-official { background: var(--gold-soft); color: var(--gold); }
+  .badge-anomaly { background: var(--red-soft); color: var(--red); }
+  .badge-witness { background: var(--orange-soft); color: var(--orange); }
+  .badge-ai { background: var(--purple-soft); color: var(--purple); }
+
+  .evidence-card .card-title {
+    font-size: 14px; font-weight: 600; color: var(--text-1);
+    line-height: 1.35; margin-bottom: 6px;
+  }
+  .evidence-card .card-summary {
+    font-size: 12px; color: var(--text-2); line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .evidence-card .card-detail {
+    font-size: 11px; color: var(--text-2); line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .evidence-card .card-source {
+    font-size: 9px; color: var(--text-3); margin-top: 8px;
+    padding-top: 8px; border-top: 1px solid var(--border);
+  }
+
+  /* ============================================ */
+  /* VISUAL ILLUSTRATIONS                         */
+  /* ============================================ */
+  .visual-flir {
+    background: #0A1A0A;
+    position: relative; overflow: hidden;
+    width: 100%; height: 100%;
+  }
+  .visual-flir .flir-grid {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(0,255,80,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,80,0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .visual-flir .flir-crosshair {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+  }
+  .visual-flir .flir-object {
+    position: absolute; top: 42%; left: 52%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 16px;
+    background: radial-gradient(ellipse, rgba(200,255,200,0.9) 0%, rgba(100,200,100,0.5) 50%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(1px);
+  }
+  .visual-flir .flir-hud {
+    position: absolute; font-family: 'JetBrains Mono', monospace;
+    font-size: 7px; color: rgba(0,255,80,0.5);
+  }
+  .visual-flir .flir-hud.tl { top: 6px; left: 8px; }
+  .visual-flir .flir-hud.tr { top: 6px; right: 8px; }
+  .visual-flir .flir-hud.bl { bottom: 6px; left: 8px; }
+  .visual-flir .flir-hud.br { bottom: 6px; right: 8px; }
+  .visual-flir .flir-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(0,255,80,0.4);
+  }
+
+  .visual-radar {
+    background: #0A0E1A;
+    position: relative; overflow: hidden;
+    width: 100%; height: 100%;
+  }
+  .visual-radar .radar-sweep {
+    position: absolute; top: 50%; left: 50%;
+    width: 120px; height: 120px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.12);
+  }
+  .visual-radar .radar-ring {
+    position: absolute; top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(80,200,120,0.06);
+    transform: translate(-50%, -50%);
+  }
+  .visual-radar .radar-line {
+    position: absolute; top: 50%; left: 50%;
+    width: 1px; height: 55px;
+    background: linear-gradient(to top, rgba(80,200,120,0.3), transparent);
+    transform-origin: bottom center;
+    animation: radar-spin 4s linear infinite;
+  }
+  @keyframes radar-spin { to { transform: rotate(360deg); } }
+  .visual-radar .radar-blip {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: rgba(80,255,120,0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(80,255,120,0.5);
+  }
+  .visual-radar .radar-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(80,200,120,0.4);
+  }
+
+  .visual-ocean {
+    background: linear-gradient(175deg, #1A3A5A 0%, #0E2A4A 40%, #0A1E3A 100%);
+    position: relative; overflow: hidden;
+    width: 100%; height: 100%;
+  }
+  .visual-ocean .ocean-waves {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(170deg, transparent, transparent 8px,
+        rgba(100,180,220,0.06) 8px, rgba(100,180,220,0.06) 9px);
+  }
+  .visual-ocean .ocean-disturbance {
+    position: absolute; top: 45%; left: 48%;
+    transform: translate(-50%, -50%);
+    width: 50px; height: 30px;
+    border: 1px solid rgba(200,220,240,0.2);
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(200,220,240,0.15) 0%, transparent 70%);
+  }
+  .visual-ocean .ocean-disturbance::after {
+    content: '+';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px; color: rgba(200,220,240,0.25);
+  }
+  .visual-ocean .ocean-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(200,220,240,0.35);
+  }
+
+  .visual-ship {
+    background: linear-gradient(180deg, #C8D8E8 0%, #8AA8C8 40%, #4A6A8A 100%);
+    position: relative; overflow: hidden;
+    width: 100%; height: 100%;
+  }
+  .visual-ship .ship-horizon {
+    position: absolute; bottom: 35%; left: 0; right: 0;
+    height: 1px; background: rgba(0,0,0,0.08);
+  }
+  .visual-ship .ship-body {
+    position: absolute; bottom: 33%; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 12px;
+    background: #3A4A5A;
+    clip-path: polygon(5% 100%, 0% 40%, 15% 0%, 85% 0%, 100% 40%, 95% 100%);
+  }
+  .visual-ship .ship-tower {
+    position: absolute; bottom: 44%; left: 52%;
+    transform: translateX(-50%);
+    width: 10px; height: 14px;
+    background: #3A4A5A;
+    clip-path: polygon(10% 100%, 20% 0%, 80% 0%, 90% 100%);
+  }
+  .visual-ship .ship-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(40,60,80,0.4);
+  }
+
+  .visual-doc {
+    background: #F5F2EA;
+    position: relative; overflow: hidden;
+    width: 100%; height: 100%;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: flex-start; justify-content: flex-start;
+  }
+  .visual-doc .doc-seal {
+    position: absolute; top: 8px; right: 10px;
+    width: 28px; height: 28px;
+    border: 1.5px solid rgba(0,0,0,0.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: rgba(0,0,0,0.15); font-weight: 600;
+  }
+  .visual-doc .scan-line {
+    height: 2px; border-radius: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+  .visual-doc .scan-line.heading {
+    height: 3px; background: rgba(0,0,0,0.15); margin-bottom: 4px;
+  }
+  .visual-doc .scan-line.redacted {
+    height: 4px; background: rgba(0,0,0,0.6);
+  }
+  .visual-doc .stamp {
+    position: absolute; bottom: 10px; left: 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(176,74,74,0.25);
+    transform: rotate(-8deg);
+    border: 1.5px solid rgba(176,74,74,0.2);
+    padding: 2px 6px;
+  }
+
+  .visual-jet {
+    background: linear-gradient(180deg, #D8E4F0 0%, #A8C0D8 100%);
+    position: relative; overflow: hidden;
+    width: 100%; height: 100%;
+  }
+  .visual-jet .jet-body {
+    position: absolute; top: 38%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 44px; height: 8px;
+    background: #4A5A6A;
+    border-radius: 4px 12px 12px 4px;
+  }
+  .visual-jet .jet-wing {
+    position: absolute; top: 42%; left: 48%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    width: 12px; height: 36px;
+    background: #4A5A6A;
+    clip-path: polygon(50% 0%, 100% 30%, 100% 70%, 50% 100%, 0% 70%, 0% 30%);
+  }
+  .visual-jet .jet-tail {
+    position: absolute; top: 30%; left: 32%;
+    transform: rotate(-5deg);
+    width: 5px; height: 16px;
+    background: #4A5A6A;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+  }
+  .visual-jet .jet-trail {
+    position: absolute; top: 40%; left: 68%;
+    transform: rotate(-5deg);
+    width: 50px; height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.6), transparent);
+  }
+  .visual-jet .jet-label {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(40,60,80,0.35);
+  }
+
+  /* ============================================ */
+  /* WITNESS CARDS                                */
+  /* ============================================ */
+  .witness-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-left: 3px solid var(--orange);
+  }
+  .witness-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 16px;
+  }
+  .witness-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--orange-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px; letter-spacing: 1px;
+    color: var(--orange); font-weight: 500;
+    flex-shrink: 0;
+  }
+  .witness-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px; font-weight: 400; color: var(--text-1);
+    line-height: 1.2;
+  }
+  .witness-rank {
+    font-size: 10px; color: var(--text-3); letter-spacing: 0.3px;
+  }
+  .witness-meta {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .witness-meta-item label {
+    display: block;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 2px;
+  }
+  .witness-meta-item span {
+    font-size: 11px; color: var(--text-2);
+  }
+  .witness-observed {
+    font-size: 12px; color: var(--text-2); line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .witness-observed strong {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 6px; font-weight: 500;
+  }
+  .witness-quote {
+    font-family: 'Caveat', cursive;
+    font-size: 17px; line-height: 1.4;
+    color: var(--orange);
+    border-left: 3px solid var(--orange);
+    padding: 8px 0 8px 14px;
+    margin: 12px 0;
+  }
+  .witness-quote .quote-source {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--text-3);
+    margin-top: 4px; font-style: normal;
+  }
+  .witness-appearances {
+    margin-top: 12px;
+    font-size: 10px; color: var(--text-3);
+  }
+  .witness-appearances strong {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 4px; font-weight: 500;
+  }
+  .witness-appearances li {
+    margin-bottom: 3px; list-style: none;
+    padding-left: 12px; position: relative;
+  }
+  .witness-appearances li::before {
+    content: '\2022'; position: absolute; left: 0; color: var(--text-3);
+  }
+  .witness-cred {
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+    font-size: 11px; color: var(--text-2); line-height: 1.5;
+  }
+  .witness-cred strong {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 4px; font-weight: 500;
+  }
+
+  /* ============================================ */
+  /* AI ANALYSIS                                  */
+  /* ============================================ */
+  .ai-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-left: 3px solid var(--purple);
+  }
+  .ai-card .ai-title {
+    font-size: 15px; font-weight: 600; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .ai-card .ai-type {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--purple); margin-bottom: 10px;
+  }
+  .ai-card .ai-finding {
+    font-size: 12px; color: var(--text-2); line-height: 1.65;
+    margin-bottom: 12px;
+  }
+  .ai-card .ai-methodology {
+    font-size: 10px; color: var(--text-3); line-height: 1.5;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .ai-card .ai-methodology strong {
+    display: block;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 4px;
+  }
+  .confidence-badge {
+    display: inline-block;
+    font-size: 9px; letter-spacing: 0.5px; font-weight: 500;
+    padding: 3px 8px; border-radius: 3px;
+  }
+  .confidence-high { background: var(--green-soft); color: var(--green); }
+  .confidence-medium { background: var(--gold-soft); color: var(--gold); }
+  .confidence-low { background: var(--red-soft); color: var(--red); }
+  .cross-refs {
+    margin-top: 12px;
+  }
+  .cross-refs strong {
+    display: block;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 6px;
+  }
+  .cross-ref-item {
+    font-size: 10px; color: var(--text-2); line-height: 1.5;
+    padding: 6px 10px;
+    background: var(--bg);
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  .cross-ref-item .ref-case { color: var(--purple); font-weight: 500; }
+  .cross-ref-item .ref-strength {
+    font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 1px 5px; border-radius: 2px; margin-left: 6px;
+  }
+  .ref-strength.strong { background: var(--green-soft); color: var(--green); }
+  .ref-strength.moderate { background: var(--gold-soft); color: var(--gold); }
+
+  /* ============================================ */
+  /* OPEN QUESTIONS                               */
+  /* ============================================ */
+  .question-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--red);
+  }
+  .question-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; color: var(--red);
+    letter-spacing: 1px; font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .question-text {
+    font-size: 14px; font-weight: 600; color: var(--text-1);
+    line-height: 1.4; margin-bottom: 8px;
+  }
+  .question-context {
+    font-size: 12px; color: var(--text-2); line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .question-badges {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .q-badge {
+    font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 3px;
+  }
+  .q-badge.status { background: var(--gold-soft); color: var(--gold); }
+  .q-badge.priority-critical { background: var(--red-soft); color: var(--red); }
+  .q-badge.priority-high { background: var(--orange-soft); color: var(--orange); }
+  .q-badge.priority-medium { background: var(--gold-soft); color: var(--gold); }
+  .q-badge.linked { background: var(--blue-soft); color: var(--blue); }
+
+  /* ============================================ */
+  /* SOURCES                                      */
+  /* ============================================ */
+  .source-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .source-item:last-child { border-bottom: none; }
+  .source-title {
+    font-size: 13px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .source-title a { color: var(--gold); }
+  .source-meta {
+    font-size: 10px; color: var(--text-3); margin-bottom: 6px;
+  }
+  .source-classification {
+    display: inline-block;
+    font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 2px;
+    margin-bottom: 8px;
+  }
+  .class-unclassified { background: var(--green-soft); color: var(--green); }
+  .class-classified { background: var(--red-soft); color: var(--red); }
+  .class-fouo { background: var(--gold-soft); color: var(--gold); }
+  .source-excerpts {
+    margin-top: 8px;
+  }
+  .source-excerpt {
+    font-size: 11px; color: var(--text-2); line-height: 1.5;
+    padding: 6px 10px;
+    background: var(--bg);
+    border-radius: 4px;
+    margin-bottom: 4px;
+    border-left: 2px solid var(--border-strong);
+  }
+
+  /* ============================================ */
+  /* METHODOLOGY                                  */
+  /* ============================================ */
+  .methodology-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  @media (max-width: 600px) {
+    .methodology-grid { grid-template-columns: 1fr; }
+  }
+  .methodology-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .methodology-card h3 {
+    font-size: 14px; font-weight: 500; margin-bottom: 12px;
+  }
+  .methodology-card p {
+    font-size: 12px; line-height: 1.6;
+  }
+
+  /* ============================================ */
+  /* CROSS CASE PATTERNS                          */
+  /* ============================================ */
+  .pattern-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .pattern-title {
+    font-size: 13px; font-weight: 600; color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .pattern-evidence {
+    font-size: 11px; color: var(--gold); margin-bottom: 8px;
+  }
+  .pattern-cases {
+    font-size: 10px; color: var(--text-2); line-height: 1.5;
+  }
+  .pattern-case {
+    padding: 4px 0;
+  }
+  .pattern-case-name { font-weight: 500; color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<button class="hamburger" id="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open')">
+  <span></span><span></span><span></span>
+</button>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">MERI<span>DIAN</span></div>
+  <ul class="toc-list" id="tocList"></ul>
+</nav>
+
+<main class="main-content" id="mainContent">
+  <section id="hero"></section>
+  <section id="summary"></section>
+  <section id="encounter"></section>
+  <section id="evidence"></section>
+  <section id="witnesses"></section>
+  <section id="analysis"></section>
+  <section id="questions"></section>
+  <section id="patterns"></section>
+  <section id="sources"></section>
+  <section id="methodology"></section>
+</main>
+
+<script src="data/case-data.js"></script>
+<script>
+(function() {
+  const D = CASE_DATA;
+
+  // ── Helpers ──
+  function esc(s) {
+    if (!s) return '';
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+  function initials(name) {
+    return name.split(' ').map(w => w[0]).filter(Boolean).join('').substring(0, 2).toUpperCase();
+  }
+  function splitOverview(text) {
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    const third = Math.ceil(sentences.length / 3);
+    return [
+      sentences.slice(0, third).join(''),
+      sentences.slice(third, third * 2).join(''),
+      sentences.slice(third * 2).join('')
+    ].filter(p => p.trim());
+  }
+
+  // ── Section definitions for TOC ──
+  const sections = [
+    { id: 'hero', label: 'Overview' },
+    { id: 'summary', label: 'Executive Summary' },
+    { id: 'encounter', label: 'The Encounter' },
+    { id: 'evidence', label: 'The Evidence' },
+    { id: 'witnesses', label: 'The Witnesses' },
+    { id: 'analysis', label: 'AI Analysis' },
+    { id: 'questions', label: 'Open Questions' },
+    { id: 'patterns', label: 'Cross-Case Patterns' },
+    { id: 'sources', label: 'Sources' },
+    { id: 'methodology', label: 'Methodology' }
+  ];
+
+  // ── Build TOC ──
+  const tocList = document.getElementById('tocList');
+  sections.forEach(s => {
+    const li = document.createElement('li');
+    li.innerHTML = '<a href="#' + s.id + '">' + esc(s.label) + '</a>';
+    tocList.appendChild(li);
+  });
+
+  // ── 1. HERO ──
+  const loc = D.location;
+  const locStr = typeof loc === 'string' ? loc : (loc.description || loc.area || '');
+  document.getElementById('hero').innerHTML = `
+    <div class="hero-case-id">${esc(D.case_id)}</div>
+    <h1 class="hero-title">${esc(D.title)}</h1>
+    <div class="hero-subtitle">${esc(D.subtitle)}</div>
+    <div class="hero-meta">
+      <span>${esc(D.date_display)}</span>
+      <span class="meta-sep">&middot;</span>
+      <span>${esc(locStr)}</span>
+      <span class="meta-sep">&middot;</span>
+      <span>${esc(D.duration ? D.duration.primary_visual_encounter || '' : '')}</span>
+    </div>
+    <div class="credibility-badge">
+      <div class="cred-score">${D.credibility_score}</div>
+      <div class="cred-details">
+        <div class="cred-tier">${esc(D.credibility_tier)}</div>
+        <div style="font-size:9px;color:var(--text-3);">Credibility Score</div>
+      </div>
+    </div>
+    <br>
+    <div class="status-pill">
+      <span class="pulse-dot"></span>
+      ${esc((D.status || '').toUpperCase())}
+    </div>
+    <div class="tag-pills">
+      ${(D.tags || []).map(t => '<span class="tag-pill">' + esc(t) + '</span>').join('')}
+    </div>
+    <a class="canvas-link" href="case-board.html">View on Canvas &rarr;</a>
+  `;
+
+  // ── 2. EXECUTIVE SUMMARY ──
+  const paras = splitOverview(D.event_summary.overview);
+  document.getElementById('summary').innerHTML = `
+    <div class="section-label">Executive Summary</div>
+    <div class="summary-text">
+      ${paras.map(p => '<p>' + esc(p.trim()) + '</p>').join('')}
+    </div>
+    <div class="info-block">
+      <div class="info-item">
+        <label>Weather</label>
+        <p>${esc(D.event_summary.weather)}</p>
+      </div>
+      <div class="info-item">
+        <label>Sea Conditions</label>
+        <p>${esc(D.event_summary.sea_conditions)}</p>
+      </div>
+    </div>
+  `;
+
+  // ── 3. THE ENCOUNTER ──
+  const tl = D.timeline || [];
+  let encounterHTML = '<div class="section-label">The Encounter</div>';
+
+  // Horizontal mini timeline
+  encounterHTML += '<div class="h-timeline"><div class="h-timeline-track">';
+  tl.forEach(t => {
+    encounterHTML += `
+      <div class="h-tl-item type-${esc(t.type || 'normal')}">
+        <div class="h-tl-dot"></div>
+        <div class="h-tl-date">${esc(t.date_display)}</div>
+        <div class="h-tl-title">${esc(t.title)}</div>
+      </div>`;
+  });
+  encounterHTML += '</div></div>';
+
+  // Vertical timeline
+  encounterHTML += '<div class="timeline">';
+  tl.forEach(t => {
+    const typeClass = 'type-' + (t.type || 'normal');
+    let tags = '';
+    if (t.tags && t.tags.length) {
+      tags = '<div class="tl-tags">' +
+        t.tags.map(tg => '<span class="tl-tag ' + esc(tg) + '">' + esc(tg) + '</span>').join('') +
+        '</div>';
+    }
+    let annotations = '';
+    if (t.annotations && t.annotations.length) {
+      t.annotations.forEach(a => {
+        if (a.author === 'Nemo') {
+          annotations += '<div class="voice-nemo"><span class="voice-label">Nemo</span>' + esc(a.text) + '</div>';
+        } else {
+          annotations += '<div class="voice-claude"><span class="voice-label">Claude</span>' + esc(a.text) + '</div>';
+        }
+      });
+    }
+    encounterHTML += `
+      <div class="tl-event ${typeClass}">
+        <div class="tl-date">${esc(t.date_display)}</div>
+        <div class="tl-title">${esc(t.title)}</div>
+        <div class="tl-detail">${esc(t.detail)}</div>
+        ${tags}
+        ${annotations}
+      </div>`;
+  });
+  encounterHTML += '</div>';
+  document.getElementById('encounter').innerHTML = encounterHTML;
+
+  // ── 4. THE EVIDENCE ──
+  const evidenceTypes = new Set(['evidence', 'media', 'sensor']);
+  const evidenceCards = (D.cards || []).filter(c => evidenceTypes.has(c.type));
+  let evidenceHTML = '<div class="section-label">The Evidence</div>';
+
+  function renderVisual(visual) {
+    if (!visual) return '';
+    const v = visual.replace('document-scan', 'doc');
+    if (v === 'flir') return `
+      <div class="card-visual"><div class="visual-flir">
+        <div class="flir-grid"></div>
+        <div class="flir-object"></div>
+        <div class="flir-hud tl">WHT</div>
+        <div class="flir-hud tr">NAR</div>
+        <div class="flir-hud bl">IR</div>
+        <div class="flir-hud br">0032</div>
+        <div class="flir-label">FLIR Capture</div>
+      </div></div>`;
+    if (v === 'radar') return `
+      <div class="card-visual"><div class="visual-radar">
+        <div class="radar-sweep"></div>
+        <div class="radar-ring" style="width:80px;height:80px;"></div>
+        <div class="radar-ring" style="width:40px;height:40px;"></div>
+        <div class="radar-line"></div>
+        <div class="radar-blip" style="top:30%;left:60%;"></div>
+        <div class="radar-blip" style="top:55%;left:35%;"></div>
+        <div class="radar-label">SPY-1B Radar</div>
+      </div></div>`;
+    if (v === 'ocean') return `
+      <div class="card-visual"><div class="visual-ocean">
+        <div class="ocean-waves"></div>
+        <div class="ocean-disturbance"></div>
+        <div class="ocean-label">Ocean Surface</div>
+      </div></div>`;
+    if (v === 'ship') return `
+      <div class="card-visual"><div class="visual-ship">
+        <div class="ship-horizon"></div>
+        <div class="ship-body"></div>
+        <div class="ship-tower"></div>
+        <div class="ship-label">USS Princeton</div>
+      </div></div>`;
+    if (v === 'jet') return `
+      <div class="card-visual"><div class="visual-jet">
+        <div class="jet-body"></div>
+        <div class="jet-wing"></div>
+        <div class="jet-tail"></div>
+        <div class="jet-trail"></div>
+        <div class="jet-label">F/A-18F Super Hornet</div>
+      </div></div>`;
+    if (v === 'doc') return `
+      <div class="card-visual"><div class="visual-doc">
+        <div class="doc-seal">DOD</div>
+        <div class="scan-line heading" style="width:55%;"></div>
+        <div class="scan-line" style="width:90%;"></div>
+        <div class="scan-line" style="width:85%;"></div>
+        <div class="scan-line redacted" style="width:60%;"></div>
+        <div class="scan-line" style="width:70%;"></div>
+        <div class="scan-line" style="width:80%;"></div>
+        <div class="stamp">Declassified</div>
+      </div></div>`;
+    return '';
+  }
+
+  evidenceCards.forEach(c => {
+    const badgeStyle = c.badge ? c.badge.style : 'official';
+    let annotations = '';
+    if (c.annotations && c.annotations.length) {
+      c.annotations.forEach(a => {
+        if (a.author === 'Nemo') {
+          annotations += '<div class="voice-nemo"><span class="voice-label">Nemo</span>' + esc(a.text) + '</div>';
+        } else {
+          annotations += '<div class="voice-claude"><span class="voice-label">Claude</span>' + esc(a.text) + '</div>';
+        }
+      });
+    }
+    const sourceCite = c.source && c.source.citation
+      ? '<div class="card-source">Source: ' + esc(c.source.citation) + '</div>' : '';
+
+    evidenceHTML += `
+      <div class="evidence-card type-${esc(c.type)}">
+        <div class="accent-border"></div>
+        ${renderVisual(c.visual)}
+        <div class="card-inner">
+          <div class="card-type-row">
+            <span class="card-type-label">${esc(c.type)}</span>
+            ${c.badge ? '<span class="card-badge badge-' + esc(badgeStyle) + '">' + esc(c.badge.label) + '</span>' : ''}
+          </div>
+          <div class="card-title">${esc(c.title)}</div>
+          <div class="card-summary">${esc(c.summary)}</div>
+          <div class="card-detail">${esc(c.detail)}</div>
+          ${annotations}
+          ${sourceCite}
+        </div>
+      </div>`;
+  });
+  document.getElementById('evidence').innerHTML = evidenceHTML;
+
+  // ── 5. THE WITNESSES ──
+  let witnessHTML = '<div class="section-label">The Witnesses</div>';
+  (D.witnesses || []).forEach(w => {
+    let quotes = '';
+    if (w.key_quotes && w.key_quotes.length) {
+      w.key_quotes.forEach(q => {
+        quotes += `<div class="witness-quote">
+          &ldquo;${esc(q.quote)}&rdquo;
+          <span class="quote-source">&mdash; ${esc(q.source)}${q.date ? ', ' + esc(q.date) : ''}</span>
+        </div>`;
+      });
+    }
+    let appearances = '';
+    if (w.public_appearances && w.public_appearances.length) {
+      appearances = '<div class="witness-appearances"><strong>Public Appearances</strong><ul>' +
+        w.public_appearances.map(a =>
+          '<li>' + esc(a.date) + ' &mdash; ' + esc(a.venue) + '</li>'
+        ).join('') + '</ul></div>';
+    }
+    witnessHTML += `
+      <div class="witness-card">
+        <div class="witness-header">
+          <div class="witness-avatar">${initials(w.name)}</div>
+          <div>
+            <div class="witness-name">${esc(w.rank_at_time)} ${esc(w.name)}</div>
+            <div class="witness-rank">${esc(w.rank_current ? 'Currently: ' + w.rank_current : '')}</div>
+          </div>
+        </div>
+        <div class="witness-meta">
+          <div class="witness-meta-item"><label>Unit</label><span>${esc(w.unit)}</span></div>
+          <div class="witness-meta-item"><label>Role</label><span>${esc(w.role)}</span></div>
+          ${w.flight_hours ? '<div class="witness-meta-item"><label>Flight Hours</label><span>' + esc(String(w.flight_hours)) + '</span></div>' : ''}
+          ${w.career_highlights ? '<div class="witness-meta-item"><label>Career</label><span>' + esc(w.career_highlights) + '</span></div>' : ''}
+        </div>
+        <div class="witness-observed">
+          <strong>What They Observed</strong>
+          ${esc(w.what_they_observed)}
+        </div>
+        ${quotes}
+        ${appearances}
+        ${w.credibility_notes ? '<div class="witness-cred"><strong>Credibility</strong>' + esc(w.credibility_notes) + '</div>' : ''}
+      </div>`;
+  });
+  document.getElementById('witnesses').innerHTML = witnessHTML;
+
+  // ── 6. AI ANALYSIS ──
+  let aiHTML = '<div class="section-label">AI Analysis</div>';
+  (D.ai_analysis || []).forEach(a => {
+    const confClass = (a.confidence || '').toLowerCase().includes('high') ? 'high' :
+      (a.confidence || '').toLowerCase().includes('low') ? 'low' : 'medium';
+    let crossRefs = '';
+    if (a.cross_references && a.cross_references.length) {
+      crossRefs = '<div class="cross-refs"><strong>Cross-Case References</strong>';
+      a.cross_references.forEach(r => {
+        const strengthClass = (r.strength || '').toLowerCase();
+        crossRefs += `<div class="cross-ref-item">
+          <span class="ref-case">${esc(r.case_name)}</span>
+          <span class="ref-strength ${esc(strengthClass)}">${esc(r.strength)}</span>
+          <br>${esc(r.shared_pattern)}
+        </div>`;
+      });
+      crossRefs += '</div>';
+    }
+    aiHTML += `
+      <div class="ai-card">
+        <div class="ai-type">${esc(a.analysis_type)}</div>
+        <div class="ai-title">${esc(a.title)}</div>
+        <div class="ai-finding">${esc(a.finding)}</div>
+        <div class="ai-methodology">
+          <strong>Methodology</strong>
+          ${esc(a.methodology)}
+        </div>
+        <span class="confidence-badge confidence-${confClass}">${esc(a.confidence)}</span>
+        ${crossRefs}
+      </div>`;
+  });
+  document.getElementById('analysis').innerHTML = aiHTML;
+
+  // ── 7. OPEN QUESTIONS ──
+  let qHTML = '<div class="section-label">Open Questions</div>';
+  (D.open_questions || []).forEach((q, i) => {
+    const prioClass = (q.priority || '').toLowerCase();
+    const linkedBadges = (q.linked_evidence_ids || []).map(id =>
+      '<span class="q-badge linked">' + esc(id) + '</span>'
+    ).join('');
+    qHTML += `
+      <div class="question-item">
+        <div class="question-number">Q${String(i + 1).padStart(2, '0')}</div>
+        <div class="question-text">${esc(q.question)}</div>
+        <div class="question-context">${esc(q.context)}</div>
+        <div class="question-badges">
+          <span class="q-badge status">${esc(q.status)}</span>
+          <span class="q-badge priority-${esc(prioClass)}">${esc(q.priority)}</span>
+          ${linkedBadges}
+        </div>
+      </div>`;
+  });
+  document.getElementById('questions').innerHTML = qHTML;
+
+  // ── 8. CROSS-CASE PATTERNS ──
+  let patHTML = '<div class="section-label">Cross-Case Patterns</div>';
+  (D.cross_case_patterns || []).forEach(p => {
+    let cases = '';
+    (p.matching_cases || []).forEach(mc => {
+      cases += '<div class="pattern-case"><span class="pattern-case-name">' + esc(mc.name) + '</span>: ' + esc(mc.detail) + '</div>';
+    });
+    patHTML += `
+      <div class="pattern-card">
+        <div class="pattern-title">${esc(p.pattern)}</div>
+        <div class="pattern-evidence">${esc(p.nimitz_evidence)}</div>
+        <div class="pattern-cases">${cases}</div>
+      </div>`;
+  });
+  document.getElementById('patterns').innerHTML = patHTML;
+
+  // ── 9. SOURCES ──
+  let srcHTML = '<div class="section-label">Sources</div>';
+  (D.source_documents || []).forEach(d => {
+    const classMap = {
+      'UNCLASSIFIED': 'class-unclassified',
+      'CLASSIFIED': 'class-classified',
+      'FOUO': 'class-fouo'
+    };
+    const classStyle = classMap[d.classification] || 'class-unclassified';
+    const titleEl = d.url
+      ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.title) + '</a>'
+      : esc(d.title);
+    let excerpts = '';
+    if (d.key_excerpts && d.key_excerpts.length) {
+      excerpts = '<div class="source-excerpts">' +
+        d.key_excerpts.map(e => '<div class="source-excerpt">' + esc(e) + '</div>').join('') +
+        '</div>';
+    }
+    srcHTML += `
+      <div class="source-item">
+        <div class="source-title">${titleEl}</div>
+        <div class="source-meta">${esc(d.author)} &mdash; ${esc(d.organization)} &middot; ${esc(d.date)}</div>
+        <span class="source-classification ${classStyle}">${esc(d.classification)}</span>
+        ${excerpts}
+      </div>`;
+  });
+  document.getElementById('sources').innerHTML = srcHTML;
+
+  // ── 10. METHODOLOGY ──
+  document.getElementById('methodology').innerHTML = `
+    <div class="section-label">Methodology</div>
+    <p style="font-size:12px;color:var(--text-2);line-height:1.65;margin-bottom:24px;">
+      Every Meridian case file is built collaboratively by a human investigator and an AI analyst.
+      Each brings distinct strengths; together they form a more complete picture than either could alone.
+    </p>
+    <div class="methodology-grid">
+      <div class="methodology-card" style="border-left:3px solid var(--orange);">
+        <h3 style="color:var(--orange);">Nemo &mdash; Human Investigator</h3>
+        <div class="voice-nemo" style="border:none;padding:0;margin:0;">
+          I chase the story. I read between the lines of official reports, track down contradictions,
+          notice when something doesn't feel right. I bring intuition, skepticism, and the messy
+          human sense that the truth is always stranger than the sanitized version. I ask the
+          uncomfortable questions. I flag what doesn't add up. I keep the investigation grounded
+          in what real people actually experienced.
+        </div>
+      </div>
+      <div class="methodology-card" style="border-left:3px solid var(--purple);">
+        <h3 style="color:var(--purple);">Claude &mdash; AI Analyst</h3>
+        <div class="voice-claude" style="border:none;padding:0;margin:0;">
+          I process the data systematically. I cross-reference witness statements for consistency,
+          compare sensor readings against known capabilities, identify patterns across cases that
+          span decades and continents. I quantify uncertainty, flag logical gaps, and maintain
+          analytical rigor. Where Nemo follows instinct, I follow evidence chains. Together we
+          cover more ground than either approach alone.
+        </div>
+      </div>
+    </div>
+  `;
+
+  // ── PROGRESS BAR ──
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = Math.min(pct, 100) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  // ── TOC HIGHLIGHTING ──
+  const tocLinks = tocList.querySelectorAll('a');
+  const sectionEls = sections.map(s => document.getElementById(s.id));
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, {
+    rootMargin: '-10% 0px -80% 0px',
+    threshold: 0
+  });
+
+  sectionEls.forEach(el => { if (el) observer.observe(el); });
+
+  // Smooth scroll on TOC click
+  tocLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

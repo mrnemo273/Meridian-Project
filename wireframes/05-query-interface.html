@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Query Interface Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC; --ink: #1A1814; --graphite: #4A4640;
+    --rule: #D4CFC7; --signal: #C4A35A; --confirm: #4A7C59;
+    --caution: #B85C38; --null: #7A8A8C; --data-1: #2D4A6B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; line-height: 1.6; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; border-bottom: 1px solid var(--rule); }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--graphite); text-decoration: none; }
+  nav ul li a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+  /* --- QUERY AREA --- */
+  .query-section {
+    max-width: 900px; margin: 0 auto; padding: 80px 40px 0;
+    text-align: center;
+  }
+
+  .query-section h1 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .query-section .subtitle {
+    color: var(--graphite); font-size: 15px; margin-bottom: 40px;
+  }
+
+  .query-box {
+    position: relative; margin-bottom: 16px;
+  }
+
+  .query-box textarea {
+    width: 100%; padding: 20px 24px; border: 1px solid var(--rule);
+    background: #FDFBF7; font-family: 'Source Serif 4', serif; font-size: 16px;
+    color: var(--ink); resize: none; height: 72px; line-height: 1.5;
+    outline: none;
+  }
+
+  .query-box textarea:focus { border-color: var(--graphite); }
+  .query-box textarea::placeholder { color: var(--null); }
+
+  .query-actions {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .query-hint {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    letter-spacing: 0.5px;
+  }
+
+  .query-submit {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 12px 28px;
+    border: none; background: var(--ink); color: var(--paper); cursor: pointer;
+  }
+
+  /* --- EXAMPLE QUERIES --- */
+  .example-queries {
+    max-width: 900px; margin: 40px auto 0; padding: 0 40px;
+  }
+
+  .example-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null); margin-bottom: 12px;
+    text-align: left;
+  }
+
+  .example-list {
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .example-item {
+    padding: 12px 0; border-bottom: 1px solid rgba(212, 207, 199, 0.5);
+    font-size: 14px; color: var(--data-1); cursor: pointer; text-align: left;
+  }
+
+  .example-item:hover { color: var(--ink); }
+
+  /* --- RESPONSE AREA --- */
+  .response-area {
+    max-width: 900px; margin: 60px auto 0; padding: 0 40px 80px;
+  }
+
+  .response-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--rule);
+  }
+
+  .response-query {
+    font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic;
+    color: var(--graphite); flex: 1;
+  }
+
+  .response-confidence {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 12px;
+    background: rgba(74, 124, 89, 0.12); color: var(--confirm);
+    white-space: nowrap;
+  }
+
+  .response-body { margin-bottom: 32px; }
+
+  .response-body p {
+    font-size: 16px; line-height: 1.75; margin-bottom: 16px;
+  }
+
+  .inline-case {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--data-1);
+    text-decoration: none; border-bottom: 1px dotted var(--data-1); cursor: pointer;
+  }
+
+  /* --- CITED CASES --- */
+  .cited-cases {
+    border: 1px solid var(--rule); background: #FDFBF7; padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+
+  .cited-label {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 16px;
+  }
+
+  .cited-case-row {
+    display: grid; grid-template-columns: 50px 1fr 100px 60px;
+    gap: 16px; align-items: center; padding: 10px 0;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+  }
+
+  .cited-case-row:last-child { border-bottom: none; }
+
+  .cited-score {
+    font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; color: var(--signal);
+  }
+
+  .cited-title {
+    font-family: 'Playfair Display', serif; font-size: 14px;
+  }
+
+  .cited-date {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite);
+  }
+
+  .tier-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 8px; text-align: center;
+  }
+  .tier-1 { background: rgba(196, 163, 90, 0.12); color: var(--signal); }
+  .tier-2 { background: rgba(74, 124, 89, 0.12); color: var(--confirm); }
+
+  /* --- INSUFFICIENT DATA STATE --- */
+  .insufficient-state {
+    max-width: 900px; margin: 60px auto 0; padding: 0 40px 80px;
+    display: none;
+  }
+
+  .insufficient-box {
+    border: 1px solid var(--rule); background: #FDFBF7; padding: 40px; text-align: center;
+  }
+
+  .insufficient-badge {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 16px;
+    background: rgba(122, 138, 140, 0.12); color: var(--null);
+    display: inline-block; margin-bottom: 16px;
+  }
+
+  .insufficient-box h3 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .insufficient-box p {
+    color: var(--graphite); font-size: 14px; max-width: 480px; margin: 0 auto;
+  }
+
+  /* --- GROUNDING NOTE --- */
+  .grounding-note {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+    letter-spacing: 0.5px; padding-top: 24px; border-top: 1px solid var(--rule);
+    line-height: 1.6;
+  }
+
+  footer { border-top: 1px solid var(--rule); padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Query Interface</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Evidence Index</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#" class="active">Query</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- QUERY INPUT -->
+<div class="query-section">
+  <h1>Ask the Corpus</h1>
+  <p class="subtitle">Natural language queries grounded in Meridian's full evidence record</p>
+  <div class="query-box">
+    <textarea placeholder="What are the most credible cases involving triangular craft in the US after 2000?"></textarea>
+  </div>
+  <div class="query-actions">
+    <span class="query-hint">Responses cite specific cases · Confidence level on every answer · "Insufficient data" is a valid response</span>
+    <button class="query-submit">Query</button>
+  </div>
+</div>
+
+<!-- EXAMPLE QUERIES -->
+<div class="example-queries">
+  <div class="example-label">Example Queries</div>
+  <div class="example-list">
+    <div class="example-item">"Which Tier 1 cases describe objects exhibiting trans-medium travel?"</div>
+    <div class="example-item">"What physical effects on witnesses appear most consistently across credible close-encounter cases?"</div>
+    <div class="example-item">"Are there cases where multiple independent radar systems tracked the same object?"</div>
+    <div class="example-item">"Which witness accounts describe a sudden onset of silence before the encounter?"</div>
+  </div>
+</div>
+
+<!-- RESPONSE (shown state) -->
+<div class="response-area">
+  <div class="response-header">
+    <div class="response-query">"What are the most credible cases involving triangular craft in the US after 2000?"</div>
+    <span class="response-confidence">High Confidence</span>
+  </div>
+
+  <div class="response-body">
+    <p>The Meridian corpus contains 1,247 cases involving triangular craft descriptions within the United States from 2000 to present. Of these, 14 are classified Tier 1 and 89 are classified Tier 2. The highest-scoring cases share several common descriptors: silent or near-silent operation, dark or black coloration, lights at each vertex, and very large estimated wingspan (often exceeding 200 feet).</p>
+    <p>The three highest-credibility triangular craft cases post-2000 are the <a class="inline-case">Tinley Park Triangle (2004, Score: 78)</a>, the <a class="inline-case">Stephenville Additional Witness Group (2008, Score: 72)</a>, and the <a class="inline-case">Hudson Valley Continuation Events (2003, Score: 68)</a>. The Tinley Park case is notable for having multiple independent video recordings from different locations that were later geometrically corroborated.</p>
+    <p>A concentration of triangular craft reports appears in the Illinois–Indiana corridor, with 23 Tier 2+ cases between 2001 and 2015. This cluster is examined in detail in the <a class="inline-case">Geographic Clustering Report v2.1</a>.</p>
+  </div>
+
+  <!-- CITED CASES -->
+  <div class="cited-cases">
+    <div class="cited-label">Cases Cited in Response (6)</div>
+    <div class="cited-case-row">
+      <span class="cited-score">78</span>
+      <span class="cited-title">Tinley Park Triangle</span>
+      <span class="cited-date">Oct 31, 2004</span>
+      <span class="tier-badge tier-2">Tier 2</span>
+    </div>
+    <div class="cited-case-row">
+      <span class="cited-score">72</span>
+      <span class="cited-title">Stephenville Additional Witness Group</span>
+      <span class="cited-date">Jan 8, 2008</span>
+      <span class="tier-badge tier-2">Tier 2</span>
+    </div>
+    <div class="cited-case-row">
+      <span class="cited-score">68</span>
+      <span class="cited-title">Hudson Valley Continuation Events</span>
+      <span class="cited-date">Mar–Sep 2003</span>
+      <span class="tier-badge tier-2">Tier 2</span>
+    </div>
+    <div class="cited-case-row">
+      <span class="cited-score">64</span>
+      <span class="cited-title">Millstadt Triangle (Post-2000 Reports)</span>
+      <span class="cited-date">2001–2004</span>
+      <span class="tier-badge tier-2">Tier 2</span>
+    </div>
+    <div class="cited-case-row">
+      <span class="cited-score">58</span>
+      <span class="cited-title">Gulf Breeze Triangle Cluster</span>
+      <span class="cited-date">Feb 2006</span>
+      <span class="tier-badge tier-2">Tier 2</span>
+    </div>
+    <div class="cited-case-row">
+      <span class="cited-score">51</span>
+      <span class="cited-title">Phoenix Triangle Recurrence</span>
+      <span class="cited-date">Apr 2008</span>
+      <span class="tier-badge tier-2">Tier 2</span>
+    </div>
+  </div>
+
+  <div class="grounding-note">
+    This response is grounded in the Meridian corpus only. All cited cases are retrievable from the Evidence Index. Confidence level reflects the breadth and quality of available data. This is not an assertion of extraterrestrial origin — it is a summary of the evidentiary record as indexed.
+  </div>
+</div>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project</p>
+</footer>
+
+</body>
+</html>

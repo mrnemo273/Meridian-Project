@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Case Detail Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2EC; --ink: #1A1814; --graphite: #4A4640;
+    --rule: #D4CFC7; --signal: #C4A35A; --confirm: #4A7C59;
+    --caution: #B85C38; --null: #7A8A8C; --data-1: #2D4A6B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; line-height: 1.6; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; border-bottom: 1px solid var(--rule); }
+  .logo { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--signal); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul li a { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--graphite); text-decoration: none; }
+
+  .breadcrumb {
+    max-width: 1400px; margin: 0 auto; padding: 20px 60px;
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--null); letter-spacing: 0.5px;
+  }
+  .breadcrumb a { color: var(--graphite); text-decoration: none; }
+
+  .case-detail { max-width: 1400px; margin: 0 auto; padding: 0 60px 80px; }
+
+  /* --- CASE HEADER --- */
+  .case-header {
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start;
+    padding-bottom: 40px; border-bottom: 1px solid var(--rule); margin-bottom: 40px;
+  }
+
+  .case-header h1 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 36px; line-height: 1.2; margin-bottom: 16px;
+  }
+
+  .case-meta-row {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--graphite); letter-spacing: 0.5px;
+  }
+
+  .case-meta-row strong { color: var(--ink); }
+
+  .case-source {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--null); margin-top: 12px;
+  }
+
+  /* --- SCORE PANEL --- */
+  .score-panel {
+    text-align: center; min-width: 180px;
+  }
+
+  .score-ring {
+    width: 100px; height: 100px; border-radius: 50%;
+    border: 3px solid var(--signal); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+
+  .score-ring .score-value {
+    font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; color: var(--signal);
+  }
+
+  .tier-badge-large {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 16px; display: inline-block;
+    background: rgba(196, 163, 90, 0.12); color: var(--signal);
+  }
+
+  /* --- CONTENT GRID --- */
+  .content-grid {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 48px;
+  }
+
+  /* --- NARRATIVE --- */
+  .section-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+
+  .narrative p {
+    font-size: 16px; line-height: 1.75; color: var(--ink); margin-bottom: 16px;
+  }
+
+  .narrative { margin-bottom: 48px; }
+
+  /* --- SCORE BREAKDOWN --- */
+  .score-breakdown { margin-bottom: 48px; }
+
+  .factor-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.5);
+  }
+
+  .factor-name {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--graphite);
+    flex: 1; letter-spacing: 0.3px;
+  }
+
+  .factor-bar-container {
+    width: 120px; height: 6px; background: rgba(212, 207, 199, 0.5); border-radius: 3px;
+  }
+
+  .factor-bar {
+    height: 100%; border-radius: 3px; background: var(--signal);
+  }
+
+  .factor-score {
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--ink);
+    width: 40px; text-align: right;
+  }
+
+  /* --- SIDEBAR --- */
+  .sidebar-block { margin-bottom: 36px; }
+
+  .sidebar-block .section-title { font-size: 9px; }
+
+  .detail-item {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+  }
+
+  .detail-item .label { color: var(--graphite); }
+  .detail-item .value { color: var(--ink); font-weight: 500; }
+  .detail-item .value.yes { color: var(--confirm); }
+  .detail-item .value.no { color: var(--null); }
+
+  /* --- DESCRIPTORS --- */
+  .descriptors {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+
+  .descriptor-tag {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 4px 10px;
+    background: rgba(45, 74, 107, 0.06); color: var(--data-1);
+  }
+
+  /* --- RELATED CASES --- */
+  .related-cases { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--rule); }
+
+  .related-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;
+  }
+
+  .related-card {
+    border: 1px solid var(--rule); background: #FDFBF7; padding: 20px;
+  }
+
+  .related-card h4 {
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 15px;
+    line-height: 1.3; margin-bottom: 8px;
+  }
+
+  .related-card .meta {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--graphite); letter-spacing: 0.5px;
+  }
+
+  .related-card .similarity {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--data-1); margin-top: 10px;
+  }
+
+  /* --- ANNOTATIONS --- */
+  .annotations { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--rule); }
+
+  .annotation {
+    padding: 20px 0; border-bottom: 1px solid rgba(212, 207, 199, 0.4);
+  }
+
+  .annotation-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+  }
+
+  .annotation-type {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 3px 8px;
+  }
+  .annotation-type.corroboration { background: rgba(74, 124, 89, 0.1); color: var(--confirm); }
+  .annotation-type.context { background: rgba(45, 74, 107, 0.08); color: var(--data-1); }
+
+  .annotation-author {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null);
+  }
+
+  .annotation p { font-size: 14px; color: var(--graphite); }
+
+  footer { border-top: 1px solid var(--rule); padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+  footer .logo { font-size: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--null); letter-spacing: 1px; }
+
+  .wireframe-label {
+    position: fixed; top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--null);
+    background: rgba(245, 242, 236, 0.9); padding: 6px 12px;
+    border: 1px solid var(--rule); z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Wireframe · Case Detail</div>
+
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Evidence Index</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">Query</a></li>
+    <li><a href="#">Contribute</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb">
+  <a href="#">Evidence Index</a> → <a href="#">Tier 1</a> → USS Nimitz Encounter
+</div>
+
+<div class="case-detail">
+
+  <!-- HEADER -->
+  <div class="case-header">
+    <div>
+      <h1>USS Nimitz Encounter (Tic Tac)</h1>
+      <div class="case-meta-row">
+        <span><strong>Date:</strong> November 14, 2004</span>
+        <span><strong>Location:</strong> 31.5°N, 117.5°W — Off San Diego, CA</span>
+        <span><strong>Duration:</strong> ~5 minutes</span>
+        <span><strong>Witnesses:</strong> 6+</span>
+      </div>
+      <div class="case-source">Sources: Pentagon AATIP Release · USS Princeton Radar Log · Cmdr. Fravor Testimony (Congress, 2023)</div>
+    </div>
+    <div class="score-panel">
+      <div class="score-ring">
+        <span class="score-value">94</span>
+      </div>
+      <div class="tier-badge-large">Tier 1</div>
+    </div>
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- Narrative -->
+      <div class="narrative">
+        <div class="section-title">Case Narrative</div>
+        <p>On November 14, 2004, the USS Princeton, part of the Nimitz Carrier Strike Group, had been tracking anomalous aerial contacts on the AN/SPY-1B radar system for approximately two weeks. The objects appeared at altitudes above 80,000 feet before rapidly descending to hover near sea level.</p>
+        <p>Commander David Fravor and Lt. Commander Alex Dietrich were vectored to investigate a contact during a training exercise. Upon arrival at the coordinates, Fravor observed a white, oblong object — described as resembling a "Tic Tac" — approximately 40 feet in length, hovering and making erratic movements above a disturbance in the ocean surface.</p>
+        <p>When Fravor descended to engage, the object accelerated beyond visual range in less than two seconds. A second F/A-18 subsequently captured the object on FLIR (Forward Looking Infrared), producing the now-declassified "FLIR1" video.</p>
+      </div>
+
+      <!-- Score Breakdown -->
+      <div class="score-breakdown">
+        <div class="section-title">Credibility Score Breakdown</div>
+        <div class="factor-row">
+          <span class="factor-name">Witness count (6+)</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 90%;"></div></div>
+          <span class="factor-score">18/20</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Witness credentials (Military)</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 100%;"></div></div>
+          <span class="factor-score">20/20</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Radar corroboration</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 100%;"></div></div>
+          <span class="factor-score">15/15</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Video evidence (FLIR)</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 80%;"></div></div>
+          <span class="factor-score">8/10</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Photo evidence</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 0%;"></div></div>
+          <span class="factor-score">0/5</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Physical trace evidence</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 0%;"></div></div>
+          <span class="factor-score">0/10</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Official investigation</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 100%;"></div></div>
+          <span class="factor-score">10/10</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Official acknowledgment</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 100%;"></div></div>
+          <span class="factor-score">15/15</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Cross-reference matches</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 53%;"></div></div>
+          <span class="factor-score">8/15</span>
+        </div>
+        <div class="factor-row">
+          <span class="factor-name">Internal consistency (AI)</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 80%;"></div></div>
+          <span class="factor-score">8/10</span>
+        </div>
+        <div class="factor-row" style="border-bottom: 2px solid var(--rule); font-weight: 500;">
+          <span class="factor-name" style="color: var(--ink); font-weight: 500;">Total (normalized)</span>
+          <div class="factor-bar-container"><div class="factor-bar" style="width: 94%; background: var(--ink);"></div></div>
+          <span class="factor-score" style="color: var(--signal);">94/100</span>
+        </div>
+      </div>
+
+      <!-- Descriptors -->
+      <div style="margin-bottom: 48px;">
+        <div class="section-title">Extracted Descriptors</div>
+        <div class="descriptors">
+          <span class="descriptor-tag">Oblong / Tic-Tac</span>
+          <span class="descriptor-tag">White</span>
+          <span class="descriptor-tag">~40ft Length</span>
+          <span class="descriptor-tag">No Visible Propulsion</span>
+          <span class="descriptor-tag">Erratic Movement</span>
+          <span class="descriptor-tag">Rapid Acceleration</span>
+          <span class="descriptor-tag">Trans-Medium</span>
+          <span class="descriptor-tag">Hovering</span>
+          <span class="descriptor-tag">Ocean Disturbance</span>
+          <span class="descriptor-tag">Infrared Signature</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+      <div class="sidebar-block">
+        <div class="section-title">Evidence Summary</div>
+        <div class="detail-item">
+          <span class="label">Radar Corroboration</span>
+          <span class="value yes">Yes — AN/SPY-1B</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Video Evidence</span>
+          <span class="value yes">Yes — FLIR1</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Photo Evidence</span>
+          <span class="value no">No</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Physical Trace</span>
+          <span class="value no">No</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Official Investigation</span>
+          <span class="value yes">Yes — AATIP</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Official Acknowledgment</span>
+          <span class="value yes">Yes — DoD 2020</span>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="section-title">Witness Credentials</div>
+        <div class="detail-item">
+          <span class="label">Cmdr. Fravor</span>
+          <span class="value">USN Fighter Pilot</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Lt. Cmdr. Dietrich</span>
+          <span class="value">USN Fighter Pilot</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Radar Operators</span>
+          <span class="value">USS Princeton Crew</span>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="section-title">Source Documents</div>
+        <div class="detail-item">
+          <span class="label">FLIR1 Video</span>
+          <span class="value" style="color: var(--data-1);">View →</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Congressional Testimony</span>
+          <span class="value" style="color: var(--data-1);">View →</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">AATIP Report Excerpt</span>
+          <span class="value" style="color: var(--data-1);">View →</span>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="section-title">Referenced In</div>
+        <div class="detail-item">
+          <span class="label">Findings Report</span>
+          <span class="value" style="color: var(--data-1);">Descriptor Convergence v3.2</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Findings Report</span>
+          <span class="value" style="color: var(--data-1);">Corroboration Density v2.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED CASES -->
+  <div class="related-cases">
+    <div class="section-title">AI-Surfaced Related Cases</div>
+    <div class="related-grid">
+      <div class="related-card">
+        <h4>USS Roosevelt Encounter (Gimbal)</h4>
+        <div class="meta">Jan 2015 · Off Jacksonville, FL · Tier 1 · Score: 88</div>
+        <div class="similarity">92% descriptor similarity</div>
+      </div>
+      <div class="related-card">
+        <h4>GoFast Video Incident</h4>
+        <div class="meta">Jan 2015 · Off Jacksonville, FL · Tier 1 · Score: 82</div>
+        <div class="similarity">84% descriptor similarity</div>
+      </div>
+      <div class="related-card">
+        <h4>USS Omaha Transmedium Object</h4>
+        <div class="meta">Jul 2019 · Off San Diego, CA · Tier 2 · Score: 71</div>
+        <div class="similarity">78% descriptor similarity</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANNOTATIONS -->
+  <div class="annotations">
+    <div class="section-title">Researcher Annotations (3)</div>
+    <div class="annotation">
+      <div class="annotation-header">
+        <span class="annotation-type corroboration">Corroboration</span>
+        <span class="annotation-author">Dr. M. Torres · Verified Researcher · Mar 12, 2026</span>
+      </div>
+      <p>Radar data from USS Princeton matches the timeline described in Fravor's congressional testimony. The 80,000ft → sea level descent profile is independently corroborated by two separate radar systems.</p>
+    </div>
+    <div class="annotation">
+      <div class="annotation-header">
+        <span class="annotation-type context">Context</span>
+        <span class="annotation-author">J. Whitfield · Verified Researcher · Feb 28, 2026</span>
+      </div>
+      <p>Worth noting that the ocean surface disturbance Fravor describes has parallels with Case #4782 (Catalina Island, 2009) and Case #12041 (Gulf of Mexico, 2014). Both describe similar "churning" or "cross-shaped" water disturbance beneath a hovering object.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>© 2026 The Meridian Project</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — The Investigation</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E0E0E;
+    --surface: #161616;
+    --surface-hover: #1C1C1C;
+    --border: rgba(196, 163, 90, 0.06);
+    --border-hover: rgba(196, 163, 90, 0.14);
+    --text-1: #C8C4B8;
+    --text-2: rgba(200, 196, 188, 0.5);
+    --text-3: rgba(200, 196, 188, 0.25);
+    --gold: #C4A35A;
+    --gold-dim: rgba(196, 163, 90, 0.45);
+    --gold-faint: rgba(196, 163, 90, 0.06);
+    --orange: #C4783A;
+    --orange-faint: rgba(196, 120, 58, 0.06);
+    --purple: #9A7D99;
+    --purple-faint: rgba(154, 125, 153, 0.06);
+    --red: #B85C5C;
+    --red-faint: rgba(184, 92, 92, 0.06);
+    --paper: #F0EDE6;
+    --ink: #1A1814;
+    --graphite: #6A665E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text-1);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.08s; }
+  .reveal-d2 { transition-delay: 0.16s; }
+  .reveal-d3 { transition-delay: 0.24s; }
+  .reveal-d4 { transition-delay: 0.32s; }
+  .reveal-d5 { transition-delay: 0.40s; }
+  .reveal-d6 { transition-delay: 0.48s; }
+
+  .section-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+  .section-label .tag {
+    padding: 2px 8px; letter-spacing: 1.5px;
+  }
+  .section-label .tag.gold { background: var(--gold-faint); color: var(--gold-dim); }
+  .section-label .tag.orange { background: var(--orange-faint); color: var(--orange); }
+  .section-label .tag.red { background: var(--red-faint); color: var(--red); }
+
+  .wireframe-label {
+    position: fixed; top: 10px; right: 10px;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); background: rgba(14,14,14,0.95);
+    padding: 5px 10px; border: 1px solid var(--border); z-index: 200;
+  }
+
+  /* ============================================ */
+  /* SYSTEM BAR                                   */
+  /* ============================================ */
+  .sys-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 40px;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); border-bottom: 1px solid var(--border);
+  }
+  .sys-status {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sys-status::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 6px var(--gold-dim);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  /* ============================================ */
+  /* NAV                                          */
+  /* ============================================ */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 14px; letter-spacing: 5px; text-transform: uppercase;
+  }
+  .logo span { color: var(--gold); }
+  nav ul { list-style: none; display: flex; gap: 28px; }
+  nav ul li a {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-2); transition: color 0.3s;
+  }
+  nav ul li a:hover { color: var(--gold); }
+
+  /* ============================================ */
+  /* HERO — THE MISSION                          */
+  /* ============================================ */
+  .hero {
+    padding: 100px 40px 40px;
+    max-width: 860px;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 52px; line-height: 1.12;
+    color: var(--text-1); margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-sub {
+    font-size: 13px; color: var(--text-2); line-height: 1.7;
+    max-width: 600px; margin-bottom: 40px;
+  }
+
+  /* --- PROGRESS BAR --- */
+  .progress-block {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px 24px;
+    background: var(--surface); border: 1px solid var(--border);
+    max-width: 520px;
+  }
+  .progress-count {
+    font-size: 28px; font-weight: 600; color: var(--gold);
+    line-height: 1; white-space: nowrap;
+  }
+  .progress-count small {
+    font-size: 14px; font-weight: 400; color: var(--text-3);
+  }
+  .progress-info {
+    flex: 1;
+  }
+  .progress-label {
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 6px;
+  }
+  .progress-track {
+    height: 3px; background: rgba(196,163,90,0.06); border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--gold); border-radius: 2px;
+    transition: width 1.5s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* ============================================ */
+  /* ACTIVE INVESTIGATION                         */
+  /* ============================================ */
+  .active-section {
+    padding: 64px 40px;
+  }
+
+  .active-card {
+    display: grid; grid-template-columns: 1.1fr 0.9fr;
+    background: var(--surface); border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.4s;
+  }
+  .active-card:hover { border-color: var(--border-hover); }
+
+  /* Pulsing "LIVE" badge */
+  .active-badge {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px;
+    background: var(--red); color: var(--bg);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .active-badge::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--bg);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Case board preview */
+  .active-board {
+    background: #111; position: relative;
+    min-height: 420px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Mini case board visualization */
+  .mini-board {
+    width: 85%; height: 75%; position: relative;
+  }
+  .board-pin {
+    position: absolute; width: 80px; background: rgba(240,237,230,0.92);
+    padding: 6px 8px; box-shadow: 2px 3px 8px rgba(0,0,0,0.4);
+    transform: rotate(var(--rot, 0deg));
+    transition: transform 0.3s;
+  }
+  .board-pin::before {
+    content: ''; position: absolute; top: -3px; left: 50%;
+    transform: translateX(-50%);
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red); box-shadow: 0 0 4px rgba(184,92,92,0.4);
+  }
+  .board-pin .pin-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 5px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--graphite); margin-bottom: 2px;
+  }
+  .board-pin .pin-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6px; font-weight: 500; color: var(--ink);
+    line-height: 1.3;
+  }
+
+  /* Photo pin variant */
+  .board-pin.photo {
+    width: 72px; padding: 0;
+  }
+  .board-pin.photo .photo-area {
+    width: 100%; aspect-ratio: 4/3; background: #D8D4CC;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 5px; color: var(--graphite); letter-spacing: 0.5px;
+  }
+  .board-pin.photo .pin-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 5px; color: var(--graphite); padding: 4px 6px;
+    background: rgba(240,237,230,0.92);
+  }
+
+  /* Thread lines (SVG) */
+  .board-threads {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .board-threads line {
+    stroke: var(--red); stroke-width: 0.8; opacity: 0.4;
+    stroke-dasharray: 3 2;
+  }
+
+  /* Timeline along bottom */
+  .board-timeline {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 32px; background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; padding: 0 16px;
+    gap: 4px;
+  }
+  .tl-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold-dim); flex-shrink: 0;
+  }
+  .tl-dot.active { background: var(--gold); box-shadow: 0 0 6px var(--gold-dim); }
+  .tl-line {
+    flex: 1; height: 1px; background: rgba(196,163,90,0.12);
+  }
+  .tl-label {
+    font-size: 6px; letter-spacing: 1px; color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  /* Active card body */
+  .active-body {
+    padding: 44px 40px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .active-case-id {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 8px;
+  }
+
+  .active-body h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 32px; line-height: 1.15; color: var(--text-1);
+    margin-bottom: 8px; letter-spacing: -0.3px;
+  }
+
+  .active-meta {
+    font-size: 10px; color: var(--text-3); letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .active-excerpt {
+    font-size: 12px; color: var(--text-2); line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  /* Investigation progress steps */
+  .inv-progress {
+    display: flex; flex-direction: column; gap: 0;
+    margin-bottom: 24px;
+    border: 1px solid var(--border); background: var(--bg);
+  }
+  .inv-step {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 9px; letter-spacing: 0.5px;
+  }
+  .inv-step:last-child { border-bottom: none; }
+
+  .inv-step-icon {
+    width: 16px; height: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+  }
+  .inv-step.done { color: var(--gold-dim); }
+  .inv-step.done .inv-step-icon { color: var(--gold); }
+  .inv-step.current { color: var(--text-1); }
+  .inv-step.current .inv-step-icon { color: var(--orange); }
+  .inv-step.pending { color: var(--text-3); }
+
+  .active-cta {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); display: inline-flex; align-items: center; gap: 8px;
+    transition: gap 0.3s;
+  }
+  .active-card:hover .active-cta { gap: 14px; }
+
+  /* ============================================ */
+  /* PUBLISHED FINDINGS                           */
+  /* ============================================ */
+  .findings-section {
+    padding: 0 40px 64px;
+  }
+
+  .findings-empty {
+    padding: 48px 32px;
+    border: 1px dashed rgba(196,163,90,0.08);
+    text-align: center;
+  }
+  .findings-empty p {
+    font-size: 11px; color: var(--text-3); line-height: 1.6;
+  }
+  .findings-empty .coming {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold-dim); margin-top: 8px;
+  }
+
+  /* ============================================ */
+  /* THE QUEUE                                    */
+  /* ============================================ */
+  .queue-section {
+    padding: 0 40px 64px;
+  }
+
+  .queue-list {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+
+  .queue-row {
+    display: grid; grid-template-columns: 48px 1fr 180px 80px;
+    align-items: center; gap: 20px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: background 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+  .queue-row:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+  }
+
+  .queue-pos {
+    font-size: 14px; font-weight: 500; color: var(--text-3);
+    text-align: center;
+  }
+  .queue-row:hover .queue-pos { color: var(--gold-dim); }
+
+  .queue-info h4 {
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 15px; text-transform: uppercase; letter-spacing: 0.3px;
+    color: var(--text-1); margin-bottom: 2px;
+  }
+  .queue-info p {
+    font-size: 9px; color: var(--text-3); letter-spacing: 0.3px;
+  }
+
+  .queue-chips {
+    display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end;
+  }
+  .q-chip {
+    font-size: 7px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 6px;
+    background: var(--gold-faint); color: var(--gold-dim);
+  }
+  .q-chip.purple { background: var(--purple-faint); color: var(--purple); }
+
+  .queue-status {
+    font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-3); text-align: right;
+  }
+
+  .queue-more {
+    padding: 14px 20px; text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-dim); cursor: pointer;
+    transition: background 0.3s;
+  }
+  .queue-more:hover { background: var(--surface-hover); }
+
+  /* ============================================ */
+  /* ABOUT THE INVESTIGATORS                      */
+  /* ============================================ */
+  .about-section {
+    padding: 0 40px 64px;
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+
+  .about-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 36px 32px;
+  }
+
+  .about-role {
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .about-role.human { color: var(--orange); }
+  .about-role.ai { color: var(--purple); }
+
+  .about-card h4 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 22px; color: var(--text-1); margin-bottom: 10px;
+  }
+  .about-card p {
+    font-size: 11px; color: var(--text-2); line-height: 1.65;
+  }
+
+  /* ============================================ */
+  /* QUERY                                        */
+  /* ============================================ */
+  .query-section {
+    padding: 0 40px 64px;
+    max-width: 780px;
+  }
+
+  .query-prompt {
+    display: flex; align-items: center;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 0.3s;
+  }
+  .query-prompt:focus-within { border-color: var(--border-hover); }
+  .query-prefix {
+    padding: 16px 14px; font-size: 13px; color: var(--gold-dim);
+    user-select: none;
+  }
+  .query-prompt input {
+    flex: 1; padding: 16px 0; background: transparent; border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-1); outline: none;
+  }
+  .query-prompt input::placeholder { color: var(--text-3); }
+  .query-prompt button {
+    padding: 16px 20px; border: none;
+    background: var(--gold); color: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer;
+  }
+
+  .query-note {
+    font-size: 9px; color: var(--text-3); margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ============================================ */
+  /* FOOTER                                       */
+  /* ============================================ */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .logo { font-size: 11px; letter-spacing: 4px; }
+  footer p { font-size: 9px; color: var(--text-3); letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="wireframe-label">Concept · Homepage</div>
+
+<!-- ======================== -->
+<!-- SYSTEM BAR               -->
+<!-- ======================== -->
+<div class="sys-bar">
+  <span>Meridian Project · Human + AI Investigation</span>
+  <div class="sys-status">Case 001 Active</div>
+</div>
+
+<!-- ======================== -->
+<!-- NAV                      -->
+<!-- ======================== -->
+<nav>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <ul>
+    <li><a href="#">Active Case</a></li>
+    <li><a href="#">Findings</a></li>
+    <li><a href="#">The Queue</a></li>
+    <li><a href="#">The Web</a></li>
+    <li><a href="#">Methodology</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== -->
+<!-- HERO                     -->
+<!-- ======================== -->
+<section class="hero">
+  <div class="hero-eyebrow reveal">An Ongoing Investigation</div>
+  <h1 class="reveal reveal-d1">We're reopening the<br>821 most credible <em>cold cases</em><br>in UFO history</h1>
+  <p class="hero-sub reveal reveal-d2">One human researcher and one AI analyst. Reviewing every verified-unidentified case file — building evidence boards, constructing timelines, and publishing what we find. Follow the investigation.</p>
+
+  <div class="progress-block reveal reveal-d3">
+    <div class="progress-count">1 <small>/ 821</small></div>
+    <div class="progress-info">
+      <div class="progress-label">Cases Investigated</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: 0.12%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- ACTIVE INVESTIGATION     -->
+<!-- ======================== -->
+<section class="active-section">
+  <div class="section-label reveal">
+    Currently Under Investigation
+    <span class="tag red">Active</span>
+  </div>
+
+  <a class="active-card reveal reveal-d1" href="02-case-board.html">
+    <!-- Case board preview -->
+    <div class="active-board">
+      <div class="active-badge">Investigating</div>
+
+      <!-- Mini case board -->
+      <div class="mini-board">
+        <svg class="board-threads" viewBox="0 0 400 300">
+          <line x1="60" y1="50" x2="180" y2="90"/>
+          <line x1="180" y1="90" x2="300" y2="60"/>
+          <line x1="180" y1="90" x2="140" y2="180"/>
+          <line x1="300" y1="60" x2="320" y2="170"/>
+          <line x1="140" y1="180" x2="280" y2="200"/>
+          <line x1="60" y1="50" x2="40" y2="170"/>
+          <line x1="40" y1="170" x2="140" y2="180"/>
+          <line x1="320" y1="170" x2="280" y2="200"/>
+        </svg>
+
+        <!-- Document pins -->
+        <div class="board-pin" style="left: 8%; top: 8%; --rot: -2deg;">
+          <div class="pin-type">Witness Statement</div>
+          <div class="pin-title">CDR Fravor debrief — describes white oblong object, ~40ft</div>
+        </div>
+
+        <div class="board-pin photo" style="left: 38%; top: 18%; --rot: 1deg;">
+          <div class="photo-area">FLIR1.mp4 frame</div>
+          <div class="pin-caption">IR capture — no exhaust, no wings</div>
+        </div>
+
+        <div class="board-pin" style="left: 68%; top: 10%; --rot: -1deg;">
+          <div class="pin-type">Radar Data</div>
+          <div class="pin-title">USS Princeton SPY-1 — objects dropping 80k→20k ft in &lt;1s</div>
+        </div>
+
+        <div class="board-pin" style="left: 3%; top: 50%; --rot: 1.5deg;">
+          <div class="pin-type">Official Report</div>
+          <div class="pin-title">DoD acknowledgment 2017 — AATIP program confirms encounter</div>
+        </div>
+
+        <div class="board-pin" style="left: 28%; top: 55%; --rot: -0.5deg;">
+          <div class="pin-type">Open Question</div>
+          <div class="pin-title">Ocean disturbance — cross-shaped whitewater. Related to object?</div>
+        </div>
+
+        <div class="board-pin photo" style="left: 62%; top: 48%; --rot: 0.5deg;">
+          <div class="photo-area">USS Nimitz CVN-68</div>
+          <div class="pin-caption">Carrier Strike Group 11</div>
+        </div>
+
+        <div class="board-pin" style="left: 55%; top: 70%; --rot: -1.5deg;">
+          <div class="pin-type">AI Finding</div>
+          <div class="pin-title">Pattern match: 3 other cases share "ocean disturbance" descriptor</div>
+        </div>
+      </div>
+
+      <!-- Timeline bar -->
+      <div class="board-timeline">
+        <span class="tl-label">OCT 04</span>
+        <div class="tl-line"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-dot active"></div>
+        <span class="tl-label" style="color:var(--gold);">14 NOV</span>
+        <div class="tl-line"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <span class="tl-label">DEC 04</span>
+        <div class="tl-line"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-line"></div>
+        <div class="tl-dot active"></div>
+        <span class="tl-label" style="color:var(--gold);">2017</span>
+        <div class="tl-line"></div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="active-body">
+      <div class="active-case-id">Case 001 · MRD-2004-NIMITZ-001</div>
+      <h3>The USS Nimitz Encounter</h3>
+      <div class="active-meta">14 Nov 2004 · Pacific Ocean · Credibility Score: 89</div>
+
+      <p class="active-excerpt">Two Navy pilots intercept anomalous radar contacts and encounter a craft performing maneuvers beyond known capability. We're building the evidence board, cross-referencing witness accounts, and running pattern analysis against the full corpus.</p>
+
+      <div class="inv-progress">
+        <div class="inv-step done">
+          <div class="inv-step-icon">✓</div>
+          <span>Source documents collected (14 files)</span>
+        </div>
+        <div class="inv-step done">
+          <div class="inv-step-icon">✓</div>
+          <span>AI analysis — entities, timeline, descriptors extracted</span>
+        </div>
+        <div class="inv-step current">
+          <div class="inv-step-icon">◉</div>
+          <span>Building case board — evidence wall in progress</span>
+        </div>
+        <div class="inv-step pending">
+          <div class="inv-step-icon">○</div>
+          <span>Investigation — cross-reference, follow threads</span>
+        </div>
+        <div class="inv-step pending">
+          <div class="inv-step-icon">○</div>
+          <span>Publish findings and credibility assessment</span>
+        </div>
+      </div>
+
+      <div class="active-cta">View the case board <span>→</span></div>
+    </div>
+  </a>
+</section>
+
+<!-- ======================== -->
+<!-- PUBLISHED FINDINGS       -->
+<!-- ======================== -->
+<section class="findings-section">
+  <div class="section-label reveal">
+    Published Findings
+    <span class="tag gold">0 Complete</span>
+  </div>
+
+  <div class="findings-empty reveal reveal-d1">
+    <p>No findings published yet. Case 001 (USS Nimitz) is currently under investigation.</p>
+    <div class="coming">First findings coming soon</div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THE QUEUE                -->
+<!-- ======================== -->
+<section class="queue-section">
+  <div class="section-label reveal">
+    The Queue — Next Up
+    <span class="tag gold">820 Remaining</span>
+  </div>
+
+  <div class="queue-list">
+    <div class="queue-row reveal reveal-d1">
+      <div class="queue-pos">002</div>
+      <div class="queue-info">
+        <h4>Rendlesham Forest Incident</h4>
+        <p>26 Dec 1980 · Suffolk, England · Physical trace + radiation at landing site</p>
+      </div>
+      <div class="queue-chips">
+        <span class="q-chip">Physical trace</span>
+        <span class="q-chip">Radiation</span>
+        <span class="q-chip purple">Multi-witness</span>
+      </div>
+      <div class="queue-status">Queued</div>
+    </div>
+
+    <div class="queue-row reveal reveal-d2">
+      <div class="queue-pos">003</div>
+      <div class="queue-info">
+        <h4>Tehran 1976 — F-4 Intercept</h4>
+        <p>19 Sep 1976 · Tehran, Iran · Jet weapons and comms disabled during approach</p>
+      </div>
+      <div class="queue-chips">
+        <span class="q-chip">System failure</span>
+        <span class="q-chip">Radar</span>
+      </div>
+      <div class="queue-status">Queued</div>
+    </div>
+
+    <div class="queue-row reveal reveal-d3">
+      <div class="queue-pos">004</div>
+      <div class="queue-info">
+        <h4>Belgian Wave — F-16 Intercepts</h4>
+        <p>30 Mar 1990 · Belgium · Radar lock, 280→1100 kts acceleration</p>
+      </div>
+      <div class="queue-chips">
+        <span class="q-chip">Radar lock</span>
+        <span class="q-chip">Triangular</span>
+      </div>
+      <div class="queue-status">Queued</div>
+    </div>
+
+    <div class="queue-row reveal reveal-d4">
+      <div class="queue-pos">005</div>
+      <div class="queue-info">
+        <h4>Washington, D.C. Radar-Visual</h4>
+        <p>19 Jul 1952 · Washington, D.C. · Objects over the capital, two weekends running</p>
+      </div>
+      <div class="queue-chips">
+        <span class="q-chip purple">Mass obs.</span>
+        <span class="q-chip">Military intercept</span>
+      </div>
+      <div class="queue-status">Queued</div>
+    </div>
+
+    <div class="queue-row reveal reveal-d5">
+      <div class="queue-pos">006</div>
+      <div class="queue-info">
+        <h4>JAL Flight 1628 — Alaska</h4>
+        <p>17 Nov 1986 · Alaska · Crew of 3, FAA radar confirmation, walnut-shaped craft</p>
+      </div>
+      <div class="queue-chips">
+        <span class="q-chip">Radar</span>
+        <span class="q-chip">Pilot report</span>
+      </div>
+      <div class="queue-status">Queued</div>
+    </div>
+
+    <a class="queue-more reveal reveal-d6" href="#">View All 821 Cases in the Queue →</a>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- THE INVESTIGATORS        -->
+<!-- ======================== -->
+<section class="about-section">
+  <div class="section-label reveal">
+    The Investigators
+  </div>
+
+  <div class="about-grid">
+    <div class="about-card reveal reveal-d1">
+      <div class="about-role human">Human Investigator</div>
+      <h4>Nemo</h4>
+      <p>Researcher and project lead. Selects cases, reviews AI analysis, adds human context and editorial judgment, writes investigation narratives, and makes the final credibility call. Not a believer or debunker — just follows the evidence.</p>
+    </div>
+    <div class="about-card reveal reveal-d2">
+      <div class="about-role ai">AI Analyst</div>
+      <h4>Claude</h4>
+      <p>Processes source documents, extracts entities and timelines, identifies pattern matches across the corpus, flags contradictions, and surfaces connections humans might miss. Every AI-generated analysis is labeled as such. Transparent by default.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== -->
+<!-- QUERY                    -->
+<!-- ======================== -->
+<section class="query-section">
+  <div class="section-label reveal">
+    Query the Evidence
+  </div>
+
+  <div class="query-prompt reveal reveal-d1">
+    <span class="query-prefix">$</span>
+    <input type="text" placeholder="ask anything about the investigated cases...">
+    <button>Run</button>
+  </div>
+  <p class="query-note reveal reveal-d2">Only returns findings from cases we've actually investigated. Every answer cites its source.</p>
+</section>
+
+<!-- ======================== -->
+<!-- FOOTER                   -->
+<!-- ======================== -->
+<footer>
+  <div class="logo">MERIDIAN<span>.</span></div>
+  <p>Human + AI Investigation · 1 of 821 Cases · Open Source</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

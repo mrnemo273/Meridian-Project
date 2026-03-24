@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CaseWorkspaceData } from "@/types/case";
 
 interface Props {
@@ -28,6 +29,24 @@ export function HeroSection({ data, getCount }: Props) {
             <span key={t} className="tag-pill">{t}</span>
           ))}
         </div>
+
+        {data.heroImage && (
+          <div className="hero-image-wrap">
+            <Image
+              src={data.heroImage}
+              alt={data.heroImageAlt || data.title}
+              width={900}
+              height={300}
+              style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 6 }}
+              priority
+            />
+            {data.heroImageAttribution && (
+              <div className="hero-image-attribution">
+                {data.heroImageAttribution}
+              </div>
+            )}
+          </div>
+        )}
       </section>
 
       <section id="summary">

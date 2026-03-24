@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { WitnessCard } from "@/types/case";
 
 interface Props {
@@ -17,7 +18,17 @@ export function WitnessSection({ cards, selectedCard, selectCard }: Props) {
           onClick={() => selectCard(`wit-${i}`, "witness")}
         >
           <div className="witness-header">
-            <div className="witness-avatar">{w.initials}</div>
+            {w.image ? (
+              <Image
+                src={w.image}
+                alt={w.imageAlt || w.name}
+                width={36}
+                height={36}
+                className="witness-photo"
+              />
+            ) : (
+              <div className="witness-avatar">{w.initials}</div>
+            )}
             <div>
               <div className="witness-name">{w.name}</div>
               <div className="witness-rank">{w.rank}</div>

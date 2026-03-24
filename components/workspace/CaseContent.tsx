@@ -4,6 +4,7 @@ import type { CaseWorkspaceData } from "@/types/case";
 import { HeroSection } from "./HeroSection";
 import { TimelineSection } from "./TimelineSection";
 import { EvidenceSection } from "./EvidenceSection";
+import { EvidenceGallery } from "./EvidenceGallery";
 import { WitnessSection } from "./WitnessSection";
 import { AIAnalysisSection } from "./AIAnalysisSection";
 import { QuestionsSection } from "./QuestionsSection";
@@ -36,6 +37,7 @@ export const CaseContent = forwardRef<HTMLDivElement, Props>(function CaseConten
         <HeroSection data={data} getCount={getCount} />
         <TimelineSection events={data.timeline} getCount={getCount} />
         <EvidenceSection cards={data.evidence} selectedCard={selectedCard} selectCard={selectCard} />
+        <EvidenceGallery items={data.gallery || []} />
         <WitnessSection cards={data.witnesses} selectedCard={selectedCard} selectCard={selectCard} />
         <AIAnalysisSection cards={data.aiAnalysis} selectedCard={selectedCard} selectCard={selectCard} />
         <QuestionsSection questions={data.openQuestions} />

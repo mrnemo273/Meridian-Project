@@ -15,6 +15,8 @@ export interface EvidenceCard {
   title: string;
   summary: string;
   linkText: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface WitnessCard {
@@ -24,6 +26,8 @@ export interface WitnessCard {
   observed: string;
   quote: string | null;
   quoteSource: string | null;
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface AIAnalysisCard {
@@ -101,6 +105,20 @@ export interface InvestigationTask {
   completed_date?: string;
 }
 
+export interface GalleryItem {
+  id: string;
+  type: "image" | "video" | "document" | "map";
+  src: string;
+  thumbnail?: string;
+  title: string;
+  caption: string;
+  attribution: string;
+  license: string;
+  category: "flir" | "sensor" | "witness" | "document" | "map" | "reference" | "analysis";
+  relatedEvidence?: string;
+  relatedWitness?: string;
+}
+
 export interface CaseWorkspaceData {
   // Case metadata
   id: string;
@@ -115,6 +133,11 @@ export interface CaseWorkspaceData {
   status: string;
   tags: string[];
 
+  // Hero image
+  heroImage?: string;
+  heroImageAlt?: string;
+  heroImageAttribution?: string;
+
   // Workspace content
   timeline: TimelineEvent[];
   evidence: EvidenceCard[];
@@ -128,6 +151,9 @@ export interface CaseWorkspaceData {
   solvabilityScore: number;
   nextSteps: NextStep[];
   searchDemoResults: SearchResult[];
+
+  // Gallery
+  gallery?: GalleryItem[];
 
   // ACH config
   achHypotheses: string[];

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { queuedCases, sidebarCases, casesWithData } from "@/data/cases-index";
 
@@ -110,9 +111,15 @@ export default function HomePage() {
                 ))}
               </div>
               <div className="mini-flir">
+                <Image
+                  src="/images/cases/001/flir1-center.png"
+                  alt="FLIR1 infrared video still showing the Tic Tac object"
+                  width={600}
+                  height={200}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }}
+                />
                 <div className="flir-grid"></div>
                 <div className="flir-crosshair"></div>
-                <div className="flir-object"></div>
                 <span className="flir-label tl">WHT</span>
                 <span className="flir-label tr">NAR</span>
                 <span className="flir-label bl">IR</span>

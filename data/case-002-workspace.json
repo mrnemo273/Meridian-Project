@@ -18,6 +18,11 @@
     "contested-explanation",
     "two-distinct-events"
   ],
+
+  "heroImage": "/images/cases/002/phoenix-lights-transit-map.svg",
+  "heroImageAlt": "Phoenix Lights V-formation transit map — Henderson NV to Tucson AZ",
+  "heroImageAttribution": "The Meridian Project (original)",
+
   "timeline": [
     {
       "date": "March 13, 1997 · 7:55 PM",
@@ -232,7 +237,9 @@
       "rank": "Governor of Arizona · Air Force Veteran",
       "observed": "Drove to Squaw Peak and observed a massive delta-shaped craft with enormous lights. Called it 'otherworldly' and 'too symmetrical' to be flares. Initially mocked the incident publicly, then admitted the truth 10 years later.",
       "quote": "'It couldn't have been flares because it was too symmetrical. It had a geometric outline, a constant shape.'",
-      "quoteSource": "— CNN, 2007"
+      "quoteSource": "— CNN, 2007",
+      "image": "/images/cases/002/symington-press-conference.jpg",
+      "imageAlt": "Governor Fife Symington III at press conference"
     },
     {
       "initials": "KR",
@@ -775,6 +782,40 @@
         "russell-atc-exchange.mp3"
       ],
       "notes": "The original ATC recording is likely government record (public domain). The broadcast edit may have copyright overlay."
+    }
+  ],
+
+  "gallery": [
+    {
+      "id": "g-001",
+      "type": "map",
+      "src": "/images/cases/002/phoenix-lights-transit-map.svg",
+      "title": "V-Formation Transit Path — March 13, 1997",
+      "caption": "Reconstructed flight path of the Event 1 V-formation from Henderson NV through Prescott, Phoenix, to Tucson. ~300 miles in ~50 minutes. Based on 700+ witness reports.",
+      "attribution": "The Meridian Project (original)",
+      "license": "Project Original",
+      "category": "map"
+    },
+    {
+      "id": "g-002",
+      "type": "image",
+      "src": "/images/cases/002/goldwater-range-map.png",
+      "title": "Barry Goldwater Air Force Range — Land Tenure Map",
+      "caption": "The training area where Operation Snowbird A-10s operated. Maryland ANG units dropped LUU-2B/B flares here during the Event 2 timeframe (10 PM).",
+      "attribution": "U.S. Government",
+      "license": "Public Domain",
+      "category": "map"
+    },
+    {
+      "id": "g-003",
+      "type": "image",
+      "src": "/images/cases/002/symington-press-conference.jpg",
+      "title": "Governor Fife Symington III",
+      "caption": "Arizona Governor who witnessed the V-formation from Squaw Peak. Initially mocked the incident at a 1997 press conference, then admitted the truth 10 years later: 'It was otherworldly.'",
+      "attribution": "Gage Skidmore / CC BY-SA",
+      "license": "CC BY-SA",
+      "category": "witness",
+      "relatedWitness": "Gov. Fife Symington III"
     }
   ]
 }

@@ -280,7 +280,7 @@ section { padding-top: 48px; margin-bottom: 48px; }
   border-radius: 6px;
 }
 .methodology-brief .voice-nemo {
-  font-family: 'Caveat', cursive;
+  font-family: 'Playfair Display', serif; font-style: italic;
   font-size: 15px; color: var(--orange);
   border-left: 3px solid var(--orange);
   padding-left: 12px; margin: 12px 0 0;
@@ -525,7 +525,7 @@ section { padding-top: 48px; margin-bottom: 48px; }
   font-size: 11px; color: var(--text-2); line-height: 1.6;
 }
 .method-card.human .method-desc {
-  font-family: 'Caveat', cursive;
+  font-family: 'Playfair Display', serif; font-style: italic;
   font-size: 15px; color: var(--orange); line-height: 1.4;
 }
 
@@ -785,7 +785,7 @@ section { padding-top: 48px; margin-bottom: 48px; }
 .witness-rank { font-size: 11px; color: var(--text-3); }
 .witness-observed { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 .witness-quote {
-  font-family: 'Caveat', cursive; font-size: 18px; line-height: 1.45; color: var(--orange);
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; line-height: 1.45; color: var(--orange);
   border-left: 3px solid var(--orange); padding: 8px 0 8px 14px; margin: 12px 0;
 }
 .witness-quote .quote-source { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-3); margin-top: 4px; }
@@ -915,7 +915,7 @@ section { padding-top: 48px; margin-bottom: 48px; }
 }
 .inline-note-input textarea {
   width: 100%; border: 1px solid var(--border); border-radius: 4px;
-  padding: 8px 10px; font-family: 'Caveat', cursive; font-size: 15px;
+  padding: 8px 10px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px;
   background: var(--bg); color: var(--text-1); resize: none;
   outline: none; min-height: 60px; line-height: 1.4;
 }
@@ -970,7 +970,7 @@ section { padding-top: 48px; margin-bottom: 48px; }
   padding: 12px 14px; overflow-y: auto; flex: 1;
 }
 .annotation-note {
-  font-family: 'Caveat', cursive; font-size: 15px; color: var(--text-1);
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; color: var(--text-1);
   line-height: 1.4; margin-bottom: 10px;
 }
 .annotation-note.claude-note {

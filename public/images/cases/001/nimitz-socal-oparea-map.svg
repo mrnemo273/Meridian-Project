@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 18px; font-weight: 700; fill: #2D2A24; }
+      .subtitle { font-size: 12px; fill: #6B6558; }
+      .label { font-size: 11px; fill: #2D2A24; font-weight: 600; }
+      .label-sm { font-size: 9px; fill: #6B6558; }
+      .time { font-size: 10px; fill: #9A7A2E; font-weight: 700; font-family: 'Courier New', monospace; }
+      .ocean { fill: #D6DFE8; }
+      .land { fill: #E8E2D6; stroke: #C8C0B0; stroke-width: 1; }
+      .oparea { fill: #4A6A9A; fill-opacity: 0.12; stroke: #4A6A9A; stroke-width: 2; stroke-dasharray: 8,4; }
+      .oparea-label { font-size: 14px; fill: #4A6A9A; font-weight: 700; letter-spacing: 3; }
+      .ship { fill: #4A6A9A; }
+      .ship-label { font-size: 10px; fill: #4A6A9A; font-weight: 600; }
+      .intercept { fill: #B04A4A; }
+      .intercept-route { stroke: #B04A4A; stroke-width: 2; fill: none; stroke-dasharray: 6,3; }
+      .intercept-glow { stroke: #B04A4A; stroke-width: 5; fill: none; opacity: 0.15; }
+      .uap-marker { fill: #9A7A2E; }
+      .radar-ring { fill: none; stroke: #7B5D9A; stroke-width: 1; stroke-dasharray: 3,3; opacity: 0.4; }
+      .cap-point { fill: #B04A4A; fill-opacity: 0.1; stroke: #B04A4A; stroke-width: 1.5; }
+      .legend-box { fill: #F6F5F1; stroke: #D4C9A8; stroke-width: 1; rx: 4; }
+      .note { font-size: 9px; fill: #6B6558; font-style: italic; }
+      .coast { fill: #E8E2D6; stroke: #C8C0B0; stroke-width: 1.5; }
+      .city-dot { fill: #6B6558; }
+    </style>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#B04A4A"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4A6A9A"/>
+    </marker>
+    <!-- Aircraft symbol -->
+    <symbol id="fa18" viewBox="0 0 24 20">
+      <path d="M12,2 L14,8 L22,10 L14,12 L12,18 L10,12 L2,10 L10,8 Z" fill="#4A6A9A" stroke="#2D2A24" stroke-width="0.5"/>
+    </symbol>
+    <!-- UAP tic-tac symbol -->
+    <symbol id="tictac" viewBox="0 0 30 14">
+      <ellipse cx="15" cy="7" rx="13" ry="5" fill="#9A7A2E" opacity="0.8" stroke="#9A7A2E" stroke-width="1"/>
+      <ellipse cx="15" cy="7" rx="13" ry="5" fill="none" stroke="#FFFDF5" stroke-width="0.5" opacity="0.6"/>
+    </symbol>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="900" fill="#F6F5F1"/>
+  <rect x="10" y="10" width="780" height="880" fill="none" stroke="#D4C9A8" stroke-width="1" rx="4"/>
+
+  <!-- Title -->
+  <text x="40" y="48" class="title">USS NIMITZ CSG — SOCAL OPAREA ENCOUNTER</text>
+  <text x="40" y="66" class="subtitle">November 14, 2004 · ~100 miles SW of San Diego · W-291 Warning Area</text>
+  <text x="40" y="82" class="subtitle">Carrier Strike Group 11 (CSG-11) pre-deployment exercises · FLIR1/GIMBAL engagement</text>
+
+  <!-- Ocean background -->
+  <rect x="20" y="100" width="760" height="700" fill="#D6DFE8" rx="3"/>
+
+  <!-- California coastline (simplified) -->
+  <path d="M 580,100 C 590,130 620,160 640,200 C 655,235 660,260 670,300
+           C 680,340 690,360 710,400 C 730,440 745,470 760,500 L 780,500 L 780,100 Z" class="coast"/>
+
+  <!-- Baja California (partial) -->
+  <path d="M 760,500 C 740,530 720,560 710,600 C 700,640 695,680 690,720
+           C 688,740 685,760 680,780 L 780,780 L 780,500 Z" class="coast"/>
+
+  <!-- Channel Islands (simplified) -->
+  <ellipse cx="590" cy="175" rx="25" ry="6" class="coast" transform="rotate(-15,590,175)"/>
+  <text x="575" y="165" font-size="7" fill="#6B6558">Channel Is.</text>
+
+  <!-- Cities on coast -->
+  <circle cx="625" cy="185" r="3" class="city-dot"/>
+  <text x="614" y="180" font-size="9" fill="#6B6558" text-anchor="end">Los Angeles</text>
+
+  <circle cx="690" cy="395" r="4" class="city-dot"/>
+  <text x="680" y="388" font-size="10" fill="#6B6558" text-anchor="end" font-weight="600">San Diego</text>
+
+  <circle cx="700" cy="425" r="3" class="city-dot"/>
+  <text x="690" y="418" font-size="8" fill="#6B6558" text-anchor="end">Coronado</text>
+  <text x="690" y="428" font-size="7" fill="#6B6558" text-anchor="end">NAS North Island</text>
+
+  <circle cx="720" cy="500" r="2" class="city-dot"/>
+  <text x="710" y="498" font-size="8" fill="#6B6558" text-anchor="end">Tijuana</text>
+
+  <!-- Grid lines (lat/lon suggestion) -->
+  <line x1="20" y1="250" x2="580" y2="250" stroke="#B8C8D8" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="30" y="246" font-size="7" fill="#A0B0C0">32°N</text>
+  <line x1="20" y1="400" x2="680" y2="400" stroke="#B8C8D8" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="30" y="396" font-size="7" fill="#A0B0C0">31°N</text>
+  <line x1="20" y1="550" x2="760" y2="550" stroke="#B8C8D8" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="30" y="546" font-size="7" fill="#A0B0C0">30°N</text>
+
+  <line x1="300" y1="100" x2="300" y2="780" stroke="#B8C8D8" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="303" y="112" font-size="7" fill="#A0B0C0">120°W</text>
+  <line x1="500" y1="100" x2="500" y2="780" stroke="#B8C8D8" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="503" y="112" font-size="7" fill="#A0B0C0">118°W</text>
+
+  <!-- W-291 Warning Area (OPAREA) -->
+  <rect x="200" y="250" width="350" height="350" class="oparea" rx="5"/>
+  <text x="375" y="290" class="oparea-label" text-anchor="middle">W-291</text>
+  <text x="375" y="306" font-size="10" fill="#4A6A9A" text-anchor="middle">SOCAL OPERATING AREA</text>
+  <text x="375" y="320" font-size="9" fill="#4A6A9A" text-anchor="middle" opacity="0.7">~100 nm SW of San Diego</text>
+
+  <!-- Radar detection rings from Princeton -->
+  <circle cx="400" cy="420" r="60" class="radar-ring"/>
+  <circle cx="400" cy="420" r="120" class="radar-ring"/>
+  <circle cx="400" cy="420" r="180" class="radar-ring"/>
+  <text x="400" y="560" font-size="7" fill="#7B5D9A" text-anchor="middle">AN/SPY-1B radar coverage rings</text>
+
+  <!-- ============================================ -->
+  <!-- Carrier Strike Group positions -->
+  <!-- ============================================ -->
+
+  <!-- USS Princeton (CG-59) — Aegis cruiser, radar picket -->
+  <rect x="385" y="410" width="30" height="8" rx="2" class="ship"/>
+  <text x="400" y="408" class="ship-label" text-anchor="middle">USS Princeton (CG-59)</text>
+  <text x="400" y="432" class="label-sm" text-anchor="middle">Aegis cruiser · AN/SPY-1B</text>
+  <text x="400" y="443" class="label-sm" text-anchor="middle">Senior Chief Day tracking contacts</text>
+
+  <!-- USS Nimitz (CVN-68) -->
+  <rect x="330" y="475" width="40" height="10" rx="2" class="ship"/>
+  <rect x="348" y="468" width="4" height="7" rx="1" fill="#4A6A9A"/> <!-- island -->
+  <text x="350" y="465" class="ship-label" text-anchor="middle">USS Nimitz (CVN-68)</text>
+  <text x="350" y="500" class="label-sm" text-anchor="middle">Nuclear carrier · VFA-41 Black Aces</text>
+
+  <!-- ============================================ -->
+  <!-- The Encounter -->
+  <!-- ============================================ -->
+
+  <!-- CAP Point (where Fravor was sent) -->
+  <circle cx="340" cy="340" r="25" class="cap-point"/>
+  <text x="340" y="338" font-size="9" fill="#B04A4A" text-anchor="middle" font-weight="600">MERGE PLOT</text>
+  <text x="340" y="350" font-size="8" fill="#B04A4A" text-anchor="middle">CAP Point</text>
+
+  <!-- UAP / Tic Tac at merge point -->
+  <use href="#tictac" x="325" y="315" width="30" height="14"/>
+
+  <!-- Disturbance on water surface -->
+  <ellipse cx="340" cy="365" rx="18" ry="8" fill="none" stroke="#5A8A4A" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="370" y="370" font-size="8" fill="#5A8A4A" font-weight="600">Water disturbance</text>
+  <text x="370" y="380" font-size="7" fill="#5A8A4A">"cross-shaped whitewater"</text>
+
+  <!-- Fravor's intercept path -->
+  <path d="M 350,470 C 350,440 345,400 340,360" class="intercept-glow"/>
+  <path d="M 350,470 C 350,440 345,400 340,360" class="intercept-route" marker-end="url(#arrow-red)"/>
+  <use href="#fa18" x="328" y="380" width="24" height="20"/>
+
+  <!-- Fravor callout -->
+  <rect x="140" y="355" width="170" height="56" rx="3" fill="#FFFDF5" stroke="#B04A4A" stroke-width="1"/>
+  <text x="150" y="370" class="time">~14:00 PST</text>
+  <text x="150" y="382" class="label-sm">CDR David Fravor (VFA-41)</text>
+  <text x="150" y="393" class="label-sm">Descends to investigate, Tic Tac</text>
+  <text x="150" y="404" class="label-sm">mirrors his descent then accelerates</text>
+
+  <!-- Tic Tac escape vector -->
+  <path d="M 340,322 C 320,300 280,280 220,260" stroke="#9A7A2E" stroke-width="2" fill="none" stroke-dasharray="4,2" marker-end="url(#arrow-red)"/>
+  <rect x="100" y="245" width="130" height="32" rx="3" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="110" y="260" font-size="9" fill="#9A7A2E" font-weight="600">Tic Tac accelerates</text>
+  <text x="110" y="272" font-size="8" fill="#9A7A2E">to Fravor's CAP point in &lt;1 sec</text>
+
+  <!-- CAP point (Fravor's original station) -->
+  <circle cx="480" cy="330" r="15" fill="#B04A4A" fill-opacity="0.08" stroke="#B04A4A" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="480" y="328" font-size="8" fill="#B04A4A" text-anchor="middle" font-weight="600">Original</text>
+  <text x="480" y="338" font-size="8" fill="#B04A4A" text-anchor="middle">CAP Point</text>
+
+  <!-- Arrow from Tic Tac to CAP -->
+  <path d="M 230,258 C 300,250 400,280 465,320" stroke="#9A7A2E" stroke-width="1.5" fill="none" stroke-dasharray="3,2" opacity="0.5"/>
+  <text x="350" y="275" font-size="7" fill="#9A7A2E" text-anchor="middle">~60 miles in seconds</text>
+
+  <!-- FLIR engagement (Underwood) -->
+  <rect x="460" y="440" width="170" height="56" rx="3" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="470" y="455" class="time">~14:15 PST</text>
+  <text x="470" y="467" class="label-sm">LT Chad Underwood (VFA-41)</text>
+  <text x="470" y="478" class="label-sm">ATFLIR pod locks Tic Tac on IR</text>
+  <text x="470" y="489" class="label-sm">→ FLIR1 video captured here</text>
+
+  <!-- Underwood flight path -->
+  <use href="#fa18" x="448" y="395" width="24" height="20"/>
+  <path d="M 350,480 C 400,470 430,440 460,410" class="intercept-route" marker-end="url(#arrow-red)" opacity="0.5"/>
+
+  <!-- Princeton radar tracking note -->
+  <rect x="470" y="555" width="190" height="44" rx="3" fill="#FFFDF5" stroke="#7B5D9A" stroke-width="1"/>
+  <text x="480" y="570" font-size="9" fill="#7B5D9A" font-weight="600">SPY-1B Radar Tracking</text>
+  <text x="480" y="582" class="label-sm">Contacts tracked for 2 weeks prior</text>
+  <text x="480" y="593" class="label-sm">Descending from 80,000+ ft to sea level</text>
+
+  <!-- ============================================ -->
+  <!-- Key details callouts -->
+  <!-- ============================================ -->
+
+  <!-- Object characteristics -->
+  <rect x="40" y="130" width="200" height="100" rx="4" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1.5"/>
+  <text x="55" y="150" class="label" fill="#9A7A2E">OBJECT CHARACTERISTICS</text>
+  <line x1="55" y1="156" x2="220" y2="156" stroke="#9A7A2E" stroke-width="0.5" opacity="0.3"/>
+  <text x="55" y="170" class="label-sm">Shape: Elongated oval ("Tic Tac")</text>
+  <text x="55" y="182" class="label-sm">Size: ~40 feet (fighter-sized)</text>
+  <text x="55" y="194" class="label-sm">Color: Uniform white, no markings</text>
+  <text x="55" y="206" class="label-sm">Propulsion: No visible exhaust/wings</text>
+  <text x="55" y="218" class="label-sm">Speed: est. 24,000+ mph (egress)</text>
+
+  <!-- ============================================ -->
+  <!-- Legend -->
+  <!-- ============================================ -->
+  <rect x="30" y="810" width="740" height="70" class="legend-box"/>
+  <text x="50" y="832" class="label">LEGEND</text>
+
+  <!-- Ship symbol -->
+  <rect x="50" y="840" width="16" height="5" rx="1" fill="#4A6A9A"/>
+  <text x="72" y="849" class="label-sm">CSG-11 vessel</text>
+
+  <!-- Aircraft symbol -->
+  <use href="#fa18" x="150" y="836" width="16" height="14"/>
+  <text x="172" y="849" class="label-sm">F/A-18F Super Hornet</text>
+
+  <!-- Tic Tac -->
+  <use href="#tictac" x="280" y="840" width="20" height="10"/>
+  <text x="306" y="849" class="label-sm">UAP ("Tic Tac")</text>
+
+  <!-- Intercept route -->
+  <line x1="380" y1="846" x2="420" y2="846" class="intercept-route"/>
+  <text x="428" y="849" class="label-sm">Intercept vector</text>
+
+  <!-- Radar ring -->
+  <path d="M 530,846 A 8,8 0 0 1 546,846" class="radar-ring" stroke-width="1.5"/>
+  <text x="552" y="849" class="label-sm">AN/SPY-1B radar range</text>
+
+  <!-- OPAREA -->
+  <rect x="650" y="840" width="14" height="10" class="oparea" stroke-width="1"/>
+  <text x="670" y="849" class="label-sm">W-291 OPAREA</text>
+
+  <!-- Attribution -->
+  <text x="50" y="870" class="note">Map: The Meridian Project · Original reconstruction from Navy/DoD reports, Fravor testimony, SCU analysis · Not to precise geographic scale</text>
+
+  <!-- Compass rose -->
+  <g transform="translate(720,160)">
+    <circle cx="0" cy="0" r="20" fill="#FFFDF5" stroke="#D4C9A8" stroke-width="1"/>
+    <line x1="0" y1="-18" x2="0" y2="18" stroke="#2D2A24" stroke-width="1"/>
+    <line x1="-18" y1="0" x2="18" y2="0" stroke="#2D2A24" stroke-width="1"/>
+    <text x="0" y="-8" text-anchor="middle" font-size="10" font-weight="700" fill="#2D2A24">N</text>
+    <polygon points="0,-16 -3,-10 3,-10" fill="#2D2A24"/>
+  </g>
+</svg>

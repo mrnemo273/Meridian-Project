@@ -83,7 +83,7 @@ export const queuedCases: QueuedCase[] = [
 ];
 
 // IDs of cases that have workspace data files
-export const casesWithData = new Set(["001"]);
+export const casesWithData = new Set(["001", "002"]);
 
 export const sidebarCases = [
   { id: "001", label: "001 \u2014 USS Nimitz", status: "Active", href: "/case/001" },

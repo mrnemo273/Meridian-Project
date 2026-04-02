@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useAnnotations } from "@/hooks/useAnnotations";
+import { useAuth } from "@/components/SupabaseProvider";
 
-export function useWorkspaceInteractions(onSetActiveTab: (tab: string) => void) {
+export function useWorkspaceInteractions(onSetActiveTab: (tab: string) => void, caseId?: string) {
   const [ctxVisible, setCtxVisible] = useState(false);
   const [ctxPos, setCtxPos] = useState({ x: 0, y: 0 });
   const [currentSelection, setCurrentSelection] = useState<{ text: string; range: Range } | null>(null);
@@ -17,14 +18,17 @@ export function useWorkspaceInteractions(onSetActiveTab: (tab: string) => void) 
   const [popoverPos, setPopoverPos] = useState({ x: 0, y: 0 });
   const [popoverAnnId, setPopoverAnnId] = useState<string | null>(null);
 
-  const { annotations, addNote, addAttachment, createAnnotation, getCount } = useAnnotations();
+  const { annotations, addNote, addAttachment, createAnnotation, getCount } = useAnnotations(caseId);
+  const { profile } = useAuth();
   const highlightCount = Object.keys(annotations).length;
+  const userName = profile?.name?.toLowerCase() || "nemo";
 
-  const applyHighlight = useCallback((user: "nemo" | "claude") => {
+  const applyHighlight = useCallback((user: string) => {
     if (!currentSelection) return;
     const span = document.createElement("span");
     const annId = "ann-" + Date.now();
-    span.className = "hl-" + user;
+    // Use hl-claude for AI, hl-nemo for all human investigators
+    span.className = user === "claude" ? "hl-claude" : "hl-nemo";
     span.setAttribute("data-annotation-id", annId);
     span.setAttribute("data-user", user);
     span.setAttribute("data-count", "");
@@ -41,17 +45,17 @@ export function useWorkspaceInteractions(onSetActiveTab: (tab: string) => void) 
 
   const ctxAction = useCallback((action: string) => {
     setCtxVisible(false);
-    if (action === "highlight-nemo") { applyHighlight("nemo"); }
+    if (action === "highlight-nemo") { applyHighlight(userName); }
     else if (action === "highlight-claude") { applyHighlight("claude"); }
     else if (action === "add-note" || action === "add-url") {
-      const hlId = applyHighlight("nemo");
+      const hlId = applyHighlight(userName);
       if (hlId) {
         setPendingHighlightId(hlId);
         setInlineType(action === "add-note" ? "note" : "url");
         setInlinePos({ x: ctxPos.x, y: ctxPos.y + 30 });
         setInlineVisible(true);
       }
-    } else if (action === "link-evidence") { applyHighlight("nemo"); onSetActiveTab("chain"); }
+    } else if (action === "link-evidence") { applyHighlight(userName); onSetActiveTab("chain"); }
     else if (action === "search-selection") { onSetActiveTab("search"); }
   }, [applyHighlight, ctxPos, onSetActiveTab]);
 

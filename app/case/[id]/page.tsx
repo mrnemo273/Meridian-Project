@@ -12,6 +12,7 @@ import { CaseContent } from "@/components/workspace/CaseContent";
 import { InvestColumn } from "@/components/workspace/InvestColumn";
 import { ContextMenu } from "@/components/workspace/ContextMenu";
 import { InlineInput, AnnotationPopover } from "@/components/workspace/AnnotationOverlays";
+import { InviteModal } from "@/components/workspace/InviteModal";
 
 export default function WorkspacePage() {
   const { id } = useParams<{ id: string }>();
@@ -19,13 +20,14 @@ export default function WorkspacePage() {
   const [notFound, setNotFound] = useState(false);
   const [activeTab, setActiveTab] = useState("ach");
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [inviteOpen, setInviteOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [progressPct, setProgressPct] = useState(0);
   const mainContentRef = useRef<HTMLDivElement>(null);
 
-  const { humanVotes, cycleVote, tallyCounts } = useACHVotes();
+  const { humanVotes, cycleVote, tallyCounts } = useACHVotes(id);
   const { links, selectedNode, toggleNode } = useEvidenceLinks();
-  const ix = useWorkspaceInteractions(setActiveTab);
+  const ix = useWorkspaceInteractions(setActiveTab, id);
 
   // Load case data
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function WorkspacePage() {
   useEffect(() => {
     const main = mainContentRef.current;
     if (!main) return;
-    const ids = ["hero", "summary", "encounter", "evidence", "witnesses", "analysis", "questions"];
+    const ids = ["hero", "summary", "verified-facts", "encounter", "evidence", "witnesses", "analysis", "questions"];
     const els = ids.map(i => document.getElementById(i)).filter(Boolean) as HTMLElement[];
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); }),
@@ -97,6 +99,7 @@ export default function WorkspacePage() {
         activeSection={activeSection} activeTab={activeTab}
         highlightCount={ix.highlightCount} scrollToSection={scrollToSection}
         setActiveTab={setActiveTab} jumpToNextHighlight={ix.jumpToNextHighlight}
+        onInvite={() => setInviteOpen(true)}
       />
       <CaseContent
         ref={mainContentRef} data={caseData} progressPct={progressPct}
@@ -107,8 +110,9 @@ export default function WorkspacePage() {
         data={caseData} activeTab={activeTab} setActiveTab={setActiveTab}
         humanVotes={humanVotes} cycleVote={cycleVote} tallyCounts={tallyCounts}
         links={links} selectedNode={selectedNode} toggleNode={toggleNode}
-        getCount={ix.getCount}
+        getCount={ix.getCount} selectedCard={selectedCard}
       />
+      <InviteModal visible={inviteOpen} onClose={() => setInviteOpen(false)} />
       <ContextMenu visible={ix.ctxVisible} pos={ix.ctxPos} onAction={ix.ctxAction} />
       <InlineInput visible={ix.inlineVisible} pos={ix.inlinePos} type={ix.inlineType} onClose={ix.closeInline} onSubmit={ix.submitInline} />
       <AnnotationPopover

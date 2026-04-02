@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/components/SupabaseProvider";
 
 // ACH matrix data: each row has evidence label and AI assessments for 5 hypotheses
 export interface ACHRow {
@@ -30,7 +32,11 @@ export const achHeaders = [
 const VOTE_ORDER = ["", "C", "I", "N"];
 const STORAGE_KEY = "meridian-ach-votes";
 
-export function useACHVotes() {
+export function useACHVotes(caseId?: string) {
+  const { user } = useAuth();
+  const supabase = createClient();
+  const loadedRef = useRef(false);
+
   // humanVotes[rowIndex][colIndex] = "" | "C" | "I" | "N"
   const [humanVotes, setHumanVotes] = useState<string[][]>(() => {
     if (typeof window === "undefined")
@@ -42,21 +48,77 @@ export function useACHVotes() {
     return achRows.map(() => achHeaders.map(() => ""));
   });
 
+  // Sync to localStorage as backup
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(humanVotes));
     } catch {}
   }, [humanVotes]);
 
-  const cycleVote = useCallback((rowIdx: number, colIdx: number) => {
-    setHumanVotes((prev) => {
-      const next = prev.map((row) => [...row]);
-      const current = next[rowIdx][colIdx];
-      const idx = VOTE_ORDER.indexOf(current);
-      next[rowIdx][colIdx] = VOTE_ORDER[(idx + 1) % VOTE_ORDER.length];
-      return next;
-    });
-  }, []);
+  // Load from Supabase on mount
+  useEffect(() => {
+    if (!user || !caseId || loadedRef.current) return;
+    loadedRef.current = true;
+
+    supabase
+      .from("ach_votes")
+      .select("*")
+      .eq("case_id", caseId)
+      .eq("user_id", user.id)
+      .then(({ data, error }) => {
+        if (error || !data || data.length === 0) return;
+
+        const newVotes = achRows.map(() => achHeaders.map(() => ""));
+        for (const row of data) {
+          const rowIdx = achRows.findIndex((r) => r.evidence === row.evidence);
+          const colIdx = achHeaders.indexOf(row.hypothesis);
+          if (rowIdx >= 0 && colIdx >= 0) {
+            newVotes[rowIdx][colIdx] = row.vote;
+          }
+        }
+        setHumanVotes(newVotes);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, caseId]);
+
+  const cycleVote = useCallback(
+    (rowIdx: number, colIdx: number) => {
+      setHumanVotes((prev) => {
+        const next = prev.map((row) => [...row]);
+        const current = next[rowIdx][colIdx];
+        const idx = VOTE_ORDER.indexOf(current);
+        const newVote = VOTE_ORDER[(idx + 1) % VOTE_ORDER.length];
+        next[rowIdx][colIdx] = newVote;
+
+        // Persist to Supabase
+        if (user && caseId && newVote) {
+          supabase.from("ach_votes").upsert(
+            {
+              user_id: user.id,
+              case_id: caseId,
+              hypothesis: achHeaders[colIdx],
+              evidence: achRows[rowIdx].evidence,
+              vote: newVote,
+            },
+            { onConflict: "user_id,case_id,hypothesis,evidence" }
+          );
+        } else if (user && caseId && !newVote) {
+          // Vote cleared — delete the row
+          supabase
+            .from("ach_votes")
+            .delete()
+            .eq("user_id", user.id)
+            .eq("case_id", caseId)
+            .eq("hypothesis", achHeaders[colIdx])
+            .eq("evidence", achRows[rowIdx].evidence);
+        }
+
+        return next;
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [user, caseId]
+  );
 
   // Count inconsistencies per hypothesis column
   const tallyCounts = achHeaders.map((_, colIdx) => {

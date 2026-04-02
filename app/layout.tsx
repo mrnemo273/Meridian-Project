@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SupabaseProvider } from "@/components/SupabaseProvider";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +20,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SupabaseProvider>{children}</SupabaseProvider>
+      </body>
     </html>
   );
 }

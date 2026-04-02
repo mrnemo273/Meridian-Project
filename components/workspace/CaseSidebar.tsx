@@ -1,3 +1,7 @@
+"use client";
+
+import { useAuth } from "@/components/SupabaseProvider";
+
 interface Props {
   caseNumber: string;
   caseTitle: string;
@@ -7,11 +11,13 @@ interface Props {
   scrollToSection: (id: string) => void;
   setActiveTab: (tab: string) => void;
   jumpToNextHighlight: () => void;
+  onInvite?: () => void;
 }
 
 const tocSections = [
   { id: "hero", label: "Overview" },
   { id: "summary", label: "Executive Summary" },
+  { id: "verified-facts", label: "Verified Facts" },
   { id: "encounter", label: "The Encounter" },
   { id: "evidence", label: "The Evidence" },
   { id: "witnesses", label: "The Witnesses" },
@@ -27,7 +33,10 @@ export function CaseSidebar({
   highlightCount,
   scrollToSection,
   jumpToNextHighlight,
+  onInvite,
 }: Props) {
+  const { profile, isAdmin, signOut } = useAuth();
+
   return (
     <nav className="ws-sidebar">
       <div className="sidebar-logo">MERI<span>DIAN</span></div>
@@ -56,6 +65,7 @@ export function CaseSidebar({
         <li><a onClick={() => setActiveTab("chain")}>Evidence Chain <span className="toc-badge tool">Tool</span></a></li>
         <li><a onClick={() => setActiveTab("search")}>Search & Import <span className="toc-badge human">Search</span></a></li>
         <li><a onClick={() => setActiveTab("solvability")}>Solvability <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => setActiveTab("branches")}>Branches <span className="toc-badge tool">Tool</span></a></li>
       </ul>
 
       <div className="sidebar-divider"></div>
@@ -74,8 +84,14 @@ export function CaseSidebar({
       </div>
 
       <div className="sidebar-footer">
-        <div className="inv-row"><div className="inv-dot human"></div><span>Nemo</span> <span style={{ marginLeft: "auto", fontSize: "8px", color: "var(--orange)" }}>&#9632;</span></div>
+        <div className="inv-row"><div className="inv-dot human" style={profile?.avatar_color ? { background: profile.avatar_color } : undefined}></div><span>{profile?.name || "Investigator"}</span> <span style={{ marginLeft: "auto", fontSize: "8px", color: "var(--orange)" }}>&#9632;</span></div>
         <div className="inv-row"><div className="inv-dot ai"></div><span>Claude</span> <span style={{ marginLeft: "auto", fontSize: "8px", color: "var(--purple)" }}>&#9632;</span></div>
+        <div className="sidebar-footer-actions">
+          {isAdmin && onInvite && (
+            <button className="sidebar-action-btn" onClick={onInvite}>+ Invite</button>
+          )}
+          <button className="sidebar-action-btn" onClick={signOut}>Sign out</button>
+        </div>
       </div>
     </nav>
   );

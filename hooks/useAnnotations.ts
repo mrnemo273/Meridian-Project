@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/components/SupabaseProvider";
 
 export interface Attachment {
   type: "url" | "video" | "document";
@@ -9,7 +11,9 @@ export interface Attachment {
 }
 
 export interface Annotation {
-  user: "nemo" | "claude";
+  user: string;
+  user_id?: string;
+  avatar_color?: string;
   notes: string[];
   attachments: Attachment[];
 }
@@ -81,7 +85,11 @@ const defaultAnnotations: AnnotationMap = {
   },
 };
 
-export function useAnnotations() {
+export function useAnnotations(caseId?: string) {
+  const { user, profile } = useAuth();
+  const supabase = createClient();
+  const loadedRef = useRef(false);
+
   const [annotations, setAnnotations] = useState<AnnotationMap>(() => {
     if (typeof window === "undefined") return defaultAnnotations;
     try {
@@ -91,27 +99,86 @@ export function useAnnotations() {
     return defaultAnnotations;
   });
 
+  // Sync to localStorage as backup
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(annotations));
     } catch {}
   }, [annotations]);
 
-  const addNote = useCallback((annId: string, note: string) => {
-    setAnnotations((prev) => {
-      const ann = prev[annId] || { user: "nemo", notes: [], attachments: [] };
-      return {
-        ...prev,
-        [annId]: { ...ann, notes: [...ann.notes, note] },
-      };
-    });
-  }, []);
+  // Load from Supabase on mount
+  useEffect(() => {
+    if (!user || !caseId || loadedRef.current) return;
+    loadedRef.current = true;
+
+    supabase
+      .from("annotations")
+      .select("*, profiles(name, avatar_color)")
+      .eq("case_id", caseId)
+      .then(({ data, error }) => {
+        if (error || !data || data.length === 0) return;
+
+        // Build annotation map from Supabase rows
+        const dbAnnotations: AnnotationMap = {};
+        for (const row of data) {
+          const targetId = row.target_id;
+          if (!dbAnnotations[targetId]) {
+            const p = row.profiles as { name: string; avatar_color: string } | null;
+            dbAnnotations[targetId] = {
+              user: p?.name?.toLowerCase() === "claude" ? "claude" : (p?.name || "investigator"),
+              user_id: row.user_id,
+              avatar_color: p?.avatar_color,
+              notes: [],
+              attachments: [],
+            };
+          }
+          if (row.type === "note") {
+            dbAnnotations[targetId].notes.push(row.content);
+          } else if (row.type === "highlight") {
+            try {
+              dbAnnotations[targetId].attachments.push(JSON.parse(row.content));
+            } catch {
+              dbAnnotations[targetId].notes.push(row.content);
+            }
+          }
+        }
+
+        // Merge: DB annotations override defaults
+        setAnnotations((prev) => ({ ...prev, ...dbAnnotations }));
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, caseId]);
+
+  const addNote = useCallback(
+    (annId: string, note: string) => {
+      setAnnotations((prev) => {
+        const ann = prev[annId] || { user: profile?.name || "investigator", notes: [], attachments: [] };
+        return {
+          ...prev,
+          [annId]: { ...ann, notes: [...ann.notes, note] },
+        };
+      });
+
+      // Persist to Supabase
+      if (user && caseId) {
+        supabase.from("annotations").insert({
+          user_id: user.id,
+          case_id: caseId,
+          target_id: annId,
+          type: "note",
+          content: note,
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [user, caseId, profile]
+  );
 
   const addAttachment = useCallback(
     (annId: string, attachment: Attachment) => {
       setAnnotations((prev) => {
         const ann = prev[annId] || {
-          user: "nemo",
+          user: profile?.name || "investigator",
           notes: [],
           attachments: [],
         };
@@ -123,15 +190,27 @@ export function useAnnotations() {
           },
         };
       });
+
+      // Persist to Supabase
+      if (user && caseId) {
+        supabase.from("annotations").insert({
+          user_id: user.id,
+          case_id: caseId,
+          target_id: annId,
+          type: "highlight",
+          content: JSON.stringify(attachment),
+        });
+      }
     },
-    []
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [user, caseId, profile]
   );
 
   const createAnnotation = useCallback(
-    (annId: string, user: "nemo" | "claude") => {
+    (annId: string, userName: string) => {
       setAnnotations((prev) => ({
         ...prev,
-        [annId]: prev[annId] || { user, notes: [], attachments: [] },
+        [annId]: prev[annId] || { user: userName, notes: [], attachments: [] },
       }));
     },
     []

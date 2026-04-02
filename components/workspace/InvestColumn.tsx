@@ -1,7 +1,10 @@
+"use client";
+
 import { useCallback, useState } from "react";
-import type { CaseWorkspaceData } from "@/types/case";
+import type { CaseWorkspaceData, HypothesisProbability, ResearchBranch } from "@/types/case";
 import { linkNodes } from "@/hooks/useEvidenceLinks";
 import type { Attachment } from "@/hooks/useAnnotations";
+import { CommentThread } from "@/components/workspace/CommentThread";
 
 interface Props {
   data: CaseWorkspaceData;
@@ -17,6 +20,8 @@ interface Props {
   toggleNode: (id: string) => void;
   // Annotations
   getCount: (id: string) => number;
+  // Comments
+  selectedCard?: string | null;
 }
 
 const tabs = [
@@ -26,6 +31,8 @@ const tabs = [
   { id: "chain", label: "Links" },
   { id: "search", label: "Search" },
   { id: "solvability", label: "Score" },
+  { id: "branches", label: "Branches" },
+  { id: "comments", label: "Discuss" },
 ];
 
 export function InvestColumn({
@@ -39,9 +46,11 @@ export function InvestColumn({
   selectedNode,
   toggleNode,
   getCount,
+  selectedCard,
 }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [importedItems, setImportedItems] = useState<{ title: string; source: string }[]>([]);
+  const [expandedReasoning, setExpandedReasoning] = useState<string | null>(null);
 
   const importResult = useCallback((title: string, source: string, btn: HTMLButtonElement) => {
     setImportedItems(prev => [...prev, { title, source }]);
@@ -54,6 +63,11 @@ export function InvestColumn({
 
   const achHypotheses = data.achHypotheses;
   const achEvidence = data.achEvidence;
+  const probabilities = (data.hypothesisProbabilities || []).slice().sort((a, b) => b.probability - a.probability);
+  const branches = data.researchBranches || [];
+
+  const factCount = (data.verifiedFacts || []).length;
+  const evidenceCount = data.evidence.length;
 
   return (
     <div className="invest-column">
@@ -144,6 +158,61 @@ export function InvestColumn({
               The ACH methodology identifies the least-disproven hypothesis — not the most supported.
             </span>
           </div>
+
+          {/* HYPOTHESIS PROBABILITIES */}
+          {probabilities.length > 0 && (
+            <div className="hp-panel">
+              <div className="hp-panel-title">Hypothesis Probability Assessment</div>
+              <div className="hp-panel-subtitle">
+                Based on {factCount} verified facts, {evidenceCount} evidence items, and qualitative ACH analysis
+              </div>
+              {probabilities.map((hp, i) => {
+                const isLeading = i === 0;
+                const trendIcon = hp.trend === "rising" ? "\u25B2" : hp.trend === "falling" ? "\u25BC" : "\u25CF";
+                const trendColor = hp.trend === "rising" ? "var(--green)" : hp.trend === "falling" ? "var(--red)" : "var(--text-3)";
+                const contradictions = hp.keyFactors.contradicts.length;
+                const isExpanded = expandedReasoning === hp.hypothesis;
+                return (
+                  <div key={hp.hypothesis} className="hp-row">
+                    <div className="hp-row-header">
+                      <span className="hp-hypothesis">{hp.hypothesis}</span>
+                      <span className="hp-pct">{hp.probability}%</span>
+                    </div>
+                    <div className="hp-bar-track">
+                      <div
+                        className="hp-bar-fill"
+                        style={{
+                          width: `${hp.probability}%`,
+                          background: isLeading ? "var(--gold)" : "var(--text-3)",
+                          opacity: isLeading ? 1 : 0.5,
+                        }}
+                      />
+                    </div>
+                    <div className="hp-meta">
+                      <span style={{ color: trendColor, fontSize: "9px" }}>
+                        {trendIcon} {hp.trend}
+                      </span>
+                      <span style={{ fontSize: "9px", color: "var(--text-3)" }}>
+                        {contradictions} contradiction{contradictions !== 1 ? "s" : ""}
+                      </span>
+                    </div>
+                    <div
+                      className="hp-reasoning-toggle"
+                      onClick={() => setExpandedReasoning(isExpanded ? null : hp.hypothesis)}
+                    >
+                      {isExpanded ? hp.reasoning : hp.reasoning.split(". ")[0] + "."}
+                      {!isExpanded && hp.reasoning.includes(". ") && (
+                        <span className="hp-more"> more...</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              <div className="hp-footer">
+                Probabilities are AI-derived estimates based on available evidence. They are not predictions — they reflect what the evidence mathematically supports given current data.
+              </div>
+            </div>
+          )}
         </div>
 
         {/* RESOLUTION */}
@@ -275,6 +344,63 @@ export function InvestColumn({
               ))
             )}
           </div>
+        </div>
+
+        {/* BRANCHES */}
+        <div className={`invest-pane ${activeTab === "branches" ? "active" : ""}`}>
+          <div className="invest-title">Research Branches</div>
+          <div style={{ fontSize: "9px", color: "var(--text-2)", marginBottom: 12 }}>
+            Active investigation threads growing from specific points in the case narrative.
+          </div>
+          {branches.length === 0 ? (
+            <div style={{ fontSize: "9px", color: "var(--text-3)" }}>No research branches yet.</div>
+          ) : (
+            [...branches]
+              .sort((a, b) => {
+                const order = { in_progress: 0, open: 1, resolved: 2 };
+                return (order[a.status] ?? 1) - (order[b.status] ?? 1);
+              })
+              .map((branch) => {
+                const statusClass = branch.status === "in_progress" ? "rb-status-progress" : branch.status === "resolved" ? "rb-status-resolved" : "rb-status-open";
+                const statusLabel = branch.status === "in_progress" ? "in progress" : branch.status;
+                return (
+                  <div
+                    key={branch.id}
+                    className="rb-list-item"
+                    onClick={() => {
+                      const anchorEl =
+                        branch.anchorSection === "fact" ? document.getElementById("verified-facts") :
+                        branch.anchorSection === "timeline" ? document.getElementById("encounter") :
+                        branch.anchorSection === "evidence" ? document.getElementById("evidence") :
+                        branch.anchorSection === "analysis" ? document.getElementById("analysis") :
+                        null;
+                      anchorEl?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    <div className="rb-list-header">
+                      <span className="rb-list-id">{branch.id}</span>
+                      <span className={`rb-status-pill ${statusClass}`}>{statusLabel}</span>
+                      <span className={`rb-priority-pill priority-${branch.priority}`}>{branch.priority}</span>
+                    </div>
+                    <div className="rb-list-question">{branch.question}</div>
+                    <div className="rb-list-meta">
+                      <span>{branch.findings.length} finding{branch.findings.length !== 1 ? "s" : ""}</span>
+                      <span>Anchored to: {branch.anchorSection}{branch.anchorId ? ` / ${branch.anchorId}` : ""}</span>
+                    </div>
+                  </div>
+                );
+              })
+          )}
+        </div>
+
+        {/* COMMENTS / DISCUSS */}
+        <div className={`invest-pane ${activeTab === "comments" ? "active" : ""}`}>
+          <div className="invest-title">Discussion Thread</div>
+          <CommentThread
+            caseId={data.id}
+            targetId={selectedCard || null}
+            targetLabel={selectedCard ? `Comments on: ${selectedCard}` : undefined}
+          />
         </div>
 
         {/* SOLVABILITY */}

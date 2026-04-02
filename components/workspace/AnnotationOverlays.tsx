@@ -48,20 +48,24 @@ interface AnnotationPopoverProps {
   visible: boolean;
   pos: { x: number; y: number };
   annId: string | null;
-  annotation: { user: string; notes: string[]; attachments: Attachment[] } | null;
+  annotation: { user: string; avatar_color?: string; notes: string[]; attachments: Attachment[] } | null;
   onClose: () => void;
   onAdd: (value: string) => void;
 }
 
 export function AnnotationPopover({ visible, pos, annotation, onClose, onAdd }: AnnotationPopoverProps) {
+  const isAI = annotation?.user === "claude";
+  const displayName = isAI ? "Claude" : (annotation?.user || "Investigator");
+  const dotColor = isAI ? undefined : annotation?.avatar_color;
+
   return (
     <div className={`annotation-popover ${visible ? "visible" : ""}`} style={{ left: pos.x, top: pos.y }}>
       <div className="annotation-popover-header">
         <div className="ann-user">
-          {annotation?.user === "claude" ? (
-            <><span className="inv-dot ai" style={{ width: 8, height: 8 }}></span> Claude</>
+          {isAI ? (
+            <><span className="inv-dot ai" style={{ width: 8, height: 8 }}></span> {displayName}</>
           ) : (
-            <><span className="inv-dot human" style={{ width: 8, height: 8 }}></span> Nemo</>
+            <><span className="inv-dot human" style={{ width: 8, height: 8, ...(dotColor ? { background: dotColor } : {}) }}></span> {displayName}</>
           )}
         </div>
         <button className="annotation-popover-close" onClick={onClose}>&times;</button>
@@ -70,7 +74,7 @@ export function AnnotationPopover({ visible, pos, annotation, onClose, onAdd }: 
         {annotation && (
           <>
             {annotation.notes.map((note, i) => (
-              <div key={i} className={`annotation-note ${annotation.user === "claude" ? "claude-note" : ""}`}>
+              <div key={i} className={`annotation-note ${isAI ? "claude-note" : ""}`}>
                 {note}
               </div>
             ))}

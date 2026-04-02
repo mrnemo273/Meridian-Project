@@ -4,9 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { queuedCases, sidebarCases, casesWithData } from "@/data/cases-index";
+import { useAuth } from "@/components/SupabaseProvider";
 
 export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { profile, signOut } = useAuth();
 
   return (
     <>
@@ -51,14 +53,17 @@ export default function HomePage() {
 
         <div className="sidebar-footer">
           <div className="inv-row">
-            <div className="inv-dot human"></div>
-            <span className="inv-name">Nemo</span>
-            <span className="inv-role">Investigator</span>
+            <div className="inv-dot human" style={profile?.avatar_color ? { background: profile.avatar_color } : undefined}></div>
+            <span className="inv-name">{profile?.name || "Investigator"}</span>
+            <span className="inv-role">{profile?.role || "investigator"}</span>
           </div>
           <div className="inv-row">
             <div className="inv-dot ai"></div>
             <span className="inv-name">Claude</span>
             <span className="inv-role">AI Analyst</span>
+          </div>
+          <div className="sidebar-footer-actions">
+            <button className="sidebar-action-btn" onClick={signOut}>Sign out</button>
           </div>
         </div>
       </nav>

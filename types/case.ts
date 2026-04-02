@@ -119,6 +119,55 @@ export interface GalleryItem {
   relatedWitness?: string;
 }
 
+export interface VerifiedFact {
+  id: string;
+  fact: string;
+  category: "sensor" | "witness" | "physical" | "documentary" | "temporal" | "environmental";
+  confidence: "confirmed" | "high" | "disputed";
+  sources: string[];
+  relatedEvidence?: string;
+  relatedTimeline?: string;
+  disputedBy?: string;
+}
+
+export interface HypothesisProbability {
+  hypothesis: string;
+  probability: number;
+  trend: "rising" | "falling" | "stable";
+  reasoning: string;
+  keyFactors: {
+    supports: string[];
+    contradicts: string[];
+  };
+  lastUpdated: string;
+}
+
+export interface ResearchFinding {
+  id: string;
+  type: "source" | "calculation" | "analysis" | "contradiction" | "confirmation";
+  content: string;
+  source?: string;
+  sourceUrl?: string;
+  addedBy: string;
+  addedAt: string;
+}
+
+export interface ResearchBranch {
+  id: string;
+  question: string;
+  status: "open" | "in_progress" | "resolved";
+  priority: "high" | "medium" | "low";
+  anchorSection: string;
+  anchorId?: string;
+  anchorText: string;
+  findings: ResearchFinding[];
+  conclusion?: string | null;
+  producedFacts?: string[];
+  updatedProbabilities?: string[];
+  createdBy: string;
+  createdAt: string;
+}
+
 export interface CaseWorkspaceData {
   // Case metadata
   id: string;
@@ -161,4 +210,9 @@ export interface CaseWorkspaceData {
 
   // Investigation tasks — evidence scavenger hunt
   investigationTasks?: InvestigationTask[];
+
+  // Phase 6 — Investigation Engine
+  verifiedFacts?: VerifiedFact[];
+  hypothesisProbabilities?: HypothesisProbability[];
+  researchBranches?: ResearchBranch[];
 }

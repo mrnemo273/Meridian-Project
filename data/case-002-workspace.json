@@ -817,5 +817,208 @@
       "category": "witness",
       "relatedWitness": "Gov. Fife Symington III"
     }
+  ],
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "On the evening of March 13, 1997, hundreds of people across a 300-mile corridor from Henderson, NV to Tucson, AZ reported seeing lights in the sky.",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "NUFORC database — 700+ filed reports",
+        "Councilwoman Frances Barwood — personally interviewed 700+ witnesses",
+        "Multiple news organizations documented reports in real-time"
+      ]
+    },
+    {
+      "id": "VF-002",
+      "fact": "Arizona Governor Fife Symington III witnessed the event and confirmed it publicly in 2007, ten years after the incident.",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "Governor Symington — CNN interview (2007)",
+        "Governor Symington — multiple subsequent interviews",
+        "Air Force veteran with pilot training — credentialed observer"
+      ]
+    },
+    {
+      "id": "VF-003",
+      "fact": "Actor and licensed pilot Kurt Russell reported lights to air traffic control while on approach to Phoenix. His ATC recording exists.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Kurt Russell — BBC One interview (2017)",
+        "ATC recording — confirmed by Russell upon hearing it on television",
+        "Russell did not connect his sighting to the Phoenix Lights until years later"
+      ]
+    },
+    {
+      "id": "VF-004",
+      "fact": "The Maryland Air National Guard 104th Fighter Squadron (Operation Snowbird) was conducting exercises at the Barry Goldwater Range that night.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Maryland ANG official statement (June 1997)",
+        "Operation Snowbird training records (partial)"
+      ]
+    },
+    {
+      "id": "VF-005",
+      "fact": "The military explanation for Event 2 (10 PM stationary lights) is LUU-2B/B illumination flares dropped during the Snowbird exercise.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Maryland ANG official statement",
+        "Cognitech video analysis — mountain-occlusion timing consistent with flares"
+      ],
+      "disputedBy": "Some analysts dispute flare explanation based on brightness constancy and formation symmetry."
+    },
+    {
+      "id": "VF-006",
+      "fact": "There are TWO distinct events: Event 1 (V-formation, 7:55–9:30 PM, moving) and Event 2 (stationary lights, 10 PM, filmed). They are temporally and geographically separate.",
+      "category": "temporal",
+      "confidence": "confirmed",
+      "sources": [
+        "NUFORC report timestamps",
+        "Geographic analysis of witness locations",
+        "Temporal gap of 30+ minutes between events"
+      ]
+    },
+    {
+      "id": "VF-007",
+      "fact": "FAA radar data for the event was not preserved — it was erased per standard 2-week retention policy.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "FAA data retention policy documentation",
+        "No FOIA request was filed within the retention window"
+      ]
+    },
+    {
+      "id": "VF-008",
+      "fact": "Multiple Prescott Valley witnesses independently reported stars being occluded (blocked) by the V-formation, suggesting a solid object rather than a formation of separate lights.",
+      "category": "witness",
+      "confidence": "high",
+      "sources": [
+        "Tim Ley family — detailed testimony with drawings",
+        "Multiple independent Prescott Valley witnesses compiled by researchers"
+      ],
+      "disputedBy": "Skeptics argue star occlusion could be perceptual — illusory contour effect from closely-spaced lights in formation."
+    }
+  ],
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Multiple Causes",
+      "probability": 45,
+      "trend": "rising",
+      "reasoning": "The two-event decomposition (VF-006) strongly supports this hypothesis. Event 2 is likely flares (VF-005). Event 1 remains unexplained. This hypothesis accommodates the strongest evidence for both events without forcing a single explanation.",
+      "keyFactors": {
+        "supports": ["VF-004", "VF-005", "VF-006"],
+        "contradicts": []
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Unknown Craft",
+      "probability": 28,
+      "trend": "stable",
+      "reasoning": "Star occlusion testimony (VF-008) suggests a solid object for Event 1. Governor Symington described a 'geometric outline.' No conventional formation would occlude stars uniformly. However, this relies entirely on witness testimony — no sensor data exists.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-008"],
+        "contradicts": ["VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "A-10 Formation",
+      "probability": 15,
+      "trend": "stable",
+      "reasoning": "A-10s from Operation Snowbird were in the area (VF-004). V-formation flight path is consistent with military transit. However, fails the star-occlusion test (VF-008), silence (A-10 engines are loud), and the perceived mile-wide size.",
+      "keyFactors": {
+        "supports": ["VF-004"],
+        "contradicts": ["VF-001", "VF-008"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "LUU-2B/B Flares",
+      "probability": 8,
+      "trend": "falling",
+      "reasoning": "Explains Event 2 only. Cognitech mountain-occlusion analysis supports this for the 10 PM footage (VF-005). Cannot explain Event 1 — flares don't move 300 miles in formation. Probability lowered because Event 1 is the primary mystery.",
+      "keyFactors": {
+        "supports": ["VF-004", "VF-005"],
+        "contradicts": ["VF-001", "VF-006"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Mass Misperception",
+      "probability": 4,
+      "trend": "falling",
+      "reasoning": "700+ independent witnesses across 300 miles with consistent descriptions, including a governor, a licensed pilot with ATC recording, and law enforcement. The scale and consistency of the testimony effectively eliminates mass misperception.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-001", "VF-002", "VF-003"]
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "Were fighters actually scrambled from Luke AFB on March 13, 1997?",
+      "status": "open",
+      "priority": "high",
+      "anchorSection": "question",
+      "anchorId": "Q02",
+      "anchorText": "Were fighters scrambled from Luke AFB?",
+      "findings": [
+        {
+          "id": "RB-001-F1",
+          "type": "source",
+          "content": "An unverified NUFORC report claims F-15Cs were launched from Luke AFB and that radar went to 'white noise' during the encounter. Luke AFB officially denied any activity that night.",
+          "source": "NUFORC report archive",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F2",
+          "type": "analysis",
+          "content": "If true, this would be the single most important piece of evidence in the case — it would mean the military detected the object on radar AND responded with fighters. A FOIA request for Luke AFB flight logs and scramble orders for March 13, 1997 has been identified as a high-priority next step.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-002",
+      "question": "Can the star-occlusion testimony definitively distinguish a solid craft from a tight formation?",
+      "status": "in_progress",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-008",
+      "anchorText": "Multiple Prescott Valley witnesses independently reported stars being occluded by the V-formation.",
+      "findings": [
+        {
+          "id": "RB-002-F1",
+          "type": "source",
+          "content": "The Tim Ley family provided the most detailed star-occlusion account. They reported watching the V-formation pass directly overhead and seeing stars disappear behind what appeared to be a continuous solid surface between the lights — not individual objects blocking stars sequentially.",
+          "source": "Tim Ley family testimony — multiple documentary interviews",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-002-F2",
+          "type": "analysis",
+          "content": "The 'illusory contour' effect (Kanizsa triangle) can make closely-spaced lights appear as a solid shape. However, this perceptual illusion typically does not cause observers to report stars disappearing — it creates a perceived edge, not opacity. The star-occlusion testimony, if accurate, is incompatible with a formation of separate aircraft.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    }
   ]
 }

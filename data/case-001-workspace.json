@@ -541,5 +541,268 @@
       "license": "Project Original",
       "category": "map"
     }
+  ],
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "AN/SPY-1B radar aboard USS Princeton tracked anomalous returns for approximately two weeks prior to November 14, 2004.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "Senior Chief Kevin Day — sworn congressional testimony (2023)",
+        "USS Princeton radar operators — multiple corroborating accounts",
+        "SCU forensic analysis of radar data characteristics"
+      ],
+      "relatedEvidence": "AN/SPY-1B Radar Tracking"
+    },
+    {
+      "id": "VF-002",
+      "fact": "Four Navy pilots across two F/A-18F Super Hornets made independent visual contact with a white, oblong object on November 14, 2004.",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "CDR David Fravor — congressional testimony under oath (July 2023)",
+        "LCDR Alex Dietrich — 60 Minutes interview (May 2021)",
+        "DoD official acknowledgment (April 2020 video release)"
+      ],
+      "relatedTimeline": "Visual contact — Tic Tac above churning ocean"
+    },
+    {
+      "id": "VF-003",
+      "fact": "The FLIR1 infrared video is 76 seconds long and was captured by an ATFLIR pod on an F/A-18F flown by LT Chad Underwood (VFA-41).",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "U.S. Department of Defense — official release (April 2020)",
+        "NAVAIR FOIA Reading Room",
+        "LT Chad Underwood — interviews confirming he captured the footage"
+      ],
+      "relatedEvidence": "FLIR1 Infrared Video"
+    },
+    {
+      "id": "VF-004",
+      "fact": "The encounter occurred approximately 100 nautical miles southwest of San Diego in the W-291 SOCAL Operating Area.",
+      "category": "environmental",
+      "confidence": "confirmed",
+      "sources": [
+        "USS Nimitz CSG-11 operational records",
+        "SCU geographic reconstruction",
+        "Multiple pilot testimonies confirming SOCAL OPAREA"
+      ]
+    },
+    {
+      "id": "VF-005",
+      "fact": "Radar data tapes and FLIR recordings were collected from USS Princeton by unidentified personnel after the encounter.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "PO Patrick 'PJ' Hughes — testimony about data collection",
+        "CDR David Fravor — congressional testimony",
+        "Multiple Princeton crew corroborating accounts"
+      ],
+      "relatedTimeline": "Data collection — unknown personnel"
+    },
+    {
+      "id": "VF-006",
+      "fact": "The object demonstrated no visible propulsion: no exhaust plume, no wings, no control surfaces, no rotor.",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "CDR Fravor — direct observation at close range",
+        "LCDR Dietrich — direct observation",
+        "FLIR1 IR video — no thermal exhaust signature visible"
+      ]
+    },
+    {
+      "id": "VF-007",
+      "fact": "USS Princeton's radar recorded the object relocating from the intercept point to Fravor's CAP point (~60 miles) in seconds.",
+      "category": "sensor",
+      "confidence": "high",
+      "sources": [
+        "Senior Chief Kevin Day — congressional testimony",
+        "USS Princeton CIC personnel"
+      ],
+      "disputedBy": "Exact speed calculation disputed — SCU estimates range from 46,000 mph (instantaneous) to lower bounds depending on radar sampling rate assumptions."
+    },
+    {
+      "id": "VF-008",
+      "fact": "No sonic boom was detected or reported despite apparent hypersonic speed.",
+      "category": "physical",
+      "confidence": "high",
+      "sources": [
+        "CDR Fravor — explicit statement",
+        "No Princeton crew reported sonic boom",
+        "No seismic or acoustic records of sonic event"
+      ]
+    },
+    {
+      "id": "VF-009",
+      "fact": "Weather on November 14, 2004 was clear with calm seas — 'a perfect day for flying' (Fravor).",
+      "category": "environmental",
+      "confidence": "confirmed",
+      "sources": [
+        "NOAA historical weather records",
+        "Multiple pilot descriptions",
+        "Clear-sky conditions visible in FLIR1 ocean background"
+      ]
+    },
+    {
+      "id": "VF-010",
+      "fact": "CDR David Fravor testified under oath before the U.S. House Oversight Committee on July 26, 2023.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "U.S. House Committee on Oversight and Accountability — official record",
+        "C-SPAN broadcast",
+        "Written statement available from oversight.house.gov"
+      ]
+    }
+  ],
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Unknown Tech",
+      "probability": 62,
+      "trend": "stable",
+      "reasoning": "The only hypothesis with zero inconsistencies in the ACH matrix. Consistent with all sensor data (radar, IR, visual), the absence of propulsion signatures, and the extreme performance characteristics (est. 75g–5,400g acceleration). No known technology matches the observed behavior.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-003", "VF-006", "VF-007", "VF-008"],
+        "contradicts": []
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Sensor Error",
+      "probability": 18,
+      "trend": "falling",
+      "reasoning": "Would require simultaneous failure of AN/SPY-1B radar, ATFLIR infrared pod, AND visual perception of four trained Navy pilots. Multi-platform, multi-sensor confirmation makes systemic error highly unlikely. The 2-week radar tracking period further reduces random error probability.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-002", "VF-003"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Drone / UAS",
+      "probability": 12,
+      "trend": "stable",
+      "reasoning": "No known drone in 2004 (or 2026) can hover without visible propulsion, accelerate to hypersonic speeds without sonic boom, or match the physical description. However, an unknown advanced drone program cannot be fully excluded.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-006", "VF-007", "VF-008"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Atmospheric",
+      "probability": 4,
+      "trend": "falling",
+      "reasoning": "Clear weather conditions (VF-009), direct visual contact at close range by trained observers, and coherent radar/IR signatures eliminate atmospheric phenomena (mirage, temperature inversion, ball lightning).",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-002", "VF-006", "VF-008", "VF-009"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Conventional Aircraft",
+      "probability": 4,
+      "trend": "falling",
+      "reasoning": "No conventional aircraft can operate without visible propulsion, hover silently, accelerate instantaneously, or match the described Tic Tac morphology. Fravor — a career fighter pilot — explicitly stated it was not any aircraft he had ever seen.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-002", "VF-003", "VF-006", "VF-007", "VF-008"]
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "How fast was the Tic Tac actually traveling during the 60-mile relocation?",
+      "status": "in_progress",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-007",
+      "anchorText": "USS Princeton's radar recorded the object relocating from the intercept point to Fravor's CAP point (~60 miles) in seconds.",
+      "findings": [
+        {
+          "id": "RB-001-F1",
+          "type": "source",
+          "content": "SCU peer-reviewed analysis (Knuth, Powell, Reali, 2019) estimates acceleration between 75g and 5,400g. Lower bound assumes maximum radar sampling interval. Upper bound assumes instantaneous acceleration.",
+          "source": "Entropy (MDPI), 2019 — doi:10.3390/e21100939",
+          "sourceUrl": "https://doi.org/10.3390/e21100939",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F2",
+          "type": "analysis",
+          "content": "Skeptic Mick West argues the object may have been at a different range than assumed, which would reduce speed estimates. However, this interpretation requires the AN/SPY-1B radar range data to be fundamentally misread — which contradicts Senior Chief Day's testimony about confirmed track correlation.",
+          "source": "Metabunk forum analysis",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F3",
+          "type": "calculation",
+          "content": "The SPY-1B refreshes approximately every 6 seconds in track-while-scan mode. If the Tic Tac moved 60 miles between two consecutive scans: 60 miles / 6 seconds = 36,000 mph (~Mach 47). If it took two scan cycles (12 seconds): 18,000 mph (~Mach 23). All scenarios exceed any known aerospace technology by orders of magnitude.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-002",
+      "question": "What was the cross-shaped water disturbance, and what could create that pattern?",
+      "status": "open",
+      "priority": "medium",
+      "anchorSection": "timeline",
+      "anchorId": "2",
+      "anchorText": "Both crews spot a cross-shaped disturbance in the water — whitewater the size of a 737.",
+      "findings": [
+        {
+          "id": "RB-002-F1",
+          "type": "source",
+          "content": "Fravor described the disturbance as looking like 'something was just below the surface.' The Tic Tac was hovering approximately 50 feet above this disturbance. When Fravor descended to investigate, the Tic Tac appeared to respond to his approach.",
+          "source": "CDR Fravor — Lex Fridman Podcast #122 (timestamps 14:22–31:05)",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-003",
+      "question": "Who collected the data tapes from USS Princeton, and where did they go?",
+      "status": "open",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-005",
+      "anchorText": "Radar data tapes and FLIR recordings were collected from USS Princeton by unidentified personnel after the encounter.",
+      "findings": [
+        {
+          "id": "RB-003-F1",
+          "type": "source",
+          "content": "PO Patrick 'PJ' Hughes stated that two men in plain clothes with no unit patches arrived by helicopter, asked for the radar data tapes, and left. No receipts were provided. No chain of custody documentation exists.",
+          "source": "PJ Hughes — multiple interviews and documentary appearances",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-003-F2",
+          "type": "contradiction",
+          "content": "The DoD has not confirmed or denied this data collection event. FOIA requests for chain-of-custody records have returned 'no responsive documents' — which could mean the records don't exist or are classified.",
+          "source": "The Black Vault FOIA archive",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "createdBy": "Nemo",
+      "createdAt": "2026-04-02"
+    }
   ]
 }

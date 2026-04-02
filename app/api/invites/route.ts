@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
   const supabase = await createServerSupabaseClient();
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
   // Invite user via Supabase (sends built-in invite email)
   const { error: inviteError } =
-    await supabaseAdmin.auth.admin.inviteUserByEmail(email);
+    await getSupabaseAdmin().auth.admin.inviteUserByEmail(email);
 
   if (inviteError) {
     return NextResponse.json(

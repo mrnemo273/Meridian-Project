@@ -1,6 +1,7 @@
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 async function seedAdmin() {
+  const supabaseAdmin = getSupabaseAdmin();
   const { data, error } = await supabaseAdmin.auth.admin.createUser({
     email: "juanmorales@gmail.com",
     email_confirm: true,

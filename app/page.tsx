@@ -5,10 +5,12 @@ import Image from "next/image";
 import { useState } from "react";
 import { queuedCases, sidebarCases, casesWithData } from "@/data/cases-index";
 import { useAuth } from "@/components/SupabaseProvider";
+import { InviteModal } from "@/components/workspace/InviteModal";
 
 export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { profile, signOut } = useAuth();
+  const [showInvite, setShowInvite] = useState(false);
+  const { profile, isAdmin, signOut } = useAuth();
 
   return (
     <>
@@ -63,10 +65,15 @@ export default function HomePage() {
             <span className="inv-role">AI Analyst</span>
           </div>
           <div className="sidebar-footer-actions">
+            {isAdmin && (
+              <button className="sidebar-action-btn" onClick={() => setShowInvite(true)}>+ Invite</button>
+            )}
             <button className="sidebar-action-btn" onClick={signOut}>Sign out</button>
           </div>
         </div>
       </nav>
+
+      {showInvite && <InviteModal onClose={() => setShowInvite(false)} />}
 
       {/* MAIN CONTENT */}
       <main className="home-main-content">

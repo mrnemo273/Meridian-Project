@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 18px; font-weight: 700; fill: #2D2A24; }
+      .subtitle { font-size: 11px; fill: #6B6558; }
+      .label { font-size: 11px; fill: #2D2A24; font-weight: 600; }
+      .label-sm { font-size: 9px; fill: #6B6558; }
+      .time { font-size: 10px; fill: #9A7A2E; font-weight: 700; font-family: 'Courier New', monospace; }
+      .land { fill: #E8E2D6; stroke: #C8C0B0; stroke-width: 1; }
+      .belgium { fill: #D6DFE8; stroke: #4A6A9A; stroke-width: 2; }
+      .neighbor { fill: #EEEAE0; stroke: #C8C0B0; stroke-width: 1; }
+      .corridor { fill: #B04A4A; fill-opacity: 0.08; stroke: #B04A4A; stroke-width: 2; stroke-dasharray: 8,4; }
+      .intercept { fill: #B04A4A; }
+      .intercept-route { stroke: #B04A4A; stroke-width: 2; fill: none; stroke-dasharray: 6,3; }
+      .sighting-dot { fill: #9A7A2E; stroke: #FFFDF5; stroke-width: 1.5; }
+      .gendarmerie { fill: #4A6A9A; stroke: #FFFDF5; stroke-width: 1.5; }
+      .legend-box { fill: #F6F5F1; stroke: #D4C9A8; stroke-width: 1; rx: 4; }
+      .note { font-size: 8px; fill: #6B6558; font-style: italic; }
+      .city-dot { fill: #6B6558; }
+      .oparea-label { font-size: 14px; fill: #4A6A9A; font-weight: 700; letter-spacing: 3; }
+    </style>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#B04A4A"/>
+    </marker>
+    <symbol id="triangle-uap" viewBox="0 0 30 26">
+      <polygon points="15,2 28,24 2,24" fill="#9A7A2E" opacity="0.8" stroke="#9A7A2E" stroke-width="1"/>
+      <circle cx="8" cy="20" r="2" fill="#FFFDF5" opacity="0.6"/>
+      <circle cx="22" cy="20" r="2" fill="#FFFDF5" opacity="0.6"/>
+      <circle cx="15" cy="8" r="2" fill="#FFFDF5" opacity="0.6"/>
+    </symbol>
+    <symbol id="f16" viewBox="0 0 24 20">
+      <path d="M12,2 L14,8 L22,10 L14,12 L12,18 L10,12 L2,10 L10,8 Z" fill="#4A6A9A" stroke="#2D2A24" stroke-width="0.5"/>
+    </symbol>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="540" fill="#F6F5F1"/>
+  <rect x="10" y="10" width="940" height="520" fill="none" stroke="#D4C9A8" stroke-width="1" rx="4"/>
+
+  <!-- Title -->
+  <text x="30" y="38" class="title">THE BELGIAN WAVE — SIGHTING CORRIDOR</text>
+  <text x="30" y="54" class="subtitle">November 1989 – April 1990 · 13,500+ witness reports · NATO F-16 intercept</text>
+  <text x="30" y="68" class="subtitle">Primary corridor: Eupen → Liège → Brussels · F-16 radar lock March 30–31, 1990</text>
+
+  <!-- Map area -->
+  <rect x="20" y="85" width="920" height="355" fill="#EEEAE0" rx="3"/>
+
+  <!-- Neighboring countries -->
+  <!-- Netherlands -->
+  <path d="M 200,85 L 920,85 L 920,160 C 840,155 750,148 660,150 C 570,152 480,158 400,155 C 340,153 270,148 200,145 Z" class="neighbor"/>
+  <text x="580" y="125" font-size="13" fill="#A09888" text-anchor="middle" letter-spacing="8">NETHERLANDS</text>
+
+  <!-- Germany -->
+  <path d="M 760,150 L 920,150 L 920,440 L 760,440 C 762,400 764,360 763,320 C 762,280 761,240 760,200 Z" class="neighbor"/>
+  <text x="840" y="300" font-size="13" fill="#A09888" text-anchor="middle" letter-spacing="6" transform="rotate(90,840,300)">GERMANY</text>
+
+  <!-- France -->
+  <path d="M 20,360 L 620,360 C 610,385 600,405 590,420 L 20,420 Z" class="neighbor"/>
+  <path d="M 20,360 L 20,440 L 590,440 L 590,420 L 20,420 Z" class="neighbor"/>
+  <text x="300" y="415" font-size="13" fill="#A09888" text-anchor="middle" letter-spacing="8">FRANCE</text>
+
+  <!-- Luxembourg -->
+  <path d="M 610,310 L 740,310 L 740,370 L 610,370 Z" class="neighbor"/>
+  <text x="675" y="345" font-size="10" fill="#A09888" text-anchor="middle" letter-spacing="3">LUX.</text>
+
+  <!-- Belgium (main) -->
+  <path d="M 20,145 C 100,148 200,153 300,155 C 400,158 480,158 560,155 C 640,152 720,150 760,150
+           L 760,260 C 758,280 755,300 750,310 L 740,310 L 610,310 L 610,370 L 620,360
+           L 20,360 Z" class="belgium"/>
+  <text x="380" y="215" class="oparea-label" text-anchor="middle">BELGIUM</text>
+
+  <!-- Grid lines -->
+  <line x1="20" y1="240" x2="920" y2="240" stroke="#C8C0B0" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="28" y="237" font-size="7" fill="#A0B0C0">50.5°N</text>
+  <line x1="20" y1="320" x2="920" y2="320" stroke="#C8C0B0" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="28" y="317" font-size="7" fill="#A0B0C0">50.0°N</text>
+  <line x1="420" y1="85" x2="420" y2="440" stroke="#C8C0B0" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="423" y="96" font-size="7" fill="#A0B0C0">5°E</text>
+  <line x1="600" y1="85" x2="600" y2="440" stroke="#C8C0B0" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <text x="603" y="96" font-size="7" fill="#A0B0C0">6°E</text>
+
+  <!-- Sighting corridor -->
+  <path d="M 490,220 C 510,235 530,250 550,260 C 570,270 590,275 610,280 C 625,283 640,285 660,286" class="corridor" fill="none" stroke-width="36" stroke-linecap="round"/>
+  <ellipse cx="580" cy="255" rx="100" ry="45" class="corridor"/>
+
+  <!-- Key cities -->
+  <!-- Brussels -->
+  <circle cx="310" cy="235" r="5" class="city-dot"/>
+  <text x="298" y="228" font-size="11" fill="#2D2A24" text-anchor="end" font-weight="600">Brussels</text>
+  <text x="298" y="240" font-size="8" fill="#6B6558" text-anchor="end">Capital</text>
+
+  <!-- Liège -->
+  <circle cx="560" cy="240" r="5" class="sighting-dot"/>
+  <text x="560" y="230" font-size="11" fill="#2D2A24" text-anchor="middle" font-weight="600">Liège</text>
+  <text x="560" y="256" font-size="8" fill="#9A7A2E" text-anchor="middle">Major sighting cluster</text>
+
+  <!-- Eupen -->
+  <circle cx="670" cy="230" r="5" class="sighting-dot"/>
+  <text x="670" y="220" font-size="11" fill="#2D2A24" text-anchor="middle" font-weight="600">Eupen</text>
+  <text x="670" y="245" font-size="8" fill="#9A7A2E" text-anchor="middle">First sightings Nov 29, 1989</text>
+
+  <!-- Ardennes region label -->
+  <text x="620" y="305" font-size="11" fill="#4A6A9A" text-anchor="middle" font-style="italic">The Ardennes</text>
+  <text x="620" y="317" font-size="8" fill="#4A6A9A" text-anchor="middle">F-16 intercept zone</text>
+
+  <!-- Gendarmerie posts -->
+  <rect x="645" y="260" width="6" height="6" class="gendarmerie" rx="1"/>
+  <text x="656" y="267" font-size="8" fill="#4A6A9A">Gendarmerie — Eupen</text>
+  <rect x="535" y="270" width="6" height="6" class="gendarmerie" rx="1"/>
+  <text x="546" y="277" font-size="8" fill="#4A6A9A">Gendarmerie — Liège</text>
+
+  <!-- F-16 intercept -->
+  <use href="#f16" x="568" y="288" width="24" height="20"/>
+  <use href="#f16" x="592" y="294" width="24" height="20"/>
+  <path d="M 490,330 C 510,318 530,306 560,298" class="intercept-route" marker-end="url(#arrow-red)"/>
+
+  <!-- F-16 base -->
+  <rect x="430" y="325" width="60" height="20" rx="3" fill="#FFFDF5" stroke="#4A6A9A" stroke-width="1"/>
+  <text x="460" y="338" font-size="8" fill="#4A6A9A" text-anchor="middle">Beauvechain AB</text>
+  <text x="460" y="349" font-size="7" fill="#6B6558" text-anchor="middle">2 × F-16 scrambled</text>
+
+  <!-- UAP triangle -->
+  <use href="#triangle-uap" x="565" y="268" width="28" height="24"/>
+
+  <!-- Intercept callout -->
+  <rect x="30" y="270" width="200" height="72" rx="3" fill="#FFFDF5" stroke="#B04A4A" stroke-width="1"/>
+  <text x="40" y="285" class="time">MAR 30-31, 1990 · 00:00</text>
+  <text x="40" y="298" class="label-sm">F-16 radar: 3 separate locks</text>
+  <text x="40" y="309" class="label-sm">Object: 3,000m → 1,700m → 500m</text>
+  <text x="40" y="320" class="label-sm">in ~2 seconds (evasive dive)</text>
+  <text x="40" y="333" class="label-sm">Both F-16s unable to maintain lock</text>
+  <line x1="230" y1="305" x2="565" y2="290" stroke="#B04A4A" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Sighting markers across Belgium -->
+  <circle cx="370" cy="248" r="3" class="sighting-dot"/>
+  <circle cx="410" cy="262" r="3" class="sighting-dot"/>
+  <circle cx="450" cy="255" r="3" class="sighting-dot"/>
+  <circle cx="500" cy="242" r="3" class="sighting-dot"/>
+  <circle cx="530" cy="265" r="3" class="sighting-dot"/>
+  <circle cx="630" cy="248" r="3" class="sighting-dot"/>
+  <circle cx="610" cy="270" r="3" class="sighting-dot"/>
+  <circle cx="545" cy="235" r="3" class="sighting-dot"/>
+  <circle cx="430" cy="244" r="3" class="sighting-dot"/>
+
+  <!-- Neighboring country sightings -->
+  <circle cx="500" cy="130" r="3" fill="#9A7A2E" opacity="0.4"/>
+  <text x="510" y="133" font-size="7" fill="#9A7A2E" opacity="0.6">NL sightings</text>
+  <circle cx="780" cy="230" r="3" fill="#9A7A2E" opacity="0.4"/>
+  <text x="790" y="233" font-size="7" fill="#9A7A2E" opacity="0.6">DE sightings</text>
+
+  <!-- Timeline callout: Nov 29, 1989 -->
+  <rect x="660" y="165" width="195" height="45" rx="3" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="670" y="179" class="time">NOV 29, 1989 · 17:20</text>
+  <text x="670" y="191" class="label-sm">First Eupen sightings — Gendarmerie</text>
+  <text x="670" y="202" class="label-sm">officers observe triangular craft</text>
+  <line x1="670" y1="210" x2="670" y2="225" stroke="#9A7A2E" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- De Brouwer callout -->
+  <rect x="30" y="170" width="220" height="55" rx="3" fill="#FFFDF5" stroke="#4A6A9A" stroke-width="1"/>
+  <text x="40" y="185" class="label">Col. Wilfried De Brouwer</text>
+  <text x="40" y="197" class="label-sm">BAF Chief of Operations</text>
+  <text x="40" y="209" class="note">"The phenomenon is exceptional. We can</text>
+  <text x="40" y="219" class="note">exclude conventional explanations."</text>
+
+  <!-- Legend — compact box at bottom-right -->
+  <rect x="560" y="455" width="385" height="70" class="legend-box"/>
+  <text x="575" y="472" class="label">Legend</text>
+
+  <circle cx="575" cy="488" r="4" class="sighting-dot"/>
+  <text x="585" y="491" class="label-sm">Civilian sighting (13,500+ total)</text>
+
+  <rect x="720" y="484" width="8" height="8" class="gendarmerie" rx="1"/>
+  <text x="733" y="491" class="label-sm">Gendarmerie post</text>
+
+  <use href="#f16" x="565" y="500" width="16" height="14"/>
+  <text x="587" y="511" class="label-sm">F-16 intercept aircraft</text>
+
+  <use href="#triangle-uap" x="718" y="499" width="18" height="16"/>
+  <text x="740" y="511" class="label-sm">Reported triangular craft</text>
+
+  <line x1="838" y1="488" x2="868" y2="488" stroke="#B04A4A" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="875" y="491" class="label-sm">Intercept route</text>
+
+  <!-- Source notes — bottom-left -->
+  <text x="30" y="476" class="note">Sources: Belgian Air Force official report (1991) · SOBEPS investigation · Col. De Brouwer public statements</text>
+  <text x="30" y="488" class="note">Note: The Petit-Rechain photograph (triangular craft with lights) was later admitted by its creator to be a hoax.</text>
+</svg>

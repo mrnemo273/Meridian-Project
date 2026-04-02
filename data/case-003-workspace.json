@@ -1,0 +1,616 @@
+{
+  "id": "CASE-003",
+  "caseNumber": "003",
+  "title": "The Belgian Wave",
+  "subtitle": "NATO F-16 Radar Lock Incident",
+  "date": "November 1989 – April 1990",
+  "location": "Belgium — Liège, Eupen, Ardennes region",
+  "duration": "~5 months (wave), ~75 min F-16 intercept",
+  "credibilityScore": 88,
+  "credibilityTier": "Tier 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "radar-confirmed",
+    "mass-sighting",
+    "government-acknowledged",
+    "f-16-intercept",
+    "nato",
+    "gendarmerie-reports"
+  ],
+
+  "heroImage": "/images/cases/003/belgian-wave-map.svg",
+  "heroImageAlt": "Belgian Wave sighting corridor map — Eupen to Brussels",
+  "heroImageAttribution": "The Meridian Project (original)",
+
+  "timeline": [
+    {
+      "date": "November 29, 1989",
+      "title": "First wave sighting — Eupen gendarmerie patrol",
+      "detail": "Gendarmerie officers Heinrich Nicoll and Hubert von Montigny observe a large triangular platform with three bright white lights and a pulsing red center light near Eupen. They file an official report before any media coverage.",
+      "tags": [{ "label": "Gendarmerie", "type": "official" }, { "label": "First Sighting", "type": "witness" }],
+      "type": "key"
+    },
+    {
+      "date": "November 29, 1989 · Evening",
+      "title": "Multiple patrols confirm sightings",
+      "detail": "At least 30 groups of witnesses, including 13 gendarmerie patrols across the Eupen-Verviers-Liège corridor, independently report the same triangular craft. Over 140 witnesses file reports that evening alone.",
+      "tags": [{ "label": "Mass Sighting", "type": "multi-witness" }, { "label": "Gendarmerie", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "December 1989 – February 1990",
+      "title": "Wave intensifies across Belgium",
+      "detail": "Sighting reports pour in from across Wallonia and Flanders. SOBEPS begins systematic collection and analysis of witness reports. Descriptions remain remarkably consistent: large silent triangle, three bright corners, pulsing red center.",
+      "tags": [{ "label": "SOBEPS", "type": "official" }, { "label": "Mass Sighting", "type": "multi-witness" }],
+      "type": "key"
+    },
+    {
+      "date": "March 30, 1990 · 11:00 PM",
+      "title": "Radar contact confirmed — BAF alerted",
+      "detail": "Ground radar stations at Glons and Semmerzake detect an unknown target in Belgian airspace. Gendarmerie units on the ground visually confirm an object at the radar position. Belgian Air Force authorizes F-16 scramble.",
+      "tags": [{ "label": "Radar", "type": "radar-confirmed" }, { "label": "BAF", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "March 30, 1990 · 11:49 PM",
+      "title": "Two F-16s scrambled from Beauvechain",
+      "detail": "Col. De Brouwer authorizes the scramble. Two F-16 Fighting Falcons depart Beauvechain Air Base. Pilots are vectored toward the radar contact by ground controllers.",
+      "tags": [{ "label": "F-16", "type": "sensor" }, { "label": "Scramble", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "March 31, 1990 · 12:05 AM",
+      "title": "First radar lock — object evades",
+      "detail": "F-16 achieves first radar lock using AN/APG-66 pulse-Doppler radar. Within seconds the object accelerates and performs evasive maneuvers, breaking the lock. Radar recording begins.",
+      "tags": [{ "label": "Radar Lock", "type": "radar-confirmed" }, { "label": "Anomaly", "type": "anomaly" }],
+      "type": "key",
+      "hasHighlight": "ann-1"
+    },
+    {
+      "date": "March 31, 1990 · ~12:10-12:30 AM",
+      "title": "Second and third radar locks — extreme maneuvers",
+      "detail": "Two additional radar locks are achieved. On each, the object executes extreme evasive maneuvers. Radar data records descent from 3,000m to 1,700m to near ground level in ~2 seconds. Object accelerates from 280 km/h to 1,800+ km/h.",
+      "tags": [{ "label": "Radar Lock", "type": "radar-confirmed" }, { "label": "40g+", "type": "anomaly" }],
+      "type": "key",
+      "hasHighlight": "ann-2"
+    },
+    {
+      "date": "March 31, 1990 · ~1:00 AM",
+      "title": "F-16s return to base — contact lost",
+      "detail": "After approximately 75 minutes of pursuit, the F-16s return to Beauvechain. The object is no longer on radar. Ground witnesses report the object departed at extreme speed.",
+      "tags": [{ "label": "F-16", "type": "sensor" }, { "label": "Contact Lost", "type": "anomaly" }],
+      "type": "key"
+    },
+    {
+      "date": "April 1990",
+      "title": "Wave subsides — final sightings reported",
+      "detail": "Sighting frequency decreases sharply. By late April 1990, the Belgian wave is effectively over. Total reports exceed 13,500.",
+      "tags": [{ "label": "End of Wave", "type": "witness" }],
+      "type": "key"
+    },
+    {
+      "date": "July 1991",
+      "title": "BAF official report released",
+      "detail": "The Belgian Air Force releases its official report on the events, acknowledging the anomalous nature of the sightings and the inability to identify the objects. Col. De Brouwer holds a press conference presenting radar data and conclusions.",
+      "tags": [{ "label": "BAF Report", "type": "official" }, { "label": "Government", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "July 2011",
+      "title": "Petit-Rechain photo exposed as hoax",
+      "detail": "Patrick Maréchal admits on RTL-TVI television that the famous Petit-Rechain photograph — widely cited as physical evidence — was a hoax created with a painted styrofoam panel and camera trickery. This does not invalidate the radar data or witness reports but removes one key piece of supposed evidence.",
+      "tags": [{ "label": "Hoax", "type": "anomaly" }, { "label": "Photo Debunked", "type": "anomaly" }],
+      "type": "anomaly"
+    }
+  ],
+
+  "evidence": [
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "F-16 Radar",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "F-16 AN/APG-66 Radar Lock Data",
+      "summary": "Three separate radar locks achieved by F-16 onboard radar during 75-minute pursuit. Object performed extreme evasive maneuvers on each lock — descending from 3,000m to near ground level in ~2 seconds and accelerating from 280 km/h to 1,800+ km/h.",
+      "linkText": "🔗 Linked to: BAF Official Report, De Brouwer Testimony, Ground Radar"
+    },
+    {
+      "typeLabel": "Documentary Evidence",
+      "badge": "Official",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Gendarmerie Official Reports",
+      "summary": "Dozens of formal gendarmerie reports filed through official law enforcement channels. First reports predated any media coverage. Descriptions remarkably consistent across officers and patrol districts: large silent triangle, three bright lights, pulsing red center.",
+      "linkText": "🔗 Linked to: SOBEPS Archives, First Sighting (Nov 29)"
+    },
+    {
+      "typeLabel": "Documentary Evidence",
+      "badge": "Military",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Belgian Air Force Official Report (July 1991)",
+      "summary": "Comprehensive military report acknowledging the events, detailing the F-16 intercept radar data, and stating that conventional explanations were insufficient. One of the most transparent government responses to a UAP event in history.",
+      "linkText": "🔗 Linked to: F-16 Radar Data, De Brouwer Press Conference"
+    },
+    {
+      "typeLabel": "Photographic Evidence",
+      "badge": "HOAX",
+      "badgeClass": "badge-anomaly",
+      "cardType": "type-evidence",
+      "title": "Petit-Rechain Photograph — CONFIRMED HOAX",
+      "summary": "Widely circulated photograph purporting to show a triangular craft with three lights. In July 2011, the photographer Patrick Maréchal admitted on RTL-TVI that he fabricated the image using a painted styrofoam panel. A cautionary lesson in evidence verification.",
+      "linkText": "⚠️ HOAX — Does NOT invalidate radar data or witness reports"
+    },
+    {
+      "typeLabel": "Witness Data",
+      "badge": "Mass",
+      "badgeClass": "badge-witness",
+      "cardType": "type-evidence",
+      "title": "Mass Witness Reports (13,500+)",
+      "summary": "Over 13,500 individual sighting reports filed during the wave period. Witnesses included gendarmerie officers, military personnel, pilots, engineers, and civilians. SOBEPS catalogued reports with geographic and temporal clustering analysis.",
+      "linkText": "🔗 Linked to: SOBEPS Vol. 1 & 2, Gendarmerie Reports"
+    }
+  ],
+
+  "witnesses": [
+    {
+      "initials": "WD",
+      "name": "Col. Wilfried De Brouwer",
+      "rank": "BAF Chief of Operations · Ret. Maj. Gen.",
+      "observed": "Authorized F-16 scramble. Reviewed all radar data. Held press conference presenting findings. Presented at National Press Club (2007). 30+ years military service.",
+      "quote": "The Air Force has arrived at the conclusion that a certain number of anomalous phenomena has been produced within Belgian airspace.",
+      "quoteSource": "— BAF press conference, July 1991"
+    },
+    {
+      "initials": "YN",
+      "name": "Capt. Yves Nicoll",
+      "rank": "Belgian Air Force · F-16 Pilot",
+      "observed": "Pursued the object for 75 minutes. Achieved three radar locks with AN/APG-66 radar. On each lock the object executed extreme evasive maneuvers breaking the lock.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "GN",
+      "name": "Gendarmerie Officers — Eupen Patrol",
+      "rank": "Belgian Gendarmerie Nationale",
+      "observed": "First officials to observe and report triangular objects (Nov 29, 1989). Filed formal reports before any media coverage. Over the wave, dozens of gendarmerie officers filed similar reports.",
+      "quote": "We observed a platform in the shape of an isosceles triangle. It was absolutely silent.",
+      "quoteSource": "— Official Gendarmerie report, November 1989"
+    },
+    {
+      "initials": "AM",
+      "name": "Prof. Auguste Meessen",
+      "rank": "Catholic University of Louvain · Physicist",
+      "observed": "Conducted detailed scientific analysis of F-16 radar recordings for SOBEPS. Concluded acceleration profiles exceeded any known aircraft capability. Published findings in SOBEPS volumes.",
+      "quote": "The radar recordings demonstrate unambiguously that the targets performed maneuvers that no known aircraft could execute.",
+      "quoteSource": "— SOBEPS Vol. 2, 1994"
+    }
+  ],
+
+  "aiAnalysis": [
+    {
+      "aiType": "Pattern Analysis",
+      "title": "Cross-Corpus: Triangular Craft Pattern",
+      "finding": "Triangular craft descriptions appear in 4+ high-credibility cases: Belgian Wave (1989-90), Hudson Valley (1981-86), Phoenix Lights (1997), RAF Cosford (1993). All share key features: silent, low-altitude, three-point lighting configuration. Geographic and temporal spread argues against single-source explanation.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Physics Review",
+      "title": "Acceleration Analysis: ~40g from Radar Data",
+      "finding": "F-16 radar data shows descent from 3,000m to near ground level in ~2 seconds. This implies vertical acceleration of approximately 40g — far beyond any known aircraft. The object also accelerated horizontally from 280 km/h to 1,800+ km/h in seconds. No sonic boom was reported by ground witnesses.",
+      "confidence": "Medium — Dependent on radar calibration",
+      "confidenceClass": "confidence-medium"
+    },
+    {
+      "aiType": "Context Analysis",
+      "title": "Government Transparency Anomaly",
+      "finding": "Belgium is the only NATO country to have openly investigated UAP sightings with full military-civilian cooperation, published official findings, and acknowledged the phenomenon publicly. This transparency is itself anomalous in the context of global UAP secrecy and may reflect the absence of classified programs to protect.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    }
+  ],
+
+  "openQuestions": [
+    { "num": "Q01", "text": "What are the complete, unedited F-16 radar recordings?", "context": "Only summary data has been publicly released. The full radar tapes from both F-16s may contain additional details about the object's maneuvers." },
+    { "num": "Q02", "text": "Were any other NATO member states tracking the objects simultaneously?", "context": "Belgium sits at the heart of NATO. AWACS, ground radar from neighboring countries, and NATO integrated air defense may have captured additional data." },
+    { "num": "Q03", "text": "Why did the wave start and stop when it did?", "context": "The wave began abruptly in late November 1989 and ended in April 1990. What triggered the onset and cessation? Seasonal? Geopolitical (fall of Berlin Wall, Nov 9, 1989)?" },
+    { "num": "Q04", "text": "What is the relationship between the Belgian Wave and concurrent European sightings?", "context": "Similar triangular craft were reported in the Netherlands, Germany, and France during the same period, but these reports received far less investigation." },
+    { "num": "Q05", "text": "Could the objects have been B-2 Spirit or F-117 Nighthawk stealth aircraft?", "context": "Both were operational in 1989-90. However, neither matches the described silent hovering, extreme acceleration, or three-light configuration — and neither was authorized for Belgian airspace." }
+  ],
+
+  "resolution": [
+    { "status": "partial", "label": "B-2 Spirit stealth bomber", "detail": "Partially considered. Triangular shape superficially matches. However, B-2 cannot hover silently, has no three-point light configuration, cannot accelerate from 280 to 1,800+ km/h, and was not authorized for Belgian airspace. USAF denied any B-2 operations over Belgium." },
+    { "status": "partial", "label": "F-117 Nighthawk stealth fighter", "detail": "Partially considered. Angular shape vaguely triangular. However, F-117 is faceted (not smooth), cannot hover, produces engine noise, and was stationed in Nevada during this period. Not a match." },
+    { "status": "eliminated", "label": "Military exercise / NATO aircraft", "detail": "Eliminated. NATO SHAPE confirmed no NATO exercises or aircraft matched the sightings. Belgian military confirmed objects were not Belgian Air Force assets." },
+    { "status": "eliminated", "label": "Mass misidentification / stars / aircraft lights", "detail": "Eliminated. Gendarmerie officers and trained observers reported structured craft at close range. F-16 radar locks confirm physical objects. Consistency of 13,500+ reports argues against misidentification." },
+    { "status": "eliminated", "label": "Helicopter", "detail": "Eliminated. No helicopter can hover silently. Observed acceleration profiles (280 to 1,800+ km/h) are physically impossible for rotary-wing aircraft." },
+    { "status": "eliminated", "label": "Hoax / mass hysteria", "detail": "Eliminated. Radar data from F-16s and ground stations confirms physical objects. Reports predated media coverage. Gendarmerie filed official reports through law enforcement channels." },
+    { "status": "open", "label": "Classified military program (unknown nation)", "detail": "Not fully eliminated. No known 1989-90 technology matches the observed capabilities. 35+ years later, no nation has demonstrated comparable silent hovering + hypersonic acceleration." },
+    { "status": "open", "label": "Unknown / unexplained phenomenon", "detail": "Remains open. The Belgian Air Force officially classified the events as unexplained. No prosaic explanation accounts for all evidence." }
+  ],
+
+  "osint": [
+    { "field": "Location", "status": "verified", "value": "Eastern Belgium — Eupen, Liège, Verviers, Ardennes corridor. 50.63°N, 5.57°E.", "source": "Gendarmerie reports, SOBEPS geographic analysis." },
+    { "field": "Weather (March 30-31)", "status": "verified", "value": "Clear to partly cloudy. Good visibility. Light winds.", "source": "Royal Meteorological Institute of Belgium historical data." },
+    { "field": "F-16 Scramble", "status": "verified", "value": "Two F-16A MLUs scrambled from Beauvechain AFB at 23:49 local time.", "source": "Belgian Air Force official report, July 1991." },
+    { "field": "NATO Denial", "status": "verified", "value": "NATO SHAPE confirmed no NATO exercises or aircraft accounted for the sightings.", "source": "NATO SHAPE official communication." },
+    { "field": "Petit-Rechain Photo", "status": "hoax", "value": "Confirmed hoax. Photographer Patrick Maréchal admitted fabrication in July 2011.", "source": "RTL-TVI televised confession, July 2011." },
+    { "field": "Witness Count", "status": "verified", "value": "13,500+ individual sighting reports filed over the wave period.", "source": "SOBEPS archives, BAF acknowledgment." }
+  ],
+
+  "evidenceChain": [
+    { "num": 1, "source": "F-16 AN/APG-66 Radar Recordings", "note": "Three separate radar locks with recorded data. Object maneuvered to break each lock. Data released in BAF official report.", "strength": "strong", "strengthLabel": "Strong — military radar, officially released" },
+    { "num": 2, "source": "Ground Radar (Glons & Semmerzake)", "note": "NATO ground radar stations detected unknown targets correlating with visual sightings. Confirmed by BAF.", "strength": "strong", "strengthLabel": "Strong — NATO infrastructure" },
+    { "num": 3, "source": "Gendarmerie Official Reports", "note": "Dozens of formal law enforcement reports filed before media coverage. Consistent descriptions across jurisdictions.", "strength": "strong", "strengthLabel": "Strong — official records, pre-media" },
+    { "num": 4, "source": "Belgian Air Force Official Report", "note": "Published July 1991. BAF acknowledged anomalous phenomena and inability to identify the objects.", "strength": "strong", "strengthLabel": "Strong — government document" },
+    { "num": 5, "source": "SOBEPS Investigation (2 volumes)", "note": "Comprehensive civilian-military collaborative analysis. Contains witness interviews, radar analysis, and scientific evaluation.", "strength": "strong", "strengthLabel": "Strong — systematic, peer-reviewed" }
+  ],
+
+  "solvabilityFactors": [
+    { "name": "Official government acknowledgment", "score": "+15", "type": "positive" },
+    { "name": "F-16 radar data exists and was released", "score": "+12", "type": "positive" },
+    { "name": "13,500+ corroborating witnesses", "score": "+10", "type": "positive" },
+    { "name": "Pre-media gendarmerie reports", "score": "+8", "type": "positive" },
+    { "name": "Full military-civilian cooperation (SOBEPS)", "score": "+10", "type": "positive" },
+    { "name": "Key photograph confirmed hoax", "score": "-8", "type": "negative" },
+    { "name": "35+ year evidence degradation", "score": "-5", "type": "negative" },
+    { "name": "NATO integrated air defense data unexamined", "score": "+5", "type": "neutral" },
+    { "name": "No FLIR/visual recording from F-16s", "score": "-7", "type": "negative" },
+    { "name": "SOBEPS disbanded (2007)", "score": "-4", "type": "negative" },
+    { "name": "Cold War context may have suppressed data", "score": "-3", "type": "negative" }
+  ],
+  "solvabilityScore": 68,
+
+  "nextSteps": [
+    { "priority": "high", "text": "Request complete F-16 radar recordings from Belgian Ministry of Defence archives" },
+    { "priority": "high", "text": "File FOIA-equivalent requests with NATO SHAPE for integrated air defense data (Nov 1989 – Apr 1990)" },
+    { "priority": "medium", "text": "Cross-reference concurrent sightings in Netherlands, Germany, and France during the wave period" },
+    { "priority": "medium", "text": "Locate and interview surviving gendarmerie officers from the November 29, 1989 patrols" },
+    { "priority": "medium", "text": "Analyze SOBEPS archive holdings (transferred after 2007 dissolution) for unpublished data" },
+    { "priority": "low", "text": "Review B-2/F-117 flight logs (now partially declassified) to definitively rule out stealth aircraft overflights" }
+  ],
+
+  "searchDemoResults": [
+    { "type": "academic", "source": "SOBEPS · Vol. 1 & 2", "title": "Vague d'OVNI sur la Belgique — Comprehensive Analysis", "snippet": "The definitive two-volume study of the Belgian Wave. Contains 13,500+ catalogued reports, gendarmerie records, radar data analysis by Prof. Meessen, and the full BAF cooperation documentation..." },
+    { "type": "video", "source": "YouTube · National Press Club", "title": "Maj. Gen. De Brouwer presents Belgian Wave evidence (2007)", "snippet": "Former BAF Chief of Operations presents F-16 radar data, gendarmerie reports, and his personal assessment at the National Press Club in Washington, D.C. States conventional explanations were exhausted..." },
+    { "type": "web", "source": "Web · The War Zone / The Drive", "title": "Revisiting the Belgian Wave: What the F-16 radar data actually showed", "snippet": "Detailed analysis of the AN/APG-66 radar recordings from the March 30-31 intercept. Object descended from 3,000m to near ground level in ~2 seconds. Three locks, three evasive maneuvers..." },
+    { "type": "reddit", "source": "Reddit · r/UFOs", "title": "Belgian Wave timeline with all known gendarmerie report locations mapped", "snippet": "User maps all 143 known gendarmerie filing locations across the wave period. Clear geographic clustering along the Eupen-Liège-Brussels corridor with secondary clusters near Ardennes..." },
+    { "type": "foia", "source": "FOIA · Belgian Ministry of Defence", "title": "BAF internal memos on F-16 scramble authorization (partial release)", "snippet": "Partially released internal communications showing the decision chain from ground radar confirmation to scramble authorization. Col. De Brouwer's authorization documented at 23:42 local..." }
+  ],
+
+  "achHypotheses": [
+    "Stealth Aircraft",
+    "Military Exercise",
+    "Mass Misidentification",
+    "Unknown Craft"
+  ],
+  "achEvidence": [
+    { "evidence": "F-16 radar locks (3 separate)", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Object descent 3,000m→ground in ~2s", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Acceleration 280→1,800+ km/h", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Triangular shape with 3 lights", "ai": ["C", "N", "N", "C"] },
+    { "evidence": "Silent hovering at low altitude", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "13,500+ consistent witness reports", "ai": ["N", "I", "I", "C"] },
+    { "evidence": "NATO confirmed not NATO aircraft", "ai": ["N", "I", "-", "C"] },
+    { "evidence": "Gendarmerie reports pre-date media", "ai": ["N", "-", "I", "C"] }
+  ],
+
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "document",
+      "priority": "high",
+      "status": "open",
+      "title": "Belgian Air Force Official Report — Full Document Scan",
+      "description": "Obtain the complete BAF official report from July 1991 including all appendices and radar data printouts. Scan or photograph key pages for the evidence gallery.",
+      "source_url": null,
+      "license": "Belgian government document — public record",
+      "attribution": "Belgian Air Force / Ministry of Defence",
+      "save_to": "public/images/cases/003/",
+      "file_names": ["baf-report-cover.png", "baf-report-radar-data.png", "baf-report-conclusions.png"],
+      "notes": "The BAF report is a public document. Check Belgian Ministry of Defence archives or SOBEPS successor organizations."
+    },
+    {
+      "id": "IT-002",
+      "type": "data",
+      "priority": "high",
+      "status": "open",
+      "title": "F-16 Radar Recording Transcription",
+      "description": "Obtain or reconstruct the F-16 AN/APG-66 radar recording data showing the three lock events. The BAF released graphical representations — locate the highest quality versions.",
+      "source_url": null,
+      "license": "Belgian government / BAF official release",
+      "attribution": "Belgian Air Force",
+      "save_to": "public/images/cases/003/",
+      "file_names": ["f16-radar-lock-1.png", "f16-radar-lock-2.png", "f16-radar-lock-3.png"],
+      "notes": "Prof. Meessen's analysis in SOBEPS Vol. 2 contains the most detailed radar data reproductions."
+    },
+    {
+      "id": "IT-003",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Belgian Wave Sighting Corridor Map",
+      "description": "Create an original SVG map showing the sighting corridor from Eupen to Brussels, including key sighting clusters, Beauvechain Air Base, and the ground radar stations at Glons and Semmerzake.",
+      "source_url": null,
+      "license": "Create original (OpenStreetMap base layer)",
+      "attribution": "The Meridian Project (original)",
+      "save_to": "public/images/cases/003/",
+      "file_names": ["belgian-wave-map.svg"],
+      "notes": "Use OpenStreetMap base layer (CC-BY-SA). Mark key locations: Eupen, Liège, Verviers, Beauvechain AFB, Glons radar, Semmerzake radar."
+    },
+    {
+      "id": "IT-004",
+      "type": "document",
+      "priority": "medium",
+      "status": "open",
+      "title": "SOBEPS Volume 1 & 2 — Key Figure Extraction",
+      "description": "Extract key figures and charts from the SOBEPS two-volume analysis: geographic clustering maps, temporal distribution charts, witness description consistency analysis, and Meessen's radar plots.",
+      "source_url": null,
+      "license": "Academic fair use — research citation",
+      "attribution": "SOBEPS / Société Belge d'Étude des Phénomènes Spatiaux",
+      "save_to": "public/images/cases/003/",
+      "file_names": ["sobeps-sighting-map.png", "sobeps-temporal-chart.png", "sobeps-meessen-radar.png"],
+      "notes": "SOBEPS volumes are out of print. Academic fair use for research figures with proper citation."
+    },
+    {
+      "id": "IT-005",
+      "type": "image",
+      "priority": "low",
+      "status": "open",
+      "title": "F-16A MLU Reference Photo — Belgian Air Force",
+      "description": "Source a photo of a Belgian Air Force F-16A MLU (Mid-Life Update), the variant flown during the March 30-31 intercept. Belgian military photos may be available through the Belgian Ministry of Defence.",
+      "source_url": "https://www.mil.be/en/",
+      "license": "Belgian Ministry of Defence — check usage rights",
+      "attribution": "Belgian Air Force / Ministry of Defence",
+      "save_to": "public/images/cases/003/",
+      "file_names": ["baf-f16a-mlu.jpg"],
+      "notes": "Belgian Air Force F-16s were F-16A Block 15 MLU variants. Beauvechain was the home base."
+    }
+  ],
+
+  "gallery": [
+    {
+      "id": "g-001",
+      "type": "map",
+      "src": "/images/cases/003/belgian-wave-map.svg",
+      "title": "Belgian Wave Sighting Corridor",
+      "caption": "Sighting corridor map showing the Eupen-Liège-Brussels triangle, key witness cluster locations, Beauvechain Air Base, and NATO ground radar stations at Glons and Semmerzake.",
+      "attribution": "The Meridian Project (original)",
+      "license": "Project Original",
+      "category": "map"
+    },
+    {
+      "id": "g-002",
+      "type": "image",
+      "src": "/images/cases/003/baf-f16.jpg",
+      "title": "Belgian Air Force F-16 Fighting Falcon",
+      "caption": "F-16 aircraft of the type scrambled by the Belgian Air Force on March 30-31, 1990 to intercept the triangular craft.",
+      "attribution": "U.S. Air Force / Wikimedia Commons",
+      "license": "Public Domain",
+      "category": "reference"
+    },
+    {
+      "id": "g-003",
+      "type": "image",
+      "src": "/images/cases/003/f16-radar-scope.jpg",
+      "title": "F-16 Cockpit Display",
+      "caption": "F-16 cockpit instrumentation. Belgian F-16 pilots achieved three separate radar locks on the unidentified object during the March 30-31 intercept.",
+      "attribution": "U.S. Air Force / Wikimedia Commons",
+      "license": "Public Domain",
+      "category": "sensor"
+    }
+  ],
+
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "Belgian Air Force officially scrambled two F-16 Fighting Falcons from Beauvechain Air Base on the night of March 30-31, 1990, in response to confirmed radar contacts and visual sightings.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Belgian Air Force official report, July 1991",
+        "Col. Wilfried De Brouwer — press conference and National Press Club testimony (2007)",
+        "Belgian Ministry of Defence records"
+      ],
+      "relatedTimeline": "Two F-16s scrambled from Beauvechain"
+    },
+    {
+      "id": "VF-002",
+      "fact": "F-16 onboard AN/APG-66 radar achieved three separate locks on the target during the 75-minute pursuit.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "Belgian Air Force official report, July 1991",
+        "F-16 radar recording data released by BAF",
+        "Prof. Auguste Meessen radar analysis — SOBEPS Vol. 2"
+      ],
+      "relatedEvidence": "F-16 AN/APG-66 Radar Lock Data"
+    },
+    {
+      "id": "VF-003",
+      "fact": "On each radar lock, the object performed evasive maneuvers — radar data showed descent from 3,000m to 1,700m to near ground level (~500m) in approximately two seconds.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "Belgian Air Force official report — radar data appendix",
+        "Prof. Meessen acceleration analysis — SOBEPS Vol. 2",
+        "Col. De Brouwer — National Press Club presentation (2007)"
+      ],
+      "relatedTimeline": "Second and third radar locks — extreme maneuvers"
+    },
+    {
+      "id": "VF-004",
+      "fact": "Col. Wilfried De Brouwer, BAF Chief of Operations, stated publicly that the phenomenon was exceptional and conventional explanations had been exhausted.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "BAF press conference, July 1991",
+        "National Press Club presentation, Washington D.C., November 2007",
+        "Multiple published interviews"
+      ]
+    },
+    {
+      "id": "VF-005",
+      "fact": "Over 13,500 individual sighting reports were filed during the wave period (November 1989 – April 1990).",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "SOBEPS archives — catalogued report database",
+        "Belgian Air Force acknowledgment",
+        "SOBEPS Vague d'OVNI sur la Belgique, Vol. 1"
+      ]
+    },
+    {
+      "id": "VF-006",
+      "fact": "The Petit-Rechain photograph, widely cited as key photographic evidence, was admitted to be a hoax by its creator Patrick Maréchal in July 2011.",
+      "category": "physical",
+      "confidence": "confirmed",
+      "sources": [
+        "RTL-TVI televised interview with Patrick Maréchal, July 2011",
+        "Maréchal's public admission and demonstration of fabrication method"
+      ],
+      "disputedBy": "N/A — photographer's own admission. This is a NEGATIVE fact: confirmed absence of photographic evidence."
+    },
+    {
+      "id": "VF-007",
+      "fact": "Belgian Gendarmerie officers filed official reports of triangular craft sightings before any media coverage of the wave, beginning November 29, 1989.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Gendarmerie Nationale official records",
+        "SOBEPS Vol. 1 — chronological analysis showing reports predated press coverage",
+        "Officers Heinrich Nicoll and Hubert von Montigny — first official report"
+      ],
+      "relatedTimeline": "First wave sighting — Eupen gendarmerie patrol"
+    },
+    {
+      "id": "VF-008",
+      "fact": "NATO SHAPE (Supreme Headquarters Allied Powers Europe) confirmed that the objects were not NATO aircraft and that no NATO exercises accounted for the sightings.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "NATO SHAPE official communication",
+        "Belgian Air Force official report — NATO coordination section",
+        "Col. De Brouwer — confirmed NATO denial in public statements"
+      ]
+    }
+  ],
+
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Stealth Aircraft",
+      "probability": 15,
+      "trend": "falling",
+      "reasoning": "The B-2 Spirit and F-117 Nighthawk were operational in 1989-90, and the triangular shape superficially matches the B-2. However, neither can hover silently, accelerate from 280 to 1,800+ km/h, or descend 2,300m in 2 seconds. The USAF denied any stealth operations over Belgium, and NATO confirmed the objects were not NATO aircraft. 35+ years later, no stealth program matching these capabilities has been revealed.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-001", "VF-002", "VF-003", "VF-008"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Military Exercise",
+      "probability": 8,
+      "trend": "stable",
+      "reasoning": "NATO SHAPE explicitly denied any NATO exercises or aircraft in the area. The Belgian military confirmed the objects were not Belgian Air Force assets. No military exercise explains silent hovering, extreme acceleration, or the 5-month duration of the wave. The hypothesis remains only because full NATO integrated air defense records have not been examined.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-003", "VF-008"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Mass Misidentification",
+      "probability": 12,
+      "trend": "falling",
+      "reasoning": "With 13,500+ reports including trained military and law enforcement observers, mass misidentification of stars, aircraft lights, or atmospheric phenomena is extremely unlikely. F-16 radar locks confirm physical objects with anomalous performance. Gendarmerie reports predated media coverage, reducing social contagion as an explanatory factor. The hoax of the Petit-Rechain photo does not extend to radar data or official reports.",
+      "keyFactors": {
+        "supports": ["VF-006"],
+        "contradicts": ["VF-002", "VF-003", "VF-005", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Unknown Craft",
+      "probability": 65,
+      "trend": "stable",
+      "reasoning": "The only hypothesis consistent with all confirmed evidence: F-16 radar locks on physical objects, extreme acceleration profiles (est. 40g+), silent hovering, and the inability of Belgian Air Force, NATO, and SOBEPS to identify the objects after thorough investigation. The Belgian government's official classification remains 'unexplained.' No known 1989-90 or current technology matches the observed capabilities.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-003", "VF-004", "VF-005", "VF-007", "VF-008"],
+        "contradicts": ["VF-006"]
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "What did the F-16 radar data actually show?",
+      "status": "open",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-002",
+      "anchorText": "F-16 onboard AN/APG-66 radar achieved three separate locks on the target during the 75-minute pursuit.",
+      "findings": [
+        {
+          "id": "RB-001-F1",
+          "type": "source",
+          "content": "Prof. Auguste Meessen of the Catholic University of Louvain conducted the most detailed analysis of the F-16 radar recordings for SOBEPS. His analysis confirmed three separate lock events, each broken by extreme target maneuvers. The descent from 3,000m to near ground level in approximately 2 seconds implies vertical acceleration of approximately 40g.",
+          "source": "SOBEPS Vague d'OVNI sur la Belgique, Vol. 2 (1994)",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F2",
+          "type": "analysis",
+          "content": "Some skeptics have suggested the radar returns may have been atmospheric ducting or angel echoes (radar returns from atmospheric temperature inversions). However, this interpretation is inconsistent with the three discrete lock events, the correlated ground radar contacts, and the visual confirmation by ground observers at the radar-indicated position.",
+          "source": "Various skeptical analyses vs. Meessen rebuttal",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F3",
+          "type": "contradiction",
+          "content": "The AN/APG-66 is a pulse-Doppler radar designed for air-to-air engagement. Its ability to track targets at the speeds implied by the data (1,800+ km/h horizontal, 40g vertical) is within its design envelope — these are the types of targets it was built to track. However, the rapid lock-break-reacquire cycle is unusual and not easily explained by clutter or interference.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-002",
+      "question": "How does the Belgian Wave relate to simultaneous European sightings?",
+      "status": "open",
+      "priority": "medium",
+      "anchorSection": "openQuestions",
+      "anchorId": "Q04",
+      "anchorText": "What is the relationship between the Belgian Wave and concurrent European sightings?",
+      "findings": [
+        {
+          "id": "RB-002-F1",
+          "type": "source",
+          "content": "During the same November 1989 – April 1990 period, triangular craft sightings were reported in the Netherlands (particularly near the German border), in Germany (Rhineland), and in northern France. These received far less investigation than the Belgian events but share the same triangular description and timeline.",
+          "source": "European UFO reporting networks, cross-border analysis by SOBEPS",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-002-F2",
+          "type": "analysis",
+          "content": "The geographic clustering along the Belgium-Germany-Netherlands border region is notable. This area contained significant NATO infrastructure during the Cold War, including SHAPE headquarters, multiple air bases, and early warning radar stations. Whether this correlation is meaningful or coincidental remains an open question.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    }
+  ]
+}

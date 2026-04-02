@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 18px; font-weight: 700; fill: #2D2A24; }
+      .subtitle { font-size: 11px; fill: #6B6558; }
+      .label { font-size: 11px; fill: #2D2A24; font-weight: 600; }
+      .label-sm { font-size: 9px; fill: #6B6558; }
+      .time { font-size: 10px; font-weight: 700; fill: #9A7A2E; font-family: 'Courier New', monospace; }
+      .land { fill: #E8E2D6; stroke: #C8C0B0; stroke-width: 1.5; }
+      .ocean { fill: #D6DFE8; }
+      .flight-route { stroke: #4A6A9A; stroke-width: 2; fill: none; }
+      .encounter-route { stroke: #B04A4A; stroke-width: 3; fill: none; }
+      .radar-arc { fill: none; stroke: #7B5D9A; stroke-width: 1; stroke-dasharray: 3,3; opacity: 0.4; }
+      .uap-marker { fill: #9A7A2E; }
+      .legend-box { fill: #F6F5F1; stroke: #D4C9A8; stroke-width: 1; rx: 4; }
+      .note { font-size: 8px; fill: #6B6558; font-style: italic; }
+      .city-dot { fill: #6B6558; }
+    </style>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4A6A9A"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#B04A4A"/>
+    </marker>
+    <symbol id="b747" viewBox="0 0 30 24">
+      <path d="M15,2 L17,9 L28,12 L17,15 L15,22 L13,15 L2,12 L13,9 Z" fill="#4A6A9A" stroke="#2D2A24" stroke-width="0.5"/>
+    </symbol>
+    <symbol id="uap-giant" viewBox="0 0 50 30">
+      <ellipse cx="25" cy="15" rx="23" ry="12" fill="#9A7A2E" opacity="0.3" stroke="#9A7A2E" stroke-width="1.5"/>
+      <ellipse cx="25" cy="15" rx="23" ry="12" fill="none" stroke="#FFFDF5" stroke-width="0.5" opacity="0.4"/>
+    </symbol>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="540" fill="#F6F5F1"/>
+  <rect x="8" y="8" width="944" height="524" fill="none" stroke="#D4C9A8" stroke-width="1" rx="4"/>
+
+  <!-- Title area (compact) -->
+  <text x="30" y="32" class="title">JAL FLIGHT 1628 — ALASKA ENCOUNTER</text>
+  <text x="30" y="48" class="subtitle">November 17, 1986 · 5:11 PM local · Boeing 747 cargo, Paris → Anchorage → Tokyo · Captain Kenjyu Terauchi</text>
+  <text x="30" y="62" class="subtitle">~31 minutes sustained observation · FAA + NORAD radar confirmation</text>
+
+  <!-- Map area -->
+  <rect x="16" y="75" width="928" height="370" class="ocean" rx="3"/>
+
+  <!-- Alaska landmass — wider, adjusted for landscape -->
+  <path d="M 16,75 L 500,75 C 530,110 570,150 620,185
+           C 670,220 720,255 745,290
+           C 770,325 780,355 790,385
+           C 800,410 810,430 830,445
+           L 930,445 L 930,445 L 16,445 Z" class="land"/>
+  <text x="300" y="380" font-size="20" fill="#A09888" text-anchor="middle" letter-spacing="8">ALASKA</text>
+
+  <!-- Canada reference -->
+  <text x="870" y="420" font-size="12" fill="#A09888" letter-spacing="4">CANADA</text>
+
+  <!-- Arctic Ocean -->
+  <text x="400" y="98" font-size="12" fill="#A0B8C8" text-anchor="middle" letter-spacing="6">ARCTIC OCEAN</text>
+
+  <!-- Pacific Ocean -->
+  <text x="80" y="200" font-size="12" fill="#A0B8C8" text-anchor="middle" letter-spacing="4" transform="rotate(-35,80,200)">PACIFIC</text>
+
+  <!-- Key locations -->
+  <!-- Anchorage -->
+  <circle cx="370" cy="340" r="6" class="city-dot"/>
+  <text x="370" y="330" font-size="12" fill="#2D2A24" text-anchor="middle" font-weight="700">Anchorage</text>
+  <text x="370" y="356" font-size="8" fill="#6B6558" text-anchor="middle">FAA Anchorage Center</text>
+  <text x="370" y="366" font-size="8" fill="#6B6558" text-anchor="middle">Destination airport</text>
+
+  <!-- Ft. Yukon -->
+  <circle cx="570" cy="190" r="5" class="city-dot"/>
+  <text x="570" y="180" font-size="11" fill="#2D2A24" text-anchor="middle" font-weight="600">Ft. Yukon</text>
+  <text x="570" y="206" font-size="8" fill="#9A7A2E" text-anchor="middle">Encounter area</text>
+
+  <!-- Fairbanks -->
+  <circle cx="500" cy="260" r="4" class="city-dot"/>
+  <text x="500" y="250" font-size="10" fill="#6B6558" text-anchor="middle">Fairbanks</text>
+
+  <!-- Flight route (from NE approaching Anchorage) -->
+  <path d="M 920,95 C 850,120 770,155 700,185 C 630,215 570,250 520,285 C 470,315 420,335 370,340" class="flight-route" marker-end="url(#arrow-blue)"/>
+  <text x="830" y="118" font-size="9" fill="#4A6A9A" transform="rotate(-22,830,118)">From Paris via polar route</text>
+
+  <!-- Encounter segment (highlighted) -->
+  <path d="M 740,165 C 700,185 660,210 620,230" class="encounter-route"/>
+
+  <!-- First craft appearance -->
+  <circle cx="720" cy="170" r="8" fill="#9A7A2E" opacity="0.3"/>
+  <circle cx="720" cy="170" r="4" class="uap-marker"/>
+  <rect x="530" y="95" width="195" height="55" rx="3" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="540" y="111" class="time">17:11 LOCAL</text>
+  <text x="540" y="123" class="label-sm">Two rectangular craft appear</text>
+  <text x="540" y="134" class="label-sm">off left side — amber/white lights</text>
+  <text x="540" y="145" class="label-sm">Formation maneuvers for ~7 min</text>
+  <line x1="680" y1="150" x2="716" y2="166" stroke="#9A7A2E" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Massive craft appearance -->
+  <use href="#uap-giant" x="585" y="195" width="70" height="42"/>
+  <rect x="700" y="210" width="210" height="55" rx="3" fill="#FFFDF5" stroke="#B04A4A" stroke-width="1"/>
+  <text x="710" y="226" class="time">~17:18 · MASSIVE CRAFT</text>
+  <text x="710" y="238" class="label-sm">"Twice the size of an aircraft carrier"</text>
+  <text x="710" y="249" class="label-sm">Tracked for ~31 minutes</text>
+  <text x="710" y="260" class="label-sm">FAA + NORAD radar confirmation</text>
+
+  <!-- FAA radar coverage arc -->
+  <path d="M 370,340 Q 400,150 650,105" class="radar-arc"/>
+  <path d="M 370,340 Q 580,150 780,155" class="radar-arc"/>
+  <text x="460" y="165" font-size="8" fill="#7B5D9A" transform="rotate(-55,460,165)">FAA radar coverage</text>
+
+  <!-- JAL reroute -->
+  <path d="M 620,230 C 580,270 530,305 470,325 C 440,335 410,340 370,340" stroke="#4A6A9A" stroke-width="2" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-blue)"/>
+  <text x="510" y="315" font-size="8" fill="#4A6A9A">JAL rerouted to Anchorage</text>
+
+  <!-- Boeing 747 icon on route -->
+  <use href="#b747" x="660" y="178" width="24" height="20"/>
+  <text x="655" y="175" font-size="8" fill="#4A6A9A" text-anchor="end">JAL 1628</text>
+  <text x="655" y="185" font-size="7" fill="#6B6558" text-anchor="end">Boeing 747-200F</text>
+
+  <!-- Callahan/CIA callout -->
+  <rect x="30" y="290" width="245" height="56" rx="3" fill="#FFFDF5" stroke="#6B6558" stroke-width="1"/>
+  <text x="40" y="306" class="label">FAA Division Chief John Callahan</text>
+  <text x="40" y="318" class="label-sm">After investigating: CIA agents arrived,</text>
+  <text x="40" y="329" class="label-sm">told everyone "this never happened,"</text>
+  <text x="40" y="340" class="label-sm">and confiscated all materials</text>
+
+  <!-- Terauchi aftermath -->
+  <rect x="30" y="355" width="245" height="44" rx="3" fill="#FFFDF5" stroke="#B04A4A" stroke-width="1"/>
+  <text x="40" y="371" class="label">Captain Terauchi</text>
+  <text x="40" y="383" class="label-sm">Grounded by JAL after press conference</text>
+  <text x="40" y="394" class="label-sm">Reinstated after public pressure</text>
+
+  <!-- Scale -->
+  <line x1="810" y1="415" x2="910" y2="415" stroke="#6B6558" stroke-width="2"/>
+  <line x1="810" y1="410" x2="810" y2="420" stroke="#6B6558" stroke-width="1"/>
+  <line x1="910" y1="410" x2="910" y2="420" stroke="#6B6558" stroke-width="1"/>
+  <text x="860" y="430" font-size="8" fill="#6B6558" text-anchor="middle">~200 miles</text>
+
+  <!-- Legend (compact bar at bottom) -->
+  <rect x="16" y="460" width="928" height="68" class="legend-box"/>
+  <text x="36" y="480" class="label">Legend</text>
+
+  <line x1="90" y1="478" x2="120" y2="478" stroke="#4A6A9A" stroke-width="2"/>
+  <text x="128" y="482" class="label-sm">JAL 1628 flight route</text>
+
+  <line x1="275" y1="478" x2="305" y2="478" class="encounter-route"/>
+  <text x="313" y="482" class="label-sm">Encounter segment (~31 min)</text>
+
+  <circle cx="490" cy="478" r="4" class="uap-marker"/>
+  <text x="500" y="482" class="label-sm">First craft appearance</text>
+
+  <ellipse cx="640" cy="478" rx="15" ry="8" fill="#9A7A2E" opacity="0.3" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="662" y="482" class="label-sm">Massive craft</text>
+
+  <text x="36" y="505" class="note">Sources: FAA CIRVIS report · Capt. Terauchi drawings and testimony · John Callahan NPC testimony (2007) · NORAD radar data</text>
+  <text x="36" y="518" class="note">Terauchi described the massive craft as "twice the size of an aircraft carrier" with a "pale light" emanating from it.</text>
+</svg>

@@ -1,0 +1,167 @@
+{
+  "case_id": "CASE-004",
+  "title": "Tehran F-4 Intercept",
+  "subtitle": "The DIA Document Case",
+  "date": "1976-09-19",
+  "date_display": "September 19, 1976",
+  "date_range": {
+    "first_reports": "1976-09-19",
+    "primary_encounter": "1976-09-19",
+    "last_known_activity": "1976-09-19"
+  },
+  "location": {
+    "description": "Tehran, Iran — airspace over and north of the capital",
+    "lat": 35.69,
+    "lng": 51.39,
+    "area": "Tehran metropolitan airspace, Imperial Iranian Air Force jurisdiction"
+  },
+  "duration": {
+    "total_event": "~90 minutes",
+    "first_intercept": "~15 minutes (instruments failed, returned to base)",
+    "second_intercept": "~30 minutes (weapons and comms failures)"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 85,
+  "credibility_tier": "TIER 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "radar-confirmed",
+    "weapons-interference",
+    "communications-failure",
+    "government-document",
+    "dia-report"
+  ],
+  "related_case_ids": [
+    "CASE-003",
+    "CASE-001"
+  ],
+  "event_summary": {
+    "overview": "On September 19, 1976, multiple civilians in the Shemiran district of Tehran reported a bright, intensely luminous object in the night sky. The Imperial Iranian Air Force scrambled two F-4 Phantom II interceptors in sequence. The first F-4, piloted by an unnamed crew, experienced total instrument and communications failure upon approaching the object and was forced to return to base. The second F-4, piloted by Lieutenant Parviz Jafari, achieved radar lock on the object but experienced weapons panel failure and communications jamming when attempting to engage. A smaller luminous object appeared to detach from the primary object and rapidly approach Jafari's aircraft. The incident was documented in a four-page Defense Intelligence Agency (DIA) report that concluded the case 'meets all the criteria for a valid study of the UFO phenomenon.'",
+    "weather": "Clear night sky, stars visible, no significant cloud cover reported over Tehran.",
+    "atmospheric_conditions": "Good visibility. Tehran sits at approximately 1,200 meters elevation. No atmospheric anomalies noted in the DIA report.",
+    "military_units": [
+      {
+        "unit": "Imperial Iranian Air Force",
+        "type": "Iranian national air defense",
+        "role": "Scrambled two F-4 Phantom II interceptors from Shahrokhi Air Base"
+      },
+      {
+        "unit": "F-4 Phantom II (First Intercept)",
+        "type": "McDonnell Douglas F-4D/E",
+        "role": "Initial scramble — experienced total instrument failure, returned to base"
+      },
+      {
+        "unit": "F-4 Phantom II (Second Intercept — Lt. Jafari)",
+        "type": "McDonnell Douglas F-4D/E",
+        "role": "Second scramble — radar lock, weapons/comms failure, observed detaching object"
+      }
+    ]
+  },
+  "key_witnesses": [
+    {
+      "id": "KW-001",
+      "name": "Lieutenant Parviz Jafari",
+      "role": "Pilot, second F-4 Phantom interceptor",
+      "affiliation": "Imperial Iranian Air Force",
+      "summary": "Pilot of the second F-4 scrambled to intercept the object. Achieved radar lock showing an object comparable in radar return to a 707 tanker. Experienced weapons panel failure and communications jamming during approach. Observed a smaller luminous object detach from the primary and fly directly toward his aircraft at high speed. Later testified at the National Press Club in Washington, D.C. in 2007.",
+      "credibility_notes": "Military pilot, trained observer. Consistent testimony over 30+ years. Public testimony at National Press Club 2007."
+    },
+    {
+      "id": "KW-002",
+      "name": "General Nader Yousefi",
+      "role": "Deputy Commander, Imperial Iranian Air Force Operations",
+      "affiliation": "Imperial Iranian Air Force",
+      "summary": "Senior officer who authorized the scramble of both F-4 interceptors. Personally observed the object from the ground before ordering the intercepts. Confirmed the instrument and weapons failures experienced by both aircraft.",
+      "credibility_notes": "Senior military commander. Authorized the intercepts. Direct ground observer."
+    }
+  ],
+  "key_evidence": [
+    {
+      "id": "KE-001",
+      "type": "document",
+      "title": "DIA Report — September 1976",
+      "description": "A four-page Defense Intelligence Agency evaluation report documenting the Tehran intercept. The report details the sequence of events, the electromagnetic interference experienced by both aircraft, and concludes that the case 'meets all the criteria for a valid study of the UFO phenomenon.' Obtained through FOIA and widely regarded as one of the most significant official UFO documents.",
+      "source": "Defense Intelligence Agency (DIA), obtained via FOIA",
+      "classification": "Formerly classified, now declassified"
+    },
+    {
+      "id": "KE-002",
+      "type": "sensor",
+      "title": "F-4 Radar Data",
+      "description": "The second F-4's radar acquired the object, showing a return comparable to a 707 tanker aircraft. The radar lock was maintained briefly before the weapons panel experienced total failure.",
+      "source": "DIA report, Lt. Jafari testimony"
+    },
+    {
+      "id": "KE-003",
+      "type": "testimony",
+      "title": "Pilot and Commander Testimony",
+      "description": "Lt. Parviz Jafari and Gen. Nader Yousefi provided consistent accounts over decades. Jafari testified publicly at the National Press Club in 2007 as part of a panel of military witnesses from multiple countries.",
+      "source": "National Press Club event (2007), multiple interviews"
+    },
+    {
+      "id": "KE-004",
+      "type": "document",
+      "title": "US Embassy Reports",
+      "description": "Both the Iranian government and the U.S. Embassy in Tehran filed reports on the incident. The US Embassy report corroborates the Iranian military account and was forwarded to the DIA.",
+      "source": "US Embassy Tehran, DIA channels"
+    },
+    {
+      "id": "KE-005",
+      "type": "physical",
+      "title": "Radiation Readings",
+      "description": "Ground teams dispatched to the area where a smaller object appeared to land reported anomalous radiation readings. The readings were above normal background levels but the instruments and methodology have not been independently verified.",
+      "source": "DIA report, Iranian ground team reports"
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "DIA Evaluation Report — Tehran UFO Incident",
+      "type": "government_document",
+      "url": "https://nsarchive2.gwu.edu/NSAEBB/NSAEBB187/",
+      "notes": "Declassified DIA report obtained via FOIA. Four pages. Concludes case meets all criteria for valid UFO study."
+    },
+    {
+      "title": "Lt. Parviz Jafari — National Press Club Testimony (2007)",
+      "type": "testimony",
+      "url": null,
+      "notes": "Public testimony at National Press Club, Washington D.C. Panel of international military witnesses."
+    },
+    {
+      "title": "National Security Archive — George Washington University",
+      "type": "archive",
+      "url": "https://nsarchive2.gwu.edu/NSAEBB/NSAEBB187/",
+      "notes": "Academic archive hosting declassified UFO documents including the Tehran DIA report."
+    }
+  ],
+  "investigation_history": [
+    {
+      "date": "1976-09-19",
+      "event": "Incident occurs. Imperial Iranian Air Force scrambles two F-4 Phantoms."
+    },
+    {
+      "date": "1976-09",
+      "event": "DIA produces evaluation report concluding case 'meets all criteria for valid study of the UFO phenomenon.'"
+    },
+    {
+      "date": "1976-09",
+      "event": "US Embassy Tehran files report corroborating Iranian military account."
+    },
+    {
+      "date": "1977",
+      "event": "DIA report circulated within US intelligence community. Classified."
+    },
+    {
+      "date": "1981",
+      "event": "Document obtained through FOIA by researchers."
+    },
+    {
+      "date": "2007",
+      "event": "Lt. Parviz Jafari testifies at National Press Club alongside international military witnesses."
+    },
+    {
+      "date": "2010s",
+      "event": "Case cited in multiple UFO/UAP research publications as a benchmark military encounter."
+    }
+  ]
+}

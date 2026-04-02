@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 16px; font-weight: 700; fill: #2D2A24; }
+      .subtitle { font-size: 10px; fill: #6B6558; }
+      .label { font-size: 11px; fill: #2D2A24; font-weight: 600; }
+      .label-sm { font-size: 9px; fill: #6B6558; }
+      .time { font-size: 10px; fill: #9A7A2E; font-weight: 700; font-family: 'Courier New', monospace; }
+      .ocean { fill: #D6DFE8; }
+      .coast { fill: #E8E2D6; stroke: #C8C0B0; stroke-width: 1.5; }
+      .oparea { fill: #4A6A9A; fill-opacity: 0.12; stroke: #4A6A9A; stroke-width: 2; stroke-dasharray: 8,4; }
+      .oparea-label { font-size: 14px; fill: #4A6A9A; font-weight: 700; letter-spacing: 3; }
+      .ship { fill: #4A6A9A; }
+      .encounter-zone { fill: #B04A4A; fill-opacity: 0.08; stroke: #B04A4A; stroke-width: 1.5; stroke-dasharray: 5,3; }
+      .uap-marker { fill: #9A7A2E; }
+      .legend-box { fill: #F6F5F1; stroke: #D4C9A8; stroke-width: 1; rx: 4; }
+      .note { font-size: 8px; fill: #6B6558; font-style: italic; }
+      .city-dot { fill: #6B6558; }
+    </style>
+    <symbol id="fa18" viewBox="0 0 24 20">
+      <path d="M12,2 L14,8 L22,10 L14,12 L12,18 L10,12 L2,10 L10,8 Z" fill="#4A6A9A" stroke="#2D2A24" stroke-width="0.5"/>
+    </symbol>
+    <symbol id="uap-no-ir" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="6" fill="none" stroke="#9A7A2E" stroke-width="2"/>
+      <circle cx="10" cy="10" r="3" fill="#9A7A2E" opacity="0.6"/>
+    </symbol>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="540" fill="#F6F5F1"/>
+  <rect x="8" y="8" width="944" height="524" fill="none" stroke="#D4C9A8" stroke-width="1" rx="4"/>
+
+  <!-- Title area — compact -->
+  <text x="30" y="34" class="title">USS ROOSEVELT — EAST COAST ENCOUNTERS</text>
+  <text x="30" y="50" class="subtitle">Summer 2014 – March 2015 · W-72 Operating Area · Carrier Strike Group 12 · GIMBAL + GOFAST videos · Lt. Ryan Graves testimony (2023)</text>
+  <line x1="30" y1="58" x2="930" y2="58" stroke="#D4C9A8" stroke-width="0.5"/>
+
+  <!-- Map area -->
+  <rect x="15" y="65" width="930" height="380" class="ocean" rx="3"/>
+
+  <!-- US East Coast — reflowed for landscape, coast runs left side -->
+  <path d="M 15,65 L 200,65 C 210,100 220,140 230,180
+           C 240,220 248,250 255,280 C 260,300 265,320 270,340
+           C 275,360 280,380 290,400 C 300,420 310,435 320,445 L 15,445 Z" class="coast"/>
+
+  <!-- State labels -->
+  <text x="80" y="220" font-size="11" fill="#A09888" letter-spacing="3">VIRGINIA</text>
+  <text x="60" y="360" font-size="11" fill="#A09888" letter-spacing="3">NORTH CAROLINA</text>
+
+  <!-- Atlantic Ocean -->
+  <text x="620" y="130" font-size="15" fill="#A0B8C8" text-anchor="middle" letter-spacing="8">ATLANTIC OCEAN</text>
+
+  <!-- Cities -->
+  <!-- Washington DC -->
+  <circle cx="200" cy="140" r="3.5" class="city-dot"/>
+  <text x="188" y="134" font-size="9" fill="#2D2A24" text-anchor="end" font-weight="600">Washington DC</text>
+
+  <!-- Norfolk -->
+  <circle cx="238" cy="210" r="4.5" class="city-dot"/>
+  <text x="226" y="203" font-size="10" fill="#2D2A24" text-anchor="end" font-weight="700">Norfolk</text>
+  <text x="226" y="214" font-size="8" fill="#6B6558" text-anchor="end">Naval Station Norfolk</text>
+
+  <!-- NAS Oceana -->
+  <rect x="244" y="226" width="35" height="7" rx="2" fill="#4A6A9A"/>
+  <text x="262" y="244" font-size="8" fill="#4A6A9A" text-anchor="middle" font-weight="600">NAS Oceana</text>
+  <text x="262" y="254" font-size="7" fill="#6B6558" text-anchor="middle">VFA-11 / VFA-31 home base</text>
+
+  <!-- Virginia Beach -->
+  <circle cx="250" cy="228" r="2.5" class="city-dot"/>
+  <text x="250" y="265" font-size="8" fill="#6B6558" text-anchor="middle">Virginia Beach</text>
+
+  <!-- Outer Banks -->
+  <path d="M 270,340 C 278,355 284,370 286,385 C 288,400 284,415 278,430" stroke="#C8C0B0" stroke-width="2" fill="none"/>
+  <text x="300" y="390" font-size="8" fill="#6B6558">Outer Banks</text>
+
+  <!-- W-72 Operating Area -->
+  <rect x="380" y="160" width="380" height="230" class="oparea" rx="5"/>
+  <text x="570" y="190" class="oparea-label" text-anchor="middle">W-72</text>
+  <text x="570" y="205" font-size="10" fill="#4A6A9A" text-anchor="middle">WARNING AREA</text>
+  <text x="570" y="218" font-size="9" fill="#4A6A9A" text-anchor="middle" opacity="0.7">~100 nm off Virginia/North Carolina</text>
+
+  <!-- USS Roosevelt -->
+  <rect x="530" y="320" width="36" height="9" rx="2" class="ship"/>
+  <rect x="546" y="314" width="4" height="6" rx="1" fill="#4A6A9A"/>
+  <text x="548" y="308" font-size="9" fill="#4A6A9A" text-anchor="middle" font-weight="600">USS Roosevelt (CVN-71)</text>
+  <text x="548" y="342" font-size="8" fill="#6B6558" text-anchor="middle">Carrier Strike Group 12</text>
+
+  <!-- Encounter zones -->
+  <ellipse cx="540" cy="270" rx="55" ry="30" class="encounter-zone"/>
+  <text x="540" y="266" font-size="8" fill="#B04A4A" text-anchor="middle" font-weight="600">Primary encounter zone</text>
+  <text x="540" y="278" font-size="7" fill="#B04A4A" text-anchor="middle">"Every day for at least a couple years"</text>
+
+  <ellipse cx="640" cy="350" rx="42" ry="26" class="encounter-zone"/>
+  <text x="640" y="348" font-size="8" fill="#B04A4A" text-anchor="middle">GIMBAL capture</text>
+  <text x="640" y="360" font-size="7" fill="#B04A4A" text-anchor="middle">Jan 2015</text>
+
+  <ellipse cx="470" cy="360" rx="38" ry="22" class="encounter-zone"/>
+  <text x="470" y="358" font-size="8" fill="#B04A4A" text-anchor="middle">GOFAST capture</text>
+  <text x="470" y="370" font-size="7" fill="#B04A4A" text-anchor="middle">2015</text>
+
+  <!-- UAP markers scattered in OPAREA -->
+  <use href="#uap-no-ir" x="500" y="235" width="14" height="14"/>
+  <use href="#uap-no-ir" x="580" y="255" width="14" height="14"/>
+  <use href="#uap-no-ir" x="555" y="290" width="14" height="14"/>
+  <use href="#uap-no-ir" x="660" y="310" width="14" height="14"/>
+  <use href="#uap-no-ir" x="440" y="300" width="14" height="14"/>
+  <use href="#uap-no-ir" x="620" y="370" width="14" height="14"/>
+
+  <!-- F/A-18 patrol -->
+  <use href="#fa18" x="475" y="245" width="18" height="14"/>
+  <use href="#fa18" x="610" y="280" width="18" height="14"/>
+
+  <!-- Flight path from NAS Oceana to W-72 -->
+  <path d="M 282,234 C 310,230 340,225 370,225 C 400,225 430,230 460,240" stroke="#4A6A9A" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+
+  <!-- Near-miss callout -->
+  <rect x="400" y="85" width="220" height="48" rx="3" fill="#FFFDF5" stroke="#B04A4A" stroke-width="1"/>
+  <text x="410" y="100" class="time">NEAR-MISS INCIDENT</text>
+  <text x="410" y="112" class="label-sm">Pilot came within meters of unidentified</text>
+  <text x="410" y="123" class="label-sm">object during routine training flight</text>
+  <line x1="510" y1="133" x2="530" y2="245" stroke="#B04A4A" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- GIMBAL callout -->
+  <rect x="770" y="260" width="155" height="62" rx="3" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="778" y="275" class="time">GIMBAL VIDEO</text>
+  <text x="778" y="287" class="label-sm">Object rotates against direction</text>
+  <text x="778" y="298" class="label-sm">of flight. No infrared heat</text>
+  <text x="778" y="309" class="label-sm">signature — anomalous for any aircraft</text>
+  <text x="778" y="318" class="note">Declassified April 27, 2020</text>
+  <line x1="770" y1="300" x2="680" y2="345" stroke="#9A7A2E" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Graves testimony callout -->
+  <rect x="770" y="170" width="155" height="56" rx="3" fill="#FFFDF5" stroke="#4A6A9A" stroke-width="1"/>
+  <text x="778" y="185" class="label" font-size="9">Lt. Ryan Graves — Congress</text>
+  <text x="778" y="196" class="label-sm">Testified under oath, House</text>
+  <text x="778" y="207" class="label-sm">Oversight (July 2023). Encounters</text>
+  <text x="778" y="218" class="label-sm">"every day for at least a couple years"</text>
+
+  <!-- Legend — compact bar at bottom -->
+  <rect x="15" y="455" width="930" height="75" class="legend-box"/>
+  <text x="35" y="474" class="label">Legend</text>
+
+  <rect x="35" y="484" width="18" height="10" class="oparea" rx="2"/>
+  <text x="58" y="492" class="label-sm">W-72 Warning Area</text>
+
+  <use href="#fa18" x="170" y="484" width="14" height="12"/>
+  <text x="190" y="492" class="label-sm">F/A-18 Super Hornet</text>
+
+  <use href="#uap-no-ir" x="300" y="483" width="12" height="12"/>
+  <text x="317" y="492" class="label-sm">Unidentified object (no IR signature)</text>
+
+  <ellipse cx="485" cy="489" rx="13" ry="7" class="encounter-zone"/>
+  <text x="504" y="492" class="label-sm">Encounter zone</text>
+
+  <rect x="585" y="484" width="18" height="7" rx="2" class="ship"/>
+  <text x="608" y="492" class="label-sm">USS Roosevelt</text>
+
+  <text x="35" y="515" class="note">Sources: GIMBAL/GOFAST videos (DoD official release, April 2020) · Lt. Ryan Graves congressional testimony (July 26, 2023)</text>
+  <text x="35" y="525" class="note">Objects observed at 30,000 ft with no visible propulsion and no infrared heat signature — anomalous for any known aircraft.</text>
+</svg>

@@ -1,0 +1,205 @@
+{
+  "case_id": "CASE-005",
+  "title": "JAL Flight 1628",
+  "subtitle": "The Alaska Giant",
+  "date": "1986-11-17",
+  "date_display": "November 17, 1986",
+  "date_range": {
+    "first_sighting": "1986-11-17",
+    "primary_encounter": "1986-11-17",
+    "faa_investigation_closed": "1987-03-05"
+  },
+  "location": {
+    "description": "Over Alaska, near Ft. Yukon",
+    "lat": 66.56,
+    "lng": -145.27,
+    "area": "Northeastern Alaska, en route Reykjavik to Anchorage"
+  },
+  "duration": {
+    "initial_sighting": "~5 minutes (first lights observed)",
+    "primary_encounter": "~31 minutes sustained observation",
+    "total_event": "~50 minutes including intermittent returns"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 82,
+  "credibility_tier": "TIER 2",
+  "status": "investigating",
+  "tags": [
+    "pilot-witness",
+    "radar-confirmed",
+    "faa-documented",
+    "data-confiscation",
+    "commercial-aviation"
+  ],
+  "related_case_ids": [
+    "CASE-001",
+    "CASE-002"
+  ],
+  "event_summary": {
+    "overview": "On November 17, 1986, Japan Air Lines cargo flight 1628, a Boeing 747-200F en route from Reykjavik to Anchorage, encountered three unidentified objects over northeastern Alaska. Captain Kenju Terauchi, a veteran pilot with over 10,000 flight hours, reported two small craft with arrays of lights followed by a massive object he described as the size of 'two aircraft carriers.' The encounter lasted approximately 31 minutes, during which FAA Anchorage Center radar and NORAD military radar both detected uncorrelated targets near the 747. The FAA conducted a formal investigation under Division Chief John Callahan. Terauchi produced detailed technical drawings of the objects. The case became a landmark in aviation UAP history when Callahan later testified that CIA personnel confiscated FAA radar tapes and ordered participants to remain silent.",
+    "weather": "Clear, dark arctic skies. Temperature approximately -50C at altitude. Stars and Jupiter visible.",
+    "flight_conditions": "Cruise altitude FL350 (35,000 ft). Cargo flight with three crew members. Standard international route.",
+    "crew": [
+      {
+        "name": "Captain Kenju Terauchi",
+        "role": "Pilot in command",
+        "experience": "10,000+ flight hours, former JASDF fighter pilot"
+      },
+      {
+        "name": "First Officer Takanori Tamefuji",
+        "role": "Co-pilot",
+        "experience": "Confirmed unusual lights but less certain about large object"
+      },
+      {
+        "name": "Flight Engineer Yoshio Tsukuba",
+        "role": "Flight engineer",
+        "experience": "Observed lights from rear engineer station"
+      }
+    ]
+  },
+  "key_witnesses": [
+    {
+      "id": "W-001",
+      "name": "Captain Kenju Terauchi",
+      "role": "Pilot in command, JAL Flight 1628",
+      "summary": "Primary witness. Observed two small craft with arrays of glowing nozzles, then a massive object he estimated as the size of two aircraft carriers. Produced detailed technical drawings. Filed official CIRVIS report. Later removed from flight duty by JAL after media interviews; reinstated after public pressure.",
+      "credibility": "High — career pilot, JASDF veteran, consistent account across multiple tellings",
+      "key_observations": [
+        "Two small objects with arrays of glowing amber/white nozzles",
+        "Massive walnut-shaped object silhouetted against city lights below",
+        "Objects paced the 747 for approximately 31 minutes",
+        "Objects departed rapidly when United Airlines flight approached"
+      ]
+    },
+    {
+      "id": "W-002",
+      "name": "First Officer Takanori Tamefuji",
+      "role": "Co-pilot, JAL Flight 1628",
+      "summary": "Confirmed observing unusual lights. More cautious in assessment than Terauchi. Could not confirm the large walnut-shaped object due to viewing angle.",
+      "credibility": "Moderate — confirmed lights, uncertain about largest object"
+    },
+    {
+      "id": "W-003",
+      "name": "Flight Engineer Yoshio Tsukuba",
+      "role": "Flight engineer, JAL Flight 1628",
+      "summary": "Observed lights from the rear engineer station. Confirmed unusual aerial phenomena but could not see the large object clearly from his position.",
+      "credibility": "Moderate — confirmed lights from separate vantage point"
+    },
+    {
+      "id": "W-004",
+      "name": "John Callahan",
+      "role": "FAA Division Chief, Accidents and Investigations",
+      "summary": "Led the FAA investigation. Preserved radar data, pilot interviews, and ATC communications. Testified at the 2007 National Press Club event that CIA personnel confiscated FAA materials and told all participants the meeting 'never happened.' Callahan had secretly retained copies of the radar data.",
+      "credibility": "High — FAA senior official, sworn testimony, retained corroborating evidence"
+    }
+  ],
+  "key_evidence": [
+    {
+      "id": "E-001",
+      "type": "radar",
+      "title": "FAA Anchorage Center Radar Returns",
+      "description": "FAA radar detected an uncorrelated target in the vicinity of JAL 1628 during portions of the encounter. The radar returns were intermittent and not present for the entire duration. John Callahan preserved copies of the radar data before CIA confiscation.",
+      "status": "partially confirmed",
+      "notes": "Intermittent returns reduce certainty. Some analysts argue returns could be weather clutter or split radar returns from the 747 itself."
+    },
+    {
+      "id": "E-002",
+      "type": "radar",
+      "title": "NORAD Radar Data",
+      "description": "Military radar operated by NORAD also tracked anomalous returns near JAL 1628. NORAD initially confirmed a primary target, then later retracted the confirmation.",
+      "status": "disputed",
+      "notes": "NORAD confirmation and subsequent retraction is a key point of contention."
+    },
+    {
+      "id": "E-003",
+      "type": "documentary",
+      "title": "FAA CIRVIS Report",
+      "description": "Captain Terauchi filed an official Communication Instructions for Reporting Vital Intelligence Sightings (CIRVIS) report, a formal military-grade report required for unidentified aerial objects observed by aviation personnel.",
+      "status": "confirmed"
+    },
+    {
+      "id": "E-004",
+      "type": "documentary",
+      "title": "Terauchi Technical Drawings",
+      "description": "Captain Terauchi produced detailed technical drawings of the objects, including the two smaller craft with their nozzle arrays and the large walnut-shaped object. The drawings remained consistent across his multiple retellings of the event.",
+      "status": "confirmed"
+    },
+    {
+      "id": "E-005",
+      "type": "testimony",
+      "title": "John Callahan NPC 2007 Testimony",
+      "description": "FAA Division Chief John Callahan testified at the 2007 National Press Club that after the FAA briefed the Reagan administration and intelligence officials, CIA personnel ordered all materials confiscated and told participants the event 'never happened.' Callahan retained secret copies.",
+      "status": "confirmed — sworn testimony"
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "FAA Investigation Report — JAL Flight 1628",
+      "type": "government",
+      "url": null,
+      "notes": "Original FAA investigation file. Partially available through FOIA."
+    },
+    {
+      "title": "Captain Terauchi Interview — Kyodo News Agency (1986)",
+      "type": "media",
+      "url": null,
+      "notes": "Original Japanese press interviews conducted shortly after the event."
+    },
+    {
+      "title": "John Callahan NPC Testimony (2007)",
+      "type": "testimony",
+      "url": "https://www.youtube.com/results?search_query=john+callahan+national+press+club+2007",
+      "notes": "Video testimony available from National Press Club event."
+    },
+    {
+      "title": "Philip J. Klass Investigation — Skeptical Inquirer",
+      "type": "investigation",
+      "url": null,
+      "notes": "Skeptical analysis arguing Jupiter misidentification and radar artifacts."
+    },
+    {
+      "title": "Bruce Maccabee — Detailed Analysis",
+      "type": "investigation",
+      "url": null,
+      "notes": "Optical physicist's detailed analysis supporting anomalous object hypothesis."
+    }
+  ],
+  "investigation_history": [
+    {
+      "date": "1986-11-17",
+      "event": "JAL Flight 1628 crew observes unidentified objects over Alaska. Captain Terauchi reports to FAA Anchorage Center."
+    },
+    {
+      "date": "1986-11-18",
+      "event": "FAA begins formal investigation under Division Chief John Callahan."
+    },
+    {
+      "date": "1986-12",
+      "event": "Japanese media reports the story. Terauchi gives interviews."
+    },
+    {
+      "date": "1987-01",
+      "event": "FAA re-interviews Terauchi. Terauchi produces detailed technical drawings."
+    },
+    {
+      "date": "1987-01",
+      "event": "FAA briefs Reagan administration officials and intelligence community. According to Callahan, CIA personnel confiscate materials."
+    },
+    {
+      "date": "1987-02",
+      "event": "JAL removes Captain Terauchi from flight duty following media attention. Reassigned to desk duties."
+    },
+    {
+      "date": "1987-03-05",
+      "event": "FAA officially closes investigation without conclusion."
+    },
+    {
+      "date": "1987-06",
+      "event": "JAL reinstates Terauchi to flying status after public pressure and union support."
+    },
+    {
+      "date": "2007-11",
+      "event": "John Callahan testifies at National Press Club, revealing CIA confiscation of FAA data."
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "case_id": "CASE-003",
+  "title": "The Belgian Wave",
+  "subtitle": "NATO F-16 Radar Lock Incident",
+  "date": "1990-03-30",
+  "date_display": "March 30-31, 1990",
+  "date_range": {
+    "first_sighting": "1989-11-29",
+    "primary_encounter": "1990-03-30",
+    "last_known_activity": "1990-04-01"
+  },
+  "location": {
+    "description": "Belgium, primarily the Liège/Eupen/Ardennes corridor, extending across Wallonia and parts of Flanders",
+    "lat": 50.63,
+    "lng": 5.57,
+    "area": "Eastern Belgium — Eupen to Brussels corridor"
+  },
+  "duration": {
+    "radar_tracking": "~75 minutes (F-16 intercept on March 30-31, 1990)",
+    "wave_period": "~5 months (November 1989 – April 1990)"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 88,
+  "credibility_tier": "TIER 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "radar-confirmed",
+    "mass-sighting",
+    "government-acknowledged",
+    "f-16-intercept",
+    "nato",
+    "gendarmerie-reports"
+  ],
+  "related_case_ids": [
+    "CASE-004",
+    "CASE-007"
+  ],
+  "event_summary": {
+    "overview": "Between November 1989 and April 1990, thousands of witnesses across Belgium reported sightings of large, silent, triangular craft with bright lights at each corner and a pulsing red or orange light at the center. The wave peaked on the night of March 30-31, 1990, when the Belgian Air Force (BAF) scrambled two F-16 Fighting Falcons from Beauvechain Air Base in response to confirmed radar contacts by ground stations and gendarmerie visual reports. Over approximately 75 minutes, the F-16 pilots achieved three separate radar locks on the target. On each lock, the object executed extreme evasive maneuvers — in one instance descending from 3,000 meters to 1,700 meters and then to near ground level in approximately two seconds, implying accelerations of 40g or greater. The object also accelerated from approximately 280 km/h to over 1,800 km/h in seconds. The Belgian government openly acknowledged the events, and the Belgian Air Force cooperated fully with civilian investigators from SOBEPS (Société Belge d'Étude des Phénomènes Spatiaux). Over 13,500 individual sighting reports were filed during the wave period. The case remains officially unexplained.",
+    "weather": "Clear to partly cloudy skies on the night of March 30-31, 1990. Good visibility. Light winds.",
+    "key_figures": [
+      {
+        "name": "Col. Wilfried De Brouwer",
+        "role": "Belgian Air Force Chief of Operations (later Major General)",
+        "significance": "Authorized the F-16 scramble and served as the primary military spokesperson. Later publicly stated the phenomenon was exceptional and could not be conventionally explained."
+      },
+      {
+        "name": "Capt. Yves Nicoll",
+        "role": "Belgian Air Force F-16 pilot",
+        "significance": "One of the two F-16 pilots who pursued the object on March 30-31. Achieved multiple radar locks."
+      },
+      {
+        "name": "SOBEPS (Société Belge d'Étude des Phénomènes Spatiaux)",
+        "role": "Belgian civilian UFO research organization",
+        "significance": "Conducted the most comprehensive civilian investigation, producing two detailed volumes of analysis with full cooperation of the Belgian military and gendarmerie."
+      },
+      {
+        "name": "Auguste Meessen",
+        "role": "Professor of Physics, Catholic University of Louvain",
+        "significance": "Conducted extensive scientific analysis of the radar data and witness reports for SOBEPS."
+      }
+    ]
+  },
+  "cards": [
+    {
+      "id": "W-001",
+      "type": "witness",
+      "title": "Col. Wilfried De Brouwer — Belgian Air Force",
+      "summary": "As Chief of Operations for the Belgian Air Force, De Brouwer authorized the F-16 scramble on March 30, 1990 and oversaw the military response. He reviewed all radar data and witness reports. After retirement (as Major General), he publicly stated that the phenomenon was exceptional and could not be explained by conventional means.",
+      "detail": "As Chief of Operations for the Belgian Air Force, De Brouwer authorized the F-16 scramble on March 30, 1990 and oversaw the military response. He reviewed all radar data and witness reports. After retirement (as Major General), he publicly stated that the phenomenon was exceptional and could not be explained by conventional means. De Brouwer presented the case at the National Press Club in Washington, D.C. in 2007 and has been consistently transparent about the Air Force's inability to identify the objects.",
+      "source": {
+        "citation": "National Press Club press conference, Washington D.C., November 12, 2007",
+        "url": null
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Authorized intercept"
+        },
+        {
+          "target_id": "E-003",
+          "type": "evidence",
+          "label": "Authored report"
+        }
+      ]
+    },
+    {
+      "id": "W-002",
+      "type": "witness",
+      "title": "Capt. Yves Nicoll — Belgian Air Force F-16 Pilot",
+      "summary": "One of the two F-16 pilots scrambled from Beauvechain Air Base on the night of March 30-31, 1990. Achieved multiple radar locks on the target using the F-16's AN/APG-66 pulse-Doppler radar. On each lock, the object performed extreme evasive maneuvers that broke the lock.",
+      "detail": "One of the two F-16 pilots scrambled from Beauvechain Air Base on the night of March 30-31, 1990. Achieved multiple radar locks on the target using the F-16's AN/APG-66 pulse-Doppler radar. On each lock, the object performed extreme evasive maneuvers that broke the lock. The recorded radar data showed the object descending from 3,000 meters to 1,700 meters and then to near ground level in approximately two seconds. The object also accelerated from approximately 280 km/h to over 1,800 km/h.",
+      "source": {
+        "citation": "Belgian Air Force official report, July 1991",
+        "url": null
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-001",
+          "type": "evidence",
+          "label": "Achieved radar lock"
+        }
+      ]
+    },
+    {
+      "id": "W-003",
+      "type": "witness",
+      "title": "Gendarmerie Nationale — Heinrich Nicoll & Hubert von Montigny",
+      "summary": "Gendarmerie officers Heinrich Nicoll and Hubert von Montigny were among the first officials to observe and report the triangular objects on November 29, 1989, near Eupen. Their detailed reports preceded any media coverage and were filed through official law enforcement channels. Over the wave period, dozens of gendarmerie officers filed formal reports.",
+      "detail": "Gendarmerie officers Heinrich Nicoll and Hubert von Montigny were among the first officials to observe and report the triangular objects on November 29, 1989, near Eupen. Their detailed reports preceded any media coverage and were filed through official law enforcement channels. Over the wave period, dozens of gendarmerie officers filed formal reports describing large triangular craft with three bright white lights and a central pulsing red/orange light, moving silently at low altitude.",
+      "source": {
+        "citation": "Gendarmerie Nationale official reports, SOBEPS Vol. 1",
+        "url": null
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 580,
+        "y": 200
+      },
+      "connections": [
+        {
+          "target_id": "E-002",
+          "type": "evidence",
+          "label": "Filed reports"
+        },
+        {
+          "target_id": "E-005",
+          "type": "evidence",
+          "label": "Corroborate mass sightings"
+        }
+      ]
+    },
+    {
+      "id": "W-004",
+      "type": "witness",
+      "title": "Civilian Witnesses — Eupen/Liège Region",
+      "summary": "Over the five-month wave, approximately 13,500 individuals filed sighting reports. Witnesses ranged from police officers, military personnel, pilots, and engineers to ordinary citizens across all demographics. Descriptions were remarkably consistent: a large, silent triangular craft with three bright white lights at the vertices and a pulsing red or orange light at the center.",
+      "detail": "Over the five-month wave, approximately 13,500 individuals filed sighting reports. Witnesses ranged from police officers, military personnel, pilots, and engineers to ordinary citizens across all demographics. Descriptions were remarkably consistent: a large, silent triangular craft with three bright white lights at the vertices and a pulsing red or orange light at the center. The craft was typically observed hovering or moving slowly at low altitude, occasionally accelerating rapidly and silently. SOBEPS catalogued and cross-referenced sighting reports, establishing temporal and geographic clusters.",
+      "source": {
+        "citation": "SOBEPS Vague d'OVNI sur la Belgique, Vol. 1 & 2",
+        "url": null
+      },
+      "badge": {
+        "label": "Mass Witnesses",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 580,
+        "y": 450
+      },
+      "connections": [
+        {
+          "target_id": "E-005",
+          "type": "evidence",
+          "label": "13,500+ reports"
+        }
+      ]
+    }
+  ],
+  "key_witnesses": [
+    {
+      "name": "Col. Wilfried De Brouwer",
+      "role": "Belgian Air Force Chief of Operations",
+      "observation": "Authorized and oversaw the F-16 scramble. Reviewed all radar data. Later publicly stated the events could not be conventionally explained.",
+      "quote": "The Air Force has arrived at the conclusion that a certain number of anomalous phenomena has been produced within Belgian airspace. The numerous testimonies of ground observations... have been confirmed by the recordings of the airborne radars of the F-16s.",
+      "source": "BAF press conference, July 1991"
+    },
+    {
+      "name": "Gendarmerie Officers (Eupen patrol)",
+      "role": "Belgian Gendarmerie Nationale",
+      "observation": "First official witnesses on November 29, 1989. Observed a large triangular object with three bright lights and a central pulsing red light hovering silently near Eupen.",
+      "quote": "We observed a platform in the shape of an isosceles triangle... it was absolutely silent.",
+      "source": "Official Gendarmerie report, filed November 29, 1989"
+    },
+    {
+      "name": "Prof. Auguste Meessen",
+      "role": "Professor of Physics, Catholic University of Louvain",
+      "observation": "Conducted detailed analysis of F-16 radar recordings and concluded the acceleration profiles exceeded any known aircraft capability.",
+      "quote": "The radar recordings demonstrate unambiguously that the targets performed maneuvers that no known aircraft could execute.",
+      "source": "SOBEPS Vague d'OVNI sur la Belgique, Vol. 2"
+    },
+    {
+      "name": "Capt. Yves Nicoll",
+      "role": "Belgian Air Force F-16 pilot",
+      "observation": "Pursued the object for 75 minutes. Achieved three radar locks; each time the object executed extreme evasive maneuvers breaking the lock.",
+      "quote": null,
+      "source": "BAF official report, July 1991"
+    }
+  ],
+  "key_evidence": [
+    {
+      "id": "KE-001",
+      "type": "sensor",
+      "title": "F-16 AN/APG-66 Radar Lock Data",
+      "description": "Three separate radar locks achieved by F-16 onboard radar. Object performed evasive maneuvers on each lock. Radar recordings showed descent from 3,000m to near ground level in ~2 seconds and acceleration from 280 km/h to 1,800+ km/h.",
+      "status": "confirmed",
+      "source": "Belgian Air Force official report, July 1991"
+    },
+    {
+      "id": "KE-002",
+      "type": "documentary",
+      "title": "Gendarmerie Official Reports",
+      "description": "Dozens of formal gendarmerie reports filed through official law enforcement channels before any media coverage. Descriptions consistent across officers and patrol districts.",
+      "status": "confirmed",
+      "source": "Gendarmerie Nationale archives, SOBEPS collections"
+    },
+    {
+      "id": "KE-003",
+      "type": "documentary",
+      "title": "Belgian Air Force Official Report (July 1991)",
+      "description": "Comprehensive military report acknowledging the events, detailing the F-16 intercept, and stating that conventional explanations were insufficient.",
+      "status": "confirmed",
+      "source": "BAF / Col. De Brouwer"
+    },
+    {
+      "id": "KE-004",
+      "type": "physical",
+      "title": "Petit-Rechain Photograph — CONFIRMED HOAX",
+      "description": "Widely circulated photograph purporting to show a triangular craft. In 2011, the photographer (Patrick Maréchal) admitted it was a hoax created using a painted styrofoam panel. This is a NEGATIVE evidence item — it demonstrates the need for rigorous verification.",
+      "status": "hoax-confirmed",
+      "source": "RTL-TVI interview with Patrick Maréchal, July 2011"
+    },
+    {
+      "id": "KE-005",
+      "type": "witness",
+      "title": "Mass Witness Reports (13,500+)",
+      "description": "Over 13,500 individual sighting reports filed during the wave period. SOBEPS catalogued and cross-referenced reports, establishing temporal and geographic clusters with remarkable consistency in descriptions.",
+      "status": "confirmed",
+      "source": "SOBEPS Vague d'OVNI sur la Belgique, Vol. 1 & 2"
+    },
+    {
+      "id": "KE-006",
+      "type": "documentary",
+      "title": "NATO Confirmation — Not NATO Aircraft",
+      "description": "NATO confirmed that the objects were not NATO aircraft and that no NATO exercises were being conducted in Belgian airspace during the sighting period.",
+      "status": "confirmed",
+      "source": "NATO SHAPE (Supreme Headquarters Allied Powers Europe) confirmation"
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "Vague d'OVNI sur la Belgique — Un Dossier Exceptionnel",
+      "author": "SOBEPS",
+      "type": "book",
+      "year": 1991,
+      "description": "Volume 1 of the comprehensive SOBEPS investigation. Contains gendarmerie reports, witness interviews, radar analysis, and scientific evaluation.",
+      "url": null
+    },
+    {
+      "title": "Vague d'OVNI sur la Belgique 2 — Nouvelles Investigations",
+      "author": "SOBEPS",
+      "type": "book",
+      "year": 1994,
+      "description": "Volume 2 with expanded analysis, including Prof. Meessen's detailed radar data examination.",
+      "url": null
+    },
+    {
+      "title": "Belgian Air Force Official Report on the F-16 Intercept",
+      "author": "Col. Wilfried De Brouwer / Belgian Air Force",
+      "type": "military report",
+      "year": 1991,
+      "description": "The official BAF report acknowledging the events and detailing the F-16 intercept radar data.",
+      "url": null
+    },
+    {
+      "title": "National Press Club Disclosure Conference — De Brouwer Testimony",
+      "author": "Col. (Ret.) Wilfried De Brouwer",
+      "type": "press conference",
+      "year": 2007,
+      "description": "De Brouwer presented the Belgian Wave case at the National Press Club in Washington, D.C.",
+      "url": null
+    }
+  ],
+  "related_phenomena": [
+    "Hudson Valley wave (1981-1986, New York) — similar triangular descriptions",
+    "Phoenix Lights (1997, Arizona) — large triangular/V-shaped craft, mass sighting",
+    "RAF Cosford/Shawbury sightings (1993, UK) — triangular craft, military witnesses",
+    "Illinois triangle (2000) — police witnesses, multiple jurisdictions"
+  ],
+  "investigation_history": [
+    {
+      "period": "November 1989 – April 1990",
+      "event": "Active wave period with over 13,500 sighting reports filed across Belgium."
+    },
+    {
+      "period": "March 30-31, 1990",
+      "event": "Belgian Air Force scrambles two F-16s. Three radar locks achieved. Object demonstrates extreme evasive maneuvers."
+    },
+    {
+      "period": "July 1991",
+      "event": "Belgian Air Force releases official report acknowledging the events. Col. De Brouwer holds press conference."
+    },
+    {
+      "period": "1991-1994",
+      "event": "SOBEPS publishes two comprehensive volumes analyzing the wave with full military cooperation."
+    },
+    {
+      "period": "July 2011",
+      "event": "Patrick Maréchal admits the Petit-Rechain photograph was a hoax."
+    },
+    {
+      "period": "November 2007",
+      "event": "Maj. Gen. (Ret.) De Brouwer presents the case at the National Press Club in Washington, D.C."
+    }
+  ]
+}

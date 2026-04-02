@@ -73,7 +73,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {showInvite && <InviteModal onClose={() => setShowInvite(false)} />}
+      {showInvite && <InviteModal visible={showInvite} onClose={() => setShowInvite(false)} />}
 
       {/* MAIN CONTENT */}
       <main className="home-main-content">
@@ -84,8 +84,8 @@ export default function HomePage() {
             Reopening the most credible cold cases in UAP history. Human investigator + AI analyst, working together.
           </div>
           <div className="hero-stats">
-            <div className="stat-block"><div className="stat-value">1</div><div className="stat-label">Active Case</div></div>
-            <div className="stat-block"><div className="stat-value">5</div><div className="stat-label">In Queue</div></div>
+            <div className="stat-block"><div className="stat-value">7</div><div className="stat-label">Active Cases</div></div>
+            <div className="stat-block"><div className="stat-value">0</div><div className="stat-label">In Queue</div></div>
             <div className="stat-block"><div className="stat-value">92</div><div className="stat-label">Highest Credibility</div></div>
             <div className="stat-block"><div className="stat-value">1958–2023</div><div className="stat-label">Date Range</div></div>
           </div>
@@ -155,6 +155,276 @@ export default function HomePage() {
               <div className="card-actions">
                 <Link href="/case/001" className="btn-primary">Open Case File &rarr;</Link>
                 <a href="#" className="btn-secondary">View on Canvas &rarr;</a>
+              </div>
+            </div>
+          </div>
+
+          {/* CASE 002 */}
+          <div className="active-card">
+            <div className="active-card-header">
+              <span className="case-num">CASE-002</span>
+              <span className="status-pill investigating"><span className="pulse-dot"></span>Investigating</span>
+            </div>
+            <div className="active-card-body">
+              <h2>The Phoenix Lights</h2>
+              <div className="case-subtitle">Mass Sighting Over Arizona</div>
+              <div className="case-meta">
+                <span>March 13, 1997</span><span>&middot;</span>
+                <span>Henderson NV → Phoenix AZ → Tucson</span><span>&middot;</span>
+                <span>~4.5 hours</span>
+              </div>
+              <div className="cred-row">
+                <div className="cred-score">72</div>
+                <div className="cred-details">
+                  <div className="cred-tier">Tier 2 — High Credibility</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-3)" }}>Mass-sighting, governor witness, contested explanation</div>
+                </div>
+              </div>
+              <div className="tag-pills">
+                {["mass-sighting","civilian","governor-witness","pilot-witness","video-documented","contested-explanation"].map(tag => (
+                  <span key={tag} className="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div className="case-summary">
+                Two distinct events over Arizona: a massive V-shaped formation traversing the state, followed by stationary lights over Phoenix. Over 700 witnesses including Governor Fife Symington. Military flares explanation contested.
+              </div>
+              <div className="case-progress">
+                <div className="progress-label"><span>Investigation Progress</span><span>~60%</span></div>
+                <div className="progress-track"><div className="progress-fill" style={{ width: "60%" }}></div></div>
+              </div>
+              <div className="case-sections">
+                <div className="case-section-chip done"><span className="chip-count">10</span> Timeline events</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Witnesses</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Evidence items</div>
+                <div className="case-section-chip done"><span className="chip-count">3</span> AI analyses</div>
+              </div>
+              <div className="card-actions">
+                <Link href="/case/002" className="btn-primary">Open Case File &rarr;</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* CASE 003 */}
+          <div className="active-card">
+            <div className="active-card-header">
+              <span className="case-num">CASE-003</span>
+              <span className="status-pill investigating"><span className="pulse-dot"></span>Investigating</span>
+            </div>
+            <div className="active-card-body">
+              <h2>The Belgian Wave</h2>
+              <div className="case-subtitle">NATO F-16 Radar Lock Incident</div>
+              <div className="case-meta">
+                <span>November 1989 – April 1990</span><span>&middot;</span>
+                <span>Belgium — Li&egrave;ge, Eupen, Ardennes</span><span>&middot;</span>
+                <span>~5 months</span>
+              </div>
+              <div className="cred-row">
+                <div className="cred-score">88</div>
+                <div className="cred-details">
+                  <div className="cred-tier">Tier 1 — Highest Credibility</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-3)" }}>Military radar, government acknowledged, 13,500+ witnesses</div>
+                </div>
+              </div>
+              <div className="tag-pills">
+                {["military","radar-confirmed","mass-sighting","government-acknowledged","f-16-intercept","nato"].map(tag => (
+                  <span key={tag} className="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div className="case-summary">
+                Wave of triangular craft sightings over Belgium lasting months. Belgian Air Force scrambled two F-16s; onboard radar locked the object three times. Object performed impossible evasive maneuvers. Belgian Air Force officially acknowledged the sightings.
+              </div>
+              <div className="case-progress">
+                <div className="progress-label"><span>Investigation Progress</span><span>~45%</span></div>
+                <div className="progress-track"><div className="progress-fill" style={{ width: "45%" }}></div></div>
+              </div>
+              <div className="case-sections">
+                <div className="case-section-chip done"><span className="chip-count">10</span> Timeline events</div>
+                <div className="case-section-chip done"><span className="chip-count">4</span> Witnesses</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Evidence items</div>
+                <div className="case-section-chip done"><span className="chip-count">3</span> AI analyses</div>
+              </div>
+              <div className="card-actions">
+                <Link href="/case/003" className="btn-primary">Open Case File &rarr;</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* CASE 004 */}
+          <div className="active-card">
+            <div className="active-card-header">
+              <span className="case-num">CASE-004</span>
+              <span className="status-pill investigating"><span className="pulse-dot"></span>Investigating</span>
+            </div>
+            <div className="active-card-body">
+              <h2>Tehran F-4 Intercept</h2>
+              <div className="case-subtitle">The DIA Document Case</div>
+              <div className="case-meta">
+                <span>September 19, 1976</span><span>&middot;</span>
+                <span>Tehran, Iran</span><span>&middot;</span>
+                <span>~90 minutes</span>
+              </div>
+              <div className="cred-row">
+                <div className="cred-score">85</div>
+                <div className="cred-details">
+                  <div className="cred-tier">Tier 1 — Highest Credibility</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-3)" }}>DIA report, military intercept, weapons interference</div>
+                </div>
+              </div>
+              <div className="tag-pills">
+                {["military","radar-confirmed","weapons-interference","communications-failure","government-document","dia-report"].map(tag => (
+                  <span key={tag} className="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div className="case-summary">
+                Two Iranian F-4 Phantoms scrambled to intercept a bright object over Tehran. Both aircraft experienced weapons and communications failures on approach. A secondary object emerged and flew toward the F-4. Declassified DIA report calls it a case meeting all criteria for valid study.
+              </div>
+              <div className="case-progress">
+                <div className="progress-label"><span>Investigation Progress</span><span>~40%</span></div>
+                <div className="progress-track"><div className="progress-fill" style={{ width: "40%" }}></div></div>
+              </div>
+              <div className="case-sections">
+                <div className="case-section-chip done"><span className="chip-count">10</span> Timeline events</div>
+                <div className="case-section-chip done"><span className="chip-count">4</span> Witnesses</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Evidence items</div>
+                <div className="case-section-chip done"><span className="chip-count">3</span> AI analyses</div>
+              </div>
+              <div className="card-actions">
+                <Link href="/case/004" className="btn-primary">Open Case File &rarr;</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* CASE 005 */}
+          <div className="active-card">
+            <div className="active-card-header">
+              <span className="case-num">CASE-005</span>
+              <span className="status-pill investigating"><span className="pulse-dot"></span>Investigating</span>
+            </div>
+            <div className="active-card-body">
+              <h2>JAL Flight 1628</h2>
+              <div className="case-subtitle">The Alaska Giant</div>
+              <div className="case-meta">
+                <span>November 17, 1986</span><span>&middot;</span>
+                <span>Over Alaska, near Ft. Yukon</span><span>&middot;</span>
+                <span>~31 minutes</span>
+              </div>
+              <div className="cred-row">
+                <div className="cred-score">82</div>
+                <div className="cred-details">
+                  <div className="cred-tier">Tier 2 — High Credibility</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-3)" }}>FAA radar, pilot witness, CIA involvement alleged</div>
+                </div>
+              </div>
+              <div className="tag-pills">
+                {["pilot-witness","radar-confirmed","faa-documented","data-confiscation","commercial-aviation"].map(tag => (
+                  <span key={tag} className="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div className="case-summary">
+                JAL cargo 747 crew observed two small craft and then a massive object described as twice the size of an aircraft carrier for 31 minutes over Alaska. FAA and NORAD radar confirmed targets. FAA Division Chief later testified CIA confiscated all materials.
+              </div>
+              <div className="case-progress">
+                <div className="progress-label"><span>Investigation Progress</span><span>~35%</span></div>
+                <div className="progress-track"><div className="progress-fill" style={{ width: "35%" }}></div></div>
+              </div>
+              <div className="case-sections">
+                <div className="case-section-chip done"><span className="chip-count">10</span> Timeline events</div>
+                <div className="case-section-chip done"><span className="chip-count">4</span> Witnesses</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Evidence items</div>
+                <div className="case-section-chip done"><span className="chip-count">3</span> AI analyses</div>
+              </div>
+              <div className="card-actions">
+                <Link href="/case/005" className="btn-primary">Open Case File &rarr;</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* CASE 006 */}
+          <div className="active-card">
+            <div className="active-card-header">
+              <span className="case-num">CASE-006</span>
+              <span className="status-pill investigating"><span className="pulse-dot"></span>Investigating</span>
+            </div>
+            <div className="active-card-body">
+              <h2>USS Roosevelt Encounters</h2>
+              <div className="case-subtitle">GIMBAL and GOFAST</div>
+              <div className="case-meta">
+                <span>Summer 2014 – March 2015</span><span>&middot;</span>
+                <span>US East Coast, W-72 OPAREA</span><span>&middot;</span>
+                <span>~2 years recurring</span>
+              </div>
+              <div className="cred-row">
+                <div className="cred-score">90</div>
+                <div className="cred-details">
+                  <div className="cred-tier">Tier 1 — Highest Credibility</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-3)" }}>DoD-released video, congressional testimony, daily encounters</div>
+                </div>
+              </div>
+              <div className="tag-pills">
+                {["military","multi-sensor","video-documented","congressional-testimony","daily-encounters","no-infrared-signature"].map(tag => (
+                  <span key={tag} className="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div className="case-summary">
+                Carrier Strike Group 12 encountered objects daily for approximately two years off the US East Coast. Objects loitered at 30,000 ft with no visible propulsion and no infrared heat signature. Produced the GIMBAL and GOFAST videos. Lt. Ryan Graves testified before Congress.
+              </div>
+              <div className="case-progress">
+                <div className="progress-label"><span>Investigation Progress</span><span>~50%</span></div>
+                <div className="progress-track"><div className="progress-fill" style={{ width: "50%" }}></div></div>
+              </div>
+              <div className="case-sections">
+                <div className="case-section-chip done"><span className="chip-count">10</span> Timeline events</div>
+                <div className="case-section-chip done"><span className="chip-count">4</span> Witnesses</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Evidence items</div>
+                <div className="case-section-chip done"><span className="chip-count">3</span> AI analyses</div>
+              </div>
+              <div className="card-actions">
+                <Link href="/case/006" className="btn-primary">Open Case File &rarr;</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* CASE 007 */}
+          <div className="active-card">
+            <div className="active-card-header">
+              <span className="case-num">CASE-007</span>
+              <span className="status-pill investigating"><span className="pulse-dot"></span>Investigating</span>
+            </div>
+            <div className="active-card-body">
+              <h2>Rendlesham Forest Incident</h2>
+              <div className="case-subtitle">Britain&apos;s Roswell</div>
+              <div className="case-meta">
+                <span>December 26–28, 1980</span><span>&middot;</span>
+                <span>Suffolk, England</span><span>&middot;</span>
+                <span>3 nights</span>
+              </div>
+              <div className="cred-row">
+                <div className="cred-score">86</div>
+                <div className="cred-details">
+                  <div className="cred-tier">Tier 1 — Highest Credibility</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-3)" }}>Physical traces, radiation readings, audio recording, official memo</div>
+                </div>
+              </div>
+              <div className="tag-pills">
+                {["military","physical-trace","radiation-readings","audio-recording","government-memo","foi-released"].map(tag => (
+                  <span key={tag} className="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div className="case-summary">
+                USAF personnel at RAF Woodbridge encountered a craft on the ground over two consecutive nights. Sgt. Penniston touched the craft and reported symbols. Lt. Col. Halt led a second investigation with a Geiger counter, recording audio in real-time. Physical impressions and elevated radiation found at the landing site.
+              </div>
+              <div className="case-progress">
+                <div className="progress-label"><span>Investigation Progress</span><span>~40%</span></div>
+                <div className="progress-track"><div className="progress-fill" style={{ width: "40%" }}></div></div>
+              </div>
+              <div className="case-sections">
+                <div className="case-section-chip done"><span className="chip-count">10</span> Timeline events</div>
+                <div className="case-section-chip done"><span className="chip-count">4</span> Witnesses</div>
+                <div className="case-section-chip done"><span className="chip-count">5</span> Evidence items</div>
+                <div className="case-section-chip done"><span className="chip-count">3</span> AI analyses</div>
+              </div>
+              <div className="card-actions">
+                <Link href="/case/007" className="btn-primary">Open Case File &rarr;</Link>
               </div>
             </div>
           </div>

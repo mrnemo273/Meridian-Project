@@ -1,0 +1,632 @@
+{
+  "id": "CASE-006",
+  "caseNumber": "006",
+  "title": "USS Roosevelt Encounters",
+  "subtitle": "GIMBAL and GOFAST",
+  "date": "Summer 2014 – March 2015",
+  "location": "US East Coast — W-72 Operating Area, off Virginia/North Carolina",
+  "duration": "~2 years of recurring encounters",
+  "credibilityScore": 90,
+  "credibilityTier": "Tier 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "multi-sensor",
+    "video-documented",
+    "congressional-testimony",
+    "daily-encounters",
+    "carrier-strike-group",
+    "no-infrared-signature"
+  ],
+
+  "heroImage": "/images/cases/006/eastcoast-oparea-map.svg",
+  "heroImageAlt": "East Coast OPAREA map showing W-72 encounter zones",
+  "heroImageAttribution": "The Meridian Project (original)",
+
+  "timeline": [
+    {
+      "date": "Summer 2014",
+      "title": "First anomalous radar contacts detected",
+      "detail": "Pilots from Carrier Air Wing 8 aboard USS Theodore Roosevelt begin detecting anomalous objects on radar and ATFLIR systems during training exercises in the W-72 warning area off the Virginia/North Carolina coast.",
+      "tags": [{ "label": "Radar", "type": "sensor" }, { "label": "CVW-8", "type": "military" }],
+      "type": "key"
+    },
+    {
+      "date": "Fall 2014",
+      "title": "Encounters become daily occurrence",
+      "detail": "Lt. Ryan Graves (VFA-11) and other pilots report near-daily detection of objects on radar and SA displays. Objects appear stationary at 30,000 ft or moving at high speed with no visible propulsion.",
+      "tags": [{ "label": "Graves", "type": "witness" }, { "label": "Daily", "type": "anomaly" }],
+      "type": "key"
+    },
+    {
+      "date": "Late 2014",
+      "title": "Lt. Accoin detects objects on radar and IR simultaneously",
+      "detail": "Lt. Danny Accoin (VFA-31) reports radar lock on objects that are invisible to the naked eye. ATFLIR pod confirms same contacts. Multi-sensor detection rules out single-system malfunction.",
+      "tags": [{ "label": "Accoin", "type": "witness" }, { "label": "Multi-sensor", "type": "sensor" }],
+      "type": "key"
+    },
+    {
+      "date": "January 21, 2015",
+      "title": "GIMBAL video captured",
+      "detail": "F/A-18 aircrew capture the GIMBAL infrared video showing a dark, oblong object that appears to rotate against its direction of flight. Pilot audio expresses astonishment and references 'a whole fleet of them' on instruments. No exhaust signature detected.",
+      "tags": [{ "label": "GIMBAL", "type": "infrared-confirmed" }, { "label": "Video", "type": "sensor" }],
+      "type": "key",
+      "hasHighlight": "ann-1"
+    },
+    {
+      "date": "January 2015",
+      "title": "GOFAST video captured",
+      "detail": "Separate ATFLIR recording captures a small, apparently spherical object moving at high speed near the ocean surface against strong winds. No thermal exhaust signature. Object appears to have no visible means of propulsion.",
+      "tags": [{ "label": "GOFAST", "type": "infrared-confirmed" }, { "label": "Video", "type": "sensor" }],
+      "type": "key"
+    },
+    {
+      "date": "Early 2015",
+      "title": "Near-miss incident reported",
+      "detail": "A VFA-11 pilot comes within meters of an unidentified object during a training sortie. The encounter is filed as a formal safety hazard report through Navy channels. The object nearly struck the aircraft.",
+      "tags": [{ "label": "Safety", "type": "official" }, { "label": "Near-miss", "type": "anomaly" }],
+      "type": "anomaly"
+    },
+    {
+      "date": "March 2015",
+      "title": "Roosevelt deploys to Persian Gulf",
+      "detail": "USS Theodore Roosevelt departs for deployment to the Persian Gulf. Encounters in the W-72 area cease for the deployed squadrons, though it is unknown whether other units subsequently reported similar contacts in the area.",
+      "tags": [{ "label": "Deployment", "type": "military" }],
+      "type": "context"
+    },
+    {
+      "date": "December 16, 2017",
+      "title": "GIMBAL and GOFAST videos surface publicly",
+      "detail": "The videos are released alongside the New York Times investigation into AATIP. To The Stars Academy publishes the footage. Pentagon acknowledges the videos are authentic Department of Defense material.",
+      "tags": [{ "label": "TTSA", "type": "official" }, { "label": "NYT", "type": "media" }],
+      "type": "key"
+    },
+    {
+      "date": "April 27, 2020",
+      "title": "DoD officially declassifies all three videos",
+      "detail": "The Department of Defense formally releases GIMBAL, GOFAST, and FLIR1, confirming they are authentic, unclassified Navy videos. DoD states the release is to 'clear up any misconceptions' about whether the footage is real.",
+      "tags": [{ "label": "DoD", "type": "official" }, { "label": "Declassified", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "July 26, 2023",
+      "title": "Lt. Ryan Graves testifies before Congress",
+      "detail": "Graves testifies under oath before the House Oversight Committee alongside CDR David Fravor and David Grusch. He describes daily encounters, the near-miss incident, and the stigma pilots face when reporting UAP. His testimony helps establish the frequency and persistence of East Coast encounters.",
+      "tags": [{ "label": "Congress", "type": "official" }, { "label": "Graves", "type": "witness" }],
+      "type": "key"
+    }
+  ],
+
+  "evidence": [
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "ATFLIR",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "GIMBAL Infrared Video",
+      "summary": "~34 seconds of ATFLIR footage captured January 21, 2015. Object appears to rotate against direction of flight. No exhaust plume. Pilot audio references 'a whole fleet of them.' Officially declassified by DoD April 2020.",
+      "linkText": "Linked to: GOFAST Video, Graves Testimony, ATFLIR Data",
+      "image": "/images/cases/001/gimbal-frame.png",
+      "imageAlt": "GIMBAL infrared still showing rotating object"
+    },
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "ATFLIR",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "GOFAST Infrared Video",
+      "summary": "~34 seconds of ATFLIR footage from January 2015. Small object moves at apparent high speed near ocean surface against strong winds. No thermal signature, no visible propulsion. Officially declassified by DoD April 2020.",
+      "linkText": "Linked to: GIMBAL Video, Graves Testimony, Speed Analysis",
+      "image": "/images/cases/001/gofast-frame.png",
+      "imageAlt": "GOFAST infrared still showing high-speed object near ocean surface"
+    },
+    {
+      "typeLabel": "Testimony",
+      "badge": "Sworn",
+      "badgeClass": "badge-official",
+      "cardType": "type-witness",
+      "title": "Lt. Graves Congressional Testimony",
+      "summary": "Sworn testimony before House Oversight Committee, July 26, 2023. Graves testified encounters were 'every day for at least a couple years.' Described near-miss incident, objects with no infrared signature hovering at 30,000 ft.",
+      "linkText": "Linked to: GIMBAL Video, Near-Miss Report, Daily Encounters"
+    },
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "AESA/ATFLIR",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "Multi-Sensor Correlation Data",
+      "summary": "AN/APG-79 AESA radar and ATFLIR pod independently detected the same objects. Lt. Accoin reported radar lock on contacts invisible to the naked eye. Multi-platform confirmation rules out single-system error.",
+      "linkText": "Linked to: Accoin Testimony, GIMBAL, GOFAST"
+    },
+    {
+      "typeLabel": "Official Report",
+      "badge": "Safety",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Near-Miss Safety Report",
+      "summary": "Formal safety hazard report filed through Navy channels after a VFA-11 pilot came within meters of an unidentified object. This incident contributed to the Navy establishing formal UAP reporting procedures in 2019.",
+      "linkText": "Linked to: Graves Testimony, Navy Reporting Guidelines"
+    }
+  ],
+
+  "witnesses": [
+    {
+      "initials": "RG",
+      "name": "Lt. Ryan Graves",
+      "rank": "VFA-11 'Red Rippers' · F/A-18F Pilot",
+      "observed": "Near-daily encounters over approximately two years. Objects stationary at 30,000 ft with no visible propulsion or IR signature. Reported near-miss incident. First active-duty pilot to testify before Congress on UAP.",
+      "quote": "\u201cEvery day for at least a couple years.\u201d",
+      "quoteSource": "— House Oversight Committee testimony, July 2023"
+    },
+    {
+      "initials": "DA",
+      "name": "Lt. Danny Accoin",
+      "rank": "VFA-31 'Tomcatters' · F/A-18 Pilot",
+      "observed": "Detected objects simultaneously on AN/APG-79 AESA radar and ATFLIR infrared pod. Objects were invisible to the naked eye despite confirmed sensor contacts at close range. Multi-sensor correlation ruled out single-system malfunction.",
+      "quote": "\u201cI almost hit one of those things.\u201d",
+      "quoteSource": "— New York Times, May 2019"
+    },
+    {
+      "initials": "VP",
+      "name": "VFA-11 / VFA-31 Pilots",
+      "rank": "Multiple CVW-8 Squadron Pilots",
+      "observed": "Multiple pilots across Carrier Air Wing 8 independently reported encounters with unidentified objects. Encounters were so routine they became accepted hazards during training sorties in the W-72 area.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "AO",
+      "name": "ATFLIR Operators",
+      "rank": "Weapon Systems Officers · CVW-8",
+      "observed": "WSOs operating the AN/ASQ-228 ATFLIR pods captured the GIMBAL and GOFAST footage. Their sensor expertise confirmed the contacts were real objects tracked by calibrated military-grade infrared systems.",
+      "quote": null,
+      "quoteSource": null
+    }
+  ],
+
+  "aiAnalysis": [
+    {
+      "aiType": "Pattern Analysis",
+      "title": "Cross-Case: Rotation Behavior Pattern",
+      "finding": "The GIMBAL object's apparent rotation matches a behavior pattern seen in the Nimitz FLIR1 video (2004), where the Tic Tac appeared to rotate on its longitudinal axis. Both events involve ATFLIR captures of objects demonstrating rotation without corresponding trajectory change — a flight characteristic inconsistent with any known aircraft.",
+      "confidence": "Medium — GIMBAL rotation could be pod artifact",
+      "confidenceClass": "confidence-medium"
+    },
+    {
+      "aiType": "Temporal Analysis",
+      "title": "Duration Anomaly: 2-Year Encounter Pattern",
+      "finding": "The ~2-year duration of daily encounters is unprecedented in high-credibility UAP cases. Most cases involve hours or days. Sustained daily presence implies either a persistent surveillance platform, a recurring natural phenomenon, or a fixed sensor anomaly. The variety of sensor confirmations (radar, IR, occasional visual) argues against a purely instrumental explanation.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Context Analysis",
+      "title": "Military Operating Area Concentration",
+      "finding": "Both the Nimitz (W-291, SOCAL) and Roosevelt (W-72, East Coast) encounters occurred in designated military warning areas used for carrier training exercises. This could indicate either heightened observation capability in these areas (more sensors) or that UAP activity correlates with military operations — a pattern noted by the DNI preliminary assessment (June 2021).",
+      "confidence": "Medium — correlation does not imply causation",
+      "confidenceClass": "confidence-medium"
+    }
+  ],
+
+  "openQuestions": [
+    { "num": "Q01", "text": "Is the GIMBAL rotation the actual object rotating, or an artifact of the ATFLIR gimbal mechanism?", "context": "Skeptic Mick West has argued the rotation is consistent with the ATFLIR pod's derotation algorithm. Multiple defense analysts dispute this interpretation. Resolution requires access to the raw sensor data and pod engineering specifications." },
+    { "num": "Q02", "text": "Why did encounters occur daily for approximately two years?", "context": "This sustained pattern is unprecedented. It implies either a fixed phenomenon in the W-72 area, a persistent surveillance platform, or a recurring sensor artifact — each with very different implications." },
+    { "num": "Q03", "text": "What was the true speed of the GOFAST object?", "context": "Parallax effects from the tracking aircraft's altitude and airspeed complicate speed calculations. Some analyses suggest the object may be slower than it appears, while others confirm anomalous velocity." },
+    { "num": "Q04", "text": "Are there additional classified videos from the Roosevelt encounters?", "context": "Graves and other pilots reported daily encounters over two years. Only two short videos have been declassified. The volume of potential sensor data is enormous." },
+    { "num": "Q05", "text": "Did the encounters continue in the W-72 area after Roosevelt deployed?", "context": "It is unknown whether subsequent units training in the same area reported similar contacts. This could help determine whether the phenomenon was tied to the location or the carrier strike group." }
+  ],
+
+  "resolution": [
+    { "status": "partial", "label": "Sensor glitch / ATFLIR artifact", "detail": "Partially addressed. GIMBAL rotation specifically debated — could be pod derotation artifact. However, multi-sensor confirmation (radar + IR + occasional visual) across two years makes systemic sensor error unlikely for all encounters." },
+    { "status": "open", "label": "Classified drone program", "detail": "Not eliminated. Objects' persistent presence in a military operating area is consistent with surveillance drone behavior. However, no known drone matches the observed flight characteristics (stationary at 30,000 ft, no IR signature)." },
+    { "status": "eliminated", "label": "Atmospheric phenomena", "detail": "Eliminated for primary encounters. Objects tracked on calibrated military radar and IR simultaneously. Atmospheric effects do not produce coherent multi-sensor returns over extended periods." },
+    { "status": "eliminated", "label": "Bird or balloon", "detail": "Eliminated. Objects detected at 30,000 ft altitude, stationary in high winds, with no thermal signature. No bird or balloon matches these characteristics. Near-miss incident confirms solid object." }
+  ],
+
+  "osint": [
+    { "field": "Location", "status": "verified", "value": "W-72 Warning Area, Atlantic Fleet Operating Area off Virginia/North Carolina. ~36.5°N, 74.5°W.", "source": "FAA warning area designations, Navy operational records, pilot testimony." },
+    { "field": "Video Authenticity", "status": "verified", "value": "GIMBAL and GOFAST officially released by U.S. Department of Defense, April 27, 2020.", "source": "DoD press release, NAVAIR FOIA Reading Room." },
+    { "field": "Witness Credentials", "status": "verified", "value": "Lt. Ryan Graves: active-duty F/A-18F pilot, VFA-11. Lt. Danny Accoin: F/A-18 pilot, VFA-31.", "source": "Congressional testimony records, Navy personnel records, NYT investigation." },
+    { "field": "Encounter Duration", "status": "verified", "value": "Graves testified encounters occurred 'every day for at least a couple years' (sworn congressional testimony).", "source": "House Oversight Committee hearing transcript, July 26, 2023." },
+    { "field": "Near-Miss Report", "status": "partial", "value": "Formal safety report filed. Exact report number and content not publicly available.", "source": "Lt. Graves congressional testimony and public interviews." },
+    { "field": "Additional Sensor Data", "status": "unverified", "value": "Unknown volume of radar tracks, ATFLIR recordings, and mission data from ~2 years of daily encounters.", "source": "No FOIA requests filed for bulk CVW-8 sensor data from this period." }
+  ],
+
+  "evidenceChain": [
+    { "num": 1, "source": "GIMBAL ATFLIR Video", "note": "Officially declassified by DoD April 2020. Authenticated by NAVAIR. ~34 seconds.", "strength": "strong", "strengthLabel": "Strong — DoD authenticated" },
+    { "num": 2, "source": "GOFAST ATFLIR Video", "note": "Officially declassified by DoD April 2020. Authenticated by NAVAIR. ~34 seconds.", "strength": "strong", "strengthLabel": "Strong — DoD authenticated" },
+    { "num": 3, "source": "Lt. Ryan Graves Testimony", "note": "Sworn congressional testimony July 2023. Consistent across years of public statements.", "strength": "strong", "strengthLabel": "Strong — sworn, consistent" },
+    { "num": 4, "source": "Lt. Danny Accoin Testimony", "note": "NYT interview May 2019. Corroborates multi-sensor detection pattern.", "strength": "strong", "strengthLabel": "Strong — independent corroboration" },
+    { "num": 5, "source": "Near-Miss Safety Report", "note": "Filed through official Navy channels. Content not publicly released.", "strength": "moderate", "strengthLabel": "Moderate — existence confirmed, content classified" }
+  ],
+
+  "solvabilityFactors": [
+    { "name": "Two officially declassified videos", "score": "+14", "type": "positive" },
+    { "name": "Sworn congressional testimony", "score": "+12", "type": "positive" },
+    { "name": "Multi-sensor confirmation (radar + IR)", "score": "+10", "type": "positive" },
+    { "name": "Multiple independent witnesses", "score": "+10", "type": "positive" },
+    { "name": "Near-miss safety report on record", "score": "+6", "type": "positive" },
+    { "name": "GIMBAL rotation interpretation disputed", "score": "-5", "type": "negative" },
+    { "name": "GOFAST speed calculation debated", "score": "-4", "type": "negative" },
+    { "name": "Bulk sensor data from 2 years not public", "score": "-7", "type": "negative" },
+    { "name": "No physical trace evidence", "score": "-4", "type": "negative" },
+    { "name": "FOIA potential for CVW-8 mission data", "score": "+8", "type": "neutral" }
+  ],
+  "solvabilityScore": 74,
+
+  "nextSteps": [
+    { "priority": "high", "text": "File FOIA for CVW-8 mission reports and ATFLIR recordings from W-72 (2014–2015)" },
+    { "priority": "high", "text": "Obtain ATFLIR AN/ASQ-228 engineering specs to resolve GIMBAL rotation debate" },
+    { "priority": "medium", "text": "Cross-reference FAA and NUFORC databases for civilian reports near W-72 (2014–2015)" },
+    { "priority": "medium", "text": "Interview additional CVW-8 pilots who have not spoken publicly" },
+    { "priority": "medium", "text": "Analyze GOFAST video with updated parallax correction methodology" },
+    { "priority": "low", "text": "Determine whether subsequent units in W-72 reported similar encounters post-2015" }
+  ],
+
+  "searchDemoResults": [
+    { "type": "video", "source": "YouTube · House Oversight Committee", "title": "Ryan Graves UAP Testimony — Full Congressional Hearing (2h30m)", "snippet": "Lt. Graves describes daily encounters in the W-72 operating area. Timestamps: 0:22:15 frequency of encounters, 0:34:08 near-miss incident, 0:41:30 no IR signature discussion..." },
+    { "type": "academic", "source": "Web · Metabunk", "title": "GIMBAL rotation analysis: Object vs. gimbal mechanism artifact", "snippet": "Detailed frame-by-frame analysis of GIMBAL video rotation. West argues the rotation matches the ATFLIR pod's derotation algorithm behavior when tracking a distant jet engine..." },
+    { "type": "web", "source": "Web · New York Times", "title": "'Wow, What Is That?' — Navy Pilots Report Unexplained Flying Objects", "snippet": "Investigative report interviewing Graves and Accoin. Details multi-year encounter pattern off East Coast. Describes objects with 'no visible engine or infrared exhaust plumes'..." },
+    { "type": "foia", "source": "FOIA · The Black Vault", "title": "Navy UAP Reporting Guidelines — Implementation Documents (2019)", "snippet": "FOIA-obtained documents showing the Navy's new UAP reporting procedures, implemented partly in response to East Coast pilot reports. Includes guidance on hazard reporting..." },
+    { "type": "reddit", "source": "Reddit · r/UFOs", "title": "GOFAST parallax analysis — is it really going fast?", "snippet": "User /u/PilotAnalysis breaks down the trigonometry of the GOFAST video. Argues the apparent speed is enhanced by parallax from the tracking aircraft's altitude and ground speed..." }
+  ],
+
+  "achHypotheses": [
+    "Sensor Artifact",
+    "Classified Drone",
+    "Atmospheric",
+    "Unknown Craft"
+  ],
+  "achEvidence": [
+    { "evidence": "GIMBAL video — object rotation", "ai": ["C", "N", "I", "C"] },
+    { "evidence": "GOFAST video — high-speed object", "ai": ["N", "N", "I", "C"] },
+    { "evidence": "Multi-sensor detection (radar + IR)", "ai": ["I", "N", "I", "C"] },
+    { "evidence": "No infrared exhaust signature", "ai": ["N", "I", "I", "C"] },
+    { "evidence": "Daily encounters for ~2 years", "ai": ["I", "N", "I", "C"] },
+    { "evidence": "Objects stationary at 30,000 ft", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Near-miss with physical object", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Graves sworn testimony", "ai": ["I", "N", "I", "C"] }
+  ],
+
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "video",
+      "priority": "high",
+      "status": "completed",
+      "completed_by": "Builder",
+      "completed_date": "2026-03-23",
+      "title": "GIMBAL Video — Still Frame Extraction",
+      "description": "Download GIMBAL video from NAVAIR FOIA Reading Room. Extract key still frame showing the rotating object. Already completed as part of Case 001 cross-reference task.",
+      "source_url": "https://www.navair.navy.mil/foia/documents",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Department of Defense / Naval Air Systems Command",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["gimbal-frame.png"],
+      "notes": "Already exists at public/media/cases/001/gimbal.mp4 and public/images/cases/001/gimbal-frame.png from Case 001 investigation tasks."
+    },
+    {
+      "id": "IT-002",
+      "type": "video",
+      "priority": "high",
+      "status": "completed",
+      "completed_by": "Builder",
+      "completed_date": "2026-03-23",
+      "title": "GOFAST Video — Still Frame Extraction",
+      "description": "Download GOFAST video from NAVAIR FOIA Reading Room. Extract key still frame showing high-speed object. Already completed as part of Case 001 cross-reference task.",
+      "source_url": "https://www.navair.navy.mil/foia/documents",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Department of Defense / Naval Air Systems Command",
+      "save_to": "public/images/cases/001/",
+      "file_names": ["gofast-frame.png"],
+      "notes": "Already exists at public/media/cases/001/gofast.mp4 and public/images/cases/001/gofast-frame.png from Case 001 investigation tasks."
+    },
+    {
+      "id": "IT-003",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "East Coast OPAREA Map — W-72 Encounter Zones",
+      "description": "Create an SVG map showing the W-72 warning area off Virginia/North Carolina with approximate encounter zones, carrier operating positions, and key geographic references.",
+      "source_url": null,
+      "license": "Create original (OpenStreetMap base layer)",
+      "attribution": "The Meridian Project (original)",
+      "save_to": "public/images/cases/006/",
+      "file_names": ["eastcoast-oparea-map.svg"],
+      "notes": "Hero image for Case 006. Should show W-72 area, Virginia Beach, Norfolk Naval Station, Cape Hatteras reference points."
+    },
+    {
+      "id": "IT-004",
+      "type": "document",
+      "priority": "medium",
+      "status": "open",
+      "title": "Graves Congressional Testimony — Document Capture",
+      "description": "Download or capture Lt. Ryan Graves' written statement to the House Oversight Committee (July 26, 2023). Screenshot first page for display as a document card.",
+      "source_url": "https://oversight.house.gov/",
+      "license": "Public Domain — Congressional record",
+      "attribution": "U.S. House Committee on Oversight and Accountability",
+      "save_to": "public/images/cases/006/",
+      "file_names": ["graves-testimony-page1.png"],
+      "notes": "Congressional testimony is public record."
+    },
+    {
+      "id": "IT-005",
+      "type": "data",
+      "priority": "low",
+      "status": "open",
+      "title": "GOFAST Parallax Analysis Data",
+      "description": "Compile parallax correction calculations from multiple analysts (West, SCU, independent researchers) into a comparative dataset showing speed estimates under different assumptions.",
+      "source_url": null,
+      "license": "Research compilation — fair use",
+      "attribution": "Multiple sources — see individual citations",
+      "save_to": "public/data/cases/006/",
+      "file_names": ["gofast-speed-analysis.json"],
+      "notes": "Key debate in the case. Multiple competing analyses with different conclusions about true object speed."
+    }
+  ],
+
+  "gallery": [
+    {
+      "id": "g-001",
+      "type": "map",
+      "src": "/images/cases/006/eastcoast-oparea-map.svg",
+      "title": "W-72 Operating Area — East Coast Encounter Map",
+      "caption": "Map showing the W-72 warning area off Virginia and North Carolina where daily encounters occurred from summer 2014 through early 2015. Norfolk Naval Station and USS Roosevelt deployment area indicated.",
+      "attribution": "The Meridian Project (original)",
+      "license": "Project Original",
+      "category": "map"
+    },
+    {
+      "id": "g-002",
+      "type": "video",
+      "src": "/media/cases/006/gimbal.mp4",
+      "thumbnail": "/images/cases/006/gimbal-frame.png",
+      "title": "GIMBAL — Rotating Object (2015)",
+      "caption": "USS Roosevelt encounter. Object appears to rotate against direction of flight. Officially declassified by DoD, April 27, 2020.",
+      "attribution": "U.S. Department of Defense / NAVAIR",
+      "license": "Public Domain",
+      "category": "flir"
+    },
+    {
+      "id": "g-003",
+      "type": "video",
+      "src": "/media/cases/006/gofast.mp4",
+      "thumbnail": "/images/cases/006/gofast-frame.png",
+      "title": "GOFAST — High-Speed Object (2015)",
+      "caption": "USS Roosevelt encounter. Object tracks at high speed against ocean background. Officially declassified by DoD, April 27, 2020.",
+      "attribution": "U.S. Department of Defense / NAVAIR",
+      "license": "Public Domain",
+      "category": "flir"
+    },
+    {
+      "id": "g-004",
+      "type": "image",
+      "src": "/images/cases/006/gimbal-frame.png",
+      "title": "GIMBAL — Still Frame",
+      "caption": "Key frame from the GIMBAL video showing the object's apparent rotation.",
+      "attribution": "U.S. Department of Defense / NAVAIR",
+      "license": "Public Domain",
+      "category": "flir"
+    },
+    {
+      "id": "g-005",
+      "type": "image",
+      "src": "/images/cases/006/gofast-frame.png",
+      "title": "GOFAST — Still Frame",
+      "caption": "Key frame from the GOFAST video showing the object tracked against the ocean.",
+      "attribution": "U.S. Department of Defense / NAVAIR",
+      "license": "Public Domain",
+      "category": "flir"
+    },
+    {
+      "id": "g-006",
+      "type": "image",
+      "src": "/images/cases/006/uss-roosevelt.jpg",
+      "title": "USS Theodore Roosevelt (CVN-71)",
+      "caption": "The aircraft carrier USS Theodore Roosevelt transiting the Pacific. Carrier Strike Group 12 encountered daily UAP activity in the W-72 operating area off Virginia.",
+      "attribution": "U.S. Navy / Wikimedia Commons",
+      "license": "Public Domain",
+      "category": "reference"
+    }
+  ],
+
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "GIMBAL and GOFAST videos were officially declassified by the U.S. Department of Defense on April 27, 2020.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "DoD press release (April 27, 2020)",
+        "NAVAIR FOIA Reading Room",
+        "Pentagon spokesperson confirmation"
+      ],
+      "relatedEvidence": "GIMBAL Infrared Video"
+    },
+    {
+      "id": "VF-002",
+      "fact": "Lt. Ryan Graves testified under oath before the House Oversight Committee on July 26, 2023.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "U.S. House Committee on Oversight and Accountability — official record",
+        "C-SPAN broadcast of hearing",
+        "Congressional transcript"
+      ]
+    },
+    {
+      "id": "VF-003",
+      "fact": "Graves stated under oath that encounters were 'every day for at least a couple years.'",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "House Oversight Committee hearing transcript (July 26, 2023)",
+        "C-SPAN broadcast",
+        "Corroborated by pre-hearing public interviews"
+      ],
+      "relatedTimeline": "Encounters become daily occurrence"
+    },
+    {
+      "id": "VF-004",
+      "fact": "A near-miss incident occurred where a pilot came within meters of an unidentified object during a training sortie.",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "Lt. Ryan Graves — congressional testimony",
+        "Formal Navy safety hazard report filed (content classified)",
+        "New York Times investigation (May 2019)"
+      ],
+      "relatedEvidence": "Near-Miss Safety Report"
+    },
+    {
+      "id": "VF-005",
+      "fact": "Objects were detected loitering at approximately 30,000 feet altitude with no visible means of propulsion.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "Lt. Ryan Graves — multiple interviews and congressional testimony",
+        "Lt. Danny Accoin — NYT interview (May 2019)",
+        "AN/APG-79 AESA radar data corroboration"
+      ]
+    },
+    {
+      "id": "VF-006",
+      "fact": "The GIMBAL object appears to rotate against its direction of flight in the ATFLIR footage.",
+      "category": "sensor",
+      "confidence": "disputed",
+      "sources": [
+        "GIMBAL video — direct observation of footage",
+        "Pilot audio on recording",
+        "Multiple independent video analyses"
+      ],
+      "disputedBy": "Mick West and others argue the rotation may be an artifact of the ATFLIR pod's derotation mechanism rather than true object rotation. Defense analysts dispute this interpretation."
+    },
+    {
+      "id": "VF-007",
+      "fact": "Objects displayed no infrared heat signature despite being detected on military-grade infrared sensors.",
+      "category": "sensor",
+      "confidence": "high",
+      "sources": [
+        "GIMBAL and GOFAST ATFLIR footage — no exhaust plume visible",
+        "Lt. Graves testimony — specifically noted absence of IR signature",
+        "Lt. Accoin — confirmed IR detection without thermal exhaust"
+      ]
+    }
+  ],
+
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Sensor Artifact",
+      "probability": 10,
+      "trend": "falling",
+      "reasoning": "While the GIMBAL rotation specifically could be an ATFLIR pod artifact, the broader pattern of daily encounters across multiple sensor systems (AESA radar, ATFLIR IR, occasional visual) over two years makes systemic sensor error highly unlikely. The near-miss incident confirms at least some objects were physically present.",
+      "keyFactors": {
+        "supports": ["VF-006"],
+        "contradicts": ["VF-003", "VF-004", "VF-005"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Classified Drone",
+      "probability": 18,
+      "trend": "stable",
+      "reasoning": "The persistent presence in a military operating area is consistent with a surveillance platform. However, no known drone can hover at 30,000 ft without propulsion, produce zero IR signature, and nearly collide with military jets without any operational deconfliction. If classified, the near-miss should have triggered immediate deconfliction through military channels.",
+      "keyFactors": {
+        "supports": ["VF-003"],
+        "contradicts": ["VF-004", "VF-005", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Atmospheric",
+      "probability": 5,
+      "trend": "falling",
+      "reasoning": "Multi-sensor detection (radar + IR simultaneously) and the near-miss with a physical object eliminate atmospheric phenomena for the primary encounters. Atmospheric effects do not produce coherent radar and infrared returns at 30,000 ft for extended periods.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-004", "VF-005", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Unknown Craft",
+      "probability": 67,
+      "trend": "stable",
+      "reasoning": "The only hypothesis consistent with all evidence: multi-sensor detection, physical near-miss, sustained daily presence, no IR exhaust, and stationary hover at altitude. The combination of flight characteristics exceeds any known technology. Congressional testimony under oath adds significant weight to the witness accounts.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-003", "VF-004", "VF-005", "VF-007"],
+        "contradicts": []
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "Is GIMBAL rotation the object or the pod mechanism?",
+      "status": "in_progress",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-006",
+      "anchorText": "The GIMBAL object appears to rotate against its direction of flight in the ATFLIR footage.",
+      "findings": [
+        {
+          "id": "RB-001-F1",
+          "type": "analysis",
+          "content": "Mick West argues the rotation matches the AN/ASQ-228 ATFLIR pod's derotation algorithm — as the pod gimbal reaches a mechanical limit, the entire image rotates to maintain tracking. This would mean the 'rotation' is the background rotating, not the object.",
+          "source": "Metabunk forum analysis — multiple threads",
+          "sourceUrl": "https://www.metabunk.org/",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F2",
+          "type": "contradiction",
+          "content": "Defense analyst Dave Beaty and others argue that the object's shape visibly changes during the rotation in a way inconsistent with a simple image rotation. The object's IR signature also appears to shift, suggesting true physical rotation rather than a sensor artifact.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F3",
+          "type": "source",
+          "content": "Resolution requires access to the raw ATFLIR sensor data and Raytheon AN/ASQ-228 engineering documentation — specifically the derotation algorithm behavior at gimbal limits. This data is likely classified or proprietary.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-002",
+      "question": "Why daily encounters for 2 years — what does sustained behavior imply?",
+      "status": "open",
+      "priority": "medium",
+      "anchorSection": "fact",
+      "anchorId": "VF-003",
+      "anchorText": "Graves stated under oath that encounters were 'every day for at least a couple years.'",
+      "findings": [
+        {
+          "id": "RB-002-F1",
+          "type": "analysis",
+          "content": "Three competing interpretations: (1) Persistent surveillance platform — implies intent and capability to maintain extended presence, possibly monitoring carrier strike group operations. (2) Recurring natural phenomenon tied to the W-72 geographic area — would require identification of a mechanism. (3) Sensor artifact specific to CVW-8 aircraft or the W-72 electromagnetic environment — contradicted by multi-sensor and occasional visual confirmation.",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-002-F2",
+          "type": "source",
+          "content": "The DNI Preliminary Assessment (June 2021) noted that UAP reports clustered around military training areas and ranges. This could reflect either genuine UAP interest in military operations or simply higher sensor density and observer awareness in these areas.",
+          "source": "Office of the Director of National Intelligence — Preliminary Assessment: UAP (June 25, 2021)",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    }
+  ]
+}

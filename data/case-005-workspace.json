@@ -1,0 +1,540 @@
+{
+  "id": "CASE-005",
+  "caseNumber": "005",
+  "title": "JAL Flight 1628",
+  "subtitle": "The Alaska Giant",
+  "date": "November 17, 1986",
+  "location": "Over Alaska, near Ft. Yukon",
+  "duration": "~31 minutes sustained observation",
+  "credibilityScore": 82,
+  "credibilityTier": "Tier 2",
+  "status": "investigating",
+  "tags": ["pilot-witness", "radar-confirmed", "faa-documented", "data-confiscation", "commercial-aviation", "cia-involvement"],
+
+  "heroImage": "/images/cases/005/jal1628-route-map.svg",
+  "heroImageAlt": "JAL 1628 encounter route map over Alaska",
+  "heroImageAttribution": "The Meridian Project (original)",
+
+  "timeline": [
+    {
+      "date": "5:11 PM AKST",
+      "title": "Initial lights observed",
+      "detail": "Captain Terauchi notices two sets of lights ahead and below JAL 1628 at FL350 over northeastern Alaska. Lights appear as arrays of glowing amber and white nozzles arranged in rectangular formations.",
+      "tags": [{ "label": "Terauchi", "type": "witness" }, { "label": "Visual", "type": "visual-confirmed" }],
+      "type": "key"
+    },
+    {
+      "date": "5:13 PM",
+      "title": "Two smaller craft close distance",
+      "detail": "The two objects rapidly close to within approximately 2,000 feet of the 747. Terauchi reports feeling heat on his face through the cockpit window. Both co-pilot Tamefuji and engineer Tsukuba observe the lights.",
+      "tags": [{ "label": "Multi-witness", "type": "multi-witness" }, { "label": "Visual", "type": "visual-confirmed" }],
+      "type": "key"
+    },
+    {
+      "date": "5:18 PM",
+      "title": "Terauchi contacts FAA Anchorage Center",
+      "detail": "Captain Terauchi radios FAA Anchorage Center to report the unidentified traffic. Controller asks military radar (NORAD) to check for other aircraft in the area.",
+      "tags": [{ "label": "FAA", "type": "official" }, { "label": "Radio", "type": "comms" }],
+      "type": "key"
+    },
+    {
+      "date": "5:20 PM",
+      "title": "FAA radar detects uncorrelated target",
+      "detail": "FAA Anchorage Center radar returns show an uncorrelated primary target near JAL 1628's position. The return is intermittent but correlates with Terauchi's reported object position.",
+      "tags": [{ "label": "Radar", "type": "radar-confirmed" }, { "label": "FAA", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "5:23 PM",
+      "title": "Small craft depart — massive object appears",
+      "detail": "The two smaller objects move away. Terauchi then observes an enormous object — which he estimates as the size of two aircraft carriers — silhouetted against the lights of Fairbanks below. He describes it as walnut-shaped.",
+      "tags": [{ "label": "Terauchi", "type": "witness" }, { "label": "Anomaly", "type": "anomaly" }],
+      "type": "key",
+      "hasHighlight": "ann-1"
+    },
+    {
+      "date": "5:30 PM",
+      "title": "NORAD confirms primary target",
+      "detail": "NORAD military radar confirms a primary target near JAL 1628. This confirmation is later retracted by NORAD officials.",
+      "tags": [{ "label": "NORAD", "type": "sensor" }, { "label": "Radar", "type": "radar-confirmed" }],
+      "type": "key"
+    },
+    {
+      "date": "5:35 PM",
+      "title": "Terauchi requests course deviation",
+      "detail": "Terauchi requests permission to deviate from his assigned heading. FAA grants a 360-degree turn and heading change. The object appears to follow the 747 through the maneuvers.",
+      "tags": [{ "label": "Evasion", "type": "anomaly" }, { "label": "FAA", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "5:39 PM",
+      "title": "United Airlines flight dispatched",
+      "detail": "FAA asks a nearby United Airlines flight to approach JAL 1628's position to attempt visual confirmation. As the United flight closes distance, Terauchi reports the object departs.",
+      "tags": [{ "label": "United", "type": "witness" }, { "label": "Departure", "type": "key" }],
+      "type": "key"
+    },
+    {
+      "date": "5:42 PM",
+      "title": "Object departs — encounter ends",
+      "detail": "The large object is no longer visible. JAL 1628 continues to Anchorage without further incident. Total sustained observation approximately 31 minutes.",
+      "tags": [{ "label": "End", "type": "key" }],
+      "type": "key"
+    },
+    {
+      "date": "January 1987",
+      "title": "CIA confiscation — Callahan testimony",
+      "detail": "FAA Division Chief John Callahan briefs Reagan administration and intelligence officials. According to Callahan's later sworn testimony, CIA personnel confiscated all radar data, audio recordings, and reports. Participants told the meeting 'never happened.' Callahan secretly retained copies.",
+      "tags": [{ "label": "CIA", "type": "data-confiscation" }, { "label": "Callahan", "type": "witness" }],
+      "type": "anomaly",
+      "hasHighlight": "ann-2"
+    }
+  ],
+
+  "evidence": [
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "Radar",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "FAA Anchorage Center Radar",
+      "summary": "FAA radar detected intermittent uncorrelated primary returns near JAL 1628 during the encounter. Returns correlated with pilot-reported object positions. John Callahan preserved copies before CIA confiscation.",
+      "linkText": "Linked to: Callahan Testimony, NORAD Data"
+    },
+    {
+      "typeLabel": "Documentary Evidence",
+      "badge": "Drawings",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Terauchi Technical Drawings",
+      "summary": "Captain Terauchi produced detailed technical drawings of all three objects: the two smaller craft with arrays of glowing nozzles and the massive walnut-shaped object. Drawings remained consistent across multiple retellings over years.",
+      "linkText": "Linked to: CIRVIS Report, Terauchi Interviews"
+    },
+    {
+      "typeLabel": "Documentary Evidence",
+      "badge": "CIRVIS",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Official CIRVIS Report",
+      "summary": "Captain Terauchi filed a formal Communication Instructions for Reporting Vital Intelligence Sightings (CIRVIS) report — a military-grade reporting mechanism required for unidentified aerial objects. This is one of the rare cases where the full CIRVIS chain was activated.",
+      "linkText": "Linked to: FAA Investigation, Terauchi Drawings"
+    },
+    {
+      "typeLabel": "Testimony",
+      "badge": "Sworn",
+      "badgeClass": "badge-witness",
+      "cardType": "type-evidence",
+      "title": "Callahan NPC Testimony (2007)",
+      "summary": "FAA Division Chief John Callahan testified at the 2007 National Press Club that CIA personnel confiscated all FAA materials and told participants the briefing 'never happened.' Callahan had secretly retained copies of radar data and case files.",
+      "linkText": "Linked to: FAA Radar, Data Confiscation"
+    },
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "Military",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "NORAD Radar Returns",
+      "summary": "NORAD military radar initially confirmed a primary target near JAL 1628. NORAD later retracted the confirmation. The retraction itself became a point of controversy, as Callahan testified the original data supported the target's existence.",
+      "linkText": "Linked to: FAA Radar, Callahan Testimony"
+    }
+  ],
+
+  "witnesses": [
+    {
+      "initials": "KT",
+      "name": "Capt. Kenju Terauchi",
+      "rank": "Pilot in Command, JAL Flight 1628",
+      "observed": "Primary witness. Former JASDF fighter pilot with 10,000+ flight hours. Observed two smaller craft with glowing nozzle arrays and a massive walnut-shaped object he estimated as the size of two aircraft carriers. Filed official CIRVIS report. Produced detailed technical drawings consistent across all retellings.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "TT",
+      "name": "F/O Takanori Tamefuji",
+      "rank": "Co-pilot, JAL Flight 1628",
+      "observed": "Confirmed observing unusual lights from the cockpit. More cautious in his assessment than Terauchi. Could not confirm the massive walnut-shaped object due to viewing angle from right seat. His partial corroboration is significant for establishing the lights as real phenomena.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "YT",
+      "name": "F/E Yoshio Tsukuba",
+      "rank": "Flight Engineer, JAL Flight 1628",
+      "observed": "Observed the lights from the rear flight engineer station. Confirmed unusual aerial phenomena visible through the cockpit windows. Limited field of view from his position prevented him from observing the larger object.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "JC",
+      "name": "John Callahan",
+      "rank": "FAA Division Chief, Accidents & Investigations",
+      "observed": "Led the FAA investigation. Reviewed radar data, pilot interviews, and ATC communications. Testified under oath at the 2007 National Press Club that CIA personnel confiscated all materials and ordered silence. Retained secret copies of radar data and case files.",
+      "quote": null,
+      "quoteSource": null
+    }
+  ],
+
+  "aiAnalysis": [
+    {
+      "aiType": "Pattern Analysis",
+      "title": "Cross-Corpus: Data Confiscation Pattern",
+      "finding": "CIA confiscation of FAA data mirrors the pattern seen in CASE-001 (Nimitz — unidentified personnel confiscated radar tapes). Both cases involve radar evidence being removed by intelligence personnel after anomalous aerial events involving military-grade sensor confirmation.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Witness Analysis",
+      "title": "Crew Corroboration Gradient",
+      "finding": "Terauchi's account shows a credibility gradient: all three crew confirmed the initial lights, but only Terauchi reported the massive walnut-shaped object. This partial corroboration pattern is consistent with viewing angle limitations rather than fabrication — the co-pilot and engineer had restricted sightlines from their positions.",
+      "confidence": "Medium — partial corroboration",
+      "confidenceClass": "confidence-medium"
+    },
+    {
+      "aiType": "Context Analysis",
+      "title": "Jupiter Visibility & Misidentification",
+      "finding": "Jupiter was visible in the sky during the encounter, and skeptic Philip Klass argued this explains the sighting. However, Terauchi was a former fighter pilot with extensive night flying experience, the objects were reported at close range with structural detail, and the FAA radar corroboration is difficult to reconcile with a celestial object.",
+      "confidence": "Low — contested hypothesis",
+      "confidenceClass": "confidence-low"
+    }
+  ],
+
+  "openQuestions": [
+    { "num": "Q01", "text": "What happened to the original FAA radar tapes confiscated by CIA personnel?", "context": "Callahan testified the CIA took all materials. His retained copies are the only known surviving evidence." },
+    { "num": "Q02", "text": "Why did NORAD retract its initial confirmation of a primary radar target?", "context": "NORAD initially confirmed the target, then retracted. The timing and rationale for retraction remain unexplained." },
+    { "num": "Q03", "text": "Why was Terauchi removed from flight duty, and who authorized it?", "context": "JAL removed Terauchi after media interviews. The decision was reversed after public pressure and union support." },
+    { "num": "Q04", "text": "Can Jupiter's position definitively account for any portion of the sighting?", "context": "Jupiter was visible but Terauchi reported structural detail, heat, and close-range observation inconsistent with a celestial object." },
+    { "num": "Q05", "text": "Do the Callahan-retained radar copies still exist and can they be independently analyzed?", "context": "Callahan claimed to retain copies. Independent modern analysis could resolve the radar artifact question." }
+  ],
+
+  "resolution": [
+    { "status": "partial", "label": "Celestial Object (Jupiter)", "detail": "Partially addressed. Jupiter was visible and could explain some distal observations. Cannot account for reported structural detail, heat sensation, radar returns, or object pacing the aircraft through course changes." },
+    { "status": "eliminated", "label": "Military aircraft", "detail": "Eliminated. No military aircraft matches the described size (two aircraft carriers), performance characteristics, or appearance. No military exercises reported in the area." },
+    { "status": "partial", "label": "Radar artifact / split return", "detail": "Partially addressed. Some analysts argue FAA radar returns could be split echoes from the 747 itself. Does not explain NORAD's initial independent confirmation or the visual observations." },
+    { "status": "open", "label": "Atmospheric / optical phenomena", "detail": "Not fully eliminated. Arctic atmospheric conditions can produce unusual optical effects. However, Terauchi was experienced in arctic flying and reported structural detail inconsistent with atmospheric phenomena." }
+  ],
+
+  "osint": [
+    { "field": "Flight Route", "status": "verified", "value": "Reykjavik (KEF) to Anchorage (ANC). Cargo flight, Boeing 747-200F. Standard polar route.", "source": "JAL flight records, FAA investigation file." },
+    { "field": "Weather Conditions", "status": "verified", "value": "Clear arctic skies, dark. Temperature ~-50C at FL350. Stars and planets visible.", "source": "NOAA historical weather data, FAA investigation." },
+    { "field": "Jupiter Position", "status": "verified", "value": "Jupiter was visible in the southwestern sky during the encounter period.", "source": "Astronomical ephemeris data for Nov 17, 1986, lat 66.56N." },
+    { "field": "Pilot Credentials", "status": "verified", "value": "Terauchi: former JASDF fighter pilot, 10,000+ hrs. Tamefuji and Tsukuba: experienced JAL crew.", "source": "JAL personnel records, FAA interview transcripts." },
+    { "field": "Callahan FAA Position", "status": "verified", "value": "Division Chief, Accidents and Investigations Branch, FAA.", "source": "FAA organizational records, NPC 2007 testimony." },
+    { "field": "NORAD Confirmation", "status": "disputed", "value": "NORAD initially confirmed primary target, then retracted. Circumstances of retraction unclear.", "source": "FAA investigation file, Callahan testimony, NORAD public statements." }
+  ],
+
+  "evidenceChain": [
+    { "num": 1, "source": "Terauchi Visual Observation & Drawings", "note": "Primary witness. 10,000+ hrs. Detailed drawings consistent across retellings. Filed CIRVIS.", "strength": "strong", "strengthLabel": "Strong — career pilot, consistent account" },
+    { "num": 2, "source": "Co-pilot & Engineer Partial Corroboration", "note": "Tamefuji and Tsukuba confirmed lights. Could not confirm massive object due to viewing angles.", "strength": "moderate", "strengthLabel": "Moderate — partial corroboration" },
+    { "num": 3, "source": "FAA Anchorage Radar Returns", "note": "Intermittent uncorrelated primary returns. Copies preserved by Callahan.", "strength": "moderate", "strengthLabel": "Moderate — intermittent returns" },
+    { "num": 4, "source": "NORAD Radar (retracted)", "note": "Initially confirmed target. Later retracted. Retraction unexplained.", "strength": "weak", "strengthLabel": "Weak — confirmation retracted" },
+    { "num": 5, "source": "Callahan NPC 2007 Testimony", "note": "Sworn testimony about CIA confiscation. Retained copies. FAA senior official.", "strength": "strong", "strengthLabel": "Strong — sworn, retained evidence" }
+  ],
+
+  "solvabilityFactors": [
+    { "name": "Experienced career pilot witness", "score": "+12", "type": "positive" },
+    { "name": "FAA radar corroboration", "score": "+10", "type": "positive" },
+    { "name": "Official CIRVIS report filed", "score": "+8", "type": "positive" },
+    { "name": "Callahan retained radar copies", "score": "+10", "type": "positive" },
+    { "name": "Callahan sworn testimony", "score": "+8", "type": "positive" },
+    { "name": "Only partial crew corroboration", "score": "-8", "type": "negative" },
+    { "name": "NORAD retracted confirmation", "score": "-7", "type": "negative" },
+    { "name": "Jupiter visible — alternative explanation exists", "score": "-8", "type": "negative" },
+    { "name": "Radar returns intermittent", "score": "-5", "type": "negative" },
+    { "name": "40-year evidence degradation", "score": "-5", "type": "negative" },
+    { "name": "Callahan radar copies unanalyzed", "score": "+5", "type": "neutral" }
+  ],
+  "solvabilityScore": 58,
+
+  "nextSteps": [
+    { "priority": "high", "text": "Locate and independently analyze Callahan's retained copies of FAA radar data" },
+    { "priority": "high", "text": "File FOIA for NORAD records regarding the retracted radar confirmation" },
+    { "priority": "medium", "text": "Commission independent astronomical analysis of Jupiter's position relative to Terauchi's reported object bearings" },
+    { "priority": "medium", "text": "Attempt to locate Tamefuji and Tsukuba for updated interviews" },
+    { "priority": "medium", "text": "Cross-reference FAA ATC audio recordings from Anchorage Center archives" },
+    { "priority": "low", "text": "Review NUFORC and Canadian databases for other Nov 1986 Alaska/Yukon sightings" }
+  ],
+
+  "searchDemoResults": [
+    { "type": "video", "source": "YouTube · National Press Club", "title": "John Callahan FAA testimony — CIA confiscation of JAL 1628 data", "snippet": "Former FAA Division Chief John Callahan describes the Reagan administration briefing and subsequent CIA confiscation of all radar tapes, audio recordings, and investigation materials..." },
+    { "type": "academic", "source": "Journal of Scientific Exploration", "title": "The JAL 1628 Case: Radar Analysis and Witness Evaluation", "snippet": "Detailed analysis of FAA and NORAD radar returns, atmospheric conditions, and Jupiter visibility calculations. Concludes radar artifact hypothesis is insufficient to explain all observations..." },
+    { "type": "web", "source": "Web · The Black Vault", "title": "FAA Investigation File — JAL Flight 1628 (FOIA)", "snippet": "Complete FOIA release of the FAA investigation file including Terauchi's original drawings, crew interview transcripts, and partial radar data records..." },
+    { "type": "reddit", "source": "Reddit · r/UFOs", "title": "Terauchi's drawings compared across all known interviews", "snippet": "Side-by-side comparison of Captain Terauchi's drawings from 1986, 1987, and later interviews shows remarkable consistency in proportions, nozzle array details, and the walnut-shaped object..." },
+    { "type": "foia", "source": "FOIA · National Archives", "title": "CIA Records Search — JAL Flight 1628 References", "snippet": "FOIA search of CIA CREST database returns limited results. No direct records of the briefing Callahan describes. Absence noted but not conclusive given known CIA filing practices..." }
+  ],
+
+  "achHypotheses": [
+    "Celestial Object",
+    "Military Aircraft",
+    "Radar Artifact",
+    "Unknown Craft"
+  ],
+  "achEvidence": [
+    { "evidence": "FAA radar uncorrelated target", "ai": ["I", "I", "C", "C"] },
+    { "evidence": "NORAD initial confirmation", "ai": ["I", "N", "C", "C"] },
+    { "evidence": "NORAD retraction", "ai": ["C", "N", "C", "N"] },
+    { "evidence": "Terauchi structural detail (nozzles, shape)", "ai": ["I", "I", "N", "C"] },
+    { "evidence": "Crew partial corroboration (lights only)", "ai": ["N", "N", "N", "C"] },
+    { "evidence": "Object paced 747 through heading changes", "ai": ["I", "I", "N", "C"] },
+    { "evidence": "Jupiter visible in sky", "ai": ["C", "N", "N", "N"] },
+    { "evidence": "CIA confiscation (Callahan testimony)", "ai": ["-", "-", "-", "C"] }
+  ],
+
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "document",
+      "priority": "high",
+      "status": "open",
+      "title": "FAA FOIA — Complete JAL 1628 Investigation File",
+      "description": "File FOIA request for the complete FAA investigation file for JAL Flight 1628, including all radar data printouts, ATC audio transcripts, crew interview transcripts, and internal FAA correspondence.",
+      "source_url": "https://www.faa.gov/foia",
+      "license": "Public Domain — US Government work",
+      "attribution": "Federal Aviation Administration",
+      "save_to": "public/images/cases/005/",
+      "file_names": ["faa-investigation-file.pdf"],
+      "notes": "Partial releases already available via Black Vault. Request complete unredacted file."
+    },
+    {
+      "id": "IT-002",
+      "type": "image",
+      "priority": "high",
+      "status": "open",
+      "title": "Terauchi Technical Drawings — High Resolution Scans",
+      "description": "Source the highest resolution versions of Captain Terauchi's technical drawings showing: (1) the two smaller craft with nozzle arrays, (2) the massive walnut-shaped object, (3) relative positions to JAL 1628.",
+      "source_url": null,
+      "license": "Fair use — historical document",
+      "attribution": "Captain Kenju Terauchi / FAA Investigation File",
+      "save_to": "public/images/cases/005/",
+      "file_names": ["terauchi-drawing-small-craft.png", "terauchi-drawing-walnut-object.png", "terauchi-drawing-positions.png"],
+      "notes": "Available in FAA FOIA releases and various publications. Seek highest resolution versions."
+    },
+    {
+      "id": "IT-003",
+      "type": "document",
+      "priority": "medium",
+      "status": "open",
+      "title": "NORAD Records — Radar Confirmation and Retraction",
+      "description": "File FOIA for NORAD records related to radar tracking of anomalous targets near JAL 1628 on November 17, 1986. Specifically seek records of the initial confirmation and subsequent retraction.",
+      "source_url": null,
+      "license": "Public Domain — US Government work",
+      "attribution": "North American Aerospace Defense Command (NORAD)",
+      "save_to": "public/images/cases/005/",
+      "file_names": ["norad-radar-records.pdf"],
+      "notes": "NORAD records may be classified or destroyed. FOIA response itself would be informative."
+    },
+    {
+      "id": "IT-004",
+      "type": "data",
+      "priority": "medium",
+      "status": "open",
+      "title": "Jupiter Position Calculation — Nov 17, 1986",
+      "description": "Generate precise astronomical ephemeris for Jupiter's position as visible from lat 66.56N, lng -145.27W at 5:11-5:42 PM AKST on November 17, 1986. Calculate azimuth, elevation, and apparent magnitude. Compare to Terauchi's reported object bearings.",
+      "source_url": "https://ssd.jpl.nasa.gov/horizons/",
+      "license": "Public Domain — NASA",
+      "attribution": "NASA JPL Horizons System",
+      "save_to": "public/images/cases/005/",
+      "file_names": ["jupiter-ephemeris-1986-11-17.csv", "jupiter-position-analysis.png"],
+      "notes": "Critical for evaluating the Klass Jupiter hypothesis. Precise bearing comparison needed."
+    },
+    {
+      "id": "IT-005",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Alaska Encounter Route Map",
+      "description": "Create an SVG route map showing JAL 1628's flight path over Alaska, the encounter zone near Ft. Yukon, the heading changes and 360-degree turn, and the relative positions of Fairbanks and Anchorage.",
+      "source_url": null,
+      "license": "Project Original",
+      "attribution": "The Meridian Project (original)",
+      "save_to": "public/images/cases/005/",
+      "file_names": ["jal1628-route-map.svg"],
+      "notes": "Use OpenStreetMap or natural earth data for base layer. Mark encounter zone, heading changes, and key waypoints."
+    }
+  ],
+
+  "gallery": [
+    {
+      "id": "g-001",
+      "type": "map",
+      "src": "/images/cases/005/jal1628-route-map.svg",
+      "title": "JAL 1628 Encounter Route Map",
+      "caption": "Flight path of JAL 1628 over northeastern Alaska showing the encounter zone near Ft. Yukon, heading changes, 360-degree turn, and the positions of Fairbanks and Anchorage.",
+      "attribution": "The Meridian Project (original)",
+      "license": "Project Original",
+      "category": "map"
+    },
+    {
+      "id": "g-002",
+      "type": "image",
+      "src": "/images/cases/005/jal-747-cargo.jpg",
+      "title": "JAL Boeing 747 Cargo",
+      "caption": "Japan Air Lines Boeing 747 cargo aircraft, the same type as Flight 1628 captained by Kenjyu Terauchi during the November 17, 1986 encounter over Alaska.",
+      "attribution": "Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "category": "reference"
+    }
+  ],
+
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "FAA Anchorage Center radar confirmed uncorrelated target near JAL 1628 during the encounter.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "FAA investigation file — radar data printouts",
+        "John Callahan — FAA Division Chief, retained copies",
+        "FAA Anchorage Center controller reports"
+      ],
+      "relatedEvidence": "FAA Anchorage Center Radar"
+    },
+    {
+      "id": "VF-002",
+      "fact": "Captain Terauchi filed an official FAA CIRVIS report documenting the encounter.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "FAA investigation file — CIRVIS report on record",
+        "John Callahan testimony confirming receipt",
+        "JAL corporate records"
+      ],
+      "relatedEvidence": "Official CIRVIS Report"
+    },
+    {
+      "id": "VF-003",
+      "fact": "The encounter lasted approximately 31 minutes of sustained observation.",
+      "category": "temporal",
+      "confidence": "confirmed",
+      "sources": [
+        "FAA ATC communication logs — timestamps 5:11 PM to 5:42 PM AKST",
+        "Captain Terauchi's CIRVIS report",
+        "FAA investigation timeline reconstruction"
+      ]
+    },
+    {
+      "id": "VF-004",
+      "fact": "Terauchi was removed from flight duty by JAL after giving media interviews about the encounter, then reinstated after public pressure.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Japanese press coverage (Kyodo News Agency, 1987)",
+        "JAL corporate communications",
+        "JAL pilot union records"
+      ]
+    },
+    {
+      "id": "VF-005",
+      "fact": "FAA Division Chief John Callahan testified at the 2007 National Press Club that CIA personnel confiscated FAA radar tapes and investigation materials.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "National Press Club event video (November 2007)",
+        "Callahan's signed affidavit",
+        "Multiple journalist accounts of the NPC event"
+      ],
+      "relatedEvidence": "Callahan NPC Testimony (2007)"
+    },
+    {
+      "id": "VF-006",
+      "fact": "NORAD radar also tracked anomalous returns near JAL 1628, initially confirming a primary target before retracting.",
+      "category": "sensor",
+      "confidence": "disputed",
+      "sources": [
+        "FAA investigation file — NORAD coordination records",
+        "John Callahan testimony",
+        "NORAD public statements (retraction)"
+      ],
+      "disputedBy": "NORAD officially retracted the confirmation. Circumstances of retraction remain unexplained.",
+      "relatedEvidence": "NORAD Radar Returns"
+    },
+    {
+      "id": "VF-007",
+      "fact": "Terauchi produced detailed technical drawings of the objects that remained consistent across multiple retellings over years.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "FAA investigation file — original drawings",
+        "Japanese press interviews (1986-1987)",
+        "Subsequent interview drawings compared by researchers"
+      ],
+      "relatedEvidence": "Terauchi Technical Drawings"
+    }
+  ],
+
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Celestial Object",
+      "probability": 15,
+      "trend": "stable",
+      "reasoning": "Jupiter was visible during the encounter and skeptic Philip Klass argued it explains the sighting. However, Terauchi reported structural detail (nozzle arrays, walnut shape), heat sensation, and close-range observation inconsistent with any celestial object. Jupiter cannot explain the radar returns or the object pacing the aircraft through heading changes.",
+      "keyFactors": {
+        "supports": ["VF-006"],
+        "contradicts": ["VF-001", "VF-003", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Military Aircraft",
+      "probability": 5,
+      "trend": "falling",
+      "reasoning": "No known military aircraft — in 1986 or today — matches the described size (two aircraft carriers), the appearance (walnut-shaped with glowing nozzle arrays), or the ability to pace a 747 through heading changes without IFF transponder response. No military exercises were reported in the area.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-001", "VF-003", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Radar Artifact",
+      "probability": 10,
+      "trend": "stable",
+      "reasoning": "Some analysts argue the FAA radar returns could be split echoes or ground clutter. This could explain the intermittent nature of the returns. However, it cannot explain the visual observations by three crew members, the CIRVIS report, or NORAD's initial independent confirmation.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-002", "VF-003", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Unknown Craft",
+      "probability": 70,
+      "trend": "stable",
+      "reasoning": "The only hypothesis consistent with all evidence: visual observation by experienced pilot with detailed structural descriptions, radar corroboration from both FAA and NORAD, 31-minute sustained encounter, object pacing through heading changes, and the subsequent data confiscation pattern. Partial crew corroboration and Jupiter visibility prevent higher confidence.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-003", "VF-005", "VF-006", "VF-007"],
+        "contradicts": []
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "Was Jupiter visible at the reported bearing, and could lens flare or atmospheric refraction account for any portion of the sighting?",
+      "status": "open",
+      "priority": "medium",
+      "anchorSection": "resolution",
+      "anchorText": "Celestial Object (Jupiter)",
+      "findings": [],
+      "conclusion": null,
+      "producedFacts": [],
+      "updatedProbabilities": [],
+      "createdBy": "system",
+      "createdAt": "2026-04-02T00:00:00Z"
+    },
+    {
+      "id": "RB-002",
+      "question": "What happened to the FAA radar tapes — can Callahan's CIA confiscation claim be independently verified?",
+      "status": "open",
+      "priority": "high",
+      "anchorSection": "evidence",
+      "anchorText": "Callahan NPC Testimony (2007)",
+      "findings": [],
+      "conclusion": null,
+      "producedFacts": [],
+      "updatedProbabilities": [],
+      "createdBy": "system",
+      "createdAt": "2026-04-02T00:00:00Z"
+    }
+  ]
+}

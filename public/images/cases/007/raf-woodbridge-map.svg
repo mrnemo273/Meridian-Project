@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 16px; font-weight: 700; fill: #2D2A24; }
+      .subtitle { font-size: 10px; fill: #6B6558; }
+      .label { font-size: 11px; fill: #2D2A24; font-weight: 600; }
+      .label-sm { font-size: 9px; fill: #6B6558; }
+      .time { font-size: 10px; fill: #9A7A2E; font-weight: 700; font-family: 'Courier New', monospace; }
+      .land { fill: #E8E2D6; stroke: #C8C0B0; stroke-width: 1; }
+      .forest { fill: #B8C8A0; stroke: #8AA060; stroke-width: 1; }
+      .base { fill: #C8C0B0; stroke: #6B6558; stroke-width: 1.5; }
+      .runway { fill: #6B6558; }
+      .ocean { fill: #D6DFE8; }
+      .patrol-route { stroke: #4A6A9A; stroke-width: 2; fill: none; stroke-dasharray: 6,3; }
+      .landing-site { fill: #9A7A2E; fill-opacity: 0.2; stroke: #9A7A2E; stroke-width: 2; }
+      .radiation { fill: #B04A4A; fill-opacity: 0.1; stroke: #B04A4A; stroke-width: 1; stroke-dasharray: 4,3; }
+      .legend-box { fill: #F6F5F1; stroke: #D4C9A8; stroke-width: 1; rx: 4; }
+      .note { font-size: 8px; fill: #6B6558; font-style: italic; }
+      .lighthouse { fill: #D4A020; }
+    </style>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4A6A9A"/>
+    </marker>
+    <symbol id="tree" viewBox="0 0 10 14">
+      <polygon points="5,1 9,10 1,10" fill="#8AA060" opacity="0.6"/>
+      <rect x="4" y="10" width="2" height="3" fill="#6B6558"/>
+    </symbol>
+    <symbol id="lighthouse-sym" viewBox="0 0 12 20">
+      <rect x="4" y="6" width="4" height="14" fill="#D4A020" stroke="#6B6558" stroke-width="0.5"/>
+      <polygon points="6,0 10,6 2,6" fill="#D4A020" stroke="#6B6558" stroke-width="0.5"/>
+      <circle cx="6" cy="4" r="2" fill="#FFFDF5" stroke="#D4A020" stroke-width="1"/>
+    </symbol>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="540" fill="#F6F5F1"/>
+  <rect x="8" y="8" width="944" height="524" fill="none" stroke="#D4C9A8" stroke-width="1" rx="4"/>
+
+  <!-- Title area (compact) -->
+  <text x="30" y="32" class="title">RENDLESHAM FOREST — LANDING SITE MAP</text>
+  <text x="30" y="46" class="subtitle">December 26–28, 1980 · RAF Woodbridge/Bentwaters · Suffolk, England · Lt. Col. Halt patrol route · Physical trace evidence · Radiation readings</text>
+
+  <!-- Compass -->
+  <circle cx="920" cy="36" r="18" fill="none" stroke="#C8C0B0" stroke-width="1"/>
+  <text x="920" y="28" font-size="11" fill="#6B6558" text-anchor="middle" font-weight="700">N</text>
+  <line x1="920" y1="31" x2="920" y2="23" stroke="#6B6558" stroke-width="2"/>
+
+  <!-- Map area -->
+  <rect x="16" y="58" width="928" height="385" fill="#E8E2D6" rx="3"/>
+
+  <!-- North Sea -->
+  <path d="M 750,58 L 928,58 L 928,443 L 780,443 C 775,400 770,360 765,320
+           C 760,280 758,240 755,200 C 752,160 750,120 750,58 Z" class="ocean"/>
+  <text x="850" y="260" font-size="13" fill="#A0B8C8" text-anchor="middle" letter-spacing="4" transform="rotate(90,850,260)">NORTH SEA</text>
+
+  <!-- Suffolk countryside -->
+  <text x="120" y="120" font-size="13" fill="#A09888" letter-spacing="6">SUFFOLK</text>
+
+  <!-- Roads -->
+  <line x1="16" y1="230" x2="720" y2="230" stroke="#D4C9A8" stroke-width="3"/>
+  <text x="80" y="224" font-size="8" fill="#A09888">A1152</text>
+  <line x1="310" y1="58" x2="310" y2="443" stroke="#D4C9A8" stroke-width="2"/>
+  <text x="318" y="90" font-size="8" fill="#A09888">B1084</text>
+
+  <!-- RAF Bentwaters -->
+  <rect x="100" y="140" width="180" height="80" class="base" rx="3"/>
+  <rect x="126" y="172" width="128" height="5" class="runway" rx="1"/>
+  <text x="190" y="163" font-size="12" fill="#2D2A24" text-anchor="middle" font-weight="700">RAF BENTWATERS</text>
+  <text x="190" y="194" font-size="8" fill="#6B6558" text-anchor="middle">81st Tactical Fighter Wing (USAF)</text>
+  <text x="190" y="205" font-size="7" fill="#6B6558" text-anchor="middle">Twin base with RAF Woodbridge</text>
+
+  <!-- RAF Woodbridge -->
+  <rect x="320" y="280" width="160" height="75" class="base" rx="3"/>
+  <rect x="338" y="312" width="115" height="5" class="runway" rx="1"/>
+  <text x="400" y="300" font-size="12" fill="#2D2A24" text-anchor="middle" font-weight="700">RAF WOODBRIDGE</text>
+  <text x="400" y="334" font-size="8" fill="#6B6558" text-anchor="middle">67th ARRS / Det 1, USAF</text>
+
+  <!-- Rendlesham Forest (between bases) -->
+  <path d="M 400,220 C 420,222 460,228 500,240 C 530,250 550,262 560,280
+           C 568,295 560,308 540,312 C 520,316 500,318 480,316
+           C 460,314 430,308 410,304 C 390,300 378,284 385,265
+           C 390,248 395,230 400,220 Z" class="forest"/>
+
+  <!-- Forest tree decoration -->
+  <use href="#tree" x="430" y="235" width="8" height="12"/>
+  <use href="#tree" x="460" y="248" width="8" height="12"/>
+  <use href="#tree" x="490" y="254" width="8" height="12"/>
+  <use href="#tree" x="450" y="270" width="8" height="12"/>
+  <use href="#tree" x="480" y="276" width="8" height="12"/>
+  <use href="#tree" x="510" y="268" width="8" height="12"/>
+  <use href="#tree" x="420" y="260" width="8" height="12"/>
+  <use href="#tree" x="500" y="290" width="8" height="12"/>
+  <use href="#tree" x="470" y="295" width="8" height="12"/>
+
+  <text x="485" y="282" font-size="11" fill="#5A7A3A" text-anchor="middle" font-weight="700" font-style="italic">Rendlesham</text>
+  <text x="485" y="294" font-size="10" fill="#5A7A3A" text-anchor="middle" font-style="italic">Forest</text>
+
+  <!-- Landing site -->
+  <circle cx="510" cy="272" r="14" class="landing-site"/>
+  <circle cx="510" cy="272" r="4" fill="#9A7A2E"/>
+  <text x="510" y="258" font-size="8" fill="#9A7A2E" text-anchor="middle" font-weight="700">LANDING SITE</text>
+
+  <!-- Radiation zone -->
+  <circle cx="510" cy="272" r="24" class="radiation"/>
+  <text x="543" y="276" font-size="7" fill="#B04A4A">Elevated radiation</text>
+
+  <!-- Ground impressions callout -->
+  <rect x="560" y="180" width="180" height="48" rx="3" fill="#FFFDF5" stroke="#9A7A2E" stroke-width="1"/>
+  <text x="568" y="194" class="time">DEC 26, 1980 · ~03:00</text>
+  <text x="568" y="205" class="label-sm">Three ground impressions found</text>
+  <text x="568" y="216" class="label-sm">Triangular pattern · 3m apart</text>
+  <text x="568" y="224" class="label-sm">Elevated radiation readings recorded</text>
+  <line x1="560" y1="224" x2="512" y2="260" stroke="#9A7A2E" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Penniston/Burroughs path (Night 1) -->
+  <path d="M 390,330 C 410,320 430,310 460,295 C 480,283 498,276 510,272" class="patrol-route" marker-end="url(#arrow-blue)"/>
+
+  <!-- Night 1 callout -->
+  <rect x="30" y="300" width="195" height="52" rx="3" fill="#FFFDF5" stroke="#4A6A9A" stroke-width="1"/>
+  <text x="38" y="314" class="time">NIGHT 1 — DEC 26</text>
+  <text x="38" y="325" class="label-sm">Sgt. Penniston + Airman Burroughs</text>
+  <text x="38" y="336" class="label-sm">Approach craft on ground in forest</text>
+  <text x="38" y="347" class="label-sm">Penniston touches craft, reports symbols</text>
+
+  <!-- Halt patrol route (Night 2-3) -->
+  <path d="M 395,340 C 420,330 450,315 480,298 C 500,286 515,275 525,265
+           C 535,255 545,248 555,242" stroke="#B04A4A" stroke-width="2" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-blue)"/>
+
+  <!-- Night 2-3 callout -->
+  <rect x="30" y="360" width="210" height="65" rx="3" fill="#FFFDF5" stroke="#B04A4A" stroke-width="1"/>
+  <text x="38" y="374" class="time">NIGHT 2-3 — DEC 27-28</text>
+  <text x="38" y="385" class="label">Lt. Col. Charles Halt</text>
+  <text x="38" y="396" class="label-sm">Leads investigation with Geiger counter</text>
+  <text x="38" y="407" class="label-sm">Records audio memo in real-time</text>
+  <text x="38" y="418" class="label-sm">Observes flashing object that splits</text>
+
+  <!-- Orford Ness Lighthouse -->
+  <use href="#lighthouse-sym" x="680" y="330" width="14" height="22"/>
+  <text x="700" y="345" font-size="9" fill="#D4A020" font-weight="600">Orford Ness</text>
+  <text x="700" y="355" font-size="8" fill="#D4A020">Lighthouse</text>
+
+  <!-- Lighthouse skeptical explanation callout -->
+  <rect x="620" y="360" width="220" height="50" rx="3" fill="#FFFDF5" stroke="#D4A020" stroke-width="1"/>
+  <text x="628" y="374" class="label">Skeptical Explanation</text>
+  <text x="628" y="385" class="label-sm">Orford Ness lighthouse ~5 miles east</text>
+  <text x="628" y="396" class="label-sm">Flashing beam visible from forest</text>
+  <text x="628" y="407" class="label-sm">Disputed by witnesses who knew lighthouse</text>
+
+  <!-- Distance line to lighthouse -->
+  <line x1="510" y1="278" x2="687" y2="340" stroke="#D4A020" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="600" y="305" font-size="8" fill="#D4A020" transform="rotate(20,600,305)">~5 miles</text>
+
+  <!-- Halt memo callout -->
+  <rect x="30" y="80" width="230" height="50" rx="3" fill="#FFFDF5" stroke="#6B6558" stroke-width="1"/>
+  <text x="38" y="94" class="label">Halt Memo — Jan 13, 1981</text>
+  <text x="38" y="106" class="label-sm">Official memo to UK Ministry of Defence</text>
+  <text x="38" y="117" class="label-sm">Documents both nights of activity</text>
+  <text x="38" y="125" class="label-sm">Released via FOI in 1983</text>
+
+  <!-- Woodbridge town -->
+  <circle cx="300" cy="270" r="3" fill="#6B6558"/>
+  <text x="288" y="267" font-size="9" fill="#6B6558" text-anchor="end">Woodbridge</text>
+
+  <!-- Ipswich reference -->
+  <circle cx="80" cy="240" r="3" fill="#6B6558"/>
+  <text x="68" y="237" font-size="9" fill="#6B6558" text-anchor="end">Ipswich</text>
+
+  <!-- Scale -->
+  <line x1="650" y1="430" x2="720" y2="430" stroke="#6B6558" stroke-width="2"/>
+  <line x1="650" y1="426" x2="650" y2="434" stroke="#6B6558" stroke-width="1"/>
+  <line x1="720" y1="426" x2="720" y2="434" stroke="#6B6558" stroke-width="1"/>
+  <text x="685" y="424" font-size="8" fill="#6B6558" text-anchor="middle">~1 mile</text>
+
+  <!-- Legend (compact bar at bottom) -->
+  <rect x="16" y="452" width="928" height="78" class="legend-box"/>
+  <text x="34" y="470" class="label">Legend</text>
+
+  <rect x="34" y="478" width="14" height="10" class="base" rx="1"/>
+  <text x="54" y="487" class="label-sm">RAF base / runway</text>
+
+  <rect x="160" y="478" width="14" height="10" class="forest" rx="1"/>
+  <text x="180" y="487" class="label-sm">Rendlesham Forest</text>
+
+  <circle cx="296" cy="483" r="5" class="landing-site"/>
+  <text x="306" y="487" class="label-sm">Landing site (physical traces)</text>
+
+  <circle cx="446" cy="483" r="5" class="radiation"/>
+  <text x="456" y="487" class="label-sm">Elevated radiation zone</text>
+
+  <use href="#lighthouse-sym" x="572" y="474" width="10" height="16"/>
+  <text x="588" y="487" class="label-sm">Orford Ness Lighthouse</text>
+
+  <line x1="700" y1="483" x2="728" y2="483" stroke="#4A6A9A" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="734" y="487" class="label-sm">Patrol route</text>
+
+  <text x="34" y="508" class="note">Sources: Halt memo (UK MoD, released 1983) · Halt audio recording · UK MoD files (released 2009 via FOI)</text>
+  <text x="34" y="520" class="note">Airman Burroughs successfully received VA benefits citing radiation exposure from the incident.</text>
+</svg>

@@ -35,9 +35,10 @@ export function HeroSection({ data, getCount }: Props) {
             <Image
               src={data.heroImage}
               alt={data.heroImageAlt || data.title}
-              width={900}
-              height={300}
-              style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 6 }}
+              width={960}
+              height={540}
+              unoptimized={data.heroImage.endsWith(".svg")}
+              style={{ width: "100%", height: "auto", borderRadius: 6 }}
               priority
             />
             {data.heroImageAttribution && (

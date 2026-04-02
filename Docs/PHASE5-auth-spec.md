@@ -752,3 +752,9 @@ Then hand it to the builder. After the build, you'll be able to sign in with you
 | 2026-03-24 | AnnotationOverlays updated for multi-user display — shows author name and avatar_color dot. |
 | 2026-03-24 | Highlight CSS classes: hl-nemo for all human investigators, hl-claude for AI. Dynamic user names in data-user attr. |
 | 2026-03-24 | IMPORTANT: Run 001_initial_schema.sql in Supabase SQL Editor before first use. Seed admin user via Dashboard or scripts/seed-admin.ts. |
+| 2026-04-02 | Replaced magic link auth with Google SSO (signInWithOAuth). Google OAuth configured in Supabase + Google Cloud Console. |
+| 2026-04-02 | Auth callback now checks ALLOWED_EMAILS list + invites table. Unauthorized Google users are rejected and deleted. |
+| 2026-04-02 | Added NEXT_PUBLIC_DEV_BYPASS_AUTH=true in .env.local to skip auth during local development. |
+| 2026-04-02 | Added Supabase env vars to Vercel (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY). |
+| 2026-04-02 | Invite button added to home page sidebar (was only on case pages). |
+| 2026-04-02 | Login page redesigned: Playfair Display italic for headlines/button, mono for small labels. Matches app logo style (Oswald). |

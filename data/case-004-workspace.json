@@ -1,0 +1,531 @@
+{
+  "id": "CASE-004",
+  "caseNumber": "004",
+  "title": "Tehran F-4 Intercept",
+  "subtitle": "The DIA Document Case",
+  "date": "September 19, 1976",
+  "location": "Tehran, Iran",
+  "duration": "~90 minutes",
+  "credibilityScore": 85,
+  "credibilityTier": "Tier 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "radar-confirmed",
+    "weapons-interference",
+    "communications-failure",
+    "government-document",
+    "dia-report"
+  ],
+
+  "heroImage": "/images/cases/004/tehran-airspace-map.svg",
+  "heroImageAlt": "Tehran F-4 intercept route map",
+  "heroImageAttribution": "The Meridian Project (original)",
+
+  "timeline": [
+    {
+      "date": "September 19, 1976 · ~10:30 PM",
+      "title": "Civilian reports flood Mehrabad tower",
+      "detail": "Multiple residents in the Shemiran district of northern Tehran report a bright, intensely luminous object in the night sky. Mehrabad International Airport receives phone calls from alarmed civilians. Reports describe a large, diamond-shaped object emitting intense colored light.",
+      "tags": [{ "label": "Civilian", "type": "witness" }, { "label": "Initial Report", "type": "report" }],
+      "type": "key"
+    },
+    {
+      "date": "~10:45 PM",
+      "title": "Gen. Yousefi observes object from ground",
+      "detail": "Deputy Commander Gen. Nader Yousefi is contacted and observes the object himself from the ground. After confirming the visual, he authorizes the scramble of an F-4 Phantom II interceptor.",
+      "tags": [{ "label": "Yousefi", "type": "witness" }, { "label": "Command", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "~11:00 PM",
+      "title": "First F-4 scrambled from Shahrokhi AFB",
+      "detail": "An F-4 Phantom II departs Shahrokhi Air Force Base and heads toward the luminous object over Tehran.",
+      "tags": [{ "label": "F-4", "type": "military" }, { "label": "Scramble", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "~11:10 PM",
+      "title": "First F-4 — total instrument failure",
+      "detail": "As the first F-4 approaches within approximately 25 nautical miles of the object, the aircraft experiences total loss of instruments and communications. The pilot is forced to break off and return to base. All systems restore upon turning away from the object.",
+      "tags": [{ "label": "Comms Failure", "type": "anomaly" }, { "label": "Instrument Failure", "type": "anomaly" }],
+      "type": "anomaly"
+    },
+    {
+      "date": "~11:15 PM",
+      "title": "Second F-4 scrambled — Lt. Jafari",
+      "detail": "Lt. Parviz Jafari is scrambled in a second F-4 Phantom II. He acquires the object on radar at a range of 27 nautical miles. The radar return is described as comparable to a 707 tanker aircraft.",
+      "tags": [{ "label": "Jafari", "type": "witness" }, { "label": "Radar", "type": "radar-confirmed" }],
+      "type": "key"
+    },
+    {
+      "date": "~11:25 PM",
+      "title": "Radar lock — weapons panel failure",
+      "detail": "As Jafari closes on the object, he prepares to fire an AIM-9 missile. At the moment of attempted weapons release, the weapons control panel goes dead and all communications are jammed. The object appears to maintain distance despite the F-4's approach speed.",
+      "tags": [{ "label": "Weapons Failure", "type": "anomaly" }, { "label": "Comms Jam", "type": "anomaly" }],
+      "type": "anomaly",
+      "hasHighlight": "ann-1"
+    },
+    {
+      "date": "~11:30 PM",
+      "title": "Smaller object detaches — approaches F-4",
+      "detail": "A brightly lit smaller object appears to separate from the primary object and flies directly toward Jafari's F-4 at high speed. Jafari initiates a sharp diving turn to evade. The smaller object follows briefly, then reverses course and rejoins the primary object.",
+      "tags": [{ "label": "Detachment", "type": "anomaly" }, { "label": "Evasion", "type": "military" }],
+      "type": "anomaly",
+      "hasHighlight": "ann-2"
+    },
+    {
+      "date": "~11:40 PM",
+      "title": "Second smaller object — apparent landing",
+      "detail": "Another luminous object appears to detach and descend rapidly toward the ground, casting a bright light over a wide area. It appears to land or hover near the ground in a dry lake bed area. Ground teams are dispatched.",
+      "tags": [{ "label": "Landing", "type": "anomaly" }, { "label": "Ground Team", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "~12:00 AM · September 20",
+      "title": "Jafari returns to base — systems restore",
+      "detail": "Lt. Jafari returns to Mehrabad. All aircraft systems — weapons panel, instruments, communications — return to normal function upon disengagement from the object. Both F-4 crews debrief.",
+      "tags": [{ "label": "Systems Restore", "type": "key" }, { "label": "Debrief", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "September 20–25, 1976",
+      "title": "DIA report produced — ground investigation",
+      "detail": "The Defense Intelligence Agency produces a four-page evaluation report documenting the incident. Ground teams investigate the apparent landing site and report anomalous radiation readings. The DIA report concludes the case 'meets all the criteria for a valid study of the UFO phenomenon.'",
+      "tags": [{ "label": "DIA", "type": "official" }, { "label": "Radiation", "type": "physical" }],
+      "type": "key"
+    }
+  ],
+
+  "evidence": [
+    {
+      "typeLabel": "Government Document",
+      "badge": "DIA",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "DIA Evaluation Report",
+      "summary": "Four-page Defense Intelligence Agency report documenting the full incident. Concludes the case 'meets all the criteria for a valid study of the UFO phenomenon.' One of the most significant official UFO documents ever declassified.",
+      "linkText": "Linked to: Radar Data, Pilot Testimony, Embassy Reports"
+    },
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "Radar",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "F-4 Radar Acquisition",
+      "summary": "Lt. Jafari's F-4 acquired the object on radar at 27 nautical miles. The radar return was comparable to a 707 tanker. Lock was maintained until the weapons panel failed upon attempted engagement.",
+      "linkText": "Linked to: DIA Report, Jafari Testimony, Weapons Failure"
+    },
+    {
+      "typeLabel": "Testimony",
+      "badge": "Sworn",
+      "badgeClass": "badge-witness",
+      "cardType": "type-witness",
+      "title": "Lt. Jafari — National Press Club (2007)",
+      "summary": "Lt. Parviz Jafari testified publicly at the National Press Club in Washington, D.C. in 2007. His account has remained consistent over 30+ years and corroborates the DIA report in every material detail.",
+      "linkText": "Linked to: DIA Report, Radar Data, Weapons/Comms Failure"
+    },
+    {
+      "typeLabel": "Government Document",
+      "badge": "Embassy",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "US Embassy Reports",
+      "summary": "Both the Iranian government and the US Embassy in Tehran filed independent reports on the incident. The Embassy report was forwarded through diplomatic channels to the DIA, providing a second institutional chain of documentation.",
+      "linkText": "Linked to: DIA Report, Iranian Air Force Records"
+    },
+    {
+      "typeLabel": "Physical Evidence",
+      "badge": "Radiation",
+      "badgeClass": "badge-anomaly",
+      "cardType": "type-evidence",
+      "title": "Ground Radiation Readings",
+      "summary": "Ground teams dispatched to the apparent landing site reported anomalous radiation levels above normal background. The readings have not been independently verified, and the instrumentation and methodology are undocumented.",
+      "linkText": "Linked to: DIA Report, Landing Site Investigation"
+    }
+  ],
+
+  "witnesses": [
+    {
+      "initials": "PJ",
+      "name": "Lt. Parviz Jafari",
+      "rank": "Pilot, Imperial Iranian Air Force",
+      "observed": "Pilot of the second F-4 Phantom scrambled to intercept. Achieved radar lock on the object at 27 nm with a return comparable to a 707 tanker. Experienced weapons panel failure and communications jamming. Observed a smaller object detach and fly directly at his aircraft. Testified at National Press Club in 2007.",
+      "quote": "I tried to fire a missile but the weapons panel went dead. Then a bright object came right at us.",
+      "quoteSource": "— National Press Club, 2007"
+    },
+    {
+      "initials": "NY",
+      "name": "Gen. Nader Yousefi",
+      "rank": "Deputy Commander, IIAF Operations",
+      "observed": "Senior officer who authorized both scrambles. Observed the object from the ground before ordering intercepts. Confirmed the instrument and weapons failures reported by both F-4 crews.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "F1",
+      "name": "First F-4 Crew (names withheld)",
+      "rank": "Pilot and WSO, Imperial Iranian Air Force",
+      "observed": "Crew of the first F-4 scrambled. Experienced total instrument and communications failure at approximately 25 nm from the object. Forced to abort and return to base. All systems restored upon turning away.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "GO",
+      "name": "Shemiran District Residents",
+      "rank": "Civilian ground observers",
+      "observed": "Multiple residents in northern Tehran's Shemiran district independently reported a large, brightly lit object in the night sky. Reports were made to Mehrabad Airport tower and triggered the military response. Observations preceded and corroborated the military intercept.",
+      "quote": null,
+      "quoteSource": null
+    }
+  ],
+
+  "aiAnalysis": [
+    {
+      "aiType": "Pattern Analysis",
+      "title": "Cross-Case: Weapons/Comms Interference Pattern",
+      "finding": "Electromagnetic interference with military systems is reported in multiple high-credibility cases: Tehran 1976 (weapons + comms), Rendlesham 1980 (equipment malfunction), Nimitz 2004 (radar anomalies). The pattern of selective system disruption — affecting offensive systems while leaving flight controls intact — is statistically improbable as coincidence.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Document Analysis",
+      "title": "DIA Report Language Assessment",
+      "finding": "The DIA report's conclusion that the case 'meets all the criteria for a valid study of the UFO phenomenon' is exceptional in official government documentation. The language implies institutional acknowledgment that the event could not be explained by conventional means. The report was classified, suggesting it was intended for internal intelligence use rather than public reassurance.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Physics Review",
+      "title": "Selective EM Interference Analysis",
+      "finding": "Both F-4 aircraft experienced system failures that selectively affected instruments, communications, and weapons — while flight controls (hydraulics, engines) remained operational. Known electromagnetic pulse (EMP) effects are indiscriminate. Selective system targeting implies a directed capability beyond known 1976 technology.",
+      "confidence": "Medium — Dependent on crew reporting accuracy",
+      "confidenceClass": "confidence-medium"
+    }
+  ],
+
+  "openQuestions": [
+    { "num": "Q01", "text": "Was Jupiter or another bright planet visible over Tehran on September 19, 1976?", "context": "Skeptics have proposed that the initial civilian reports may have been triggered by Jupiter or another astronomical object. Positional astronomy can resolve this definitively." },
+    { "num": "Q02", "text": "What mechanism could selectively disable weapons and communications while leaving flight controls intact?", "context": "Both F-4s experienced the same pattern: offensive/sensor systems failed, but engines and flight controls operated normally. This is inconsistent with broadband EMP." },
+    { "num": "Q03", "text": "What were the actual radiation readings at the apparent landing site?", "context": "The DIA report mentions anomalous radiation but provides no quantitative data. The instruments used and the methodology are undocumented." },
+    { "num": "Q04", "text": "Why did the DIA conclude this case 'meets all criteria for valid study' and then apparently conduct no follow-up?", "context": "No subsequent DIA analysis has been declassified. Either follow-up was classified or the conclusion was not acted upon." },
+    { "num": "Q05", "text": "Are there additional Iranian Air Force records or radar tapes from Mehrabad tower?", "context": "The DIA report is sourced from US intelligence channels. Iranian military records from 1976 may contain additional data not captured in the DIA report." }
+  ],
+
+  "resolution": [
+    { "status": "partial", "label": "Jupiter / bright star", "detail": "Partially addressed. Jupiter's position on that date needs verification. Even if Jupiter triggered initial civilian reports, it cannot explain the radar return, weapons failure, or pilot encounters at close range." },
+    { "status": "eliminated", "label": "Ball lightning", "detail": "Eliminated. Ball lightning does not produce radar returns comparable to a 707, does not selectively disable weapons systems, and does not persist for 90+ minutes across multiple engagements." },
+    { "status": "open", "label": "Classified aircraft", "detail": "Not eliminated. A classified US or Soviet aircraft could potentially explain the visual sighting, but no known 1976-era technology could selectively jam weapons systems while leaving flight controls operational." },
+    { "status": "open", "label": "Equipment malfunction", "detail": "Not eliminated for the first F-4. However, identical failure patterns on two independent aircraft at the same proximity to the object make coincidental malfunction extremely unlikely." }
+  ],
+
+  "osint": [
+    { "field": "Location", "status": "verified", "value": "Tehran, Iran. Shemiran district (northern Tehran). Mehrabad International Airport. 35.69°N, 51.39°E.", "source": "DIA report, geographic records, Lt. Jafari testimony." },
+    { "field": "Date & Time", "status": "verified", "value": "September 19, 1976, approximately 10:30 PM local time through approximately midnight.", "source": "DIA report, Iranian Air Force records." },
+    { "field": "Aircraft Type", "status": "verified", "value": "McDonnell Douglas F-4 Phantom II. Iran operated F-4D and F-4E variants in 1976.", "source": "Iranian Air Force fleet records, DIA report." },
+    { "field": "DIA Report Authenticity", "status": "verified", "value": "Document authenticated through FOIA. Held at National Security Archive, George Washington University.", "source": "National Security Archive, FOIA records." },
+    { "field": "Jafari Identity", "status": "verified", "value": "Lt. Parviz Jafari confirmed as serving IIAF pilot in 1976. Later promoted to General. Testified at National Press Club 2007.", "source": "Iranian military records, National Press Club event records." },
+    { "field": "Radiation Readings", "status": "unverified", "value": "Ground teams reported anomalous readings at apparent landing site. No quantitative data, instrument type, or methodology documented.", "source": "DIA report (summary only). No primary measurement data available." }
+  ],
+
+  "evidenceChain": [
+    { "num": 1, "source": "DIA Evaluation Report (4 pages)", "note": "Declassified via FOIA. Held at National Security Archive (GWU). Authenticated government document.", "strength": "strong", "strengthLabel": "Strong — authenticated government document" },
+    { "num": 2, "source": "F-4 Radar Data (Lt. Jafari's aircraft)", "note": "Object acquired at 27 nm with return comparable to 707 tanker. No original radar tapes preserved.", "strength": "moderate", "strengthLabel": "Moderate — described in DIA report, no raw data" },
+    { "num": 3, "source": "Lt. Parviz Jafari Testimony", "note": "National Press Club 2007. Consistent over 30+ years. Corroborates DIA report in all material details.", "strength": "strong", "strengthLabel": "Strong — consistent, public, corroborated" },
+    { "num": 4, "source": "US Embassy Tehran Report", "note": "Independent diplomatic channel report corroborating the Iranian military account. Forwarded to DIA.", "strength": "strong", "strengthLabel": "Strong — independent institutional source" },
+    { "num": 5, "source": "Ground Team Radiation Readings", "note": "Anomalous readings reported but no quantitative data, methodology, or instrument specifications documented.", "strength": "weak", "strengthLabel": "Weak — no verifiable measurement data" }
+  ],
+
+  "solvabilityFactors": [
+    { "name": "Authenticated DIA document exists", "score": "+15", "type": "positive" },
+    { "name": "Pilot testimony consistent over 30+ years", "score": "+12", "type": "positive" },
+    { "name": "Multiple independent reporting channels", "score": "+8", "type": "positive" },
+    { "name": "Cross-case EM interference pattern", "score": "+8", "type": "positive" },
+    { "name": "No original radar tapes preserved", "score": "-10", "type": "negative" },
+    { "name": "Iranian records inaccessible", "score": "-8", "type": "negative" },
+    { "name": "50-year evidence degradation", "score": "-5", "type": "negative" },
+    { "name": "Radiation data unverified", "score": "-5", "type": "negative" },
+    { "name": "Astronomical check unperformed", "score": "+5", "type": "neutral" },
+    { "name": "National Press Club testimony on record", "score": "+5", "type": "positive" }
+  ],
+  "solvabilityScore": 65,
+
+  "nextSteps": [
+    { "priority": "high", "text": "Run positional astronomy calculation for Jupiter visibility over Tehran on September 19, 1976 at 22:30 local time" },
+    { "priority": "high", "text": "Cross-reference weapons/comms interference pattern with Rendlesham (CASE-003) and Nimitz (CASE-001)" },
+    { "priority": "medium", "text": "Locate and digitize full DIA report from National Security Archive (GWU)" },
+    { "priority": "medium", "text": "Search for additional declassified US intelligence community references to the Tehran incident" },
+    { "priority": "medium", "text": "Investigate whether Iranian Air Force post-revolution archives contain additional records" },
+    { "priority": "low", "text": "Attempt to identify the first F-4 crew through Iranian military historians" }
+  ],
+
+  "searchDemoResults": [
+    { "type": "foia", "source": "FOIA · National Security Archive", "title": "DIA Report: Tehran UFO Incident (1976) — Declassified", "snippet": "Four-page DIA evaluation documenting the scramble of two F-4 Phantoms, electromagnetic interference, and the conclusion that the case 'meets all criteria for valid study of the UFO phenomenon'..." },
+    { "type": "video", "source": "YouTube · National Press Club", "title": "Lt. Parviz Jafari — Tehran 1976 Testimony (2007)", "snippet": "Iranian Air Force pilot describes his encounter during an international panel of military witnesses. Consistent account of radar lock, weapons failure, and object detaching a smaller craft..." },
+    { "type": "academic", "source": "Journal of Scientific Exploration", "title": "Analysis of the 1976 Tehran UFO Incident", "snippet": "Peer-reviewed analysis examining the DIA report, pilot testimony, and electromagnetic interference patterns. Compares the selective systems failure to known EMP profiles and finds no conventional match..." },
+    { "type": "reddit", "source": "Reddit · r/UFOs", "title": "The Tehran 1976 case is the most underrated military encounter", "snippet": "The DIA literally wrote that it 'meets all criteria for valid study.' Two F-4s had their weapons disabled. A smaller object flew AT the jet. And somehow this case barely gets discussed..." },
+    { "type": "web", "source": "Web · The Black Vault", "title": "Tehran 1976 — Complete FOIA Document Collection", "snippet": "Full collection of declassified documents related to the September 1976 Tehran incident. Includes DIA evaluation, embassy cables, and cross-references to other intelligence community assessments..." }
+  ],
+
+  "achHypotheses": [
+    "Astronomical Object",
+    "Ball Lightning",
+    "Classified Aircraft",
+    "Unknown Craft"
+  ],
+  "achEvidence": [
+    { "evidence": "Radar return comparable to 707 tanker", "ai": ["I", "I", "C", "C"] },
+    { "evidence": "Weapons panel failure on approach", "ai": ["I", "I", "N", "C"] },
+    { "evidence": "Communications jamming (both F-4s)", "ai": ["I", "I", "N", "C"] },
+    { "evidence": "Smaller object detached at high speed", "ai": ["I", "I", "N", "C"] },
+    { "evidence": "Systems restored upon disengagement", "ai": ["I", "N", "N", "C"] },
+    { "evidence": "Visible to naked eye as bright object", "ai": ["C", "C", "N", "C"] },
+    { "evidence": "Ground radiation anomaly at landing site", "ai": ["I", "N", "I", "C"] },
+    { "evidence": "DIA concludes 'meets all criteria for valid study'", "ai": ["I", "I", "N", "C"] }
+  ],
+
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "document",
+      "priority": "high",
+      "status": "open",
+      "title": "DIA Report — Full Document Digitization",
+      "description": "Obtain and digitize the complete four-page DIA evaluation report from the National Security Archive at George Washington University. Extract key pages as high-resolution images for the evidence gallery.",
+      "source_url": "https://nsarchive2.gwu.edu/NSAEBB/NSAEBB187/",
+      "license": "Public Domain — US Government work (declassified)",
+      "attribution": "Defense Intelligence Agency / National Security Archive",
+      "save_to": "public/images/cases/004/",
+      "file_names": ["dia-report-page1.png", "dia-report-page2.png", "dia-report-page3.png", "dia-report-page4.png"],
+      "notes": "Declassified government document. No copyright restrictions. The cornerstone evidence for this case."
+    },
+    {
+      "id": "IT-002",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "F-4 Phantom II Reference Photo",
+      "description": "Source a reference photo of a McDonnell Douglas F-4 Phantom II, preferably in Iranian Air Force livery (pre-revolution markings). US military photos of F-4s are public domain.",
+      "source_url": "https://www.navy.mil/Resources/Photo-Gallery/",
+      "license": "Public Domain — US Government work",
+      "attribution": "U.S. Air Force or U.S. Navy",
+      "save_to": "public/images/cases/004/",
+      "file_names": ["f4-phantom-reference.jpg"],
+      "notes": "F-4 Phantom was widely used by both US and Iranian air forces. Any F-4 reference photo acceptable."
+    },
+    {
+      "id": "IT-003",
+      "type": "data",
+      "priority": "high",
+      "status": "open",
+      "title": "Jupiter Position Calculation — September 19, 1976",
+      "description": "Use Stellarium or JPL Horizons to calculate the exact position and brightness of Jupiter as visible from Tehran (35.69°N, 51.39°E) at 22:30 local time on September 19, 1976. Document azimuth, altitude, and apparent magnitude.",
+      "source_url": "https://ssd.jpl.nasa.gov/horizons/",
+      "license": "Public Domain — NASA/JPL data",
+      "attribution": "NASA/JPL Horizons System",
+      "save_to": "public/images/cases/004/",
+      "file_names": ["jupiter-position-1976-09-19.png"],
+      "notes": "Critical for evaluating the astronomical object hypothesis. If Jupiter was not visible or not in the reported direction, this hypothesis can be eliminated."
+    },
+    {
+      "id": "IT-004",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Tehran Airspace Map — Intercept Route",
+      "description": "Create an original SVG map showing the Tehran metropolitan area, Mehrabad Airport, Shahrokhi AFB, the Shemiran district, and the approximate intercept routes of both F-4 aircraft.",
+      "source_url": null,
+      "license": "Create original (OpenStreetMap base layer)",
+      "attribution": "The Meridian Project (original) / OpenStreetMap contributors",
+      "save_to": "public/images/cases/004/",
+      "file_names": ["tehran-airspace-map.svg"],
+      "notes": "Original creation for the project. OpenStreetMap base is CC-BY-SA."
+    }
+  ],
+
+  "gallery": [
+    {
+      "id": "g-001",
+      "type": "map",
+      "src": "/images/cases/004/tehran-airspace-map.svg",
+      "title": "Tehran Airspace — F-4 Intercept Route Map",
+      "caption": "Reconstructed map showing the Tehran metropolitan area, Mehrabad Airport, Shahrokhi Air Force Base, and the approximate intercept routes of both F-4 Phantom aircraft on September 19, 1976.",
+      "attribution": "The Meridian Project (original)",
+      "license": "Project Original",
+      "category": "map"
+    },
+    {
+      "id": "g-002",
+      "type": "image",
+      "src": "/images/cases/004/f4-phantom.jpg",
+      "title": "Iranian F-4 Phantom II",
+      "caption": "F-4 Phantom II of the Imperial Iranian Air Force. Two F-4s were scrambled on September 19, 1976 to intercept the bright object over Tehran.",
+      "attribution": "Wikimedia Commons",
+      "license": "Public Domain",
+      "category": "reference"
+    }
+  ],
+
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "A DIA evaluation report dated September 1976 documents the Tehran intercept incident in detail.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Defense Intelligence Agency — declassified document (FOIA)",
+        "National Security Archive, George Washington University",
+        "Multiple FOIA confirmations of document authenticity"
+      ]
+    },
+    {
+      "id": "VF-002",
+      "fact": "The DIA report states the case 'meets all the criteria for a valid study of the UFO phenomenon.'",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "DIA evaluation report — direct quote from document conclusion",
+        "National Security Archive verified copy"
+      ]
+    },
+    {
+      "id": "VF-003",
+      "fact": "Two F-4 Phantom II interceptors were scrambled by the Imperial Iranian Air Force on the night of September 19, 1976.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "DIA evaluation report",
+        "Lt. Parviz Jafari testimony — National Press Club 2007",
+        "Gen. Nader Yousefi — confirmed authorization of scrambles"
+      ]
+    },
+    {
+      "id": "VF-004",
+      "fact": "Both aircraft experienced weapons and/or communications failures during their approach to the object.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "DIA evaluation report — documents failures on both aircraft",
+        "Lt. Parviz Jafari testimony — describes weapons panel failure and comms jamming",
+        "Gen. Yousefi — confirmed failure reports from both crews"
+      ]
+    },
+    {
+      "id": "VF-005",
+      "fact": "Both the Iranian government and the US Embassy in Tehran filed reports on the incident.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "DIA report — references Embassy reporting channel",
+        "US Embassy Tehran cable records",
+        "National Security Archive document collection"
+      ]
+    },
+    {
+      "id": "VF-006",
+      "fact": "Lt. Parviz Jafari testified publicly at the National Press Club in Washington, D.C. in 2007.",
+      "category": "witness",
+      "confidence": "confirmed",
+      "sources": [
+        "National Press Club event records — November 12, 2007",
+        "Video recordings of the testimony",
+        "Multiple news media reports of the event"
+      ]
+    },
+    {
+      "id": "VF-007",
+      "fact": "Ground teams dispatched to the area of the apparent landing reported anomalous radiation readings.",
+      "category": "physical",
+      "confidence": "disputed",
+      "sources": [
+        "DIA evaluation report — mentions radiation but provides no quantitative data"
+      ],
+      "disputedBy": "No quantitative measurements, instrument specifications, or methodology documented. Radiation levels and baseline comparisons are absent from all available records."
+    }
+  ],
+
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Astronomical Object",
+      "probability": 10,
+      "trend": "stable",
+      "reasoning": "Jupiter or a bright star may explain the initial civilian reports of a bright light. However, astronomical objects do not produce radar returns comparable to a 707, do not cause weapons and communications failures, and do not detach smaller objects. This hypothesis can only account for the initial visual trigger, not the full encounter.",
+      "keyFactors": {
+        "supports": ["VF-006"],
+        "contradicts": ["VF-003", "VF-004"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Ball Lightning",
+      "probability": 5,
+      "trend": "falling",
+      "reasoning": "Ball lightning is transient (seconds to minutes), does not produce coherent radar returns, and has never been documented to selectively disable weapons systems. The 90-minute duration and consistent radar signature are incompatible with any known atmospheric electrical phenomenon.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-003", "VF-004", "VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Classified Aircraft",
+      "probability": 15,
+      "trend": "stable",
+      "reasoning": "A classified US or Soviet aircraft could potentially explain visual observations. However, no known 1976-era technology could selectively jam weapons and communications while leaving flight controls operational. The US would be unlikely to test classified aircraft over an allied nation's capital without coordination, and the DIA report shows no indication of awareness of a classified program.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-004"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Unknown Craft",
+      "probability": 70,
+      "trend": "stable",
+      "reasoning": "The only hypothesis consistent with all evidence: radar return of a physical object, selective electromagnetic interference affecting multiple aircraft, apparent intelligent behavior (smaller object approaching the F-4), and the DIA's own conclusion that the case warrants serious study. No known conventional explanation accounts for the full evidence set.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-003", "VF-004", "VF-005", "VF-006", "VF-007"],
+        "contradicts": []
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "Was Jupiter visible over Tehran on the night of September 19, 1976?",
+      "status": "open",
+      "priority": "medium",
+      "anchorSection": "openQuestions",
+      "anchorId": "Q01",
+      "anchorText": "Skeptics have proposed that the initial civilian reports may have been triggered by Jupiter or another astronomical object.",
+      "findings": [],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-002",
+      "question": "Is there a consistent pattern of weapons and communications interference across military UAP cases?",
+      "status": "open",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-004",
+      "anchorText": "Both aircraft experienced weapons and/or communications failures during their approach to the object.",
+      "findings": [
+        {
+          "id": "RB-002-F1",
+          "type": "analysis",
+          "content": "Tehran 1976: both F-4s experienced selective weapons/comms failure. Rendlesham 1980: military personnel reported equipment malfunctions near the object. Nimitz 2004: radar anomalies and potential jamming noted. The pattern of selective system interference — affecting sensors and weapons but not flight controls — appears across decades and different military platforms.",
+          "source": "Cross-case analysis — CASE-001 (Nimitz), CASE-003 (Rendlesham), CASE-004 (Tehran)",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    }
+  ]
+}

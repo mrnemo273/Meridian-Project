@@ -1,0 +1,309 @@
+{
+  "case_id": "CASE-006",
+  "title": "USS Roosevelt Encounters",
+  "subtitle": "GIMBAL and GOFAST",
+  "date": "2015-01-21",
+  "date_display": "2014–2015",
+  "date_range": {
+    "first_encounter": "2014-06-01",
+    "primary_videos": "2015-01-21",
+    "last_known": "2015-03-15"
+  },
+  "location": {
+    "description": "US East Coast, W-72 Operating Area off Virginia and North Carolina",
+    "lat": 36.5,
+    "lng": -74.5,
+    "area": "W-72 Warning Area, Atlantic Fleet Operating Area"
+  },
+  "duration": {
+    "encounter_period": "~2 years of recurring encounters (Summer 2014 – March 2015+)",
+    "gimbal_recording": "~34 seconds",
+    "gofast_recording": "~34 seconds"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 90,
+  "credibility_tier": "TIER 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "multi-sensor",
+    "video-documented",
+    "congressional-testimony",
+    "daily-encounters",
+    "carrier-strike-group",
+    "no-infrared-signature"
+  ],
+  "related_case_ids": [
+    "CASE-001"
+  ],
+  "event_summary": {
+    "overview": "Between summer 2014 and March 2015, F/A-18 Super Hornet pilots attached to Carrier Air Wing 8 aboard USS Theodore Roosevelt (CVN-71) reported near-daily encounters with unidentified aerial objects in the W-72 warning area off the coast of Virginia and North Carolina. The encounters were documented by multiple sensor systems including the AN/ASQ-228 ATFLIR pod, which produced the now-famous GIMBAL and GOFAST infrared videos. Objects exhibited anomalous flight characteristics — hovering at 30,000 feet with no visible propulsion, no infrared exhaust signature, and apparent rotation against flight direction. Lt. Ryan Graves of VFA-11 'Red Rippers' reported the encounters occurred 'every day for at least a couple years.' At least one near-miss incident was formally reported through Navy safety channels.",
+    "weather": "Variable — encounters occurred across multiple seasons and weather conditions over the 2014–2015 period. GIMBAL video shows overcast conditions.",
+    "sea_conditions": "Atlantic waters off East Coast. Variable conditions.",
+    "military_units": [
+      {
+        "unit": "USS Theodore Roosevelt (CVN-71)",
+        "type": "Nimitz-class nuclear aircraft carrier",
+        "role": "Carrier Strike Group 12 flagship, home to encountering squadrons"
+      },
+      {
+        "unit": "VFA-11 'Red Rippers'",
+        "type": "Strike Fighter Squadron, F/A-18F Super Hornets",
+        "role": "Lt. Ryan Graves' squadron — primary reporting unit"
+      },
+      {
+        "unit": "VFA-31 'Tomcatters'",
+        "type": "Strike Fighter Squadron, F/A-18E Super Hornets",
+        "role": "Lt. Danny Accoin's squadron — corroborating encounters"
+      },
+      {
+        "unit": "Carrier Air Wing 8 (CVW-8)",
+        "type": "Carrier Air Wing",
+        "role": "Multiple squadrons reported encounters across the air wing"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "id": "W-001",
+      "type": "witness",
+      "title": "Lieutenant (LT) Ryan Graves",
+      "summary": "F/A-18F pilot with VFA-11 'Red Rippers.' First active-duty Navy pilot to publicly report UAP encounters. Testified under oath before the House Oversight Committee on July 26, 2023. Reported near-daily encounters over approximately two years in the W-72 operating area.",
+      "detail": "Graves described objects that appeared on radar and SA (situational awareness) displays, were occasionally visually acquired, and demonstrated the ability to remain stationary at altitude in high winds with no visible propulsion or infrared heat signature. He reported a near-miss incident where a pilot came within meters of an unidentified object during a training exercise. He stated these encounters were so routine they became a daily occurrence, and he filed safety reports through official Navy channels. After leaving active duty, Graves founded Americans for Safe Aerospace (ASA) to advocate for UAP reporting transparency.",
+      "source": {
+        "citation": "House Oversight Committee hearing on UAPs, July 26, 2023",
+        "url": "https://oversight.house.gov/"
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 200
+      }
+    },
+    {
+      "id": "W-002",
+      "type": "witness",
+      "title": "Lieutenant (LT) Danny Accoin",
+      "summary": "F/A-18 pilot with VFA-31 'Tomcatters.' Reported radar and infrared detection of objects that were invisible to the naked eye. His encounters were documented in a 2019 New York Times investigation.",
+      "detail": "Accoin described tracking objects on the AN/APG-79 AESA radar and the ATFLIR infrared pod simultaneously, yet being unable to see them visually. On at least one occasion, he reported that his radar locked onto an object at close range that was not visually observable. These 'ghost' contacts were consistent across multiple sensor systems, ruling out simple sensor malfunction.",
+      "source": {
+        "citation": "New York Times, May 26, 2019 — 'Wow, What Is That?' by Helene Cooper, Ralph Blumenthal, Leslie Kean",
+        "url": "https://www.nytimes.com/2019/05/26/us/politics/ufo-sightings-navy-pilots.html"
+      },
+      "badge": {
+        "label": "Primary",
+        "style": "witness"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 120,
+        "y": 400
+      }
+    },
+    {
+      "id": "E-001",
+      "type": "evidence",
+      "title": "GIMBAL Infrared Video",
+      "summary": "Approximately 34 seconds of ATFLIR infrared footage captured on January 21, 2015 showing an object that appears to rotate against its direction of flight. Audio captures pilot reactions expressing astonishment. Object displays no visible exhaust plume.",
+      "detail": "The GIMBAL video is one of three officially declassified UAP videos released by the U.S. Department of Defense in April 2020. The footage shows a dark, oblong object tracked by the ATFLIR pod. The object appears to rotate smoothly while maintaining its flight path — a behavior that has been debated as either true object rotation or an artifact of the ATFLIR gimbal mechanism. Pilot audio exclaims about the object and references 'a whole fleet of them' on the SA display. The video name 'GIMBAL' was assigned by personnel who captured it, referring to the apparent rotation.",
+      "source": {
+        "citation": "U.S. Department of Defense / NAVAIR — official declassification April 27, 2020",
+        "url": "https://www.navair.navy.mil/foia/documents"
+      },
+      "badge": {
+        "label": "Declassified",
+        "style": "official"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 500,
+        "y": 200
+      }
+    },
+    {
+      "id": "E-002",
+      "type": "evidence",
+      "title": "GOFAST Infrared Video",
+      "summary": "Approximately 34 seconds of ATFLIR footage from January 2015 showing an object moving at high speed close to the ocean surface against strong winds. No visible propulsion or exhaust.",
+      "detail": "The GOFAST video shows a small, apparently spherical object tracked by the ATFLIR pod as it moves rapidly over the ocean surface. The object has no visible wings, propulsion, or thermal exhaust signature. Debate exists over the object's true speed — parallax effects from the tracking aircraft's altitude and speed may contribute to the apparent velocity. However, the object's lack of any thermal signature and its flight behavior remain unexplained regardless of the speed calculation interpretation.",
+      "source": {
+        "citation": "U.S. Department of Defense / NAVAIR — official declassification April 27, 2020",
+        "url": "https://www.navair.navy.mil/foia/documents"
+      },
+      "badge": {
+        "label": "Declassified",
+        "style": "official"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 500,
+        "y": 400
+      }
+    },
+    {
+      "id": "E-003",
+      "type": "evidence",
+      "title": "Near-Miss Safety Report",
+      "summary": "A formal safety report was filed through Navy channels after a VFA-11 pilot came within meters of an unidentified object during a training sortie. The object nearly struck the aircraft.",
+      "detail": "Lt. Ryan Graves reported that a squadron pilot had a near-collision with one of the unidentified objects during a routine training flight. The incident was filed as a formal safety hazard report. This was one of the factors that led to the Navy implementing new UAP reporting guidelines in 2019, making it easier for pilots to report encounters without stigma.",
+      "source": {
+        "citation": "Lt. Ryan Graves — Congressional testimony and multiple public interviews",
+        "url": "https://oversight.house.gov/"
+      },
+      "badge": {
+        "label": "Official",
+        "style": "official"
+      },
+      "visual": null,
+      "annotations": [],
+      "position": {
+        "x": 500,
+        "y": 600
+      }
+    }
+  ],
+  "key_witnesses": [
+    {
+      "name": "Lt. Ryan Graves",
+      "rank": "Lieutenant, U.S. Navy (VFA-11 'Red Rippers')",
+      "role": "F/A-18F Super Hornet pilot",
+      "credibility_factors": [
+        "Active-duty Navy fighter pilot during encounters",
+        "Testified under oath before Congress (July 26, 2023)",
+        "Filed official Navy safety reports",
+        "Founded Americans for Safe Aerospace (ASA) advocacy group",
+        "Consistent testimony across years of public statements"
+      ],
+      "key_observations": [
+        "Near-daily encounters over approximately two years",
+        "Objects on radar with no visual signature in some cases",
+        "Objects stationary at 30,000 ft in strong winds",
+        "No infrared heat signature",
+        "Near-miss incident reported through safety channels"
+      ]
+    },
+    {
+      "name": "Lt. Danny Accoin",
+      "rank": "Lieutenant, U.S. Navy (VFA-31 'Tomcatters')",
+      "role": "F/A-18 Super Hornet pilot",
+      "credibility_factors": [
+        "Active-duty Navy fighter pilot",
+        "Multi-sensor detection (radar + IR simultaneously)",
+        "Interviewed by New York Times (2019)"
+      ],
+      "key_observations": [
+        "Radar lock on object not visible to naked eye",
+        "ATFLIR pod detected same contacts as radar",
+        "Objects demonstrated unusual flight characteristics"
+      ]
+    }
+  ],
+  "key_evidence": [
+    {
+      "id": "KE-001",
+      "type": "video",
+      "name": "GIMBAL Video",
+      "description": "ATFLIR infrared video showing rotating object with no exhaust signature. Captured January 21, 2015. Officially declassified by DoD April 27, 2020.",
+      "authenticity": "Confirmed authentic — released by U.S. Department of Defense",
+      "significance": "Shows apparent rotation against flight direction, no thermal exhaust, pilot audio confirming 'fleet' on instruments"
+    },
+    {
+      "id": "KE-002",
+      "type": "video",
+      "name": "GOFAST Video",
+      "description": "ATFLIR infrared video showing high-speed object near ocean surface. Captured January 2015. Officially declassified by DoD April 27, 2020.",
+      "authenticity": "Confirmed authentic — released by U.S. Department of Defense",
+      "significance": "Object moves against wind with no propulsion signature. Speed interpretation debated but flight characteristics remain anomalous."
+    },
+    {
+      "id": "KE-003",
+      "type": "testimony",
+      "name": "Congressional Testimony — Lt. Ryan Graves",
+      "description": "Sworn testimony before House Oversight Committee, July 26, 2023. Described daily encounters, near-miss incident, and flight safety implications.",
+      "authenticity": "Official congressional record — testimony under oath",
+      "significance": "First active-duty pilot to publicly testify. Established daily frequency and multi-year duration of encounters."
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "DoD Official Release of UAP Videos",
+      "type": "government",
+      "url": "https://www.defense.gov/News/Releases/Release/Article/2165713/",
+      "date": "2020-04-27",
+      "description": "Department of Defense officially releases three UAP videos (FLIR1, GIMBAL, GOFAST) confirming their authenticity and provenance."
+    },
+    {
+      "title": "NAVAIR FOIA Reading Room",
+      "type": "government",
+      "url": "https://www.navair.navy.mil/foia/documents",
+      "date": "2020-04-27",
+      "description": "Original source for the declassified video files."
+    },
+    {
+      "title": "New York Times — 'Wow, What Is That?'",
+      "type": "journalism",
+      "url": "https://www.nytimes.com/2019/05/26/us/politics/ufo-sightings-navy-pilots.html",
+      "date": "2019-05-26",
+      "description": "Investigative report by Cooper, Blumenthal, and Kean detailing the East Coast encounters and interviewing Graves and Accoin."
+    },
+    {
+      "title": "House Oversight Committee Hearing — UAP",
+      "type": "government",
+      "url": "https://oversight.house.gov/",
+      "date": "2023-07-26",
+      "description": "Hearing featuring testimony from Ryan Graves, David Fravor, and David Grusch."
+    },
+    {
+      "title": "Americans for Safe Aerospace (ASA)",
+      "type": "organization",
+      "url": "https://www.safeaerospace.org/",
+      "date": "2023-01-01",
+      "description": "Advocacy organization founded by Ryan Graves to facilitate pilot reporting of UAP encounters."
+    }
+  ],
+  "investigation_history": [
+    {
+      "period": "2014–2015",
+      "event": "Encounters occur",
+      "detail": "F/A-18 pilots from CVW-8 report near-daily encounters with anomalous objects in W-72 warning area during training exercises off the US East Coast."
+    },
+    {
+      "period": "2015",
+      "event": "Safety reports filed",
+      "detail": "VFA-11 pilots file formal safety hazard reports through Navy channels after near-miss incident."
+    },
+    {
+      "period": "2017-12-16",
+      "event": "Videos surface publicly",
+      "detail": "GIMBAL and GOFAST videos first appear publicly alongside the New York Times AATIP investigation. To The Stars Academy releases the footage."
+    },
+    {
+      "period": "2019-04",
+      "event": "Navy implements reporting guidelines",
+      "detail": "U.S. Navy establishes formal UAP reporting procedures, partly in response to East Coast pilot reports."
+    },
+    {
+      "period": "2019-05-26",
+      "event": "NYT follow-up investigation",
+      "detail": "New York Times publishes detailed investigation interviewing Graves, Accoin, and other pilots about the East Coast encounters."
+    },
+    {
+      "period": "2020-04-27",
+      "event": "DoD official declassification",
+      "detail": "Department of Defense officially releases GIMBAL, GOFAST, and FLIR1 videos, confirming they are authentic and unresolved."
+    },
+    {
+      "period": "2023-07-26",
+      "event": "Congressional testimony",
+      "detail": "Lt. Ryan Graves testifies under oath before House Oversight Committee alongside David Fravor and David Grusch."
+    }
+  ]
+}

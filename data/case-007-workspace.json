@@ -1,0 +1,595 @@
+{
+  "id": "CASE-007",
+  "caseNumber": "007",
+  "title": "Rendlesham Forest Incident",
+  "subtitle": "Britain's Roswell",
+  "date": "December 26\u201328, 1980",
+  "location": "Rendlesham Forest, Suffolk, England",
+  "duration": "3 nights of activity",
+  "credibilityScore": 86,
+  "credibilityTier": "Tier 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "physical-trace",
+    "radiation-readings",
+    "audio-recording",
+    "government-memo",
+    "foi-released",
+    "ground-landing"
+  ],
+
+  "heroImage": "/images/cases/007/raf-woodbridge-map.svg",
+  "heroImageAlt": "Rendlesham Forest map showing RAF bases and landing site",
+  "heroImageAttribution": "The Meridian Project (original)",
+
+  "timeline": [
+    {
+      "date": "December 26, 1980 \u00b7 ~3:00 AM",
+      "title": "Security patrol spots lights in Rendlesham Forest",
+      "detail": "USAF security police at RAF Woodbridge's East Gate observe unusual lights descending into the forest. Initial assumption is a downed aircraft. Patrol dispatched to investigate.",
+      "tags": [{ "label": "First Night", "type": "key" }, { "label": "Woodbridge", "type": "location" }],
+      "type": "key"
+    },
+    {
+      "date": "December 26 \u00b7 ~3:30 AM",
+      "title": "Penniston and Burroughs encounter craft on the ground",
+      "detail": "Sgt. Jim Penniston and A1C John Burroughs approach a triangular craft approximately 3 meters tall and 3 meters wide at its base. Penniston reports touching the craft and observing hieroglyphic-like symbols on its surface. The craft emits bright light and appears to maneuver through the trees before departing.",
+      "tags": [{ "label": "Penniston", "type": "witness" }, { "label": "Burroughs", "type": "witness" }, { "label": "Ground Landing", "type": "physical-trace" }],
+      "type": "key"
+    },
+    {
+      "date": "December 26 \u00b7 Dawn",
+      "title": "Ground impressions found at landing site",
+      "detail": "Three triangular depressions discovered in the forest floor at the alleged landing site. Nearby trees show broken branches. Area documented by security personnel.",
+      "tags": [{ "label": "Physical Evidence", "type": "physical-trace" }],
+      "type": "key"
+    },
+    {
+      "date": "December 27, 1980",
+      "title": "Second night \u2014 additional activity reported",
+      "detail": "Further reports of anomalous lights in the forest from base personnel. Activity is less well-documented than the first or third nights.",
+      "tags": [{ "label": "Second Night", "type": "key" }],
+      "type": "minor"
+    },
+    {
+      "date": "December 28, 1980 \u00b7 Night",
+      "title": "Lt. Col. Halt leads official investigation team",
+      "detail": "Deputy Base Commander Lt. Col. Charles Halt organizes a team to investigate the landing site. Brings a hand-held audio recorder, Geiger counter (AN/PDR-27), and a Starlight scope (night vision). Records events in real-time.",
+      "tags": [{ "label": "Halt", "type": "witness" }, { "label": "Third Night", "type": "key" }, { "label": "Audio", "type": "audio-recording" }],
+      "type": "key"
+    },
+    {
+      "date": "December 28 \u00b7 Halt patrol",
+      "title": "Elevated radiation readings recorded at landing site",
+      "detail": "Halt's team measures radiation levels approximately 10x above background at the three ground depressions using an AN/PDR-27 Geiger counter. Readings documented on the audio tape.",
+      "tags": [{ "label": "Radiation", "type": "radiation-readings" }, { "label": "Geiger", "type": "sensor" }],
+      "type": "key"
+    },
+    {
+      "date": "December 28 \u00b7 Later that night",
+      "title": "Anomalous lights observed \u2014 beams directed at base",
+      "detail": "Halt's team observes a red pulsing light moving through the trees. Later, multiple star-like objects are seen in the sky, one of which appears to send beams of light down into the forest and onto the weapons storage area of the base.",
+      "tags": [{ "label": "Light Beams", "type": "anomaly" }, { "label": "Weapons Area", "type": "security" }],
+      "type": "key",
+      "hasHighlight": "ann-1"
+    },
+    {
+      "date": "January 13, 1981",
+      "title": "Halt submits formal memorandum to UK MoD",
+      "detail": "Lt. Col. Halt drafts and sends a one-page memorandum to the UK Ministry of Defence titled 'Unexplained Lights' documenting the events of December 26 and 28.",
+      "tags": [{ "label": "Halt Memo", "type": "government-memo" }, { "label": "MoD", "type": "official" }],
+      "type": "key"
+    },
+    {
+      "date": "1984",
+      "title": "Halt memorandum released via US FOIA",
+      "detail": "Researcher Robert Todd obtains the Halt memorandum through a US Freedom of Information Act request. The document enters public domain and becomes central evidence in the case.",
+      "tags": [{ "label": "FOIA", "type": "foi-released" }],
+      "type": "key"
+    },
+    {
+      "date": "2009",
+      "title": "UK MoD releases full Rendlesham files",
+      "detail": "The UK Ministry of Defence releases its complete Rendlesham Forest investigation files to The National Archives under the Freedom of Information Act. Files include internal correspondence, assessments, and the conclusion that events posed no threat to national security.",
+      "tags": [{ "label": "MoD Files", "type": "foi-released" }, { "label": "National Archives", "type": "official" }],
+      "type": "key"
+    }
+  ],
+
+  "evidence": [
+    {
+      "typeLabel": "Official Document",
+      "badge": "Memo",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "Halt Memorandum (Jan 13, 1981)",
+      "summary": "Formal one-page memo from Deputy Base Commander to UK MoD titled 'Unexplained Lights.' Describes landing site, ground impressions, radiation readings, and anomalous lights over three nights. Released via FOIA.",
+      "linkText": "\ud83d\udd17 Linked to: Halt Audio, Ground Impressions, Radiation Readings"
+    },
+    {
+      "typeLabel": "Audio Evidence",
+      "badge": "Audio",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "Halt Audio Recording",
+      "summary": "Real-time audio captured by Lt. Col. Halt during the third night patrol. Records team reactions, radiation meter readings, and descriptions of the anomalous lights. Publicly released and widely analyzed.",
+      "linkText": "\ud83d\udd17 Linked to: Halt Memo, Radiation Readings, Light Beam Observations"
+    },
+    {
+      "typeLabel": "Physical Evidence",
+      "badge": "Physical",
+      "badgeClass": "badge-physical",
+      "cardType": "type-evidence",
+      "title": "Ground Impressions at Landing Site",
+      "summary": "Three triangular depressions in the forest floor at the alleged landing site. Documented by Halt's team. Plaster casts reportedly made. Skeptics suggest animal or natural origin.",
+      "linkText": "\ud83d\udd17 Linked to: Halt Memo, Radiation Readings, Penniston Testimony"
+    },
+    {
+      "typeLabel": "Sensor Data",
+      "badge": "Radiation",
+      "badgeClass": "badge-sensor",
+      "cardType": "type-sensor",
+      "title": "Radiation Readings (AN/PDR-27)",
+      "summary": "Geiger counter readings at the landing site approximately 10x above background levels. Peak readings of ~0.1 milliroentgens/hour recorded at the three ground depressions. Documented on Halt's audio tape.",
+      "linkText": "\ud83d\udd17 Linked to: Halt Audio, Ground Impressions, Burroughs VA Claim"
+    },
+    {
+      "typeLabel": "Government Files",
+      "badge": "FOI",
+      "badgeClass": "badge-official",
+      "cardType": "type-evidence",
+      "title": "UK MoD Investigation Files (Released 2009)",
+      "summary": "Complete MoD investigation files released to The National Archives. Include internal correspondence, assessments, and the official conclusion that events posed no threat to national security. Reveal limited investigation depth.",
+      "linkText": "\ud83d\udd17 Linked to: Halt Memo, Official Conclusion"
+    }
+  ],
+
+  "witnesses": [
+    {
+      "initials": "CH",
+      "name": "Lt. Col. Charles Halt",
+      "rank": "Deputy Base Commander \u00b7 RAF Woodbridge",
+      "observed": "Led official investigation team on the third night (Dec 28). Made real-time audio recording. Observed anomalous lights that appeared to beam light down into the forest and onto the weapons storage area. Submitted formal memorandum to UK MoD. Later submitted sworn affidavit reaffirming events.",
+      "quote": "\u201cHere I am, a senior official who routinely denies this sort of thing and diligently works to debunk them, and I\u2019m involved in the middle of something I can\u2019t explain.\u201d",
+      "quoteSource": "\u2014 Lt. Col. Halt, public statement"
+    },
+    {
+      "initials": "JP",
+      "name": "Sgt. Jim Penniston",
+      "rank": "Security Police \u00b7 RAF Woodbridge",
+      "observed": "First night responder. Approached and claims to have physically touched a triangular craft on the forest floor. Reported hieroglyphic-like symbols on the craft surface. Made sketches in his field notebook. Later claims about receiving binary code are controversial.",
+      "quote": "\u201cI estimated it to be about three meters tall and about three meters wide at the base. No landing gear was apparent, but it seemed to be on fixed legs.\u201d",
+      "quoteSource": "\u2014 Sgt. Penniston, witness statement"
+    },
+    {
+      "initials": "JB",
+      "name": "A1C John Burroughs",
+      "rank": "Security Police \u00b7 RAF Woodbridge",
+      "observed": "Present on first and third nights. Accompanied Penniston to the landing site on the first night and corroborated the encounter. Later experienced health issues and successfully applied for VA medical benefits citing radiation exposure from the incident.",
+      "quote": null,
+      "quoteSource": null
+    },
+    {
+      "initials": "UP",
+      "name": "Other USAF Personnel",
+      "rank": "Various \u00b7 81st TFW",
+      "observed": "Multiple additional USAF security and base personnel reported seeing anomalous lights in and above Rendlesham Forest over the three nights. Accounts vary in detail but consistently describe unusual, moving lights in the forest that could not be explained by known sources.",
+      "quote": null,
+      "quoteSource": null
+    }
+  ],
+
+  "aiAnalysis": [
+    {
+      "aiType": "Source Analysis",
+      "title": "Documentary Evidence Chain: Exceptionally Strong",
+      "finding": "Rare combination of contemporaneous official documentation: Halt's memo (written 2 weeks after events), real-time audio recording, and physical trace documentation all exist. This triple-source chain is nearly unique among historical UAP cases. Only weakened by absence of photographic evidence.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    },
+    {
+      "aiType": "Pattern Analysis",
+      "title": "Lighthouse Correlation: Partial Match Only",
+      "finding": "Orford Ness lighthouse is visible from the forest edge and its 5-second rotation cycle correlates with some descriptions of a pulsing light. However, witnesses describe the light moving through the trees, changing altitude, and approaching their position — behaviors inconsistent with a fixed lighthouse beam.",
+      "confidence": "Medium \u2014 Explains some but not all observations",
+      "confidenceClass": "confidence-medium"
+    },
+    {
+      "aiType": "Context Analysis",
+      "title": "Cold War Security Context",
+      "finding": "RAF Woodbridge/Bentwaters was a major NATO nuclear weapons storage facility during the Cold War. The reported light beams directed at the weapons storage area raise significant security implications. The MoD's conclusion of 'no defense significance' is difficult to reconcile with reported incursions over a nuclear-capable base.",
+      "confidence": "High Confidence",
+      "confidenceClass": "confidence-high"
+    }
+  ],
+
+  "openQuestions": [
+    { "num": "Q01", "text": "Why did the UK MoD conclude 'no defense significance' for reported incursions over a nuclear-capable base?", "context": "RAF Bentwaters/Woodbridge stored tactical nuclear weapons. Any unauthorized incursion over a nuclear weapons storage area should have triggered maximum security response." },
+    { "num": "Q02", "text": "What do the classified UK MoD radar tapes from RAF Watton show for those nights?", "context": "RAF Watton's Eastern Radar facility monitored airspace over East Anglia. Their records for December 26-28, 1980 have never been publicly released." },
+    { "num": "Q03", "text": "Can the lighthouse explanation account for all the observations across all three nights?", "context": "Orford Ness lighthouse matches some descriptions but not the reported approach behavior, ground landing, or light beams directed at specific areas." },
+    { "num": "Q04", "text": "What are the medical records cited in Burroughs' VA benefits case?", "context": "The VA approved Burroughs' claim citing classified UK MoD medical records — implying UK government documentation of radiation exposure exists." },
+    { "num": "Q05", "text": "Why was the formal investigation apparently so limited?", "context": "The MoD files reveal a surprisingly cursory investigation for an incident involving military witnesses, physical evidence, and a nuclear-capable base." }
+  ],
+
+  "resolution": [
+    { "status": "partial", "label": "Orford Ness Lighthouse", "detail": "Partially addressed. Lighthouse visible from area and 5-second cycle matches some descriptions. Does not explain ground craft, physical traces, radiation readings, or close-range observations by trained military personnel." },
+    { "status": "eliminated", "label": "Military prank or exercise", "detail": "Eliminated. Lt. Col. Halt — the Deputy Base Commander — led the third night investigation personally. No evidence of any exercise or prank. Halt submitted formal documentation to MoD." },
+    { "status": "eliminated", "label": "Meteor or satellite reentry", "detail": "Eliminated. Events occurred over three consecutive nights. A meteor or reentry event would be a single, brief occurrence. Does not explain ground traces or radiation." },
+    { "status": "partial", "label": "Natural phenomena (earth lights, etc.)", "detail": "Partially addressed. Some researchers have proposed geological or atmospheric explanations. Does not account for the structured craft reported by Penniston, ground impressions, or radiation readings." }
+  ],
+
+  "osint": [
+    { "field": "Location", "status": "verified", "value": "Rendlesham Forest, Suffolk, England. Between RAF Woodbridge (52.09\u00b0N, 1.44\u00b0E) and RAF Bentwaters (52.13\u00b0N, 1.44\u00b0E).", "source": "UK Ordnance Survey maps, military installation records." },
+    { "field": "Base Status (1980)", "status": "verified", "value": "Active NATO air bases operated by USAF 81st Tactical Fighter Wing. Nuclear weapons storage confirmed at Bentwaters.", "source": "Declassified NATO records, USAF historical archives." },
+    { "field": "Lighthouse Distance", "status": "verified", "value": "Orford Ness lighthouse approximately 8 km east of the forest edge. Beam visible from elevated positions within the forest.", "source": "Ordnance Survey, Trinity House lighthouse records." },
+    { "field": "Halt Memo Authenticity", "status": "verified", "value": "Original memo on official USAF letterhead dated January 13, 1981. Released through both US and UK FOIA processes.", "source": "The National Archives (UK), USAF FOIA records." },
+    { "field": "Burroughs VA Claim", "status": "verified", "value": "John Burroughs received VA medical benefits for injuries attributed to the incident. VA cited classified UK MoD records in the determination.", "source": "VA records (partially public), Burroughs' attorney statements." },
+    { "field": "Weather Conditions", "status": "verified", "value": "Cold, clear nights with temperatures near freezing. Light frost. No significant precipitation.", "source": "Met Office historical weather records for Suffolk, December 1980." }
+  ],
+
+  "evidenceChain": [
+    { "num": 1, "source": "Halt Memorandum (Jan 13, 1981)", "note": "Official document on USAF letterhead to UK MoD. Written 2 weeks after events. Released via FOIA.", "strength": "strong", "strengthLabel": "Strong \u2014 official document, authenticated" },
+    { "num": 2, "source": "Halt Audio Recording", "note": "Real-time recording during third night patrol. Captures reactions, readings, observations. Publicly available.", "strength": "strong", "strengthLabel": "Strong \u2014 contemporaneous, unedited" },
+    { "num": 3, "source": "Ground Impressions & Plaster Casts", "note": "Three depressions documented at landing site. Triangular arrangement. Photographed by Halt's team.", "strength": "moderate", "strengthLabel": "Moderate \u2014 documented but disputed origin" },
+    { "num": 4, "source": "Radiation Readings (AN/PDR-27)", "note": "Readings ~10x background at depression sites. Documented on Halt audio. Equipment calibration questioned.", "strength": "moderate", "strengthLabel": "Moderate \u2014 documented, methodology disputed" },
+    { "num": 5, "source": "UK MoD Files (Released 2009)", "note": "Internal correspondence and assessments. Reveal limited investigation. Confirm receipt of Halt memo.", "strength": "strong", "strengthLabel": "Strong \u2014 official government records" }
+  ],
+
+  "solvabilityFactors": [
+    { "name": "Formal military memorandum exists", "score": "+15", "type": "positive" },
+    { "name": "Real-time audio recording exists", "score": "+12", "type": "positive" },
+    { "name": "Government files released via FOI", "score": "+10", "type": "positive" },
+    { "name": "Physical trace evidence documented", "score": "+8", "type": "positive" },
+    { "name": "Multiple military witnesses across 3 nights", "score": "+10", "type": "positive" },
+    { "name": "No photographic or video evidence of the craft", "score": "-10", "type": "negative" },
+    { "name": "Orford Ness lighthouse provides partial explanation", "score": "-8", "type": "negative" },
+    { "name": "45+ years of evidence degradation", "score": "-8", "type": "negative" },
+    { "name": "Penniston's later claims reduce overall witness reliability", "score": "-5", "type": "negative" },
+    { "name": "Radar data from RAF Watton never released", "score": "+5", "type": "neutral" },
+    { "name": "Burroughs VA claim adds documentary weight", "score": "+7", "type": "positive" }
+  ],
+  "solvabilityScore": 62,
+
+  "nextSteps": [
+    { "priority": "high", "text": "File FOI request for RAF Watton Eastern Radar records from December 26-28, 1980" },
+    { "priority": "high", "text": "Obtain and analyze the classified UK MoD medical records cited in Burroughs' VA determination" },
+    { "priority": "medium", "text": "Conduct geometric analysis of Orford Ness lighthouse visibility from specific forest locations on the reported path" },
+    { "priority": "medium", "text": "Cross-reference Met Office weather and astronomical data for the three nights (moon phase, satellite passes)" },
+    { "priority": "low", "text": "Interview remaining living witnesses from the 81st TFW security detachment" },
+    { "priority": "low", "text": "Analyze soil samples from the landing site area for residual anomalies" }
+  ],
+
+  "searchDemoResults": [
+    { "type": "foia", "source": "FOIA \u00b7 The National Archives (UK)", "title": "MoD Rendlesham Files \u2014 Complete Release (2009)", "snippet": "Full file set including internal MoD correspondence, DS8 assessment, and Halt memo original. Conclusion: 'no evidence that the UK's defenses were compromised.' Files reveal limited investigative effort..." },
+    { "type": "academic", "source": "Journal \u00b7 UFO Studies", "title": "Rendlesham Forest: A Forensic Review of Physical Evidence", "snippet": "Peer-reviewed analysis of ground impressions, radiation data, and environmental factors. Concludes that while individual pieces of evidence have prosaic explanations, the combination is difficult to dismiss..." },
+    { "type": "web", "source": "Web \u00b7 Ian Ridpath", "title": "The Rendlesham Forest UFO Case: A Skeptical Assessment", "snippet": "Detailed skeptical analysis arguing that the lights were a combination of the Orford Ness lighthouse, a bright meteor seen over southern England on Dec 26, and stars misidentified through the trees..." },
+    { "type": "video", "source": "YouTube \u00b7 Documentary", "title": "The Halt Tape: Full Audio with Annotations", "snippet": "Complete Halt audio recording with timestamps and contextual annotations. Key moments: 0:04:12 radiation readings, 0:18:30 'there it is again,' 0:31:15 'it's coming this way'..." },
+    { "type": "reddit", "source": "Reddit \u00b7 r/UFOs", "title": "Burroughs VA benefits — strongest Rendlesham evidence?", "snippet": "Discussion thread analyzing the significance of the VA awarding Burroughs medical benefits citing classified UK MoD records. Users note this constitutes official US government acknowledgment that something happened..." }
+  ],
+
+  "achHypotheses": [
+    "Lighthouse",
+    "Military Exercise",
+    "Meteor/Reentry",
+    "Unknown Craft"
+  ],
+  "achEvidence": [
+    { "evidence": "Halt memo (official USAF document)", "ai": ["N", "I", "N", "C"] },
+    { "evidence": "Halt audio recording (real-time)", "ai": ["N", "I", "N", "C"] },
+    { "evidence": "Ground impressions (triangular pattern)", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Radiation readings (~10x background)", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Craft observed on ground (Penniston)", "ai": ["I", "I", "I", "C"] },
+    { "evidence": "Events over 3 consecutive nights", "ai": ["N", "I", "I", "C"] },
+    { "evidence": "Orford Ness lighthouse visible from area", "ai": ["C", "N", "N", "N"] },
+    { "evidence": "Light beams directed at weapons storage", "ai": ["I", "N", "I", "C"] }
+  ],
+
+  "investigationTasks": [
+    {
+      "id": "IT-001",
+      "type": "document",
+      "priority": "high",
+      "status": "open",
+      "title": "Halt Memorandum \u2014 High-Resolution Scan",
+      "description": "Obtain and scan the original Halt memorandum from The National Archives (UK). Extract clear image of the full document for display as an evidence card.",
+      "source_url": "https://www.nationalarchives.gov.uk/",
+      "license": "Crown Copyright \u2014 Open Government Licence",
+      "attribution": "The National Archives (UK)",
+      "save_to": "public/images/cases/007/",
+      "file_names": ["halt-memo-page1.png"],
+      "notes": "UK government document released under FOI. Available from The National Archives catalog."
+    },
+    {
+      "id": "IT-002",
+      "type": "audio",
+      "priority": "high",
+      "status": "open",
+      "title": "Halt Audio Recording \u2014 Full Tape with Timestamps",
+      "description": "Source the complete Halt audio recording. Create a timestamped transcript of key moments for the evidence section.",
+      "source_url": null,
+      "license": "Public domain \u2014 widely circulated",
+      "attribution": "Lt. Col. Charles Halt (USAF, Ret.)",
+      "save_to": "public/media/cases/007/",
+      "file_names": ["halt-audio-full.mp3"],
+      "notes": "The Halt tape has been publicly available since the 1980s. Multiple versions exist online."
+    },
+    {
+      "id": "IT-003",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Rendlesham Forest / RAF Woodbridge Area Map",
+      "description": "Create an SVG map showing the relative positions of RAF Woodbridge, RAF Bentwaters, the alleged landing site in Rendlesham Forest, and the Orford Ness lighthouse.",
+      "source_url": null,
+      "license": "Create original (OpenStreetMap base layer)",
+      "attribution": "The Meridian Project / OpenStreetMap contributors",
+      "save_to": "public/images/cases/007/",
+      "file_names": ["raf-woodbridge-map.svg"],
+      "notes": "OpenStreetMap base is CC-BY-SA. Show key locations: East Gate, forest trail, landing site, lighthouse."
+    },
+    {
+      "id": "IT-004",
+      "type": "image",
+      "priority": "medium",
+      "status": "open",
+      "title": "Penniston Notebook Sketches",
+      "description": "Source reproductions of Sgt. Penniston's original field notebook sketches showing the triangular craft and symbols.",
+      "source_url": null,
+      "license": "Fair use \u2014 historical document",
+      "attribution": "Sgt. Jim Penniston (USAF, Ret.)",
+      "save_to": "public/images/cases/007/",
+      "file_names": ["penniston-sketch-craft.png", "penniston-sketch-symbols.png"],
+      "notes": "Sketches have been widely reproduced in books and documentaries. Source highest quality available."
+    },
+    {
+      "id": "IT-005",
+      "type": "image",
+      "priority": "low",
+      "status": "open",
+      "title": "Orford Ness Lighthouse Reference Photo",
+      "description": "Source a photograph of the Orford Ness lighthouse for the skeptical analysis section.",
+      "source_url": null,
+      "license": "Creative Commons or public domain preferred",
+      "attribution": "To be determined based on source",
+      "save_to": "public/images/cases/007/",
+      "file_names": ["orford-ness-lighthouse.jpg"],
+      "notes": "Lighthouse was decommissioned in 2013. Historical photos preferred showing it operational."
+    },
+    {
+      "id": "IT-006",
+      "type": "document",
+      "priority": "low",
+      "status": "open",
+      "title": "UK MoD Released Files \u2014 Key Pages",
+      "description": "Extract 2-3 key pages from the MoD released files showing internal correspondence and the official assessment.",
+      "source_url": "https://www.nationalarchives.gov.uk/",
+      "license": "Crown Copyright \u2014 Open Government Licence",
+      "attribution": "The National Archives (UK)",
+      "save_to": "public/images/cases/007/",
+      "file_names": ["mod-assessment-page1.png", "mod-correspondence.png"],
+      "notes": "Available from The National Archives. Focus on pages showing the cursory nature of the investigation."
+    }
+  ],
+
+  "gallery": [
+    {
+      "id": "g-001",
+      "type": "map",
+      "src": "/images/cases/007/raf-woodbridge-map.svg",
+      "title": "Rendlesham Forest Area Map",
+      "caption": "Map showing RAF Woodbridge, RAF Bentwaters, the alleged landing site in Rendlesham Forest, and the Orford Ness lighthouse to the east.",
+      "attribution": "The Meridian Project (original)",
+      "license": "Project Original",
+      "category": "map"
+    },
+    {
+      "id": "g-002",
+      "type": "image",
+      "src": "/images/cases/007/orford-ness-lighthouse.jpg",
+      "title": "Orford Ness Lighthouse",
+      "caption": "The Orford Ness lighthouse, approximately 5 miles east of the Rendlesham Forest landing site. The primary skeptical explanation — disputed by witnesses who knew the lighthouse well.",
+      "attribution": "Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "category": "reference"
+    },
+    {
+      "id": "g-003",
+      "type": "image",
+      "src": "/images/cases/007/rendlesham-forest-map.png",
+      "title": "Rendlesham Forest — Landing Site Area",
+      "caption": "The area of Rendlesham Forest near the reported landing site, between RAF Woodbridge and RAF Bentwaters.",
+      "attribution": "Wikimedia Commons / Geograph",
+      "license": "CC BY-SA 3.0",
+      "category": "reference"
+    }
+  ],
+
+  "verifiedFacts": [
+    {
+      "id": "VF-001",
+      "fact": "Lt. Col. Charles Halt submitted a formal memorandum to the UK Ministry of Defence on January 13, 1981, documenting the events.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Halt Memorandum \u2014 original on USAF letterhead (The National Archives, UK)",
+        "Released via both US and UK FOIA processes",
+        "Lt. Col. Halt \u2014 multiple public confirmations"
+      ],
+      "relatedEvidence": "Halt Memorandum (Jan 13, 1981)"
+    },
+    {
+      "id": "VF-002",
+      "fact": "Halt's real-time audio recording of the third night patrol exists and has been publicly released.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Lt. Col. Halt \u2014 acknowledges making the recording",
+        "Audio tape publicly available since the 1980s",
+        "Multiple independent analyses of the recording"
+      ],
+      "relatedEvidence": "Halt Audio Recording"
+    },
+    {
+      "id": "VF-003",
+      "fact": "Physical ground impressions were found and measured at the alleged landing site, forming a triangular pattern.",
+      "category": "physical",
+      "confidence": "confirmed",
+      "sources": [
+        "Halt Memorandum \u2014 describes depressions",
+        "Halt audio recording \u2014 documents measurements",
+        "Photographs taken by Halt's investigation team"
+      ],
+      "relatedEvidence": "Ground Impressions at Landing Site"
+    },
+    {
+      "id": "VF-004",
+      "fact": "Radiation readings above background levels were recorded at the landing site using an AN/PDR-27 Geiger counter.",
+      "category": "sensor",
+      "confidence": "confirmed",
+      "sources": [
+        "Halt Memorandum \u2014 references radiation readings",
+        "Halt audio recording \u2014 Geiger counter audible on tape",
+        "Defence Intelligence Staff assessment acknowledged elevated readings"
+      ],
+      "relatedEvidence": "Radiation Readings (AN/PDR-27)",
+      "disputedBy": "Equipment calibration and methodology questioned. Some analysts argue readings, while above background, were not at levels that definitively indicate an anomalous source."
+    },
+    {
+      "id": "VF-005",
+      "fact": "The UK MoD investigated the events and released files in 2009 under the Freedom of Information Act.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "The National Archives (UK) \u2014 Rendlesham file set",
+        "MoD official statements confirming release",
+        "Files available for public download"
+      ]
+    },
+    {
+      "id": "VF-006",
+      "fact": "Airman John Burroughs successfully applied for VA medical benefits citing radiation exposure from the Rendlesham incident.",
+      "category": "documentary",
+      "confidence": "confirmed",
+      "sources": [
+        "Burroughs' attorney \u2014 public statements confirming VA determination",
+        "VA cited classified UK MoD medical records in the determination",
+        "Senator John McCain's office assisted in obtaining the classified records"
+      ]
+    },
+    {
+      "id": "VF-007",
+      "fact": "The Orford Ness lighthouse was visible from the forest edge and is the primary skeptical explanation for the observed lights.",
+      "category": "environmental",
+      "confidence": "confirmed",
+      "sources": [
+        "Trinity House lighthouse records \u2014 operational in 1980",
+        "Ian Ridpath skeptical analysis \u2014 geometric visibility confirmed",
+        "Forestry Commission maps \u2014 line of sight from forest edge"
+      ]
+    }
+  ],
+
+  "hypothesisProbabilities": [
+    {
+      "hypothesis": "Lighthouse",
+      "probability": 12,
+      "trend": "stable",
+      "reasoning": "The Orford Ness lighthouse is confirmed visible from the forest edge and its 5-second rotation cycle matches some descriptions of a flashing or pulsing light. However, it cannot account for the reported close-range encounter with a structured craft (Penniston/Burroughs), ground impressions, radiation readings, or lights that appeared to move through the trees and direct beams at specific locations.",
+      "keyFactors": {
+        "supports": ["VF-007"],
+        "contradicts": ["VF-003", "VF-004"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Military Exercise",
+      "probability": 8,
+      "trend": "falling",
+      "reasoning": "No evidence of any military exercise in the area during those nights. The Deputy Base Commander personally investigated and filed an official report — inconsistent with a known exercise. No unit has claimed responsibility in 45+ years.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-001", "VF-002"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Meteor/Reentry",
+      "probability": 5,
+      "trend": "falling",
+      "reasoning": "A bright fireball was recorded over southern England on December 26, 1980, and may account for initial light reports on the first night. However, meteor events are momentary and cannot explain three consecutive nights of activity, ground traces, radiation readings, or the close-range encounter.",
+      "keyFactors": {
+        "supports": [],
+        "contradicts": ["VF-003", "VF-004", "VF-001"]
+      },
+      "lastUpdated": "2026-04-02"
+    },
+    {
+      "hypothesis": "Unknown Craft",
+      "probability": 75,
+      "trend": "stable",
+      "reasoning": "The hypothesis most consistent with the full evidence set: official military documentation (Halt memo), real-time audio recording, physical ground traces, elevated radiation readings, close-range observation by trained military personnel over three nights, and subsequent government investigation. The VA determination citing classified medical records adds additional documentary weight.",
+      "keyFactors": {
+        "supports": ["VF-001", "VF-002", "VF-003", "VF-004", "VF-006"],
+        "contradicts": ["VF-007"]
+      },
+      "lastUpdated": "2026-04-02"
+    }
+  ],
+
+  "researchBranches": [
+    {
+      "id": "RB-001",
+      "question": "Can the Orford Ness lighthouse explain the observations \u2014 geometry and timing?",
+      "status": "open",
+      "priority": "high",
+      "anchorSection": "fact",
+      "anchorId": "VF-007",
+      "anchorText": "The Orford Ness lighthouse was visible from the forest edge and is the primary skeptical explanation for the observed lights.",
+      "findings": [
+        {
+          "id": "RB-001-F1",
+          "type": "source",
+          "content": "Ian Ridpath's analysis confirms the lighthouse beam was visible from the forest edge looking east, with a rotation period of approximately 5 seconds matching some witness descriptions of a flashing light.",
+          "source": "Ian Ridpath \u2014 Rendlesham Forest UFO skeptical analysis",
+          "sourceUrl": "https://www.ianridpath.com/ufo/rendlesham.html",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        },
+        {
+          "id": "RB-001-F2",
+          "type": "contradiction",
+          "content": "Lt. Col. Halt and other witnesses explicitly stated they were aware of the lighthouse and that the anomalous lights were in a different direction and behaved differently \u2014 moving through the trees, changing altitude, and approaching their position.",
+          "source": "Lt. Col. Halt \u2014 multiple interviews and sworn affidavit",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    },
+    {
+      "id": "RB-002",
+      "question": "What do the UK MoD released files reveal about the depth and conclusions of the official investigation?",
+      "status": "open",
+      "priority": "medium",
+      "anchorSection": "fact",
+      "anchorId": "VF-005",
+      "anchorText": "The UK MoD investigated the events and released files in 2009 under the Freedom of Information Act.",
+      "findings": [
+        {
+          "id": "RB-002-F1",
+          "type": "analysis",
+          "content": "The released MoD files reveal a surprisingly limited investigation. The Defence Intelligence Staff acknowledged the radiation readings but did not conduct follow-up analysis. The official conclusion \u2014 'no threat to national security' \u2014 appears to have been reached without exhaustive investigation of the physical evidence.",
+          "source": "The National Archives (UK) \u2014 Rendlesham file set",
+          "addedBy": "Claude",
+          "addedAt": "2026-04-02"
+        }
+      ],
+      "conclusion": null,
+      "createdBy": "Claude",
+      "createdAt": "2026-04-02"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "case_id": "CASE-007",
+  "title": "Rendlesham Forest Incident",
+  "subtitle": "Britain's Roswell",
+  "date": "1980-12-26",
+  "date_display": "December 26-28, 1980",
+  "date_range": {
+    "first_night": "1980-12-26",
+    "second_night": "1980-12-27",
+    "third_night": "1980-12-28"
+  },
+  "location": {
+    "description": "Rendlesham Forest, Suffolk, England — between RAF Woodbridge and RAF Bentwaters",
+    "lat": 52.08,
+    "lng": 1.44,
+    "area": "Suffolk Coast, East Anglia"
+  },
+  "duration": {
+    "total_activity_period": "3 nights (December 26-28, 1980)",
+    "first_night_encounter": "~3 hours",
+    "third_night_encounter": "~2 hours (Halt's patrol)"
+  },
+  "classification": "UAP — Unidentified Anomalous Phenomena",
+  "credibility_score": 86,
+  "credibility_tier": "TIER 1",
+  "status": "investigating",
+  "tags": [
+    "military",
+    "physical-trace",
+    "radiation-readings",
+    "audio-recording",
+    "government-memo",
+    "foi-released",
+    "ground-landing"
+  ],
+  "related_case_ids": [
+    "CASE-004",
+    "CASE-003"
+  ],
+  "event_summary": {
+    "overview": "Over three consecutive nights in late December 1980, United States Air Force personnel stationed at the twin NATO bases RAF Woodbridge and RAF Bentwaters in Suffolk, England, reported encounters with unexplained lights and a craft in the adjacent Rendlesham Forest. On the first night (December 26), security patrol personnel including Sgt. Jim Penniston and Airman John Burroughs investigated strange lights in the forest and reported encountering a triangular craft on the ground. Penniston claims to have touched the craft and observed symbols on its surface. On the third night (December 28), the deputy base commander Lt. Col. Charles Halt led an official investigation team into the forest, recording events on a hand-held audio recorder. Halt's team documented elevated radiation readings, ground impressions at the alleged landing site, and observed anomalous lights that appeared to beam light down into the forest and onto the base. Halt subsequently submitted a formal memorandum to the UK Ministry of Defence on January 13, 1981, documenting the events. The MoD investigated and released files in 2009 under the Freedom of Information Act. The case remains one of the best-documented military UFO encounters in history.",
+    "weather": "Cold, clear winter nights with light frost. Visibility generally good under partial cloud cover.",
+    "terrain": "Dense pine plantation (Rendlesham Forest) between two active NATO air bases. Orford Ness lighthouse visible to the east from the forest edge.",
+    "military_units": [
+      {
+        "unit": "81st Tactical Fighter Wing (USAF)",
+        "type": "US Air Force wing stationed at RAF Bentwaters/Woodbridge",
+        "role": "Base personnel who witnessed and investigated the events"
+      },
+      {
+        "unit": "RAF Woodbridge Security Police",
+        "type": "Base security detachment",
+        "role": "First responders on the initial night; Penniston and Burroughs from this unit"
+      },
+      {
+        "unit": "UK Ministry of Defence (MoD)",
+        "type": "Government defense department",
+        "role": "Received Halt's memo; investigated and later released files under FOI"
+      }
+    ]
+  },
+  "key_witnesses": [
+    {
+      "id": "W-001",
+      "name": "Lt. Col. Charles Halt",
+      "role": "Deputy Base Commander, RAF Woodbridge",
+      "involvement": "Led official investigation team on third night (Dec 28). Made audio recording during patrol. Submitted formal memorandum to UK MoD on January 13, 1981. Observed anomalous lights that appeared to direct beams of light downward.",
+      "credibility": "Very high — senior military officer, formal memo on official letterhead, audio recording exists"
+    },
+    {
+      "id": "W-002",
+      "name": "Sgt. Jim Penniston",
+      "role": "Security Police, RAF Woodbridge",
+      "involvement": "First night witness. Claims to have approached and physically touched a triangular craft on the ground. Reported symbols or inscriptions on the craft surface. Made sketches in his notebook at the time.",
+      "credibility": "High — military security professional, contemporary notes exist. Later claims about binary code are controversial."
+    },
+    {
+      "id": "W-003",
+      "name": "Airman First Class John Burroughs",
+      "role": "Security Police, RAF Woodbridge",
+      "involvement": "Present on first and third nights. Accompanied Penniston to the alleged landing site. Later experienced health issues and successfully applied for VA medical benefits citing radiation exposure from the incident.",
+      "credibility": "High — corroborates Penniston on first night. VA benefits approval adds documentary weight."
+    }
+  ],
+  "key_evidence": [
+    {
+      "id": "E-001",
+      "type": "document",
+      "title": "Halt Memorandum",
+      "description": "Official memorandum from Lt. Col. Halt to the UK Ministry of Defence dated January 13, 1981, describing the events of December 26 and 28. Released via FOIA. The memo describes 'unexplained lights,' ground depressions, elevated radiation, and an object that 'appeared to throw off glowing particles and then broke into five separate white objects.'",
+      "authenticity": "Confirmed — original on official letterhead, released by UK MoD"
+    },
+    {
+      "id": "E-002",
+      "type": "audio",
+      "title": "Halt Audio Recording",
+      "description": "Real-time audio recording made by Lt. Col. Halt on his hand-held recorder during the third night patrol. Captures the team's reactions, radiation meter readings, and descriptions of the lights. The tape has been publicly released and analyzed.",
+      "authenticity": "Confirmed — Halt acknowledges making the recording; tape has been publicly available since the 1980s"
+    },
+    {
+      "id": "E-003",
+      "type": "physical",
+      "title": "Ground Impressions",
+      "description": "Three depressions in the ground at the alleged landing site, forming a triangular pattern. Measured and documented by Halt's team. Plaster casts were reportedly made.",
+      "authenticity": "Documented in Halt memo — skeptics argue the marks could have been made by animals or other causes"
+    },
+    {
+      "id": "E-004",
+      "type": "physical",
+      "title": "Radiation Readings",
+      "description": "Halt's team recorded radiation levels significantly above background at the landing site using an AN/PDR-27 Geiger counter. Peak readings were reportedly 0.1 milliroentgens per hour at the ground depressions — approximately 10x background levels for the area.",
+      "authenticity": "Documented in Halt memo and on audio recording — equipment calibration and methodology questioned by some analysts"
+    },
+    {
+      "id": "E-005",
+      "type": "document",
+      "title": "UK MoD Files",
+      "description": "Files released by the UK Ministry of Defence in 2009 under the Freedom of Information Act. Include internal correspondence, investigation notes, and assessments. The MoD concluded the events posed no threat to national security.",
+      "authenticity": "Official government release — The National Archives (UK)"
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "Halt Memorandum (January 13, 1981)",
+      "type": "Official military document",
+      "description": "Formal memo from the Deputy Base Commander to the UK MoD documenting the encounters",
+      "availability": "Public — released via FOIA"
+    },
+    {
+      "title": "Halt Audio Recording",
+      "type": "Audio recording",
+      "description": "Real-time recording made during the third night patrol",
+      "availability": "Public — widely circulated since the 1980s"
+    },
+    {
+      "title": "UK MoD Files (Released 2009)",
+      "type": "Government documents",
+      "description": "Complete MoD investigation files including internal correspondence",
+      "availability": "Public — The National Archives (UK)"
+    },
+    {
+      "title": "Penniston's Notebook",
+      "type": "Contemporary notes",
+      "description": "Sketches and notes made by Sgt. Penniston at the time of the first night encounter",
+      "availability": "Partially public — reproduced in books and documentaries"
+    }
+  ],
+  "investigation_history": [
+    {
+      "year": "1981",
+      "event": "Lt. Col. Halt submits memorandum to UK MoD on January 13, 1981"
+    },
+    {
+      "year": "1983",
+      "event": "News of the World publishes first public account. Halt memo leaked."
+    },
+    {
+      "year": "1984",
+      "event": "Halt memo officially released through US FOIA request by researcher Robert Todd"
+    },
+    {
+      "year": "2001",
+      "event": "Georgina Bruni publishes 'You Can't Tell the People' — comprehensive account based on witness interviews"
+    },
+    {
+      "year": "2009",
+      "event": "UK MoD releases full Rendlesham files to The National Archives under Freedom of Information Act"
+    },
+    {
+      "year": "2010",
+      "event": "Lt. Col. Halt submits sworn affidavit reaffirming the events and claiming a cover-up"
+    },
+    {
+      "year": "2015",
+      "event": "Airman Burroughs receives VA medical benefits for injuries linked to the incident — VA cites classified UK MoD medical records"
+    }
+  ]
+}

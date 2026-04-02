@@ -83,14 +83,14 @@ export const queuedCases: QueuedCase[] = [
 ];
 
 // IDs of cases that have workspace data files
-export const casesWithData = new Set(["001", "002"]);
+export const casesWithData = new Set(["001", "002", "003", "004", "005", "006", "007"]);
 
 export const sidebarCases = [
   { id: "001", label: "001 \u2014 USS Nimitz", status: "Active", href: "/case/001" },
   { id: "002", label: "002 \u2014 Phoenix Lights", status: "Active", href: "/case/002" },
-  { id: "003", label: "003 \u2014 Belgian Wave", status: "Queue", href: "/case/003" },
-  { id: "004", label: "004 \u2014 Tehran F-4", status: "Queue", href: "/case/004" },
-  { id: "005", label: "005 \u2014 JAL 1628", status: "Queue", href: "/case/005" },
-  { id: "006", label: "006 \u2014 USS Roosevelt", status: "Queue", href: "/case/006" },
-  { id: "007", label: "007 \u2014 Rendlesham", status: "Queue", href: "/case/007" },
+  { id: "003", label: "003 \u2014 Belgian Wave", status: "Active", href: "/case/003" },
+  { id: "004", label: "004 \u2014 Tehran F-4", status: "Active", href: "/case/004" },
+  { id: "005", label: "005 \u2014 JAL 1628", status: "Active", href: "/case/005" },
+  { id: "006", label: "006 \u2014 USS Roosevelt", status: "Active", href: "/case/006" },
+  { id: "007", label: "007 \u2014 Rendlesham", status: "Active", href: "/case/007" },
 ];

@@ -129,7 +129,7 @@
 | DES-04 | Navigation component | P0 | |
 | DES-05 | About / methodology page | P0 | Critical for credibility |
 | DES-06 | Corpus statistics component for homepage | P1 | |
-| DES-07 | Responsive mobile layout | P1 | |
+| DES-07 | Responsive mobile layout (homepage) | P1 | Workspace mobile is tracked separately as DES-18. |
 | DES-08 | Dark mode | P3 | Not priority |
 | DES-09 | Investigation workspace three-column layout | P0 | |
 | DES-10 | Right-click annotation system — highlight, note, URL, evidence link | P0 | |
@@ -139,6 +139,8 @@
 | DES-14 | Solvability scoring display | P1 | |
 | DES-15 | Resolution checklist | P1 | |
 | DES-16 | OSINT verification log | P1 | |
+| DES-17 | Wide-screen content scaling — bump `.content-inner` max-width inside the 1400px and 1800px media queries (and add a 2200px tier) so the workspace reading column doesn't stay capped at 860px on large monitors | P1 | Touches `styles/globals.css` only. Targets: 1400px → ~1080px, 1800px → ~1240px, 2200px → ~1400px. Investigation column already scales (500px / 560px / 600px). |
+| DES-18 | Workspace mobile responsive layout — collapse `.ws-sidebar` and `.invest-column` into off-canvas drawers on viewports below ~900px, add header bar with two toggle buttons (TOC drawer left, Investigation drawer right), backdrop overlay, and lock body scroll when a drawer is open | P1 | Replaces the umbrella DES-07 for the workspace specifically. Touches `app/case/[id]/page.tsx`, `components/workspace/CaseSidebar.tsx`, `components/workspace/InvestColumn.tsx`, `styles/globals.css`. Needs new state for `leftOpen` / `rightOpen` and a small mobile header component. Right-click annotations need a long-press equivalent or fallback affordance on touch (track separately if needed). |
 
 ---
 

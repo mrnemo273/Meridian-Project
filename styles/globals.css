@@ -2035,3 +2035,236 @@ section { padding-top: 48px; margin-bottom: 48px; }
 .rb-list-meta {
   display: flex; gap: 10px; font-size: 8px; color: var(--text-3);
 }
+
+/* ═══════════════════════════════════════════════
+   HYPOTHESIS PROBABILITIES — REDESIGN (BL-002)
+   ═══════════════════════════════════════════════ */
+
+/* Hero card — leading hypothesis */
+.hp-hero {
+  background: var(--gold-soft);
+  border: 1px solid rgba(154,122,46,0.18);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 18px 14px;
+  margin-bottom: 16px;
+}
+.hp-hero-badge {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); font-weight: 500; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.hp-hero-badge::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0;
+}
+.hp-hero-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 20px; font-weight: 400; color: var(--text-1);
+  line-height: 1.2; margin-bottom: 10px;
+}
+.hp-hero-pct-row {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px;
+}
+.hp-hero-pct {
+  font-size: 44px; font-weight: 700; color: var(--gold);
+  line-height: 1; letter-spacing: -1px;
+}
+.hp-hero-trend-inline {
+  font-size: 11px; font-weight: 500;
+}
+.hp-hero-bar-track {
+  height: 8px; background: rgba(154,122,46,0.15); border-radius: 4px;
+  overflow: hidden; margin-bottom: 12px;
+}
+.hp-hero-bar-fill {
+  height: 100%; border-radius: 4px; background: var(--gold);
+  transition: width 0.4s ease;
+}
+.hp-hero-reasoning {
+  font-size: 11px; color: var(--text-2); line-height: 1.65;
+  margin-bottom: 10px;
+}
+.hp-factors {
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: 4px;
+}
+.hp-factor-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 8px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; flex-shrink: 0; padding-top: 3px;
+}
+.hp-factor-label.supports { color: var(--green); }
+.hp-factor-label.contradicts { color: var(--red); }
+.hp-factor-item {
+  font-size: 9px; color: var(--text-2);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 3px; padding: 2px 7px; line-height: 1.4;
+}
+
+/* Ranked hypothesis list */
+.hp-ranked-list {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 14px;
+}
+.hp-ranked-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg); border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.hp-rank-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px; font-weight: 500; color: var(--text-3);
+  min-width: 16px; flex-shrink: 0; padding-top: 2px;
+  line-height: 1;
+}
+.hp-ranked-content { flex: 1; min-width: 0; }
+.hp-ranked-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 5px;
+}
+.hp-ranked-name {
+  font-size: 11px; font-weight: 600; color: var(--text-1);
+}
+.hp-ranked-pct {
+  font-size: 13px; font-weight: 700; color: var(--text-2);
+  flex-shrink: 0; margin-left: 8px;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE TYPOGRAPHY (BL-001)
+   Scale up font sizes and spacing on large monitors
+   ═══════════════════════════════════════════════ */
+
+@media (min-width: 1400px) {
+  body { font-size: 14px; }
+
+  /* Workspace hero */
+  .ws-hero-title { font-size: 50px; }
+  .ws-hero-subtitle { font-size: 22px; }
+  .hero-meta { font-size: 13px; }
+
+  /* Homepage hero */
+  .home-hero-title { font-size: 42px; }
+  .hero-subtitle { font-size: 20px; }
+
+  /* Main content body text */
+  .summary-text { font-size: 15px; }
+  .summary-text p { margin-bottom: 16px; }
+
+  /* Timeline */
+  .tl-title { font-size: 16px; }
+  .tl-detail { font-size: 14px; }
+  .tl-date { font-size: 11px; }
+
+  /* Evidence cards */
+  .evidence-card .card-title { font-size: 16px; }
+  .evidence-card .card-summary { font-size: 14px; }
+
+  /* Witness */
+  .witness-name { font-size: 21px; }
+  .witness-quote { font-size: 20px; }
+  .witness-observed { font-size: 14px; }
+  .witness-rank { font-size: 12px; }
+
+  /* AI cards */
+  .ai-card .ai-title { font-size: 16px; }
+  .ai-card .ai-finding { font-size: 14px; }
+
+  /* Questions */
+  .question-text { font-size: 16px; }
+  .question-context { font-size: 14px; }
+
+  /* Active card homepage */
+  .active-card-body h2 { font-size: 30px; }
+  .case-summary { font-size: 13px; }
+
+  /* Investigation column */
+  .invest-column { width: 500px; }
+  .invest-body { padding: 24px; }
+  .invest-tab { font-size: 9px; padding: 11px 13px; }
+  .invest-title { font-size: 11px; }
+  .check-label { font-size: 12px; }
+  .check-detail { font-size: 11px; }
+  .osint-value { font-size: 12px; }
+  .chain-source { font-size: 12px; }
+  .hp-hero-name { font-size: 22px; }
+  .hp-hero-pct { font-size: 48px; }
+  .hp-hero-reasoning { font-size: 12px; }
+  .hp-ranked-name { font-size: 12px; }
+  .hp-ranked-pct { font-size: 14px; }
+  .hp-hero-trend-inline { font-size: 12px; }
+
+  /* Verified facts */
+  .vf-fact { font-size: 12px; }
+
+  /* Content padding */
+  .content-inner { padding: 0 48px 120px; }
+}
+
+@media (min-width: 1800px) {
+  body { font-size: 15px; }
+
+  /* Workspace hero */
+  .ws-hero-title { font-size: 58px; }
+  .ws-hero-subtitle { font-size: 25px; }
+  .hero-meta { font-size: 14px; }
+
+  /* Homepage hero */
+  .home-hero-title { font-size: 50px; }
+  .hero-subtitle { font-size: 22px; }
+  .stat-value { font-size: 28px; }
+
+  /* Main content */
+  .summary-text { font-size: 16px; }
+
+  /* Timeline */
+  .tl-title { font-size: 18px; }
+  .tl-detail { font-size: 15px; }
+  .tl-date { font-size: 12px; }
+
+  /* Evidence cards */
+  .evidence-card .card-title { font-size: 18px; }
+  .evidence-card .card-summary { font-size: 15px; }
+
+  /* Witness */
+  .witness-name { font-size: 24px; }
+  .witness-quote { font-size: 22px; }
+  .witness-observed { font-size: 15px; }
+  .witness-rank { font-size: 13px; }
+
+  /* AI cards */
+  .ai-card .ai-title { font-size: 18px; }
+  .ai-card .ai-finding { font-size: 15px; }
+
+  /* Questions */
+  .question-text { font-size: 18px; }
+  .question-context { font-size: 15px; }
+
+  /* Active card homepage */
+  .active-card-body h2 { font-size: 34px; }
+  .case-summary { font-size: 14px; }
+
+  /* Investigation column */
+  .invest-column { width: 560px; }
+  .invest-body { padding: 28px; }
+  .invest-tab { font-size: 9px; padding: 12px 14px; }
+  .invest-title { font-size: 11px; }
+  .check-label { font-size: 13px; }
+  .check-detail { font-size: 12px; }
+  .osint-value { font-size: 13px; }
+  .chain-source { font-size: 13px; }
+  .hp-hero-name { font-size: 26px; }
+  .hp-hero-pct { font-size: 56px; }
+  .hp-hero-reasoning { font-size: 13px; }
+  .hp-ranked-name { font-size: 13px; }
+  .hp-ranked-pct { font-size: 15px; }
+
+  /* Verified facts */
+  .vf-fact { font-size: 13px; }
+
+  /* Content padding */
+  .content-inner { padding: 0 60px 140px; }
+  .section-label { font-size: 12px; }
+}

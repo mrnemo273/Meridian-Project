@@ -25,7 +25,7 @@ interface Props {
 }
 
 const tabs = [
-  { id: "ach", label: "ACH" },
+  { id: "ach", label: "Hypotheses" },
   { id: "resolution", label: "Resolution" },
   { id: "osint", label: "OSINT" },
   { id: "chain", label: "Links" },
@@ -84,134 +84,101 @@ export function InvestColumn({
       </div>
       <div className="invest-body">
 
-        {/* ACH MATRIX */}
+        {/* HYPOTHESES */}
         <div className={`invest-pane ${activeTab === "ach" ? "active" : ""}`}>
-          <div className="invest-title">Analysis of Competing Hypotheses</div>
-          <div style={{ fontSize: "9px", color: "var(--orange)", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}>
-            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--orange)", display: "inline-block" }}></span>
-            Click any cell to cast your vote — cycle through C / I / N
-          </div>
-          <table className="ach-matrix">
-            <thead>
-              <tr>
-                <th>Evidence</th>
-                {achHypotheses.map((h) => (
-                  <th key={h}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {achEvidence.map((row, ri) => (
-                <tr key={ri}>
-                  <td>{row.evidence}</td>
-                  {row.ai.map((aiVal, ci) => {
-                    const human = humanVotes[ri]?.[ci] || "";
-                    const displayVal = human || aiVal;
-                    const isDash = displayVal === "-";
-                    const cellClass = isDash ? "ach-na" : displayVal === "C" ? "ach-c" : displayVal === "I" ? "ach-i" : "ach-n";
-                    const showSplit = human && human !== aiVal && aiVal !== "-";
-                    return (
-                      <td
-                        key={ci}
-                        className={`ach-cell ${showSplit ? "" : cellClass}`}
-                        onClick={() => cycleVote(ri, ci)}
-                      >
-                        {showSplit ? (
-                          <>
-                            <span style={{ fontSize: "7px", color: "var(--text-3)" }}>{aiVal}</span>{" "}
-                            <span className={human === "C" ? "ach-c" : human === "I" ? "ach-i" : "ach-n"} style={{ fontWeight: 700 }}>
-                              {human}
-                            </span>
-                            <span className="human-vote"></span>
-                          </>
-                        ) : human ? (
-                          <>
-                            {displayVal}
-                            <span className="human-vote"></span>
-                          </>
-                        ) : isDash ? (
-                          "\u2014"
-                        ) : (
-                          displayVal
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div style={{ marginTop: 10, display: "flex", gap: 4, flexWrap: "wrap" }}>
-            {tallyCounts.map((c, i) => {
-              const color = c === 0 ? "var(--green)" : c <= 2 ? "var(--gold)" : "var(--red)";
-              return (
-                <span key={i} style={{ fontSize: "8px", padding: "3px 8px", borderRadius: 3, background: "var(--bg)", border: "1px solid var(--border)" }}>
-                  <span style={{ fontWeight: 600, color }}>{c}I</span> {achHypotheses[i]}
-                </span>
-              );
-            })}
-          </div>
-          <div className="ach-verdict">
-            <strong>ACH Assessment</strong>
-            &ldquo;Unknown Technology&rdquo; is the only hypothesis with <strong>zero inconsistencies</strong>. &ldquo;Sensor Error&rdquo; has the fewest among conventional explanations (2), but is contradicted by multi-platform visual confirmation.{" "}
-            <span className="hl-claude" data-count={getCount("ann-7") || ""} data-annotation-id="ann-7" data-user="claude">
-              The ACH methodology identifies the least-disproven hypothesis — not the most supported.
-            </span>
+          <div className="invest-title">Hypothesis Probability Assessment</div>
+          <div className="hp-panel-subtitle" style={{ marginBottom: 16 }}>
+            Based on {factCount} verified facts and {evidenceCount} evidence items
           </div>
 
-          {/* HYPOTHESIS PROBABILITIES */}
-          {probabilities.length > 0 && (
-            <div className="hp-panel">
-              <div className="hp-panel-title">Hypothesis Probability Assessment</div>
-              <div className="hp-panel-subtitle">
-                Based on {factCount} verified facts, {evidenceCount} evidence items, and qualitative ACH analysis
-              </div>
-              {probabilities.map((hp, i) => {
-                const isLeading = i === 0;
-                const trendIcon = hp.trend === "rising" ? "\u25B2" : hp.trend === "falling" ? "\u25BC" : "\u25CF";
+          {probabilities.length > 0 ? (
+            <>
+              {/* Leading hypothesis — hero card */}
+              {(() => {
+                const hp = probabilities[0];
+                const trendIcon = hp.trend === "rising" ? "▲" : hp.trend === "falling" ? "▼" : "●";
                 const trendColor = hp.trend === "rising" ? "var(--green)" : hp.trend === "falling" ? "var(--red)" : "var(--text-3)";
-                const contradictions = hp.keyFactors.contradicts.length;
-                const isExpanded = expandedReasoning === hp.hypothesis;
                 return (
-                  <div key={hp.hypothesis} className="hp-row">
-                    <div className="hp-row-header">
-                      <span className="hp-hypothesis">{hp.hypothesis}</span>
-                      <span className="hp-pct">{hp.probability}%</span>
-                    </div>
-                    <div className="hp-bar-track">
-                      <div
-                        className="hp-bar-fill"
-                        style={{
-                          width: `${hp.probability}%`,
-                          background: isLeading ? "var(--gold)" : "var(--text-3)",
-                          opacity: isLeading ? 1 : 0.5,
-                        }}
-                      />
-                    </div>
-                    <div className="hp-meta">
-                      <span style={{ color: trendColor, fontSize: "9px" }}>
+                  <div className="hp-hero">
+                    <div className="hp-hero-badge">Most Probable</div>
+                    <div className="hp-hero-name">{hp.hypothesis}</div>
+                    <div className="hp-hero-pct-row">
+                      <span className="hp-hero-pct">{hp.probability}%</span>
+                      <span className="hp-hero-trend-inline" style={{ color: trendColor }}>
                         {trendIcon} {hp.trend}
                       </span>
-                      <span style={{ fontSize: "9px", color: "var(--text-3)" }}>
-                        {contradictions} contradiction{contradictions !== 1 ? "s" : ""}
-                      </span>
                     </div>
-                    <div
-                      className="hp-reasoning-toggle"
-                      onClick={() => setExpandedReasoning(isExpanded ? null : hp.hypothesis)}
-                    >
-                      {isExpanded ? hp.reasoning : hp.reasoning.split(". ")[0] + "."}
-                      {!isExpanded && hp.reasoning.includes(". ") && (
-                        <span className="hp-more"> more...</span>
-                      )}
+                    <div className="hp-hero-bar-track">
+                      <div className="hp-hero-bar-fill" style={{ width: `${hp.probability}%` }} />
                     </div>
+                    <div className="hp-hero-reasoning">{hp.reasoning}</div>
+                    {hp.keyFactors.supports.length > 0 && (
+                      <div className="hp-factors">
+                        <span className="hp-factor-label supports">Supports:</span>
+                        {hp.keyFactors.supports.map((f, i) => (
+                          <span key={i} className="hp-factor-item">{f}</span>
+                        ))}
+                      </div>
+                    )}
+                    {hp.keyFactors.contradicts.length > 0 && (
+                      <div className="hp-factors" style={{ marginTop: 4 }}>
+                        <span className="hp-factor-label contradicts">Against:</span>
+                        {hp.keyFactors.contradicts.map((f, i) => (
+                          <span key={i} className="hp-factor-item">{f}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 );
-              })}
-              <div className="hp-footer">
-                Probabilities are AI-derived estimates based on available evidence. They are not predictions — they reflect what the evidence mathematically supports given current data.
+              })()}
+
+              {/* Remaining hypotheses — ranked list */}
+              <div className="hp-ranked-list">
+                {probabilities.slice(1).map((hp, i) => {
+                  const rank = i + 2;
+                  const trendIcon = hp.trend === "rising" ? "▲" : hp.trend === "falling" ? "▼" : "●";
+                  const trendColor = hp.trend === "rising" ? "var(--green)" : hp.trend === "falling" ? "var(--red)" : "var(--text-3)";
+                  const isExpanded = expandedReasoning === hp.hypothesis;
+                  return (
+                    <div key={hp.hypothesis} className="hp-ranked-row">
+                      <span className="hp-rank-num">{rank}</span>
+                      <div className="hp-ranked-content">
+                        <div className="hp-ranked-header">
+                          <span className="hp-ranked-name">{hp.hypothesis}</span>
+                          <span className="hp-ranked-pct">{hp.probability}%</span>
+                        </div>
+                        <div className="hp-bar-track">
+                          <div className="hp-bar-fill" style={{ width: `${hp.probability}%`, background: "var(--text-3)", opacity: 0.45 }} />
+                        </div>
+                        <div className="hp-meta">
+                          <span style={{ color: trendColor, fontSize: "9px" }}>{trendIcon} {hp.trend}</span>
+                          {hp.keyFactors.contradicts.length > 0 && (
+                            <span style={{ fontSize: "9px", color: "var(--text-3)" }}>
+                              {hp.keyFactors.contradicts.length} contradiction{hp.keyFactors.contradicts.length !== 1 ? "s" : ""}
+                            </span>
+                          )}
+                        </div>
+                        <div
+                          className="hp-reasoning-toggle"
+                          onClick={() => setExpandedReasoning(isExpanded ? null : hp.hypothesis)}
+                        >
+                          {isExpanded ? hp.reasoning : hp.reasoning.split(". ")[0] + "."}
+                          {!isExpanded && hp.reasoning.includes(". ") && (
+                            <span className="hp-more"> more...</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
+
+              <div className="hp-footer">
+                Probabilities are AI-derived estimates. They reflect what available evidence supports — not predictions of ground truth.
+              </div>
+            </>
+          ) : (
+            <div style={{ fontSize: "10px", color: "var(--text-3)" }}>No probability data for this case yet.</div>
           )}
         </div>
 

@@ -12,6 +12,8 @@ interface Props {
   setActiveTab: (tab: string) => void;
   jumpToNextHighlight: () => void;
   onInvite?: () => void;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
 const tocSections = [
@@ -34,12 +36,36 @@ export function CaseSidebar({
   scrollToSection,
   jumpToNextHighlight,
   onInvite,
+  mobileOpen,
+  onMobileClose,
 }: Props) {
   const { profile, isAdmin, signOut } = useAuth();
 
+  const handleSection = (id: string) => {
+    scrollToSection(id);
+    onMobileClose?.();
+  };
+  const handleTab = (tab: string) => {
+    setActiveTab(tab);
+    onMobileClose?.();
+  };
+
   return (
-    <nav className="ws-sidebar">
-      <div className="sidebar-logo">MERI<span>DIAN</span></div>
+    <nav className={`ws-sidebar ${mobileOpen ? "mobile-open" : ""}`}>
+      <div className="sidebar-logo">
+        MERI<span>DIAN</span>
+        {onMobileClose && (
+          <button
+            className="ws-sidebar-close"
+            onClick={onMobileClose}
+            aria-label="Close navigation"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M6 6l12 12M18 6l-12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
 
       <div className="sidebar-section-label">Case File</div>
       <ul className="toc-list">
@@ -47,7 +73,7 @@ export function CaseSidebar({
           <li key={s.id}>
             <a
               className={activeSection === s.id ? "active" : ""}
-              onClick={() => scrollToSection(s.id)}
+              onClick={() => handleSection(s.id)}
             >
               {s.label}
             </a>
@@ -59,13 +85,13 @@ export function CaseSidebar({
 
       <div className="sidebar-section-label">Investigation</div>
       <ul className="toc-list">
-        <li><a onClick={() => setActiveTab("ach")}>ACH Matrix <span className="toc-badge tool">Tool</span></a></li>
-        <li><a onClick={() => setActiveTab("resolution")}>Resolution <span className="toc-badge tool">Tool</span></a></li>
-        <li><a onClick={() => setActiveTab("osint")}>OSINT Log <span className="toc-badge tool">Tool</span></a></li>
-        <li><a onClick={() => setActiveTab("chain")}>Evidence Chain <span className="toc-badge tool">Tool</span></a></li>
-        <li><a onClick={() => setActiveTab("search")}>Search & Import <span className="toc-badge human">Search</span></a></li>
-        <li><a onClick={() => setActiveTab("solvability")}>Solvability <span className="toc-badge tool">Tool</span></a></li>
-        <li><a onClick={() => setActiveTab("branches")}>Branches <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => handleTab("ach")}>ACH Matrix <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => handleTab("resolution")}>Resolution <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => handleTab("osint")}>OSINT Log <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => handleTab("chain")}>Evidence Chain <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => handleTab("search")}>Search & Import <span className="toc-badge human">Search</span></a></li>
+        <li><a onClick={() => handleTab("solvability")}>Solvability <span className="toc-badge tool">Tool</span></a></li>
+        <li><a onClick={() => handleTab("branches")}>Branches <span className="toc-badge tool">Tool</span></a></li>
       </ul>
 
       <div className="sidebar-divider"></div>

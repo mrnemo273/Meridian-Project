@@ -10,10 +10,8 @@ interface Props {
   data: CaseWorkspaceData;
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  // ACH
-  humanVotes: string[][];
-  cycleVote: (row: number, col: number) => void;
-  tallyCounts: number[];
+  expanded: boolean;
+  setExpanded: (b: boolean) => void;
   // Evidence links
   links: { a: string; b: string; label: string }[];
   selectedNode: string | null;
@@ -24,7 +22,47 @@ interface Props {
   selectedCard?: string | null;
 }
 
-const tabs = [
+const ICON_PATHS: Record<string, string[]> = {
+  ach: [
+    "M5 21V11", "M12 21V3", "M19 21v-7",
+  ],
+  resolution: [
+    "M4 4h16v16H4z", "M9 12l2 2 4-4",
+  ],
+  osint: [
+    "M21 12a9 9 0 11-18 0 9 9 0 0118 0z", "M3 12h18", "M12 3a14 14 0 010 18", "M12 3a14 14 0 000 18",
+  ],
+  chain: [
+    "M10 14a4 4 0 005.66 0l3-3a4 4 0 10-5.66-5.66l-1.5 1.5",
+    "M14 10a4 4 0 00-5.66 0l-3 3a4 4 0 105.66 5.66l1.5-1.5",
+  ],
+  search: [
+    "M18 11a7 7 0 11-14 0 7 7 0 0114 0z", "M21 21l-4.3-4.3",
+  ],
+  solvability: [
+    "M22 12a10 10 0 10-20 0", "M12 12l4-3",
+  ],
+  branches: [
+    "M6 7v4a4 4 0 004 4h4a4 4 0 004-4V7",
+    "M8 5a2 2 0 11-4 0 2 2 0 014 0z",
+    "M20 5a2 2 0 11-4 0 2 2 0 014 0z",
+    "M14 19a2 2 0 11-4 0 2 2 0 014 0z",
+  ],
+  comments: [
+    "M21 12a8 8 0 01-12.7 6.5L3 20l1.5-5.3A8 8 0 1121 12z",
+  ],
+};
+
+function TabIcon({ id }: { id: string }) {
+  const paths = ICON_PATHS[id] || [];
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {paths.map((d, i) => <path key={i} d={d} />)}
+    </svg>
+  );
+}
+
+const tabs: { id: string; label: string }[] = [
   { id: "ach", label: "Hypotheses" },
   { id: "resolution", label: "Resolution" },
   { id: "osint", label: "OSINT" },
@@ -39,15 +77,22 @@ export function InvestColumn({
   data,
   activeTab,
   setActiveTab,
-  humanVotes,
-  cycleVote,
-  tallyCounts,
+  expanded,
+  setExpanded,
   links,
   selectedNode,
   toggleNode,
   getCount,
   selectedCard,
 }: Props) {
+  const handleIconClick = (tabId: string) => {
+    if (expanded && activeTab === tabId) {
+      setExpanded(false);
+    } else {
+      setActiveTab(tabId);
+      setExpanded(true);
+    }
+  };
   const [searchQuery, setSearchQuery] = useState("");
   const [importedItems, setImportedItems] = useState<{ title: string; source: string }[]>([]);
   const [expandedReasoning, setExpandedReasoning] = useState<string | null>(null);
@@ -61,28 +106,48 @@ export function InvestColumn({
     btn.disabled = true;
   }, []);
 
-  const achHypotheses = data.achHypotheses;
-  const achEvidence = data.achEvidence;
   const probabilities = (data.hypothesisProbabilities || []).slice().sort((a, b) => b.probability - a.probability);
   const branches = data.researchBranches || [];
 
   const factCount = (data.verifiedFacts || []).length;
   const evidenceCount = data.evidence.length;
 
+  const activeLabel = tabs.find((t) => t.id === activeTab)?.label || "";
+
   return (
-    <div className="invest-column">
-      <div className="invest-tabs">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            className={`invest-tab ${activeTab === t.id ? "active" : ""}`}
-            onClick={() => setActiveTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
+    <aside className={`invest-column ${expanded ? "expanded" : "collapsed"}`}>
+      <div className="invest-icon-rail">
+        {tabs.map((t) => {
+          const isActive = expanded && activeTab === t.id;
+          return (
+            <button
+              key={t.id}
+              className={`invest-icon-btn ${isActive ? "active" : ""}`}
+              onClick={() => handleIconClick(t.id)}
+              title={t.label}
+              aria-label={t.label}
+              aria-pressed={isActive}
+            >
+              <TabIcon id={t.id} />
+            </button>
+          );
+        })}
       </div>
-      <div className="invest-body">
+      <div className="invest-panel" aria-hidden={!expanded}>
+        <div className="invest-panel-header">
+          <span className="invest-panel-title">{activeLabel}</span>
+          <button
+            className="invest-panel-close"
+            onClick={() => setExpanded(false)}
+            aria-label="Close panel"
+            title="Close"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M6 6l12 12M18 6l-12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="invest-body">
 
         {/* HYPOTHESES */}
         <div className={`invest-pane ${activeTab === "ach" ? "active" : ""}`}>
@@ -395,7 +460,8 @@ export function InvestColumn({
           </div>
         </div>
 
+        </div>
       </div>
-    </div>
+    </aside>
   );
 }

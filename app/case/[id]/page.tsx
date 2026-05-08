@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import type { CaseWorkspaceData } from "@/types/case";
-import { useACHVotes } from "@/hooks/useACHVotes";
 import { useEvidenceLinks } from "@/hooks/useEvidenceLinks";
 import { useWorkspaceInteractions } from "@/hooks/useWorkspaceInteractions";
 import { CaseSidebar } from "@/components/workspace/CaseSidebar";
@@ -19,15 +18,44 @@ export default function WorkspacePage() {
   const [caseData, setCaseData] = useState<CaseWorkspaceData | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [activeTab, setActiveTab] = useState("ach");
+  const [investExpanded, setInvestExpanded] = useState(false);
+  const [leftDrawerOpen, setLeftDrawerOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [progressPct, setProgressPct] = useState(0);
   const mainContentRef = useRef<HTMLDivElement>(null);
 
-  const { humanVotes, cycleVote, tallyCounts } = useACHVotes(id);
   const { links, selectedNode, toggleNode } = useEvidenceLinks();
-  const ix = useWorkspaceInteractions(setActiveTab, id);
+
+  // Tab changes from card selection / right-click actions auto-expand the invest panel.
+  const openInvestTab = useCallback((tab: string) => {
+    setActiveTab(tab);
+    setInvestExpanded(true);
+  }, []);
+  const ix = useWorkspaceInteractions(openInvestTab, id);
+
+  // Lock body scroll while a mobile drawer is open.
+  useEffect(() => {
+    const anyOpen = leftDrawerOpen || investExpanded;
+    if (!anyOpen) return;
+    const prev = document.body.style.overflow;
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => { document.body.style.overflow = prev; };
+  }, [leftDrawerOpen, investExpanded]);
+
+  // Escape closes whichever drawer is on top.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (investExpanded) setInvestExpanded(false);
+      else if (leftDrawerOpen) setLeftDrawerOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [investExpanded, leftDrawerOpen]);
 
   // Load case data
   useEffect(() => {
@@ -64,9 +92,9 @@ export default function WorkspacePage() {
 
   const selectCard = useCallback((cardId: string, type: string) => {
     setSelectedCard((prev) => (prev === cardId ? null : cardId));
-    if (type === "evidence" || type === "witness") setActiveTab("chain");
-    else if (type === "ai") setActiveTab("ach");
-  }, []);
+    if (type === "evidence" || type === "witness") openInvestTab("chain");
+    else if (type === "ai") openInvestTab("ach");
+  }, [openInvestTab]);
 
   const scrollToSection = useCallback((sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
@@ -93,13 +121,28 @@ export default function WorkspacePage() {
   }
 
   return (
-    <div className="workspace-app">
+    <div className={`workspace-app ${leftDrawerOpen ? "left-drawer-open" : ""} ${investExpanded ? "invest-expanded" : ""}`}>
+      <header className="workspace-mobile-header">
+        <button
+          className="ws-mobile-menu-btn"
+          onClick={() => setLeftDrawerOpen(true)}
+          aria-label="Open navigation"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <span className="ws-mobile-title">{caseData.caseNumber}</span>
+      </header>
+
       <CaseSidebar
         caseNumber={caseData.caseNumber} caseTitle={caseData.title}
         activeSection={activeSection} activeTab={activeTab}
         highlightCount={ix.highlightCount} scrollToSection={scrollToSection}
-        setActiveTab={setActiveTab} jumpToNextHighlight={ix.jumpToNextHighlight}
+        setActiveTab={openInvestTab} jumpToNextHighlight={ix.jumpToNextHighlight}
         onInvite={() => setInviteOpen(true)}
+        mobileOpen={leftDrawerOpen}
+        onMobileClose={() => setLeftDrawerOpen(false)}
       />
       <CaseContent
         ref={mainContentRef} data={caseData} progressPct={progressPct}
@@ -108,10 +151,22 @@ export default function WorkspacePage() {
       />
       <InvestColumn
         data={caseData} activeTab={activeTab} setActiveTab={setActiveTab}
-        humanVotes={humanVotes} cycleVote={cycleVote} tallyCounts={tallyCounts}
+        expanded={investExpanded} setExpanded={setInvestExpanded}
         links={links} selectedNode={selectedNode} toggleNode={toggleNode}
         getCount={ix.getCount} selectedCard={selectedCard}
       />
+
+      {(leftDrawerOpen || investExpanded) && (
+        <div
+          className="workspace-backdrop"
+          onClick={() => {
+            setLeftDrawerOpen(false);
+            setInvestExpanded(false);
+          }}
+          aria-hidden="true"
+        />
+      )}
+
       <InviteModal visible={inviteOpen} onClose={() => setInviteOpen(false)} />
       <ContextMenu visible={ix.ctxVisible} pos={ix.ctxPos} onAction={ix.ctxAction} />
       <InlineInput visible={ix.inlineVisible} pos={ix.inlinePos} type={ix.inlineType} onClose={ix.closeInline} onSubmit={ix.submitInline} />
